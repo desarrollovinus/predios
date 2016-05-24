@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>UF1-24.kml</name>
+	<Schema name="UF_1" id="UF_1">
+		<SimpleField type="int" name="FID_"></SimpleField>
+		<SimpleField type="string" name="Entity"></SimpleField>
+		<SimpleField type="string" name="Layer"></SimpleField>
+		<SimpleField type="int" name="Color"></SimpleField>
+		<SimpleField type="string" name="Linetype"></SimpleField>
+		<SimpleField type="float" name="Elevation"></SimpleField>
+		<SimpleField type="int" name="LineWt"></SimpleField>
+		<SimpleField type="string" name="RefName"></SimpleField>
+		<SimpleField type="float" name="AREA2"></SimpleField>
+		<SimpleField type="string" name="Ficha"></SimpleField>
+		<SimpleField type="string" name="Numero"></SimpleField>
+		<SimpleField type="string" name="Tramo"></SimpleField>
+		<SimpleField type="string" name="Propietari"></SimpleField>
+		<SimpleField type="string" name="Cedula_NIT"></SimpleField>
+		<SimpleField type="string" name="Direccion"></SimpleField>
+		<SimpleField type="string" name="Telefono"></SimpleField>
+		<SimpleField type="int" name="Correo_E"></SimpleField>
+		<SimpleField type="string" name="Est_amb"></SimpleField>
+		<SimpleField type="string" name="Func_en_pr"></SimpleField>
+		<SimpleField type="string" name="est_en_obr"></SimpleField>
+		<SimpleField type="string" name="est_via"></SimpleField>
+		<SimpleField type="string" name="Abs_Inicia"></SimpleField>
+		<SimpleField type="string" name="Abs_I_Marg"></SimpleField>
+		<SimpleField type="string" name="Abs_Final"></SimpleField>
+		<SimpleField type="string" name="Abs_F_Marg"></SimpleField>
+		<SimpleField type="int" name="Logn_efec"></SimpleField>
+		<SimpleField type="string" name="Long_Comp_"></SimpleField>
+		<SimpleField type="string" name="Semaforo_E"></SimpleField>
+		<SimpleField type="string" name="Semaforo_I"></SimpleField>
+		<SimpleField type="string" name="Semaforo_D"></SimpleField>
+		<SimpleField type="string" name="Semafor_EX"></SimpleField>
+		<SimpleField type="string" name="Meta_cont"></SimpleField>
+		<SimpleField type="string" name="Disp_A_P"></SimpleField>
+		<SimpleField type="int" name="Area_Total"></SimpleField>
+		<SimpleField type="int" name="Area_Req"></SimpleField>
+		<SimpleField type="int" name="Area_Rem"></SimpleField>
+		<SimpleField type="string" name="Area_Sobr"></SimpleField>
+		<SimpleField type="int" name="Area_Const"></SimpleField>
+		<SimpleField type="int" name="Area_Con_1"></SimpleField>
+		<SimpleField type="string" name="Matrcula_I"></SimpleField>
+		<SimpleField type="string" name="Num_Catast"></SimpleField>
+		<SimpleField type="string" name="Escritura_"></SimpleField>
+		<SimpleField type="string" name="Escrit_Fec"></SimpleField>
+		<SimpleField type="int" name="Escrit_Not"></SimpleField>
+		<SimpleField type="string" name="Escrit_Ciu"></SimpleField>
+		<SimpleField type="string" name="EST_T_1"></SimpleField>
+		<SimpleField type="string" name="EST_T_Fech"></SimpleField>
+	</Schema>
+	<Style id="sh_ylw-pushpin8">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff00ff00</color>
+			<width>3</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>4cff55ff</color>
+			<colorMode>random</colorMode>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="msn_ylw-pushpin0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin2</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin8</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_ylw-pushpin2">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff00ff00</color>
+			<width>3</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>4cff55ff</color>
+			<colorMode>random</colorMode>
+		</PolyStyle>
+	</Style>
+	<Placemark>
+		<name>UF1-24</name>
+		<styleUrl>#msn_ylw-pushpin0</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#UF_1">
+				<SimpleData name="FID_">0</SimpleData>
+				<SimpleData name="Entity">LWPolyline</SimpleData>
+				<SimpleData name="Layer">UF1-24</SimpleData>
+				<SimpleData name="Color">40</SimpleData>
+				<SimpleData name="Linetype">Continuous</SimpleData>
+				<SimpleData name="Elevation">0.00000000000</SimpleData>
+				<SimpleData name="LineWt">60</SimpleData>
+				<SimpleData name="AREA2">28000.0000000</SimpleData>
+				<SimpleData name="Ficha">UF1-24</SimpleData>
+				<SimpleData name="Tramo">PRADERA - PORCESITO</SimpleData>
+				<SimpleData name="Propietari">RAUL ARANA VASQUEZ</SimpleData>
+				<SimpleData name="Cedula_NIT">6,556,927</SimpleData>
+				<SimpleData name="Direccion">CR 42D N82-50 APT 104 ED TORRE DE ALEJANDRIA B LA AMERICA</SimpleData>
+				<SimpleData name="Telefono">3147988493</SimpleData>
+				<SimpleData name="Correo_E">0</SimpleData>
+				<SimpleData name="Func_en_pr">Para franja de retiro</SimpleData>
+				<SimpleData name="est_en_obr">No disponible</SimpleData>
+				<SimpleData name="est_via">Sin intervenir</SimpleData>
+				<SimpleData name="Abs_Inicia">PR 16 + 067</SimpleData>
+				<SimpleData name="Abs_I_Marg">IZQUIERDA</SimpleData>
+				<SimpleData name="Abs_Final">PR 16 + 507</SimpleData>
+				<SimpleData name="Abs_F_Marg">IZQUIERDA</SimpleData>
+				<SimpleData name="Logn_efec">440</SimpleData>
+				<SimpleData name="Long_Comp_">{Crear}</SimpleData>
+				<SimpleData name="Disp_A_P">{Crear}</SimpleData>
+				<SimpleData name="Area_Total">159790</SimpleData>
+				<SimpleData name="Area_Req">12377</SimpleData>
+				<SimpleData name="Area_Rem">0</SimpleData>
+				<SimpleData name="Area_Sobr">{Verificar}</SimpleData>
+				<SimpleData name="Area_Const">0</SimpleData>
+				<SimpleData name="Area_Con_1">0</SimpleData>
+				<SimpleData name="Matrcula_I">012-33347</SimpleData>
+				<SimpleData name="Num_Catast">237-2-02-01-99</SimpleData>
+				<SimpleData name="Escritura_">5126</SimpleData>
+				<SimpleData name="Escrit_Fec">1994-10-10</SimpleData>
+				<SimpleData name="Escrit_Not">20</SimpleData>
+				<SimpleData name="Escrit_Ciu">Medellin</SimpleData>
+				<SimpleData name="EST_T_Fech">2016-03-14</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-75.2362881842832,6.539933407906857,0 -75.23629838426265,6.539887181224028,0 -75.23629521268778,6.539757783148709,0 -75.23627696544502,6.539627995701641,0 -75.2362801635349,6.539560643673091,0 -75.2364506308711,6.539536112583476,0 -75.23645035079954,6.539525328431944,0 -75.23644966816826,6.53949899374627,0 -75.2364489908074,6.539472562517757,0 -75.23644832656493,6.539446034962253,0 -75.23644768777794,6.539419602902443,0 -75.23644707435685,6.539392929368515,0 -75.23644649784278,6.539366158665814,0 -75.23644596637124,6.539339290689106,0 -75.23644548816286,6.539312325373543,0 -75.23644507152342,6.539285262702252,0 -75.23644472484374,6.539258102713958,0 -75.23644445659946,6.539230845510681,0 -75.23644427535083,6.539203491265791,0 -75.23644418974229,6.539176040231905,0 -75.23644420850192,6.539148492749129,0 -75.2364443404409,6.539120849253242,0 -75.23644459445264,6.539093110284138,0 -75.23644497951187,6.539065276494351,0 -75.23644550467354,6.539037348657588,0 -75.23644617907152,6.539009327677528,0 -75.23644701191701,6.538981214596653,0 -75.23644801249695,6.538953010605175,0 -75.23644919017202,6.538924717050138,0 -75.23645055437441,6.538896335444508,0 -75.23645070294708,6.538893624588439,0 -75.23635809824127,6.538856405770605,0 -75.23633267374014,6.538835345435869,0 -75.23642126821876,6.538362464590258,0 -75.23651826955428,6.538358654255305,0 -75.23652461737309,6.538327111877217,0 -75.23653031995644,6.538299669137616,0 -75.23653614674139,6.538272350986622,0 -75.23654208862735,6.538245156230926,0 -75.23654813662014,6.538218083568572,0 -75.2365542818311,6.538191131597889,0 -75.2365605154764,6.538164298825818,0 -75.23656459966907,6.538147016565376,0 -75.23656134980158,6.538141033409458,0 -75.23655570226673,6.538081776929975,0 -75.23655449323483,6.538030513278582,0 -75.23655590255453,6.538009665228283,0 -75.23655797766277,6.537980402210791,0 -75.23656446448894,6.53793317213903,0 -75.23657118945421,6.537887709548036,0 -75.23657805511266,6.537842449604901,0 -75.23657980049629,6.537831004526088,0 -75.23659800322319,6.53774983331179,0 -75.23661057943588,6.537704617705672,0 -75.23661868982926,6.53767807119357,0 -75.23662558202179,6.537658260331849,0 -75.23664347760759,6.537614040787709,0 -75.23666390358457,6.537569085047751,0 -75.23668992332242,6.537525350397131,0 -75.23672362628965,6.537475152645049,0 -75.23673927858101,6.537466741775349,0 -75.23678120978228,6.537305826727608,0 -75.23674740763332,6.537264238500964,0 -75.23671130408036,6.537211347129862,0 -75.2366934277248,6.537196134210897,0 -75.23672122375174,6.537055552159916,0 -75.23677950453023,6.53705828840913,0 -75.23689839350342,6.536898934851003,0 -75.23709930807834,6.536917573898389,0 -75.23727637888,6.536928372315999,0 -75.23741509040369,6.536977141181268,0 -75.2375133724465,6.53706501922488,0 -75.23758702185191,6.537145995590503,0 -75.23756559672023,6.537189669844825,0 -75.23751394541188,6.537245156200617,0 -75.23736574660995,6.537255876225611,0 -75.2373528905343,6.537262913228401,0 -75.23720500538069,6.537830439179881,0 -75.23720695108159,6.537859394465131,0 -75.23720955715865,6.537897205798573,0 -75.23723812977471,6.537950356360553,0 -75.23724517614713,6.538006207334885,0 -75.23725313919671,6.538056325349467,0 -75.23725794855439,6.538161224620086,0 -75.23729245251614,6.538225486276892,0 -75.23725333158851,6.538311783989645,0 -75.23721757927311,6.538362689614961,0 -75.23715664795249,6.538392784518946,0 -75.23713099801719,6.538430297442718,0 -75.23707404833429,6.538461567404804,0 -75.23705992400384,6.538484825277324,0 -75.23705136829521,6.53851858465814,0 -75.23704750210415,6.538540931180932,0 -75.23703888102347,6.538567041878491,0 -75.23702652211918,6.538596158771249,0 -75.23702475802125,6.538607099032751,0 -75.23702102690002,6.538631412205045,0 -75.23701749671274,6.538655692477562,0 -75.23701417379378,6.538679939168777,0 -75.23701106443305,6.538704151425856,0 -75.23700817364269,6.538728338519328,0 -75.23700549975604,6.538752550556462,0 -75.23700303302454,6.538776836715086,0 -75.237000766463,6.538801204886017,0 -75.23699869413926,6.538825652810969,0 -75.23699681003902,6.538850178388294,0 -75.23699510806868,6.538874779668906,0 -75.23699358205829,6.538899454851853,0 -75.23699222576411,6.538924202279926,0 -75.236991032871,6.538949020435078,0 -75.23698999699474,6.53897390793374,0 -75.23698945739463,6.53898911845386,0 -75.23699223360944,6.538991038927287,0 -75.23701079236666,6.539036616221148,0 -75.23706472440473,6.539080258163404,0 -75.23708383464297,6.539123483422693,0 -75.23713878465755,6.539167397669035,0 -75.237163474958,6.539231544406833,0 -75.23715971004063,6.539279955431115,0 -75.23716573926456,6.539317313944846,0 -75.23717244012367,6.539349274338404,0 -75.23717535029894,6.539365225976273,0 -75.23717576469286,6.539415364615153,0 -75.23717238535915,6.53946196717508,0 -75.2371684991066,6.53951659347941,0 -75.23714904661151,6.539576232382935,0 -75.23708932573142,6.539624252979986,0 -75.23707008849813,6.539669737382852,0 -75.23701428462802,6.5397156001604,0 -75.23700273028034,6.539747665309204,0 -75.23699905573034,6.539761616259511,0 -75.2370193145466,6.540541640718902,0 -75.23701976835514,6.540559141853296,0 -75.23702021891212,6.540576687780515,0 -75.23702066200617,6.540594287573264,0 -75.23702109576631,6.540612048376417,0 -75.23702151095164,6.540629782671562,0 -75.23702190500556,6.540647571191582,0 -75.23702227329802,6.540665413874993,0 -75.23702261116114,6.540683310769993,0 -75.23702291388621,6.540701261901342,0 -75.23702317672367,6.540719267266511,0 -75.23702339488324,6.540737326832026,0 -75.23702356353395,6.540755440529616,0 -75.23702367780437,6.540773608252464,0 -75.23702373278273,6.540791829851105,0 -75.2370237235172,6.540810105129598,0 -75.23702364501627,6.540828433841519,0 -75.23702349224901,6.540846815685794,0 -75.23702326014562,6.540865250302642,0 -75.23702294359795,6.540883737269459,0 -75.23702277092242,6.540891619324469,0 -75.23697467898347,6.540827127492752,0 -75.23692153419238,6.540768210515142,0 -75.23685531608723,6.540693312768338,0 -75.23683595343452,6.540668760262606,0 -75.2367914167059,6.540613420335759,0 -75.23678089551341,6.540588510850371,0 -75.23677956653245,6.540563414729587,0 -75.23678892760222,6.540519682307347,0 -75.23681427797739,6.540461053195295,0 -75.23682897157492,6.5404156667882,0 -75.23683569602592,6.540364229195957,0 -75.23684220533433,6.540335412685126,0 -75.23684227349658,6.540329408869386,0 -75.23683572776903,6.540328802383728,0 -75.23683702030775,6.540316087734826,0 -75.23683093167841,6.540282421559436,0 -75.2368160920804,6.540247432985293,0 -75.23678704147139,6.540195505900281,0 -75.23673335386087,6.540113540813528,0 -75.23669970167558,6.540071770137118,0 -75.23668135548171,6.540065324770067,0 -75.23665115014283,6.540061534090049,0 -75.23654078016196,6.540046212829822,0 -75.23649421055849,6.540046898909808,0 -75.23644138682627,6.540057478182443,0 -75.23642849934358,6.540064618296325,0 -75.23640496037666,6.540024776646093,0 -75.23628818729677,6.539933410264751,0 -75.2362881842832,6.539933407906857,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+</Document>
+</kml>

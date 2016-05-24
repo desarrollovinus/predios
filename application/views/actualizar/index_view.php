@@ -2,25 +2,25 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/demo_table_jui.css" type="text/css" />
 <div id="form">
 	<?php echo form_fieldset('<b>Actualizar</b>'); ?>
-		<img src="<?php echo base_url(); ?>img/search.png" title="Consultar" >: Consultar Ficha 
-		<?php if (isset($permisos['Fichas']['Actualizar'])) { ?><img src="<?php echo base_url(); ?>img/edit.png" title="Actualizar" >: Actualizar Ficha <?php } ?> 
-		<?php if (isset($permisos['Bit&aacute;cora']['Consultar'])) { ?><img alt="Ver Bit&aacute;cora" title="Ver Bit&aacute;cora" src="<?php echo base_url(); ?>img/bitacora.png">: Bit&aacute;cora,<?php } ?> 
+		<img src="<?php echo base_url(); ?>img/search.png" title="Consultar" >: Consultar Ficha
+		<?php if (isset($permisos['Fichas']['Actualizar'])) { ?><img src="<?php echo base_url(); ?>img/edit.png" title="Actualizar" >: Actualizar Ficha <?php } ?>
+		<?php if (isset($permisos['Bit&aacute;cora']['Consultar'])) { ?><img alt="Ver Bit&aacute;cora" title="Ver Bit&aacute;cora" src="<?php echo base_url(); ?>img/bitacora.png">: Bit&aacute;cora,<?php } ?>
 		<?php if (isset($permisos['Archivos y Fotos']['Consultar'])) {?>
-			<img src="<?php echo base_url(); ?>img/archivos.png" title="Subir archivos" >: Subir Archivos 
-			<img src="<?php echo base_url(); ?>img/camara.png" title="Subir fotos" >: Subir Fotos 
+			<img src="<?php echo base_url(); ?>img/archivos.png" title="Subir archivos" >: Subir Archivos
+			<img src="<?php echo base_url(); ?>img/camara.png" title="Subir fotos" >: Subir Fotos
 		<?php } ?>
 		<?php if (isset($permisos['Fichas']['Imprimir estudio de t&iacute;tulos'])) { ?><img src="<?php echo base_url(); ?>img/doc.png" title="Estudio de T&iacute;tulos" >: Descargar el Estudio de T&iacute;tulos<?php } ?>
 
 		<br><br>
 
-		<?php 
+		<?php
 			/*echo form_label('Contratista', 'contratistas');
 			$dropdown = array('' => '');
 			foreach ($contratistas as $contratista):
 				$dropdown[$contratista->id_cont] = $contratista->nombre;
 			endforeach;
 			if($this->uri->segment(3)) {
-				echo form_dropdown('contratistas', $dropdown, $this->uri->segment(3)); 
+				echo form_dropdown('contratistas', $dropdown, $this->uri->segment(3));
 			}
 			else {
 				echo form_dropdown('contratistas', $dropdown);
@@ -49,19 +49,24 @@
 								<?php echo anchor(site_url("consultas_controller/ficha/$ficha->id_predio"), '<img border="0" title="Consultar" src="'.base_url().'img/search.png">');?>
 								<?php if (isset($permisos['Fichas']['Actualizar'])) { ?><?php echo anchor("actualizar_controller/ficha/$ficha->id_predio", '<img src="'.base_url().'img/edit.png"', 'title="Actualizar"'); ?><?php } ?>
 								<?php if (isset($permisos['Bit&aacute;cora']['Consultar'])) { ?><a href="javascript:void(window.open('<?php echo site_url("bitacora_controller/obtener_bitacora/$ficha->ficha_predial"); ?>','bitacora','resizable=no,location=no,menubar=no, scrollbars=yes,status=no,toolbar=no,fullscreen=no, dependent=no,width=1020,height=600,left=100,top=0' ))"><img border="0" alt="Ver Bit&aacute;cora" title="Ver Bit&aacute;cora" src="<?php echo base_url(); ?>img/bitacora.png"></a><?php } ?>
-								<?php 
+								<?php
 									if (isset($permisos['Archivos y Fotos']['Consultar'])) {
 										echo anchor("archivos_controller/ver_archivos/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/archivos.png"', 'title="Subir archivos"');
 										echo anchor("archivos_controller/ver_fotos/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"');
-									} 
+									}
 								?>
 								<?php if (isset($permisos['Fichas']['Imprimir estudio de t&iacute;tulos'])) { ?><?php echo anchor("informes_controller/estudio_titulos/".$ficha->id_predio, '<img src="'.base_url().'img/doc.png"', 'title="Estudio de T&iacute;tulos"'); ?><?php } ?>
 
 								<?php echo anchor("informes_controller/gestion_predial_ani/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de la ANI"'); ?>
-								
+
 								<?php echo anchor("informes_controller/gestion_predial_fotos/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/pdf.png"', 'title="Generar registro fotográfico"'); ?>
 
-
+								<?php
+								echo '
+								<a href="http://localhost/vinus/predios/files/mapas/'.$ficha->ficha_predial.'.kml" tittle="ver mapa">
+									<img src="http://localhost/vinus/predios/img/kml.png">
+								</a>';
+								 ?>
 							</td>
 						</tr>
 					<?php endforeach; ?>
@@ -99,7 +104,7 @@
 			);
 			return false;
 		});
-		
+
 		/*$('#form select').change(function(){
 			var form_data = {
 				"contratista":$('#form select').val(),

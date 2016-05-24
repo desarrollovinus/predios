@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>UF1-09.kml</name>
+	<Schema name="UF_1" id="UF_1">
+		<SimpleField type="int" name="FID_"></SimpleField>
+		<SimpleField type="string" name="Entity"></SimpleField>
+		<SimpleField type="string" name="Layer"></SimpleField>
+		<SimpleField type="int" name="Color"></SimpleField>
+		<SimpleField type="string" name="Linetype"></SimpleField>
+		<SimpleField type="float" name="Elevation"></SimpleField>
+		<SimpleField type="int" name="LineWt"></SimpleField>
+		<SimpleField type="string" name="RefName"></SimpleField>
+		<SimpleField type="float" name="AREA2"></SimpleField>
+		<SimpleField type="string" name="Ficha"></SimpleField>
+		<SimpleField type="string" name="Numero"></SimpleField>
+		<SimpleField type="string" name="Tramo"></SimpleField>
+		<SimpleField type="string" name="Propietari"></SimpleField>
+		<SimpleField type="string" name="Cedula_NIT"></SimpleField>
+		<SimpleField type="string" name="Direccion"></SimpleField>
+		<SimpleField type="string" name="Telefono"></SimpleField>
+		<SimpleField type="int" name="Correo_E"></SimpleField>
+		<SimpleField type="string" name="Est_amb"></SimpleField>
+		<SimpleField type="string" name="Func_en_pr"></SimpleField>
+		<SimpleField type="string" name="est_en_obr"></SimpleField>
+		<SimpleField type="string" name="est_via"></SimpleField>
+		<SimpleField type="string" name="Abs_Inicia"></SimpleField>
+		<SimpleField type="string" name="Abs_I_Marg"></SimpleField>
+		<SimpleField type="string" name="Abs_Final"></SimpleField>
+		<SimpleField type="string" name="Abs_F_Marg"></SimpleField>
+		<SimpleField type="int" name="Logn_efec"></SimpleField>
+		<SimpleField type="string" name="Long_Comp_"></SimpleField>
+		<SimpleField type="string" name="Semaforo_E"></SimpleField>
+		<SimpleField type="string" name="Semaforo_I"></SimpleField>
+		<SimpleField type="string" name="Semaforo_D"></SimpleField>
+		<SimpleField type="string" name="Semafor_EX"></SimpleField>
+		<SimpleField type="string" name="Meta_cont"></SimpleField>
+		<SimpleField type="string" name="Disp_A_P"></SimpleField>
+		<SimpleField type="int" name="Area_Total"></SimpleField>
+		<SimpleField type="int" name="Area_Req"></SimpleField>
+		<SimpleField type="int" name="Area_Rem"></SimpleField>
+		<SimpleField type="string" name="Area_Sobr"></SimpleField>
+		<SimpleField type="int" name="Area_Const"></SimpleField>
+		<SimpleField type="int" name="Area_Con_1"></SimpleField>
+		<SimpleField type="string" name="Matrcula_I"></SimpleField>
+		<SimpleField type="string" name="Num_Catast"></SimpleField>
+		<SimpleField type="string" name="Escritura_"></SimpleField>
+		<SimpleField type="string" name="Escrit_Fec"></SimpleField>
+		<SimpleField type="int" name="Escrit_Not"></SimpleField>
+		<SimpleField type="string" name="Escrit_Ciu"></SimpleField>
+		<SimpleField type="string" name="EST_T_1"></SimpleField>
+		<SimpleField type="string" name="EST_T_Fech"></SimpleField>
+	</Schema>
+	<Style id="sh_ylw-pushpin8">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff00ff00</color>
+			<width>3</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>4cff55ff</color>
+			<colorMode>random</colorMode>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="msn_ylw-pushpin0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin2</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin8</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_ylw-pushpin2">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff00ff00</color>
+			<width>3</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>4cff55ff</color>
+			<colorMode>random</colorMode>
+		</PolyStyle>
+	</Style>
+	<Placemark>
+		<name>UF1-09</name>
+		<styleUrl>#msn_ylw-pushpin0</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#UF_1">
+				<SimpleData name="FID_">0</SimpleData>
+				<SimpleData name="Entity">LWPolyline</SimpleData>
+				<SimpleData name="Layer">UF1-09</SimpleData>
+				<SimpleData name="Color">40</SimpleData>
+				<SimpleData name="Linetype">Continuous</SimpleData>
+				<SimpleData name="Elevation">0.00000000000</SimpleData>
+				<SimpleData name="LineWt">60</SimpleData>
+				<SimpleData name="AREA2">580.0000000</SimpleData>
+				<SimpleData name="Ficha">UF1-09</SimpleData>
+				<SimpleData name="Tramo">PRADERA - PORCESITO</SimpleData>
+				<SimpleData name="Propietari">MARLENY HERNANDEZ DE MORENO</SimpleData>
+				<SimpleData name="Cedula_NIT">32,475,709</SimpleData>
+				<SimpleData name="Correo_E">0</SimpleData>
+				<SimpleData name="Func_en_pr">Para franja de retiro</SimpleData>
+				<SimpleData name="est_en_obr">No disponible</SimpleData>
+				<SimpleData name="est_via">Sin intervenir</SimpleData>
+				<SimpleData name="Abs_Inicia">PR 13 + 309</SimpleData>
+				<SimpleData name="Abs_I_Marg">IZQUIERDA</SimpleData>
+				<SimpleData name="Abs_Final">PR 13 + 365</SimpleData>
+				<SimpleData name="Abs_F_Marg">IZQUIERDA</SimpleData>
+				<SimpleData name="Logn_efec">56</SimpleData>
+				<SimpleData name="Long_Comp_">{Crear}</SimpleData>
+				<SimpleData name="Disp_A_P">{Crear}</SimpleData>
+				<SimpleData name="Area_Total">1480</SimpleData>
+				<SimpleData name="Area_Req">580</SimpleData>
+				<SimpleData name="Area_Rem">0</SimpleData>
+				<SimpleData name="Area_Sobr">{Verificar}</SimpleData>
+				<SimpleData name="Area_Const">0</SimpleData>
+				<SimpleData name="Area_Con_1">0</SimpleData>
+				<SimpleData name="Matrcula_I">026-17676</SimpleData>
+				<SimpleData name="Num_Catast">690-2-05-02-42</SimpleData>
+				<SimpleData name="Escritura_">231 DE 22-10</SimpleData>
+				<SimpleData name="Escrit_Fec">2004-11-12</SimpleData>
+				<SimpleData name="Escrit_Not">1</SimpleData>
+				<SimpleData name="Escrit_Ciu">SANTO DOMINGO</SimpleData>
+				<SimpleData name="EST_T_Fech">2016-03-14</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-75.25069669481863,6.518430229671431,0 -75.2506979877144,6.518307982705451,0 -75.25069965226139,6.518307083186495,0 -75.25077509365659,6.518242078860245,0 -75.25089192857629,6.517989656190926,0 -75.25089568109036,6.517987554864412,0 -75.25089317819599,6.517995840270632,0 -75.25088544795207,6.518059000969448,0 -75.25088777657955,6.51808189500384,0 -75.25088362273131,6.51815787347147,0 -75.25084670446653,6.518235406953712,0 -75.2508320058854,6.518301932955904,0 -75.25087880376782,6.518394136649225,0 -75.25092731977361,6.518502876205751,0 -75.25093527866383,6.518525698487887,0 -75.25090792854351,6.518518700627612,0 -75.25087805784798,6.518511057845571,0 -75.25082366549074,6.518464183191458,0 -75.25069669481863,6.518430229671431,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+</Document>
+</kml>
