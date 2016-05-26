@@ -62,10 +62,12 @@
 								<?php echo anchor("informes_controller/gestion_predial_fotos/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/pdf.png"', 'title="Generar registro fotográfico"'); ?>
 
 								<?php
-								echo '
-								<a href="http://localhost/vinus/predios/files/mapas/'.$ficha->ficha_predial.'.kml" tittle="ver mapa">
+								if (file_exists('./files/mapas/'.$ficha->ficha_predial.'.kml')) {
+									echo '
+									<a href="http://localhost/vinus/predios/files/mapas/'.$ficha->ficha_predial.'.kml" tittle="ver mapa">
 									<img src="http://localhost/vinus/predios/img/kml.png">
-								</a>';
+									</a>';
+								}
 								 ?>
 							</td>
 						</tr>
