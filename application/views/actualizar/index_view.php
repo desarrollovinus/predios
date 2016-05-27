@@ -12,20 +12,6 @@
 		<?php if (isset($permisos['Fichas']['Imprimir estudio de t&iacute;tulos'])) { ?><img src="<?php echo base_url(); ?>img/doc.png" title="Estudio de T&iacute;tulos" >: Descargar el Estudio de T&iacute;tulos<?php } ?>
 
 		<br><br>
-
-		<?php
-			/*echo form_label('Contratista', 'contratistas');
-			$dropdown = array('' => '');
-			foreach ($contratistas as $contratista):
-				$dropdown[$contratista->id_cont] = $contratista->nombre;
-			endforeach;
-			if($this->uri->segment(3)) {
-				echo form_dropdown('contratistas', $dropdown, $this->uri->segment(3));
-			}
-			else {
-				echo form_dropdown('contratistas', $dropdown);
-			}*/
-		?>
 		<?php echo form_hidden('posicion_tabla'); ?>
 		<div id="tabla">
 			<table style="width:100%; font-size: 13px">
@@ -103,47 +89,5 @@
 			);
 			return false;
 		});
-
-		/*$('#form select').change(function(){
-			var form_data = {
-				"contratista":$('#form select').val(),
-				"<?php echo $this->security->get_csrf_token_name(); ?>":"<?php echo $this->security->get_csrf_hash(); ?>"
-			};
-			$.ajax({
-				type: "POST",
-				url: "<?php echo site_url('actualizar_controller/fichas_contratista'); ?>",
-				data: form_data,
-				dataType: "json",
-				success: function(msg) {
-					var tabla = "<div id='tabla'><table width='100%'><thead><tr><th>Ficha predial</th><th>Primer propietario</th><th>Usuario</th><th></th></tr></thead><tbody>";
-					for(var i = 0; i < msg.length; i++){
-						tabla += "<tr>";
-						// tabla += "<td>" + msg[i].fecha + "</td>";
-						tabla += "<td>" + msg[i].ficha + "</td>";
-						tabla += "<td>" + msg[i].propietario + "</td>";
-						tabla += "<td>" + msg[i].usuario + "</td>";
-						tabla += "<td width='260px'>";
-						tabla += '<a href="http://www.hatovial.com/vinus/index.php/consultas_controller/ficha/' + msg[i].predio + '"><img border="0" title="Consultar" src="http://www.hatovial.com/vinus/img/search.png"></a>';
-						<?php if (isset($permisos['Fichas']['Actualizar'])) { ?>tabla += '<a href="http://www.hatovial.com/vinus/index.php/actualizar_controller/ficha/' + msg[i].predio + '" title="Actualizar"><img src="http://www.hatovial.com/vinus/img/edit.png"</a>'; <?php } ?>
-						<?php if (isset($permisos['Bit&aacute;cora']['Consultar'])) { ?>tabla += '<a href="javascript:void(window.open(\'<?php echo site_url("bitacora_controller/obtener_bitacora"); ?>/' + msg[i].ficha + '\',\'bitacora\',\'resizable=no,location=no,menubar=no, scrollbars=yes,status=no,toolbar=no,fullscreen=no, dependent=no,width=1020,height=600,left=100,top=0\' ))"><img border="0" alt="Ver Bit&aacute;cora" title="Ver Bit&aacute;cora" src="<?php echo base_url(); ?>img/bitacora.png"></a>';<?php } ?>
-						<?php if (isset($permisos['Archivos y Fotos']['Consultar'])) { ?>
-							tabla += '<a href="http://www.hatovial.com/vinus/index.php/archivos_controller/ver_archivos/' + msg[i].ficha + '" title="Subir archivos"><img src="http://www.hatovial.com/vinus/img/archivos.png"</a>';
-							tabla += '<a href="http://www.hatovial.com/vinus/index.php/archivos_controller/ver_fotos/' + msg[i].ficha + '" title="Subir fotos"><img src="http://www.hatovial.com/vinus/img/camara.png"</a>';
-						<?php } ?>
-						<?php if (isset($permisos['Informes']['Ver'])) { ?>tabla += '<a href="http://www.hatovial.com/vinus/index.php/informes_controller/estudio_titulos/' + msg[i].predio + '" title="Estudio de T&iacute;tulos"><img src="http://www.hatovial.com/vinus/img/doc.png"</a>';<?php } ?>
-						tabla += '<a href="http://www.hatovial.com/vinus/index.php/informes_controller/gestion_predial_ani/' + msg[i].ficha + '" title="Formato de la ANI"><img src="http://www.hatovial.com/vinus/img/excel.png"</a>';
-						tabla += "</td>";
-						tabla += "</tr>";
-					}
-					tabla += "</tbody></table></div>";
-					$('#tabla').remove();
-					$('#form input[name=posicion_tabla]').after(tabla);
-					$('#form table').dataTable({
-						"bJQueryUI": true,
-						"sPaginationType": "full_numbers"
-					});
-				}
-			});
-		});*/
 	});
 </script>
