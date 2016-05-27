@@ -34,18 +34,15 @@
 						<!-- <th>Fecha de creaci&oacute;n</th> -->
 						<th>Ficha predial</th>
 						<th>Primer propietario</th>
-						<th>Creador</th>
-						<th></th>
+						<th>Opciones</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php foreach ($fichas as $ficha): ?>
 						<tr>
-							<!-- <td><?php // echo $ficha->fecha_hora; ?></td> -->
 							<td><?php echo $ficha->ficha_predial; ?></td>
 							<td><?php echo $ficha->propietario; ?></td>
-							<td><?php echo $ficha->us_nombre.' '.$ficha->us_apellido; ?></td>
-							<td width="300px">
+							<td width="550px">
 								<?php echo anchor(site_url("consultas_controller/ficha/$ficha->id_predio"), '<img border="0" title="Consultar" src="'.base_url().'img/search.png">');?>
 								<?php if (isset($permisos['Fichas']['Actualizar'])) { ?><?php echo anchor("actualizar_controller/ficha/$ficha->id_predio", '<img src="'.base_url().'img/edit.png"', 'title="Actualizar"'); ?><?php } ?>
 								<?php if (isset($permisos['Bit&aacute;cora']['Consultar'])) { ?><a href="javascript:void(window.open('<?php echo site_url("bitacora_controller/obtener_bitacora/$ficha->ficha_predial"); ?>','bitacora','resizable=no,location=no,menubar=no, scrollbars=yes,status=no,toolbar=no,fullscreen=no, dependent=no,width=1020,height=600,left=100,top=0' ))"><img border="0" alt="Ver Bit&aacute;cora" title="Ver Bit&aacute;cora" src="<?php echo base_url(); ?>img/bitacora.png"></a><?php } ?>
@@ -64,8 +61,8 @@
 								<?php
 								if (file_exists('./files/mapas/'.$ficha->ficha_predial.'.kml')) {
 									echo '
-									<a href="http://localhost/vinus/predios/files/mapas/'.$ficha->ficha_predial.'.kml" tittle="ver mapa">
-									<img src="http://localhost/vinus/predios/img/kml.png">
+									<a href="'.base_url().'files/mapas/'.$ficha->ficha_predial.'.kml" tittle="ver mapa">
+									<img src="'.base_url().'img/kml.png">
 									</a>';
 								}
 								 ?>
