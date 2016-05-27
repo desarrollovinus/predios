@@ -12,20 +12,6 @@
 		<?php if (isset($permisos['Fichas']['Imprimir estudio de t&iacute;tulos'])) { ?><img src="<?php echo base_url(); ?>img/doc.png" title="Estudio de T&iacute;tulos" >: Descargar el Estudio de T&iacute;tulos<?php } ?>
 
 		<br><br>
-
-		<?php
-			/*echo form_label('Contratista', 'contratistas');
-			$dropdown = array('' => '');
-			foreach ($contratistas as $contratista):
-				$dropdown[$contratista->id_cont] = $contratista->nombre;
-			endforeach;
-			if($this->uri->segment(3)) {
-				echo form_dropdown('contratistas', $dropdown, $this->uri->segment(3));
-			}
-			else {
-				echo form_dropdown('contratistas', $dropdown);
-			}*/
-		?>
 		<?php echo form_hidden('posicion_tabla'); ?>
 		<div id="tabla">
 			<table style="width:100%; font-size: 13px">

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>UF2-17.kml</name>
+	<Schema name="UF_2" id="UF_2">
+		<SimpleField type="int" name="FID_"></SimpleField>
+		<SimpleField type="string" name="Entity"></SimpleField>
+		<SimpleField type="string" name="Layer"></SimpleField>
+		<SimpleField type="int" name="Color"></SimpleField>
+		<SimpleField type="string" name="Linetype"></SimpleField>
+		<SimpleField type="float" name="Elevation"></SimpleField>
+		<SimpleField type="int" name="LineWt"></SimpleField>
+		<SimpleField type="string" name="RefName"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Numero"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Tramo"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Propietario"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Cedula_NIT"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Direccion"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Telefono"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Correo_E"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Est_amb"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Func_en_proy"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_est_en_obra"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_est_via"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Abs_Inicial"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Abs_I_Margen"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Abs_Final"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Abs_F_Margen"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Logn_efec"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Long_Comp_obra"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Semaforo_EXI"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Semaforo_IZ"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Semaforo_DER"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Semafor_EXD"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Meta_cont"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Disp_A_P"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Area_Total"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Area_Req"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Area_Rem"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Area_Sobr"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Area_Const_P"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Area_Const_R"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Matr�cula_I"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Num_Catast"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Escritura_P"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Escrit_Fecha"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Escrit_Notaria"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_Escrit_Ciudad"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_EST_T_1"></SimpleField>
+		<SimpleField type="string" name="Sábana predial EXP_EST_T_Fecha"></SimpleField>
+	</Schema>
+	<Placemark>
+		<Style>
+			<LineStyle>
+				<color>ff0000ff</color>
+			</LineStyle>
+			<PolyStyle>
+				<fill>0</fill>
+			</PolyStyle>
+		</Style>
+		<ExtendedData>
+			<SchemaData schemaUrl="#UF_2">
+				<SimpleData name="FID_">0</SimpleData>
+				<SimpleData name="Entity">LWPolyline</SimpleData>
+				<SimpleData name="Layer">UF2-17</SimpleData>
+				<SimpleData name="Color">32</SimpleData>
+				<SimpleData name="Linetype">Continuous</SimpleData>
+				<SimpleData name="Elevation">0.00000000000</SimpleData>
+				<SimpleData name="LineWt">60</SimpleData>
+				<SimpleData name="Sábana predial EXP_Numero"></SimpleData>
+				<SimpleData name="Sábana predial EXP_Tramo">PORCESITO - SANTIAGO</SimpleData>
+				<SimpleData name="Sábana predial EXP_Propietario">CLAUDIA MARIA FRANCO PELAEZ</SimpleData>
+				<SimpleData name="Sábana predial EXP_Cedula_NIT">42,897,938</SimpleData>
+				<SimpleData name="Sábana predial EXP_Direccion"></SimpleData>
+				<SimpleData name="Sábana predial EXP_Telefono"></SimpleData>
+				<SimpleData name="Sábana predial EXP_Correo_E"></SimpleData>
+				<SimpleData name="Sábana predial EXP_Est_amb"></SimpleData>
+				<SimpleData name="Sábana predial EXP_Func_en_proy">Para franja de retiro</SimpleData>
+				<SimpleData name="Sábana predial EXP_est_en_obra">No disponible</SimpleData>
+				<SimpleData name="Sábana predial EXP_est_via">Sin intervenir</SimpleData>
+				<SimpleData name="Sábana predial EXP_Abs_Inicial">PR 25 + 404</SimpleData>
+				<SimpleData name="Sábana predial EXP_Abs_I_Margen">IZQUIERDA</SimpleData>
+				<SimpleData name="Sábana predial EXP_Abs_Final">PR 25 + 509</SimpleData>
+				<SimpleData name="Sábana predial EXP_Abs_F_Margen">IZQUIERDA</SimpleData>
+				<SimpleData name="Sábana predial EXP_Logn_efec">105</SimpleData>
+				<SimpleData name="Sábana predial EXP_Long_Comp_obra">{Crear}</SimpleData>
+				<SimpleData name="Sábana predial EXP_Semaforo_EXI"></SimpleData>
+				<SimpleData name="Sábana predial EXP_Semaforo_IZ"></SimpleData>
+				<SimpleData name="Sábana predial EXP_Semaforo_DER"></SimpleData>
+				<SimpleData name="Sábana predial EXP_Semafor_EXD"></SimpleData>
+				<SimpleData name="Sábana predial EXP_Meta_cont"></SimpleData>
+				<SimpleData name="Sábana predial EXP_Disp_A_P">{Crear}</SimpleData>
+				<SimpleData name="Sábana predial EXP_Area_Total">40,993</SimpleData>
+				<SimpleData name="Sábana predial EXP_Area_Req">8,808</SimpleData>
+				<SimpleData name="Sábana predial EXP_Area_Rem">0</SimpleData>
+				<SimpleData name="Sábana predial EXP_Area_Sobr">{Verificar}</SimpleData>
+				<SimpleData name="Sábana predial EXP_Area_Const_P">0</SimpleData>
+				<SimpleData name="Sábana predial EXP_Area_Const_R">0</SimpleData>
+				<SimpleData name="Sábana predial EXP_Matr�cula_I">026-14067</SimpleData>
+				<SimpleData name="Sábana predial EXP_Num_Catast">690-2-02-01-109</SimpleData>
+				<SimpleData name="Sábana predial EXP_Escritura_P">282</SimpleData>
+				<SimpleData name="Sábana predial EXP_Escrit_Fecha">2001-02-20</SimpleData>
+				<SimpleData name="Sábana predial EXP_Escrit_Notaria">17</SimpleData>
+				<SimpleData name="Sábana predial EXP_Escrit_Ciudad">MEDELLIN</SimpleData>
+				<SimpleData name="Sábana predial EXP_EST_T_1"></SimpleData>
+				<SimpleData name="Sábana predial EXP_EST_T_Fecha">0000-00-00</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<gx:balloonVisibility>1</gx:balloonVisibility>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-75.16527736739711,6.545565503778949,0 -75.16527736739711,6.545565503778946,0 -75.16526008733581,6.545556427288044,0 -75.16501478592625,6.545508654492563,0 -75.16501794938812,6.545317428960272,0 -75.16502964959743,6.545181813273564,0 -75.16505660105098,6.544958877343639,0 -75.16506060415158,6.544925764654546,0 -75.16519474028046,6.544924094433527,0 -75.16532887078552,6.5449261673605,0 -75.16535802072556,6.544884836546832,0 -75.16539089241661,6.544846400045073,0 -75.16543913335319,6.54478950034691,0 -75.16550806220113,6.544848090244044,0 -75.16545677880137,6.54490830294602,0 -75.16543719079034,6.544930576331372,0 -75.16559877032891,6.544941710816799,0 -75.16575988319296,6.544958281732397,0 -75.16592034655831,6.544980270273305,0 -75.16607997833781,6.545007651486963,0 -75.1660799562938,6.545007647323347,0 -75.16634757473925,6.545058182861101,0 -75.16634411925845,6.54508864501529,0 -75.16633550546396,6.545164580821886,0 -75.16633435777543,6.545255971767567,0 -75.16628176693318,6.545603427743347,0 -75.16624477762912,6.545595703952278,0 -75.16623128379673,6.545593299877689,0 -75.16618826050087,6.545587273153426,0 -75.16614410588723,6.545582787024003,0 -75.1660988545617,6.545577934217201,0 -75.16607857150245,6.545575359421778,0 -75.16605917135942,6.545574639293202,0 -75.16601205166965,6.545575982287506,0 -75.16598070846115,6.545572487052294,0 -75.16592316204762,6.545609459739854,0 -75.16586140678372,6.545580987037517,0 -75.165832725236,6.545571074876673,0 -75.16580720050494,6.545575684853493,0 -75.16575468998231,6.545607090684817,0 -75.1656952670951,6.545603731704972,0 -75.16563908215575,6.545593693260471,0 -75.16563743421244,6.545592350971659,0 -75.16561004448987,6.545588680841097,0 -75.16556792162298,6.545581782618246,0 -75.1655270441359,6.545575614153845,0 -75.16548835205202,6.545570668667724,0 -75.16546330176786,6.545570167923979,0 -75.16544932441549,6.545570035776149,0 -75.16540663196449,6.545569333674886,0 -75.16536442511981,6.545567324030179,0 -75.16532297652796,6.545566170319626,0 -75.16528104377953,6.545565532009774,0 -75.16527736739711,6.545565503778949,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+</Document>
+</kml>
