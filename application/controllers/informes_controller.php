@@ -432,6 +432,17 @@ class Informes_controller extends CI_Controller
 		$this->load->view('informes/gestion_predial/formato_ani_excel');
 	}
 
+	function ficha_social_general(){
+		$this->load->model(array('PrediosDAO', 'Gestion_socialDAO'));
+
+		// Se recibe por post la variable que define si es un registro nuevo o editado
+        $this->data["ficha"] = $this->uri->segment(3);
+		$this->data['predio'] = $this->PrediosDAO->obtener_predio($this->uri->segment(3));
+		$this->data['ficha_social'] = $this->Gestion_socialDAO->cargar_ficha($this->uri->segment(3));
+		// $this->data['valores_fichas'] = $this->Gestion_socialDAO->cargar_valores_ficha_social($this->uri->segment(4), 0);
+		$this->load->view('informes/fichas_sociales/caracterizacion_general', $this->data);
+	}
+
 	function gestion_predial_fotos(){
 		$ficha = $this->uri->segment(3);
 		
