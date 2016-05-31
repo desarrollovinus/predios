@@ -21,6 +21,8 @@
 						<a onclick="javascript:editar('<?php echo $ficha->id_predio; ?>', '<?php echo $ficha->ficha_predial; ?>')" style="cursor: pointer">
 							<img src="<?php echo base_url(); ?>img/edit.png" title="Editar información">
 						</a>
+
+						<?php echo anchor("informes_controller/ficha_social_general/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización general"'); ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>
