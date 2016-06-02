@@ -2,6 +2,11 @@
 //Se crea un nuevo objeto PHPExcel
 $objPHPExcel = new PHPExcel();
 
+$valores_f = array();
+
+foreach ($valores_fichas as $valor_ficha) {
+	array_push($valores_f, $valor_ficha->id_valor_social);
+}
 //Se establece la configuracion general
 $objPHPExcel->getProperties()
 	->setCreator("Luis David Moreno - Concesión Vías del Nus - Vinus")
@@ -129,6 +134,7 @@ $hoja->mergeCells('E14:F14');
 $hoja->mergeCells('G14:H14');
 $hoja->mergeCells('I14:J14');
 $hoja->mergeCells('K14:L14');
+$hoja->mergeCells('M14:N14');
 
 $hoja->mergeCells('A15:L15');
 
@@ -202,30 +208,96 @@ $hoja->setCellValue('M3', '31/5/2016');
 $hoja->setCellValue('A5', '1. DATOS GENERALES');
 
 $hoja->setCellValue('A6', 'Proyecto:');
+$hoja->setCellValue('C6', 'Vias del Nus');
 $hoja->setCellValue('F6', 'Ficha predial:');
 $hoja->setCellValue('H6', $ficha);
 $hoja->setCellValue('J6', 'Tramo:');
+$hoja->setCellValue('K6', $predio->tramo);
 
 $hoja->setCellValue('A7', 'Municipio:');
+$hoja->setCellValue('C7', $predio->municipio);
 $hoja->setCellValue('F7', 'Vereda / Barrio:');
+$hoja->setCellValue('H7', $predio->barrio);
 $hoja->setCellValue('J7', 'Dirección:');
+$hoja->setCellValue('K7', $predio->direccion);
 
 $hoja->setCellValue('A8', 'Propietario:');
+$hoja->setCellValue('D8', $predio->nombre_propietario);
 
 $hoja->setCellValue('A9', 'Datos de contacto:');
+$hoja->setCellValue('D9', $predio->direccion_propietario." / ".$predio->telefono_propietario." / ".$predio->email_propietario);
 
 $hoja->setCellValue('A11', '2. CARACTERISTCAS DEL INMUEBLE');
 
 $hoja->setCellValue('A12', 'Requerimiento del terreno por el proyecto:');
+$hoja->setCellValue('F12', 'TOTAL ___');
+$hoja->setCellValue('H12', 'PARCIAL ___');
+
+if ($ficha_social->requerimiento_terreno == "1") {
+	$hoja->setCellValue('H12', 'PARCIAL _X_');
+} else if ($ficha_social->requerimiento_terreno == "2") {
+	$hoja->setCellValue('F12', 'TOTAL _X_');
+}
+
 $hoja->setCellValue('J12', '¿Se requieren edificaciones?');
+$hoja->setCellValue('M12', 'SI ___');
+$hoja->setCellValue('N12', 'NO ___');
+
+if ($ficha_social->requerimiento_edificaciones) {
+	$hoja->setCellValue('M12', 'SI _X_');
+} else {
+	$hoja->setCellValue('N12', 'NO _X_');
+}
 
 $hoja->setCellValue('A13', '¿El valor del área a adquirir es inferior a 3 SLMMV?');
+$hoja->setCellValue('H13', 'SI ___');
+$hoja->setCellValue('I13', 'NO ___');
+
+if ($ficha_social->area_adquirir) {
+	$hoja->setCellValue('H13', 'SI _X_');
+} else {
+	$hoja->setCellValue('I13', 'NO _X_');
+}
+
 $hoja->setCellValue('J13', 'Usos actuales del inmueble:');
 
+$col = "A";
+foreach ($this->Gestion_socialDAO->cargar_valores_ficha(1) as $valor1) {
+	if(in_array($valor1->id, $valores_f)) {$check = "X";} else {$check = "_";}
+		$hoja->setCellValue("{$col}14", $valor1->nombre."_".$check."_");
+		$col++;
+		$col++;
+}
+
 $hoja->setCellValue('A15', '¿En el área no requerida se puede restablecer el uso actual(en caso de requerimiento parcial)?:');
+$hoja->setCellValue('M15', 'SI ___');
+$hoja->setCellValue('N15', 'NO ___');
+if ($ficha_social->restablecer_uso_area_no_requerida) {
+	$hoja->setCellValue('M15', 'SI _X_');
+} else {
+	$hoja->setCellValue('N15', 'NO _X_');
+}
 
 $hoja->setCellValue('A16', '¿Existe vivienda en el inmueble?');
+$hoja->setCellValue('E16', 'SI ___');
+$hoja->setCellValue('F16', 'NO ___');
+
+if ($ficha_social->existe_vivienda) {
+	$hoja->setCellValue('E16', 'SI _X_');
+} else {
+	$hoja->setCellValue('F16', 'NO _X_');
+}
+
 $hoja->setCellValue('G16', '¿La vivienda se encuentra habitada?');
+$hoja->setCellValue('M16', 'SI ___');
+$hoja->setCellValue('N16', 'NO ___');
+
+if ($ficha_social->vivienda_habitada) {
+	$hoja->setCellValue('M16', 'SI _X_');
+} else {
+	$hoja->setCellValue('M16', 'SI _X_');
+}
+
 
 $hoja->setCellValue('A17','¿La vivienda se requiere para el proyecto?');
 $hoja->setCellValue('J17', 'Condiciones actuales del inmueble:');
