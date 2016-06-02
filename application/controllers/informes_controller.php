@@ -495,6 +495,12 @@ class Informes_controller extends CI_Controller
 		$this->load->view('informes/gestion_predial/excel');
 	}
 
+	function gestion_procesos_excel(){
+		$this->load->model('PrediosDAO');
+
+		$this->load->view('informes/gestion_predial/procesos_excel');
+	}
+	
 	function filtrar_caracteres($html) {
 		/*$html = str_replace("Ã", "&Ntilde;", $html);*/
 		$html = str_replace("Ã", "&Oacute;", $html);

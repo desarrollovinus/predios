@@ -20,6 +20,7 @@
 						<!-- <th>Fecha de creaci&oacute;n</th> -->
 						<th>Ficha predial</th>
 						<th>Primer propietario</th>
+						<th>¿Requerido?</th>
 						<th>Opciones</th>
 					</tr>
 				</thead>
@@ -28,6 +29,7 @@
 						<tr>
 							<td><?php echo $ficha->ficha_predial; ?></td>
 							<td><?php echo $ficha->propietario; ?></td>
+							<td><?php echo $ficha->requerido; ?></td>
 							<td width="550px">
 								<?php echo anchor(site_url("consultas_controller/ficha/$ficha->id_predio"), '<img border="0" title="Consultar" src="'.base_url().'img/search.png">');?>
 								<?php if (isset($permisos['Fichas']['Actualizar'])) { ?><?php echo anchor("actualizar_controller/ficha/$ficha->id_predio", '<img src="'.base_url().'img/edit.png"', 'title="Actualizar"'); ?><?php } ?>
