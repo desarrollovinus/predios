@@ -153,45 +153,6 @@ $hoja->mergeCells('F20:H20');
 $hoja->mergeCells('I20:K20');
 $hoja->mergeCells('L20:N20');
 
-$hoja->mergeCells('A21:B21');
-$hoja->mergeCells('F21:G21');
-$hoja->mergeCells('I21:J21');
-$hoja->mergeCells('L21:M21');
-
-$hoja->mergeCells('A23:L23');
-
-$hoja->mergeCells('A24:B24');
-$hoja->mergeCells('C24:N24');
-
-$hoja->mergeCells('A26:N26');
-
-$hoja->mergeCells('A27:E27');
-$hoja->mergeCells('H27:I27');
-$hoja->mergeCells('K27:N27');
-
-$hoja->mergeCells('B28:C28');
-$hoja->mergeCells('D28:E28');
-$hoja->mergeCells('F28:H28');
-$hoja->mergeCells('I28:J28');
-$hoja->mergeCells('K28:N28');
-
-$hoja->mergeCells('B29:C29');
-$hoja->mergeCells('D29:E29');
-$hoja->mergeCells('F29:H29');
-$hoja->mergeCells('I29:J29');
-$hoja->mergeCells('K29:N29');
-
-$hoja->mergeCells('A31:N31');
-
-$hoja->mergeCells('A32:N32');
-
-$hoja->mergeCells('A34:D34');
-$hoja->mergeCells('E34:N34');
-
-$hoja->mergeCells('A35:D36');
-$hoja->mergeCells('E35:I35');
-$hoja->mergeCells('J35:N35');
-
 //Encabezados
 $hoja->setCellValue('D1', 'CONCESIÓN VÍAS DEL NUS - VINUS');
 $hoja->setCellValue('D2', 'FICHA SOCIAL - FORMATO DE CARACTERIZACIÓN GENERAL DE INMUEBLE');
@@ -300,37 +261,171 @@ if ($ficha_social->vivienda_habitada) {
 
 
 $hoja->setCellValue('A17','¿La vivienda se requiere para el proyecto?');
+$hoja->setCellValue('F17','SI ___');
+$hoja->setCellValue('G17','NO ___');
+$hoja->setCellValue('H17','PARCIAL ___');
+
+switch ($ficha_social->requerida_proyecto) {
+	case '0':
+		$hoja->setCellValue('G17','NO _X_');
+		break;
+
+	case '1':
+		$hoja->setCellValue('F17','SI _X_');
+		break;
+
+	case '2':
+		$hoja->setCellValue('H17','PARCIAL _X_');
+		break;
+}
+
 $hoja->setCellValue('J17', 'Condiciones actuales del inmueble:');
 
 $hoja->setCellValue('A19', 'Servicios básicos');
-$hoja->setCellValue('D19', 'Distribucion por numero de:');
-$hoja->setCellValue('F19', 'Material predominante');
+$hoja->setCellValue("D19", 'Distribucion por numero de:');
+$hoja->setCellValue("F19", 'Material predominante');
 
-$hoja->setCellValue('F20', 'Paredes');
-$hoja->setCellValue('I20', 'Pisos');
-$hoja->setCellValue('L20', 'Techo');
+$hoja->setCellValue("F20", 'Paredes');
+$hoja->setCellValue("I20", 'Pisos');
+$hoja->setCellValue("L20", 'Techo');
 
-$hoja->setCellValue('A23', '¿Existen edificaciones con infraesructura mínima para el desarrollo de actividades productivas?');
+$fila = 21;
+foreach ($this->Gestion_socialDAO->cargar_valores_ficha(2) as $valor2) {
+	if(in_array($valor1->id, $valores_f)) {$check = "X";} else {$check = "";}
+		$hoja->setCellValue("A{$fila}", $valor2->nombre);
+		$hoja->setCellValue("C{$fila}", $check);
+		$hoja->mergeCells("A{$fila}:B{$fila}");
+		$hoja->mergeCells("F{$fila}:G{$fila}");
+		$hoja->mergeCells("I{$fila}:J{$fila}");
+		$hoja->mergeCells("L{$fila}:M{$fila}");
+		$objPHPExcel->getActiveSheet()->insertNewRowBefore($fila + 1, 1);
+		$fila++;
+}
 
-$hoja->setCellValue('A24', '¿Cuáles?');
+// Distribucion por numero de:
+$fila = 21;
+$hoja->setCellValue("D{$fila}", "Alcobas");
+$hoja->setCellValue("E{$fila}", $ficha_social->distribucion_alcobas);
+$fila++;
 
-$hoja->setCellValue('A26', '3. UNIDADES SOCIALES IDENTIFICADAS');
+$hoja->setCellValue("D{$fila}", "Cocinas");
+$hoja->setCellValue("E{$fila}", $ficha_social->distribucion_cocinas);
+$fila++;
 
-$hoja->setCellValue('A27', '¿Existen unidades sociales identificadas?');
-$hoja->setCellValue('H27', '¿Cuantas?');
-$hoja->setCellValue('K27', 'Identificación:');
+$hoja->setCellValue("D{$fila}", "Salas");
+$hoja->setCellValue("E{$fila}", $ficha_social->distribucion_sala);
+$fila++;
 
-$hoja->setCellValue('A28', 'Nro');
-$hoja->setCellValue('B28', 'Categoría');
-$hoja->setCellValue('D28', 'Relacion con el inmueble');
-$hoja->setCellValue('F28', 'Responsable unidad social');
-$hoja->setCellValue('I28', 'Numero de integrantes');
-$hoja->setCellValue('K28', 'Firma del responsable de la unidada social');
+$hoja->setCellValue("D{$fila}", "Comedor");
+$hoja->setCellValue("E{$fila}", $ficha_social->distribucion_comedor);
+$fila++;
 
-$hoja->setCellValue('A31', '4. OBSERVACIONES');
+//Paredes
+$fila = 21;
+foreach ($this->Gestion_socialDAO->cargar_valores_ficha(4) as $valor4) {
+	if(in_array($valor4->id, $valores_f)) {$check = "X";} else {$check = "";}
+	$hoja->setCellValue("F{$fila}", $valor4->nombre);
+	$hoja->setCellValue("H{$fila}", $check);
+	$fila++;
+}
 
-$hoja->setCellValue('A34', 'Fecha de levantamiento de la información');
-$hoja->setCellValue('E34', 'El profesional social certifica que en la fecha se levantó la inforacion contenida en el presente documento');
+//Pisos
+$fila = 21;
+foreach ($this->Gestion_socialDAO->cargar_valores_ficha(5) as $valor5) {
+	if(in_array($valor5->id, $valores_f)) {$check = "X";} else {$check = "";}
+	$hoja->setCellValue("I{$fila}", $valor5->nombre);
+	$hoja->setCellValue("K{$fila}", $check);
+	$fila++;
+}
+
+//Techo
+$fila = 21;
+foreach ($this->Gestion_socialDAO->cargar_valores_ficha(6) as $valor6) {
+	if(in_array($valor6->id, $valores_f)) {$check = "X";} else {$check = "";}
+	$hoja->setCellValue("L{$fila}", $valor6->nombre);
+	$hoja->setCellValue("N{$fila}", $check);
+	$fila++;
+}
+
+$hoja->mergeCells("A{$fila}:N{$fila}");
+$fila++;
+
+$hoja->mergeCells("A{$fila}:L{$fila}");
+$hoja->setCellValue("A{$fila}", "¿Existen edificaciones con infraesructura mínima para el desarrollo de actividades productivas?");
+$hoja->setCellValue("M{$fila}", "SI ___");
+$hoja->setCellValue("N{$fila}", "NO ___");
+if ($ficha_social->edificaciones_unidades_productivas) {
+	$hoja->setCellValue("M{$fila}", "SI _X_");
+} else {
+	$hoja->setCellValue("N{$fila}", "NO _X_");
+}
+$fila++;
+
+$hoja->mergeCells("C{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", "¿Cuáles?");
+$hoja->setCellValue("C{$fila}", $ficha_social->edificaciones_unidades_productivas_descripcion);
+$fila++;
+
+$hoja->mergeCells("A{$fila}:N{$fila}");
+$fila++;
+
+$hoja->mergeCells("A{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", "3. UNIDADES SOCIALES IDENTIFICADAS");
+$fila++;
+
+$hoja->mergeCells("A{$fila}:E{$fila}");
+$hoja->mergeCells("H{$fila}:J{$fila}");
+$hoja->mergeCells("k{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", "¿Existen unidades sociales identificadas?");
+$hoja->setCellValue("F{$fila}", "SI ___");
+$hoja->setCellValue("G{$fila}", "NO ___");
+$hoja->setCellValue("H{$fila}", "¿Cuantas?");
+$hoja->setCellValue("K{$fila}", "Identificación:");
+$fila++;
+
+$hoja->mergeCells("B{$fila}:C{$fila}");
+$hoja->mergeCells("D{$fila}:E{$fila}");
+$hoja->mergeCells("F{$fila}:H{$fila}");
+$hoja->mergeCells("I{$fila}:J{$fila}");
+$hoja->mergeCells("K{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", "Nro");
+$hoja->setCellValue("B{$fila}", "Categoría");
+$hoja->setCellValue("D{$fila}", "Relacion con el inmueble");
+$hoja->setCellValue("F{$fila}", "Responsable unidad social");
+$hoja->setCellValue("I{$fila}", "Numero de integrantes");
+$hoja->setCellValue("K{$fila}", "Firma del responsable de la unidada social");
+$fila++;
+
+$hoja->mergeCells("A{$fila}:N{$fila}");
+$fila++;
+
+$hoja->mergeCells("A{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", "4. OBSERVACIONES");
+$fila++;
+
+$hoja->mergeCells("A{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", $ficha_social->observaciones);
+$fila++;
+
+$hoja->mergeCells("A{$fila}:N{$fila}");
+$fila++;
+
+$hoja->mergeCells("A{$fila}:D{$fila}");
+$hoja->mergeCells("E{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", "Fecha de levantamiento de la información");
+$hoja->setCellValue("E{$fila}", "El profesional social certifica que en la fecha se levantó la inforacion contenida en el presente documento");
+$fila++;
+
+$fila2 = $fila + 1;
+$hoja->mergeCells("A{$fila}:D{$fila2}");
+$hoja->mergeCells("E{$fila}:I{$fila}");
+$hoja->mergeCells("J{$fila}:N{$fila}");
+$hoja->setCellValue("E{$fila}", "Nombre / Cargo");
+$hoja->setCellValue("J{$fila}", "Firma / CC");
+$fila++;
+
+$hoja->mergeCells("E{$fila}:I{$fila}");
+$hoja->mergeCells("J{$fila}:N{$fila}");
 
 //Tamaño de celdas
 // $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(6);
