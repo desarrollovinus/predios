@@ -125,8 +125,12 @@ class Actualizar_controller extends CI_Controller {
 
 		//se lee la ficha predial
 		$ficha_predial = $this->input->post('ficha');
+
 		//se carga el modelo PrediosDAO
 		$this->load->model('PrediosDAO');
+
+		//se actualiza el predio si está o no requerido
+		$this->PrediosDAO->actualizar_predio($ficha_predial, $this->input->post('requerido'));
 		
 		//se prepara la identificacion del predio
 		$identificacion = array(

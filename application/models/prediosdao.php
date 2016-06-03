@@ -661,6 +661,11 @@ class PrediosDAO extends CI_Model
 		return $resultado;
 	}
 
+	function actualizar_predio($ficha_predial, $estado) {
+		$this->db->where('ficha_predial', $ficha_predial);
+		$this->db->update('tbl_predio', array("requerido" => $estado));
+	}
+
 	function actualizar_predio_requerido($ficha_predial, $datos) {
 		$this->db->where('ficha_predial', $ficha_predial);
 		$this->db->update('tbl_predio_req', $datos);
