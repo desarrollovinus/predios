@@ -25,25 +25,39 @@
 		<!-- seccion 1 -->
 		<h3><a href="#seccion1">PREDIO REQUERIDO</a></h3>
 		<div>
-			<?php echo form_fieldset('<b>&Aacute;REAS</b>'); ?>
+			<?php echo form_fieldset('<b>&Aacute;REAS TOTALES</b>'); ?>
 			<table style="text-align:'left'">
 				<tbody>
 					<tr>
-						<td width="20%"><?php echo form_label('&Aacute;rea Total','area_total'); ?></td>
+						<td width="20%"><?php echo form_label('Plano','area_total'); ?></td>
 						<td width="30%"><?php echo form_input('area_total', utf8_decode($descripcion->area_total)); ?>m&sup2;</td>
-						<td width="20%"><?php echo form_label('&Aacute;rea Requerida','area_requerida'); ?></td>
-						<td width="30%"><?php echo form_input('area_requerida', utf8_decode($descripcion->area_requerida)); ?>m&sup2;</td>
+						<td width="20%"><?php echo form_label('Catastral','area_total_catastral'); ?></td>
+						<td width="30%"><?php echo form_input('area_total_catastral', utf8_decode($descripcion->area_total_catastral)); ?>m&sup2;</td>
 					</tr>
-
 					<tr>
-						<td width="20%"><?php echo form_label('&Aacute;rea Remanente','area_residual'); ?></td>
+						<td width="20%"><?php echo form_label('Registral','area_total_registral'); ?></td>
+						<td width="30%"><?php echo form_input('area_total_registral', utf8_decode($descripcion->area_total_registral)); ?>m&sup2;</td>
+						<td width="20%"><?php echo form_label('Títulos','area_total_titulos'); ?></td>
+						<td width="30%"><?php echo form_input('area_total_titulos', utf8_decode($descripcion->area_total_titulos)); ?>m&sup2;</td>
+					</tr>
+				</tbody>
+			</table>
+			<?php echo form_fieldset_close(); ?>
+
+			<?php echo form_fieldset('<b>&Aacute;REAS PARCIALES</b>'); ?>
+			<table style="text-align:'left'">
+				<tbody>
+					<tr>
+						<td width="20%"><?php echo form_label('Requerida','area_requerida'); ?></td>
+						<td width="30%"><?php echo form_input('area_requerida', utf8_decode($descripcion->area_requerida)); ?>m&sup2;</td>
+						<td width="20%"><?php echo form_label('Remanente','area_residual'); ?></td>
 						<td width="30%"><?php echo form_input('area_residual', utf8_decode($descripcion->area_residual)); ?>m&sup2;</td>
 					</tr>
 					
 					<tr>
-						<td width="20%"><?php echo form_label('&Aacute;rea construida','area_construida'); ?></td>
+						<td width="20%"><?php echo form_label('construida','area_construida'); ?></td>
 						<td width="30%"><?php echo form_input('area_construida', utf8_decode($descripcion->area_construida)); ?>m&sup2;</td>
-						<td width="20%"><?php echo form_label('&Aacute;rea construida anexos','area_const_requerida'); ?></td>
+						<td width="20%"><?php echo form_label('construida anexos','area_const_requerida'); ?></td>
 						<td width="30%"><?php echo form_input('area_const_requerida', utf8_decode($descripcion->area_cons_requerida)); ?>m&sup2;</td>
 					</tr>
 				</tbody>
