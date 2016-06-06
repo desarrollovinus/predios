@@ -440,6 +440,8 @@ class Informes_controller extends CI_Controller
 		$this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($this->data["ficha"]);
 		$this->data['ficha_social'] = $this->Gestion_socialDAO->cargar_ficha($this->data["ficha"]);
 		$this->data['valores_fichas'] = $this->Gestion_socialDAO->cargar_valores_ficha_social($this->data["ficha"], 0);
+		$this->data['unidades_productivas'] = $this->Gestion_socialDAO->cargar_unidades_sociales_productivas($this->data["ficha"]);
+		$this->data['unidades_residentes'] = $this->Gestion_socialDAO->cargar_unidades_sociales_residentes($this->data["ficha"]);
 
 		// $this->data['valores_fichas'] = $this->Gestion_socialDAO->cargar_valores_ficha_social($this->uri->segment(4), 0);
 		$this->load->view('informes/fichas_sociales/caracterizacion_general', $this->data);
@@ -500,7 +502,7 @@ class Informes_controller extends CI_Controller
 
 		$this->load->view('informes/gestion_predial/procesos_excel');
 	}
-	
+
 	function filtrar_caracteres($html) {
 		/*$html = str_replace("Ã", "&Ntilde;", $html);*/
 		$html = str_replace("Ã", "&Oacute;", $html);

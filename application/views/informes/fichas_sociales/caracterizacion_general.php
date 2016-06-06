@@ -1,6 +1,18 @@
 <?php
+// funcion para calcular tamaño de una fila
+function dinamicSizeRow($columns='A:A', $content='', $columnSize=9.09, $rowSize=13)
+{
+	$nCol = split(":", $columns);
+	$nCol = count(range($nCol[0], $nCol[1]));
+	$limitCol = 8 * $nCol;
+	$content = strlen($content);
+	return ceil($content / $limitCol) * $rowSize;
+}
+
+
 //Se crea un nuevo objeto PHPExcel
 $objPHPExcel = new PHPExcel();
+$hoja = $objPHPExcel->getActiveSheet();
 
 $valores_f = array();
 
@@ -23,27 +35,53 @@ $objPHPExcel->getDefaultStyle()->getAlignment()->setVertical(PHPExcel_Style_Alig
 
 //Se establece la configuracion de la pagina
 // $objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE); //Orientacion horizontal
-$objPHPExcel->getActiveSheet()->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_LEGAL); //Tamano oficio
-$objPHPExcel->getActiveSheet()->getPageSetup()->setScale(100);
+$hoja->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_LEGAL); //Tamano oficio
+$hoja->getPageSetup()->setScale(100);
 
 //Se indica el rango de filas que se van a repetir en el momento de imprimir. (Encabezado del reporte)
-$objPHPExcel->getActiveSheet()->getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(3);
+$hoja->getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(3);
 
 // Título de la hoja
-$objPHPExcel->getActiveSheet()->setTitle("Caracterización general $ficha");
+$hoja->setTitle("Caracterización general $ficha");
 
 //Se establecen las margenes
-$objPHPExcel->getActiveSheet()->getPageMargins()->setTop(0.10); //Arriba
-$objPHPExcel->getActiveSheet()->getPageMargins()->setRight(0.70); //Derecha
-$objPHPExcel->getActiveSheet()->getPageMargins()->setLeft(0.80); //Izquierda
-$objPHPExcel->getActiveSheet()->getPageMargins()->setBottom(0,90); //Abajo
+$hoja->getPageMargins()->setTop(0.10); //Arriba
+$hoja->getPageMargins()->setRight(0.70); //Derecha
+$hoja->getPageMargins()->setLeft(0.80); //Izquierda
+$hoja->getPageMargins()->setBottom(0,90); //Abajo
 
 //Centrar página
-$objPHPExcel->getActiveSheet()->getPageSetup()->setHorizontalCentered();
+$hoja->getPageSetup()->setHorizontalCentered();
 
-// Ocultar la cuadrícula:
-// $objPHPExcel->getActiveSheet()->setShowGridlines(false);
+/*******************************************************
+ *********************** Estilos ***********************
+ *******************************************************/
+ $centrado = array( 'alignment' => array( 'horizontal' => PHPExcel_Style_Alignment::VERTICAL_CENTER ) ); // Alineación centrada
+ $negrita = array( 'font' => array( 'bold' => true ) ); // negrita
 
+$relleno_gris = array(
+	'fill' => array(
+	    'type' => PHPExcel_Style_Fill::FILL_GRADIENT_LINEAR,
+	    'rotation' => 90,
+	    'startcolor' => array(
+  	  		'argb' => 'DBDBDB'
+        ),
+	    'endcolor' => array(
+			'argb' => 'DBDBDB'
+    	),
+    ),
+);
+
+$borde_negrita_externo = array(
+	'borders' => array(
+		'outline' => array(
+			'style' => PHPExcel_Style_Border::BORDER_THICK,
+			'color' => array('argb' => '000000'),
+		),
+	),
+);
+
+$hoja->getStyle("A1:N55")->applyFromArray($centrado);
 // Logos
 // Logo Vinus
 $objDrawing = new PHPExcel_Worksheet_Drawing();
@@ -53,7 +91,7 @@ $objDrawing->setPath('./img/logo_vinus.jpg');
 $objDrawing->setCoordinates('J1');
 $objDrawing->setHeight(60);
 $objDrawing->setWidth(60);
-$objDrawing->setOffsetX(20);
+$objDrawing->setOffsetX(30);
 $objDrawing->setOffsetY(5);
 $objDrawing->getShadow()->setDirection(160);
 $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
@@ -67,7 +105,7 @@ $objDrawing2->setPath('./img/logo_ani.jpg');
 $objDrawing2->setCoordinates('A1');
 $objDrawing2->setHeight(50);
 $objDrawing2->setWidth(100);
-$objDrawing2->setOffsetX(25);
+$objDrawing2->setOffsetX(35);
 $objDrawing2->setOffsetY(0);
 $objDrawing2->setWorksheet($objPHPExcel->getActiveSheet());
 // Estilos
@@ -78,8 +116,7 @@ $objDrawing2->setWorksheet($objPHPExcel->getActiveSheet());
  * Definicion de la anchura de las columnas
  */
 $columna = "A";
-$hoja = $objPHPExcel->getActiveSheet();
-// Asingnacion del tamaño de las columnas en 7 desde A hasta N
+// Asingnacion del tamaño de las columnas y filas
 for ($i=1; $i <= 50; $i++) {
 	$hoja->getColumnDimension($columna)->setWidth(8.7);
 	$hoja->getRowDimension($i)->setRowHeight(20);
@@ -160,12 +197,15 @@ $hoja->setCellValue('L1', 'Código:');
 $hoja->setCellValue('L2', 'Versión:');
 $hoja->setCellValue('L3', 'Fecha:');
 $hoja->setCellValue('M1', 'F012');
-$hoja->setCellValue('M2', '1.00');
+$hoja->setCellValueExplicit('M2', '1.00', PHPExcel_Cell_DataType::TYPE_STRING);
 $hoja->setCellValue('M3', '31/5/2016');
 
 
 
 // Contenido
+$hoja->mergeCells('A4:N4');
+$hoja->getRowDimension(4)->setRowHeight(5.7);
+$hoja->getStyle("A5:N5")->applyFromArray($relleno_gris);
 $hoja->setCellValue('A5', '1. DATOS GENERALES');
 
 $hoja->setCellValue('A6', 'Proyecto:');
@@ -188,6 +228,10 @@ $hoja->setCellValue('D8', $predio->nombre_propietario);
 $hoja->setCellValue('A9', 'Datos de contacto:');
 $hoja->setCellValue('D9', $predio->direccion_propietario." / ".$predio->telefono_propietario." / ".$predio->email_propietario);
 
+$hoja->getRowDimension(10)->setRowHeight(5.7);
+$hoja->mergeCells('A10:N10');
+
+$hoja->getStyle("A11:N11")->applyFromArray($relleno_gris);
 $hoja->setCellValue('A11', '2. CARACTERISTCAS DEL INMUEBLE');
 
 $hoja->setCellValue('A12', 'Requerimiento del terreno por el proyecto:');
@@ -264,6 +308,9 @@ $hoja->setCellValue('A17','¿La vivienda se requiere para el proyecto?');
 $hoja->setCellValue('F17','SI ___');
 $hoja->setCellValue('G17','NO ___');
 $hoja->setCellValue('H17','PARCIAL ___');
+
+$hoja->getRowDimension(18)->setRowHeight(5.7);
+$hoja->mergeCells("A18:N18");
 
 switch ($ficha_social->requerida_proyecto) {
 	case '0':
@@ -347,6 +394,7 @@ foreach ($this->Gestion_socialDAO->cargar_valores_ficha(6) as $valor6) {
 	$fila++;
 }
 
+$hoja->getRowDimension($fila)->setRowHeight(5.7);
 $hoja->mergeCells("A{$fila}:N{$fila}");
 $fila++;
 
@@ -366,15 +414,17 @@ $hoja->setCellValue("A{$fila}", "¿Cuáles?");
 $hoja->setCellValue("C{$fila}", $ficha_social->edificaciones_unidades_productivas_descripcion);
 $fila++;
 
+$hoja->getRowDimension($fila)->setRowHeight(5.7);
 $hoja->mergeCells("A{$fila}:N{$fila}");
 $fila++;
 
 $hoja->mergeCells("A{$fila}:N{$fila}");
+$hoja->getStyle("A{$fila}:N{$fila}")->applyFromArray($relleno_gris);
 $hoja->setCellValue("A{$fila}", "3. UNIDADES SOCIALES IDENTIFICADAS");
 $fila++;
 
 $hoja->mergeCells("A{$fila}:E{$fila}");
-$hoja->mergeCells("H{$fila}:J{$fila}");
+$hoja->mergeCells("H{$fila}:I{$fila}");
 $hoja->mergeCells("k{$fila}:N{$fila}");
 $hoja->setCellValue("A{$fila}", "¿Existen unidades sociales identificadas?");
 $hoja->setCellValue("F{$fila}", "SI ___");
@@ -393,20 +443,60 @@ $hoja->setCellValue("B{$fila}", "Categoría");
 $hoja->setCellValue("D{$fila}", "Relacion con el inmueble");
 $hoja->setCellValue("F{$fila}", "Responsable unidad social");
 $hoja->setCellValue("I{$fila}", "Numero de integrantes");
-$hoja->setCellValue("K{$fila}", "Firma del responsable de la unidada social");
+$hoja->setCellValue("K{$fila}", "Firma del responsable de la unidad social");
+$hoja->getRowDimension($fila)->setRowHeight(dinamicSizeRow("K:N", "Firma del responsable de la unidad social", 8.7));
 $fila++;
 
+$unidades_identificadas = 0;
+foreach ($unidades_productivas as $unidad_productiva) {
+	$unidades_identificadas++;
+	$hoja->mergeCells("B{$fila}:C{$fila}");
+	$hoja->mergeCells("D{$fila}:E{$fila}");
+	$hoja->mergeCells("F{$fila}:H{$fila}");
+	$hoja->mergeCells("I{$fila}:J{$fila}");
+	$hoja->mergeCells("K{$fila}:N{$fila}");
+	$hoja->setCellValue("A{$fila}", $unidades_identificadas);
+	$hoja->setCellValue("B{$fila}", "USP");
+	$hoja->setCellValue("D{$fila}", $unidad_productiva->relacion_inmueble);
+	$hoja->setCellValue("F{$fila}", $unidad_productiva->titular);
+	$hoja->setCellValue("I{$fila}", $unidad_productiva->arrendatarios);
+	$fila++;
+}
+
+foreach ($unidades_residentes as $unidad_residente) {
+	$unidades_identificadas++;
+	$hoja->mergeCells("B{$fila}:C{$fila}");
+	$hoja->mergeCells("D{$fila}:E{$fila}");
+	$hoja->mergeCells("F{$fila}:H{$fila}");
+	$hoja->mergeCells("I{$fila}:J{$fila}");
+	$hoja->mergeCells("K{$fila}:N{$fila}");
+	$hoja->setCellValue("A{$fila}", $unidades_identificadas);
+	$hoja->setCellValue("B{$fila}", "USR");
+	$hoja->setCellValue("D{$fila}", $unidad_residente->relacion_inmueble);
+	$hoja->setCellValue("F{$fila}", $unidad_residente->responsable);
+	$hoja->setCellValue("I{$fila}", $unidad_residente->integrantes);
+	$fila++;
+}
+
+$fila2 = $fila - $unidades_identificadas - 2;
+// cuantas unidades sociales identificadas hay
+$hoja->setCellValue("J{$fila2}", $unidades_identificadas);
+
+$hoja->getRowDimension($fila)->setRowHeight(5.7);
 $hoja->mergeCells("A{$fila}:N{$fila}");
 $fila++;
 
 $hoja->mergeCells("A{$fila}:N{$fila}");
+$hoja->getStyle("A{$fila}:N{$fila}")->applyFromArray($relleno_gris);
 $hoja->setCellValue("A{$fila}", "4. OBSERVACIONES");
 $fila++;
 
 $hoja->mergeCells("A{$fila}:N{$fila}");
 $hoja->setCellValue("A{$fila}", $ficha_social->observaciones);
+$hoja->getRowDimension($fila)->setRowHeight(dinamicSizeRow("A:N", $ficha_social->observaciones, 8.7));
 $fila++;
 
+$hoja->getRowDimension($fila)->setRowHeight(5.7);
 $hoja->mergeCells("A{$fila}:N{$fila}");
 $fila++;
 
@@ -427,8 +517,7 @@ $fila++;
 $hoja->mergeCells("E{$fila}:I{$fila}");
 $hoja->mergeCells("J{$fila}:N{$fila}");
 
-//Tamaño de celdas
-// $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(6);
+$objPHPExcel->getActiveSheet()->getStyle("A1:N{$fila}")->applyFromArray($borde_negrita_externo);
 
 
 //Se modifican los encabezados del HTTP para indicar que se envia un archivo de Excel.
