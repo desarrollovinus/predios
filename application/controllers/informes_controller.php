@@ -26,7 +26,7 @@ class Informes_controller extends CI_Controller
 	 */
 	var $nombre_carpeta_fotos = "fotos/";
 
-	
+
 	function __construct()
 	{
 		parent::__construct();
@@ -39,7 +39,7 @@ class Informes_controller extends CI_Controller
 		{
 			//redirecciono al controlador de sesion
 			redirect('sesion_controller');
-		}	
+		}
 		//se establece la vista que tiene el contenido del menu
 		$this->data['menu'] = 'informes/menu';
 
@@ -47,7 +47,7 @@ class Informes_controller extends CI_Controller
         $this->load->library(array('PHPExcel'));
 
 	}
-	
+
 	function index() {
 		$this->data['titulo_pagina'] = 'Informes';
 		$this->data['contenido_principal'] = 'informes/actas/index_view';
@@ -55,63 +55,63 @@ class Informes_controller extends CI_Controller
 		$this->data['actas'] = $this->InformesDAO->obtener_informe_actas()->result_array();
 		$this->load->view('includes/template', $this->data);
 	}
-	
+
 	function actas_excel()
-	{		
+	{
 		$this->load->model('InformesDAO');
         $actas = $this->InformesDAO->obtener_informe_actas()->result_array();
 
         $tabla_html = "<table><thead><tr><th><b>PREDIO</b></th><th><b>PRIMER PROPIETARIO</b></th><th><b>FICHA APROBADA</b></th><th><b>ENTREGA F&Iacute;SICA</b></th><th><b>COMPRAVENTA</b></th><th><b>REGISTRO</b></th></tr></thead><tbody>";
 		foreach ($actas as $acta):
 			$tabla_html .= "<tr><td><label>".$acta['PREDIO']."</label></td><td><label>".$acta['PROPIETARIO']."</label></td><td><label>";
-			if($acta['FICHA APROBADA'] == '') { 
-				$tabla_html .= "0"; 
-			} 
-			else { 
-				$tabla_html .= $acta['FICHA APROBADA']; 
+			if($acta['FICHA APROBADA'] == '') {
+				$tabla_html .= "0";
+			}
+			else {
+				$tabla_html .= $acta['FICHA APROBADA'];
 			}
 			$tabla_html .= "</label></td><td><label>";
-			if($acta['ENTREGA FISICA'] == '') { 
-				$tabla_html .= "0"; 
-			} 
-			else { 
-				$tabla_html .= $acta['ENTREGA FISICA']; 
+			if($acta['ENTREGA FISICA'] == '') {
+				$tabla_html .= "0";
+			}
+			else {
+				$tabla_html .= $acta['ENTREGA FISICA'];
 			}
 			$tabla_html .= "</label></td><td><label>";
-			if($acta['COMPRAVENTA'] == '') { 
-				$tabla_html .= "0"; 
+			if($acta['COMPRAVENTA'] == '') {
+				$tabla_html .= "0";
 			}
-			else { 
-				$tabla_html .= $acta['COMPRAVENTA']; 
+			else {
+				$tabla_html .= $acta['COMPRAVENTA'];
 			}
 			$tabla_html .= "</label></td><td><label>";
-			if($acta['REGISTRO'] == '') { 
-				$tabla_html .= "0"; 
-			} 
-			else { 
-				$tabla_html .= $acta['REGISTRO']; 
+			if($acta['REGISTRO'] == '') {
+				$tabla_html .= "0";
+			}
+			else {
+				$tabla_html .= $acta['REGISTRO'];
 			}
 			$tabla_html .= "</label></td></tr>";
 		endforeach;
 		$tabla_html .= "</tbody></table>";
-		
+
 		header('Content-type: application/vnd.ms-excel;');
 		header("Content-Disposition: attachment; filename=Informe_de_actas.xls");
 		header("Pragma: no-cache");
 		header("Expires: 0");
 		echo '<!DOCTYPE html><html><head></head><body>'.$tabla_html.'</body></html>';
 	}
-	
+
 	function actas_pdf() {
 		$this->load->library('pdf');
 
         // set document information
         $this->pdf->SetSubject('Informe');
         $this->pdf->SetKeywords('HATOVIAL, Predios');
-        
+
         // set font
         $this->pdf->SetFont('helvetica', '', 8);
-        
+
         // add a page
         $this->pdf->AddPage();
 
@@ -133,32 +133,32 @@ class Informes_controller extends CI_Controller
 			<tbody>";
 		foreach ($actas as $acta):
 			$tabla_html .= "<tr><td><label>".$acta['PREDIO']."</label></td><td><label>".$acta['PROPIETARIO']."</label></td><td><label>";
-			if($acta['FICHA APROBADA'] == '') { 
-				$tabla_html .= "0"; 
-			} 
-			else { 
-				$tabla_html .= $acta['FICHA APROBADA']; 
+			if($acta['FICHA APROBADA'] == '') {
+				$tabla_html .= "0";
+			}
+			else {
+				$tabla_html .= $acta['FICHA APROBADA'];
 			}
 			$tabla_html .= "</label></td><td><label>";
-			if($acta['ENTREGA FISICA'] == '') { 
-				$tabla_html .= "0"; 
-			} 
-			else { 
-				$tabla_html .= $acta['ENTREGA FISICA']; 
+			if($acta['ENTREGA FISICA'] == '') {
+				$tabla_html .= "0";
+			}
+			else {
+				$tabla_html .= $acta['ENTREGA FISICA'];
 			}
 			$tabla_html .= "</label></td><td><label>";
-			if($acta['COMPRAVENTA'] == '') { 
-				$tabla_html .= "0"; 
+			if($acta['COMPRAVENTA'] == '') {
+				$tabla_html .= "0";
 			}
-			else { 
-				$tabla_html .= $acta['COMPRAVENTA']; 
+			else {
+				$tabla_html .= $acta['COMPRAVENTA'];
 			}
 			$tabla_html .= "</label></td><td><label>";
-			if($acta['REGISTRO'] == '') { 
-				$tabla_html .= "0"; 
-			} 
-			else { 
-				$tabla_html .= $acta['REGISTRO']; 
+			if($acta['REGISTRO'] == '') {
+				$tabla_html .= "0";
+			}
+			else {
+				$tabla_html .= $acta['REGISTRO'];
 			}
 			$tabla_html .= "</label></td></tr>";
 		endforeach;
@@ -166,7 +166,7 @@ class Informes_controller extends CI_Controller
 
 		$this->pdf->WriteHTML('<div align="center"><h3>INFORME - ACTAS EN LAS QUE SE PAGA LA GESTI&Oacute;N PREDIAL</h3></div>');
 		$this->pdf->WriteHTML($tabla_html);
-        
+
         //Close and output PDF document
         $this->pdf->Output('Informe de actas.pdf', 'I');
 	}
@@ -187,7 +187,7 @@ class Informes_controller extends CI_Controller
 		$this->data['registros'] = $this->InformesDAO->obtener_registros_bitacora($ficha_predial);
 		$this->load->view('informes/bitacora/excel', $this->data);
 	}
-	
+
 	function pagos() {
 		$this->load->model('InformesDAO');
 		$this->data['pagos'] = $this->InformesDAO->obtener_informe_predios();
@@ -202,7 +202,7 @@ class Informes_controller extends CI_Controller
 		$this->data['contenido_principal'] = 'informes/normas/index_view';
 		$this->load->view('includes/template', $this->data);
 	}
-	
+
 	function pagos_excel()
 	{
 		$this->load->model('InformesDAO');
@@ -225,17 +225,17 @@ class Informes_controller extends CI_Controller
 		header("Expires: 0");
 		echo utf8_decode($tabla);
 	}
-	
+
 	function pagos_pdf() {
 		$this->load->library('pdf');
 
         // set document information
         $this->pdf->SetSubject('Informe');
         $this->pdf->SetKeywords('HATOVIAL, Predios');
-        
+
         // set font
         $this->pdf->SetFont('helvetica', '', 8);
-        
+
         // add a page
         $this->pdf->AddPage();
 
@@ -256,7 +256,7 @@ class Informes_controller extends CI_Controller
 
 		$this->pdf->WriteHTML('<div align="center"><h3>INFORME - PAGOS DE LOS PREDIOS</h3></div>');
 		$this->pdf->WriteHTML($tabla_html);
-        
+
         //Close and output PDF document
         $this->pdf->Output('Informe de pagos.pdf', 'I');
 	}
@@ -284,7 +284,7 @@ class Informes_controller extends CI_Controller
 	function avaluos_pdf(){
 		$this->load->view('informes/avaluos/pdf');
 	}
-	
+
 	function avaluos_vencidos() {
 		$this->load->model(array('InformesDAO', 'ContratistasDAO'));
 		$this->data['titulo_pagina'] = 'Informes';
@@ -293,14 +293,14 @@ class Informes_controller extends CI_Controller
 		$this->data['menu'] = 'informes/avaluos_vencidos/menu';
 		$this->load->view('includes/template', $this->data);
 	}
-	
+
 	function avaluos_vencidos_excel() {
 		$this->load->model('InformesDAO');
 		$avaluos_vencidos = $this->InformesDAO->obtener_avaluos_vencidos();
 		$tabla = '<table border="1px"><thead><tr align="center"><th>PREDIO</th><th>PRIMER PROPIETARIO</th><th>FECHA AVAL&Uacute;O</th><th>FECHA EXPIRACION</th><th>DIAS EXPIRADO</th><th>CONTRATISTA</th></tr></thead><tbody>';
 		foreach ($avaluos_vencidos as $avaluo):
 			$tabla .= "<tr><td>".$avaluo['ficha_predial']."</td><td>".$avaluo['propietario']."</td><td>".$avaluo['fecha_avaluo']."</td><td>".$avaluo['fecha_expiracion']."</td><td>".$avaluo['dias_expirado']."</td><td>".$avaluo['contratista']."</td></tr>";
-		endforeach;  
+		endforeach;
 		$tabla .= '</tbody></table>';
 		header('Content-type: application/vnd.ms-excel; charset=iso-8859-1');
 		header("Content-Disposition: attachment; filename=Avaluos_Vencidos.xls");
@@ -308,17 +308,17 @@ class Informes_controller extends CI_Controller
 		header("Expires: 0");
 		echo utf8_decode($tabla);
 	}
-	
+
 	function avaluos_vencidos_pdf() {
 		$this->load->library('pdf');
 
         // set document information
         $this->pdf->SetSubject('Informe');
         $this->pdf->SetKeywords('HATOVIAL, Predios');
-        
+
         // set font
         $this->pdf->SetFont('helvetica', '', 8);
-        
+
         // add a page
         $this->pdf->AddPage();
 
@@ -332,11 +332,11 @@ class Informes_controller extends CI_Controller
 
 		$this->pdf->WriteHTML('<div align="center"><h3>INFORME - AVAL&Uacute;OS VENCIDOS</h3></div>');
 		$this->pdf->WriteHTML($tabla_html);
-        
+
         //Close and output PDF document
         $this->pdf->Output('Informe de avaluos vencidos.pdf', 'I');
 	}
-	
+
 	function avaluos_en_vencimiento() {
 		$this->load->model('InformesDAO');
 		$this->data['titulo_pagina'] = 'Informes';
@@ -345,14 +345,14 @@ class Informes_controller extends CI_Controller
 		$this->data['menu'] = 'informes/avaluos_expirando/menu';
 		$this->load->view('includes/template', $this->data);
 	}
-	
+
 	function avaluos_en_vencimiento_excel() {
 		$this->load->model('InformesDAO');
 		$avaluos_vencidos = $this->InformesDAO->obtener_avaluos_en_vencimiento();
 		$tabla = '<table border="1px"><thead><tr align="center"><th>PREDIO</th><th>FECHA EXPIRACION</th><th>DIAS FALTANTES</th><th>CONTRATISTA</th></tr></thead><tbody>';
 		foreach ($avaluos_vencidos as $avaluo):
 			$tabla .= "<tr><td>".$avaluo['ficha_predial']."</td><td>".$avaluo['fecha_expiracion']."</td><td>".$avaluo['dias_expirado']."</td><td>".$avaluo['contratista']."</td></tr>";
-		endforeach;  
+		endforeach;
 		$tabla .= '</tbody></table>';
 		header('Content-type: application/vnd.ms-excel; charset=iso-8859-1');
 		header("Content-Disposition: attachment; filename=Avaluos en proceso de vencimiento.xls");
@@ -360,17 +360,17 @@ class Informes_controller extends CI_Controller
 		header("Expires: 0");
 		echo utf8_decode($tabla);
 	}
-	
+
 	function avaluos_en_vencimiento_pdf() {
 		$this->load->library('pdf');
 
         // set document information
         $this->pdf->SetSubject('Informe');
         $this->pdf->SetKeywords('HATOVIAL, Predios');
-        
+
         // set font
         $this->pdf->SetFont('helvetica', '', 8);
-        
+
         // add a page
         $this->pdf->AddPage();
 
@@ -379,16 +379,16 @@ class Informes_controller extends CI_Controller
 		$tabla_html = '<table border="1px"><thead><tr align="center"><th><b>PREDIO</b></th><th><b>FECHA EXPIRACION</b></th><th><b>DIAS FALTANTES</b></th><th><b>CONTRATISTA</b></th></tr></thead><tbody>';
 		foreach ($avaluos_vencidos as $avaluo):
 			$tabla_html .= "<tr><td>".$avaluo['ficha_predial']."</td><td>".$avaluo['fecha_expiracion']."</td><td>".$avaluo['dias_expirado']."</td><td>".$avaluo['contratista']."</td></tr>";
-		endforeach;  
+		endforeach;
 		$tabla_html .= '</tbody></table>';
 
 		$this->pdf->WriteHTML('<div align="center"><h3>INFORME - AVAL&Uacute;OS EN VENCIMIENTO</h3><h4>'.date("Y-m-d", time()).'</h4></div>');
 		$this->pdf->WriteHTML($tabla_html);
-        
+
         //Close and output PDF document
         $this->pdf->Output('Informe de avaluos en vencimiento.pdf', 'I');
 	}
-	
+
 	function estudio_titulos($id_predio) {
 		$permisos = $this->session->userdata('permisos');
 		if( ! isset($permisos['Fichas']['Imprimir estudio de t&iacute;tulos']) ) {
@@ -408,16 +408,16 @@ class Informes_controller extends CI_Controller
 		$this->data['descripcion'] = 			$this->PrediosDAO->obtener_descripcion($this->data['predio']->ficha_predial);
 		$this->data['linderos'] = 				$this->PrediosDAO->obtener_linderos($this->data['predio']->ficha_predial);
 		$this->data['propietarios'] = 			$this->PropietariosDAO->obtener_propietarios($this->data['predio']->ficha_predial);
-		
-		
-		
+
+
+
 		header("Content-Type: application/msword; charset=utf-8");
 		header("Expires: 0");
 		header("Cache-Control:  must-revalidate, post-check=0, pre-check=0");
 		header("Content-disposition: attachment; filename=\"Estudio de titulos - ".$this->data['predio']->ficha_predial.".doc\"");
-		
-		
-		
+
+
+
 		$this->load->view('informes/estudio_titulos/plantilla', $this->data);
 	}
 
@@ -433,19 +433,23 @@ class Informes_controller extends CI_Controller
 	}
 
 	function ficha_social_general(){
-		$this->load->model(array('PrediosDAO', 'Gestion_socialDAO'));
+		$this->load->model(array('InformesDAO', 'Gestion_socialDAO'));
 
 		// Se recibe por post la variable que define si es un registro nuevo o editado
-        $this->data["ficha"] = $this->uri->segment(3);
-		$this->data['predio'] = $this->PrediosDAO->obtener_predio($this->uri->segment(3));
-		$this->data['ficha_social'] = $this->Gestion_socialDAO->cargar_ficha($this->uri->segment(3));
+    $this->data["ficha"] = $this->uri->segment(3);
+		$this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($this->data["ficha"]);
+		$this->data['ficha_social'] = $this->Gestion_socialDAO->cargar_ficha($this->data["ficha"]);
+		$this->data['valores_fichas'] = $this->Gestion_socialDAO->cargar_valores_ficha_social($this->data["ficha"], 0);
+		$this->data['unidades_productivas'] = $this->Gestion_socialDAO->cargar_unidades_sociales_productivas($this->data["ficha"]);
+		$this->data['unidades_residentes'] = $this->Gestion_socialDAO->cargar_unidades_sociales_residentes($this->data["ficha"]);
+
 		// $this->data['valores_fichas'] = $this->Gestion_socialDAO->cargar_valores_ficha_social($this->uri->segment(4), 0);
 		$this->load->view('informes/fichas_sociales/caracterizacion_general', $this->data);
 	}
 
 	function gestion_predial_fotos(){
 		$ficha = $this->uri->segment(3);
-		
+
 		if( ! $ficha)
 		{
 			redirect('actualizar_controller');
@@ -464,15 +468,15 @@ class Informes_controller extends CI_Controller
 			{
 				//se arma un array de nombres de archivo
 				$nombres = array();
-				
+
 				while(($file = readdir($directorio)) !== FALSE)
 				{
 					if($file != '.' && $file != '..')
 					{
 						array_push($nombres, $file);
-					}						
+					}
 				}
-				
+
 				//se cierra el directorio
 				closedir();
 
@@ -492,7 +496,13 @@ class Informes_controller extends CI_Controller
 	function gestion_predial_excel(){
 		$this->load->view('informes/gestion_predial/excel');
 	}
-	
+
+	function gestion_procesos_excel(){
+		$this->load->model('PrediosDAO');
+
+		$this->load->view('informes/gestion_predial/procesos_excel');
+	}
+
 	function filtrar_caracteres($html) {
 		/*$html = str_replace("Ã", "&Ntilde;", $html);*/
 		$html = str_replace("Ã", "&Oacute;", $html);

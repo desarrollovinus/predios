@@ -223,29 +223,7 @@ class PrediosDAO extends CI_Model
 	
 	function obtener_fichas()
 	{
-		$sql_=
-		"SELECT
-		(SELECT
-		tbl_propietario.nombre
-		FROM
-		tbl_relacion
-		INNER JOIN tbl_propietario ON tbl_relacion.id_propietario = tbl_propietario.id_propietario
-		WHERE
-		tbl_relacion.ficha_predial = tbl_predio.ficha_predial
-		GROUP BY
-		tbl_relacion.ficha_predial) AS propietario,
-		tbl_predio.id_predio,
-		tbl_predio.fecha_hora,
-		tbl_predio.ficha_predial,
-		tbl_usuarios.us_nombre,
-		tbl_usuarios.us_apellido
-		FROM
-		tbl_predio
-		INNER JOIN tbl_usuarios ON tbl_usuarios.id_usuario = tbl_predio.usuario
-		ORDER BY
-		tbl_predio.ficha_predial ASC";
-
-		$sql =
+		$sql_ =
 		"SELECT
 			(
 				SELECT
@@ -284,6 +262,51 @@ class PrediosDAO extends CI_Model
 		INNER JOIN tbl_usuarios ON tbl_usuarios.id_usuario = tbl_predio.usuario
 		ORDER BY
 			tbl_predio.ficha_predial ASC";
+
+		$sql =
+		"SELECT
+			(
+				SELECT
+					tbl_propietario.nombre
+				FROM
+					tbl_relacion
+				INNER JOIN tbl_propietario ON tbl_relacion.id_propietario = tbl_propietario.id_propietario
+				WHERE
+					tbl_relacion.ficha_predial = p.ficha_predial
+				GROUP BY
+					tbl_relacion.ficha_predial
+			) AS propietario,
+			p.id_predio,
+			p.fecha_hora,
+			p.ficha_predial,
+			u.us_apellido,
+			(
+				SELECT
+					COUNT(usr.id)
+				FROM
+					tbl_unidades_sociales_residentes AS usr
+				WHERE
+					usr.ficha_predial = p.ficha_predial
+			) AS usr,
+			(
+				SELECT
+					COUNT(usp.id)
+				FROM
+					tbl_unidades_sociales_productivas AS usp
+				WHERE
+					usp.ficha_predial = p.ficha_predial
+			) AS usp,
+			CASE p.requerido
+		WHEN '1' THEN
+			'Si'
+		ELSE
+			'No'
+		END requerido
+		FROM
+			tbl_predio AS p
+		INNER JOIN tbl_usuarios AS u ON u.id_usuario = p.usuario
+		ORDER BY
+			p.ficha_predial ASC";
 
 
 		return $this->db->query($sql)->result();
@@ -342,7 +365,7 @@ class PrediosDAO extends CI_Model
 
 	function obtener_unidades_funcionales()
 	{
-		$sql=
+		$sql_=
 		"SELECT
 			SUBSTRING_INDEX(p.ficha_predial, '-', 1) AS Nombre
 		FROM
@@ -352,6 +375,34 @@ class PrediosDAO extends CI_Model
 		ORDER BY
 			Nombre ASC";
 
+		$sql =
+		"SELECT
+			SUBSTRING_INDEX(p.ficha_predial, '-', 1) Nombre,
+			(
+				SELECT
+					t.tramo
+				FROM
+					tbl_tramos AS t
+				WHERE
+					RIGHT (Nombre, 1) = t.id
+			) Codigo,
+			(
+				SELECT
+					count(
+						SUBSTRING_INDEX(pr.ficha_predial, '-', 1)
+					)
+				FROM
+					tbl_predio pr
+				WHERE
+					pr.requerido = 1
+				AND SUBSTRING_INDEX(pr.ficha_predial, '-', 1) = SUBSTRING_INDEX(p.ficha_predial, '-', 1)
+			) Requeridos
+		FROM
+			tbl_predio AS p
+		GROUP BY
+			Nombre
+		ORDER BY
+			Nombre ASC";
 
 		return $this->db->query($sql)->result();
 	}
@@ -608,6 +659,11 @@ class PrediosDAO extends CI_Model
 		#fin accion de auditoria
 
 		return $resultado;
+	}
+
+	function actualizar_predio($ficha_predial, $estado) {
+		$this->db->where('ficha_predial', $ficha_predial);
+		$this->db->update('tbl_predio', array("requerido" => $estado));
 	}
 
 	function actualizar_predio_requerido($ficha_predial, $datos) {
