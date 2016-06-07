@@ -1254,6 +1254,24 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 	}
 
 	/**
+	 * Asigna el tamaño de una fila segun su contenido
+	 *
+	 * @param string $content	String contenido de la fila
+	 * @param string $columns String rango de columnas de una fila Ejemplo "A:C"
+	 * @param int $fila Numeric fila a la que se le modificara el tamaño
+	 * @param float $columnSize Numeric tamaño de la columna, por defecto es 9.09
+	 * @param float $rowSize Numeric tamaño de la fila, por defecto es 13
+	 */
+	public function setDinamicSizeRow($content='', $fila, $columns='A:A', $columnSize=9.09, $rowSize=13)
+	{
+		$nCol = split(":", $columns);
+		$nCol = count(range($nCol[0], $nCol[1]));
+		$limitCol = 8 * $nCol;
+		$content = strlen($content);
+		$this->getRowDimension($fila)->setRowHeight(ceil($content / $limitCol) * $rowSize);
+	}
+
+	/**
 	 * Get column dimension at a specific column
 	 *
 	 * @param string $pColumn	String index of the column
