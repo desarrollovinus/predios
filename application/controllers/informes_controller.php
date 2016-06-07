@@ -444,7 +444,7 @@ class Informes_controller extends CI_Controller
 		$this->data['unidades_residentes'] = $this->Gestion_socialDAO->cargar_unidades_sociales_residentes($this->data["ficha"]);
 
 		// $this->data['valores_fichas'] = $this->Gestion_socialDAO->cargar_valores_ficha_social($this->uri->segment(4), 0);
-		$this->load->view('informes/fichas_sociales/caracterizacion_general', $this->data);
+		$this->load->view('informes/fichas_sociales/ficha_social_general', $this->data);
 	}
 
 	function gestion_predial_fotos(){
