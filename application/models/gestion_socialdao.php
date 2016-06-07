@@ -134,7 +134,7 @@ class Gestion_socialDAO extends CI_Model
 			$sql .= " WHERE usr.ficha_predial = '{$ficha_predial}'";
 		}
 
-		$sql .= "ORDER BY usr.ficha_predial ASC";
+		$sql .= " ORDER BY usr.ficha_predial ASC";
 
 	 	return $this->db->query($sql)->result();
 	}
