@@ -136,8 +136,6 @@
 		
 		
 		<!-- seccion 2 -->
-		
-		
 		<h3><a href="#seccion2">PREDIO ORIGINAL</a></h3>
 		<div>
 			<div class="clear">&nbsp;</div>
@@ -196,8 +194,8 @@
 			<?php echo form_fieldset_close(); ?>
 		</div>
 
-		<!-- seccion 6 -->
-		<h3><a href="#seccion5">PROPIETARIOS</a></h3>
+		<!-- seccion 3 -->
+		<h3><a href="#seccion3">PROPIETARIOS</a></h3>
 		<div>
 			<?php $id = 0;?>
 			<?php foreach ($propietarios as $propietario): ?>
@@ -258,8 +256,8 @@
 			?>
 		</div>
 		
-		<!-- seccion 3 -->
-		<h3><a href="#seccion3">ESTUDIO DE T&Iacute;TULOS</a></h3>
+		<!-- seccion 5 -->
+		<h3><a href="#seccion5">ESTUDIO DE T&Iacute;TULOS</a></h3>
 		<div>
 			<?php echo form_fieldset('<b>Fecha</b>'); ?>
 			<table>
@@ -290,10 +288,9 @@
 			<div align="center"><?php echo form_textarea('concepto', utf8_decode($identificacion->conc_titu)); ?></div>
 			<?php echo form_fieldset_close(); ?>
 		</div>
-				
 		
-		<!-- seccion 4 -->
-		<h3><a href="#seccion4">GESTI&Oacute;N PREDIAL</a></h3>
+		<!-- seccion 6 -->
+		<h3><a href="#seccion6">GESTI&Oacute;N PREDIAL</a></h3>
 		<div>
 			<?php echo form_fieldset('<b>Identificaci&oacute;n</b>')?>
 			<table style="text-align:'left'">
@@ -378,12 +375,6 @@
 			<table style="text-align:'left'">
 				<tbody>
 					<tr>
-						<td width="30%"><?php echo form_label('Env&iacute;o a la interventor&iacute;a','envio_interventoria'); ?></td>
-						<td width="20%"><?php echo form_input('envio_interventoria', utf8_decode($identificacion->f_envio_int)); ?></td>
-						<td width="30%"><?php echo form_label('Radicado env&iacute;o a interventor&iacute;a','radicado_envio_interventoria'); ?></td>
-						<td width="20%"><?php echo form_input('radicado_envio_interventoria', utf8_decode($identificacion->rad_env_int)); ?></td>
-					</tr>
-					<tr>
 						<td width="20%"><?php echo form_label('Env&iacute;o a la gerencia para firmar','envio_gerencia_firmar'); ?></td>
 						<td width="30%"><?php echo form_input('envio_gerencia_firmar', utf8_decode($identificacion->f_envio_ger)); ?></td>
 						<td width="20%"><?php echo form_label('Radicado env&iacute;o a gerencia','radicado_envio_gerencia'); ?></td>
@@ -465,8 +456,29 @@
 			<?php echo form_fieldset_close(); ?>
 		</div>
 
-		<!-- seccion 5 -->
-		<h3><a href="#seccion5">FICHA PREDIAL</a></h3>
+		<!-- seccion 4 -->
+		<h3><a href="#seccion4">GESTI&Oacute;N DE PROCESOS</a></h3>
+		<div>
+			<table style="text-align:'left'">
+				<tbody>
+					<tr>
+						<td width="30%"><?php echo form_label('Env&iacute;o a la interventor&iacute;a','envio_interventoria'); ?></td>
+						<td width="20%"><?php echo form_input('envio_interventoria', utf8_decode($identificacion->f_envio_int)); ?></td>
+						<td width="30%"><?php echo form_label('Radicado env&iacute;o a interventor&iacute;a','radicado_envio_interventoria'); ?></td>
+						<td width="20%"><?php echo form_input('radicado_envio_interventoria', utf8_decode($identificacion->rad_env_int)); ?></td>
+					</tr>
+					<tr>
+						<td width="30%"><?php echo form_label('Aprobaci&oacute;n de la ficha','fecha_aprobacion_ficha_predial'); ?></td>
+						<td width="20%"><?php echo form_input('fecha_aprobacion_ficha_predial', utf8_decode($identificacion->aprobacion_ficha_predial)); ?></td>
+						<td width="30%"><?php echo form_label('Radicado aprobaci&oacute;n ficha','radicado_aprobacion_ficha'); ?></td>
+						<td width="20%"><?php echo form_input('radicado_aprobacion_ficha', utf8_decode($identificacion->rad_aprobacion_ficha)); ?></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- seccion 7 -->
+		<h3><a href="#seccion7">FICHA PREDIAL</a></h3>
 		<div>
 			<!-- DATOS B&Aacute;SICOS -->
 			<?php echo form_fieldset('<b>DATOS B&Aacute;SICOS</b>'); ?>
@@ -609,8 +621,8 @@
 			<?php echo form_fieldset_close(); ?>
 		</div>
 
-		<!-- seccion 6 -->
-		<h3><a href="#seccion5">S&Aacute;BANA</a></h3>
+		<!-- seccion 8 -->
+		<h3><a href="#seccion8">S&Aacute;BANA</a></h3>
 		<div>
 			<?php echo form_fieldset('<b>Semáforo</b>'); ?>
 			<table style="text-align:'left'">
@@ -683,10 +695,6 @@
 			<div class="clear">&nbsp;</div>	
 		</div>
 	</div>
-
-	
-
-
 
 	<br /><input type="hidden" id="errores" />
 	<div class="clear">&nbsp;</div>
