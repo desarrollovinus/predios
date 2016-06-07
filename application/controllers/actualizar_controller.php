@@ -125,8 +125,12 @@ class Actualizar_controller extends CI_Controller {
 
 		//se lee la ficha predial
 		$ficha_predial = $this->input->post('ficha');
+
 		//se carga el modelo PrediosDAO
 		$this->load->model('PrediosDAO');
+
+		//se actualiza el predio si está o no requerido
+		$this->PrediosDAO->actualizar_predio($ficha_predial, $this->input->post('requerido'));
 		
 		//se prepara la identificacion del predio
 		$identificacion = array(
@@ -205,6 +209,9 @@ class Actualizar_controller extends CI_Controller {
 			'serv_publicos' => 			utf8_encode($this->input->post('servicios_publicos')),
 			'nacimiento_agua' => 		utf8_encode($this->input->post('nacimiento_agua')),
 			'area_total' => 			utf8_encode($this->input->post('area_total')),
+			'area_total_catastral' =>	utf8_encode($this->input->post('area_total_catastral')),
+			'area_total_registral' =>	utf8_encode($this->input->post('area_total_registral')),
+			'area_total_titulos' =>		utf8_encode($this->input->post('area_total_titulos')),
 			'area_requerida' => 		utf8_encode($this->input->post('area_requerida')),
 			'area_residual' => 			utf8_encode($this->input->post('area_residual')),
 			'area_construida' => 		utf8_encode($this->input->post('area_construida')),
