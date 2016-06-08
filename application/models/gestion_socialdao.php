@@ -35,7 +35,7 @@ class Gestion_socialDAO extends CI_Model
 		$this->db->where('ficha_predial', $ficha_predial);
 	 	return $this->db->get('tbl_ficha_social')->row();
 	}
-	
+
 	function cargar_valores_ficha($id_lista){
 		$this->db->select('*');
 		$this->db->where('id_lista_social', $id_lista);
@@ -45,7 +45,7 @@ class Gestion_socialDAO extends CI_Model
 
 	function cargar_valores_ficha_social($ficha, $id_unidad_social){
 		$this->db->select('*');
-		
+
 		if ($id_unidad_social != 0) {
 			$this->db->where('id_unidad_social', $id_unidad_social);
 		}else{
@@ -93,42 +93,48 @@ class Gestion_socialDAO extends CI_Model
 	 	return $this->db->get('tbl_unidades_sociales_residentes')->row();
 	}
 
-	function cargar_unidades_sociales_productivas(){
+	function cargar_unidades_sociales_productivas($ficha_predial=null){
 	 	$sql =
 	 	"SELECT
 			usp.id,
 			usp.ficha_predial,
 			v.nombre AS relacion_inmueble,
 			usp.titular,
-			(IF(usp.nombre_arrendatario1 <> '', 1, 0)) + 
-			(IF(usp.nombre_arrendatario2 <> '', 1, 0)) + 
-			(IF(usp.nombre_arrendatario3 <> '', 1, 0)) + 
-			(IF(usp.nombre_arrendatario4 <> '', 1, 0)) + 
+			(IF(usp.nombre_arrendatario1 <> '', 1, 0)) +
+			(IF(usp.nombre_arrendatario2 <> '', 1, 0)) +
+			(IF(usp.nombre_arrendatario3 <> '', 1, 0)) +
+			(IF(usp.nombre_arrendatario4 <> '', 1, 0)) +
 			(IF(usp.nombre_arrendatario5 <> '', 1, 0)) arrendatarios
 		FROM
 			tbl_unidades_sociales_productivas AS usp
 		LEFT JOIN tbl_valores_social AS v ON usp.relacion_inmueble = v.id";
-
+		if ($ficha_predial) {
+			$sql .= " WHERE usp.ficha_predial = '{$ficha_predial}'";
+		}
 	 	return $this->db->query($sql)->result();
 	}
 
-	function cargar_unidades_sociales_residentes(){
+	function cargar_unidades_sociales_residentes($ficha_predial=null){
 		$sql =
 		"SELECT
 			usr.id,
 			usr.ficha_predial,
 			v.nombre AS relacion_inmueble,
 			usr.responsable,
-			(IF(usr.nombre_integrante1 <> '', 1, 0)) + 
-			(IF(usr.nombre_integrante2 <> '', 1, 0)) + 
-			(IF(usr.nombre_integrante3 <> '', 1, 0)) + 
-			(IF(usr.nombre_integrante4 <> '', 1, 0)) + 
+			(IF(usr.nombre_integrante1 <> '', 1, 0)) +
+			(IF(usr.nombre_integrante2 <> '', 1, 0)) +
+			(IF(usr.nombre_integrante3 <> '', 1, 0)) +
+			(IF(usr.nombre_integrante4 <> '', 1, 0)) +
 			(IF(usr.nombre_integrante5 <> '', 1, 0)) integrantes
 		FROM
 			tbl_unidades_sociales_residentes AS usr
-		LEFT JOIN tbl_valores_social AS v ON usr.relacion_inmueble = v.id
-		ORDER BY
-			usr.ficha_predial ASC";
+		LEFT JOIN tbl_valores_social AS v ON usr.relacion_inmueble = v.id";
+
+		if ($ficha_predial) {
+			$sql .= " WHERE usr.ficha_predial = '{$ficha_predial}'";
+		}
+
+		$sql .= " ORDER BY usr.ficha_predial ASC";
 
 	 	return $this->db->query($sql)->result();
 	}

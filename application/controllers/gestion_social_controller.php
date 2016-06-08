@@ -29,7 +29,7 @@ class Gestion_social_controller extends CI_Controller {
 		// 	redirect('');
 		// }
 		$this->load->model(array('PrediosDAO', 'Gestion_socialDAO'));
-		
+
 		//se establece la vista que tiene el contenido del menu
 		$this->data['menu'] = 'gestion_social/menu';
 	}
@@ -95,7 +95,7 @@ class Gestion_social_controller extends CI_Controller {
 
 	function ficha(){
 		// // Se recibe por post la variable que define si es un registro nuevo o editado
-        $this->data["ficha"] = $this->uri->segment(4);
+    $this->data["ficha"] = $this->uri->segment(4);
 		$this->data['predio'] = $this->PrediosDAO->obtener_predio($this->uri->segment(3));
 		$this->data['ficha_social'] = $this->Gestion_socialDAO->cargar_ficha($this->uri->segment(4));
 		$this->data['valores_fichas'] = $this->Gestion_socialDAO->cargar_valores_ficha_social($this->uri->segment(4), 0);
@@ -135,7 +135,7 @@ class Gestion_social_controller extends CI_Controller {
 	}
 
 	function insertar_ficha(){
-		echo $this->Gestion_socialDAO->insertar_ficha($this->input->post('datos'));	
+		echo $this->Gestion_socialDAO->insertar_ficha($this->input->post('datos'));
 	}
 
 	function insertar_usp(){
@@ -144,7 +144,7 @@ class Gestion_social_controller extends CI_Controller {
 	}
 
 	function insertar_usr(){
-		echo $this->Gestion_socialDAO->insertar_usr($this->input->post('datos'));	
+		echo $this->Gestion_socialDAO->insertar_usr($this->input->post('datos'));
 	}
 
 	function insertar_valores_ficha(){
