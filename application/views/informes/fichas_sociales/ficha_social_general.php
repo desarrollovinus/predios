@@ -1,15 +1,4 @@
 <?php
-// funcion para calcular tamaño de una fila
-function dinamicSizeRow($columns='A:A', $content='', $columnSize=9.09, $rowSize=13)
-{
-	$nCol = split(":", $columns);
-	$nCol = count(range($nCol[0], $nCol[1]));
-	$limitCol = 8 * $nCol;
-	$content = strlen($content);
-	return ceil($content / $limitCol) * $rowSize;
-}
-
-
 //Se crea un nuevo objeto PHPExcel
 $objPHPExcel = new PHPExcel();
 $hoja = $objPHPExcel->getActiveSheet();
