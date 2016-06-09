@@ -108,9 +108,6 @@ $objDrawing2->setWidth(90);
 $objDrawing2->setOffsetX(35);
 $objDrawing2->setOffsetY(5);
 $objDrawing2->setWorksheet($objPHPExcel->getActiveSheet());
-// Estilos
-
-
 
 /*
  * Definicion de la anchura de las columnas
