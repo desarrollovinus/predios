@@ -185,6 +185,7 @@ foreach ($predios as $predio) {
 	//Contenido
 	$objPHPExcel->getActiveSheet()->setCellValue('A'.$fila, $numero++);
 	$unidad = explode('-', $predio->ficha_predial); // Se divide la ficha para sacar unidad y número
+	print_r($unidad);
 	$objPHPExcel->getActiveSheet()->setCellValue('B'.$fila, $unidad['0']);
 	$objPHPExcel->getActiveSheet()->setCellValue('C'.$fila, $unidad['1']);
 	$objPHPExcel->getActiveSheet()->setCellValue('D'.$fila, $predio->tramo);
@@ -223,12 +224,12 @@ $objPHPExcel->getActiveSheet()->getHeaderFooter()->setOddFooter('&L&B' .$objPHPE
 $objPHPExcel->getActiveSheet()->setTitle("Gestión predial");
 
 
-//Se modifican los encabezados del HTTP para indicar que se envia un archivo de Excel.
-header('Cache-Control: max-age=0');
-header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment; filename="Gestión predial.xlsx"');
+// //Se modifican los encabezados del HTTP para indicar que se envia un archivo de Excel.
+// header('Cache-Control: max-age=0');
+// header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+// header('Content-Disposition: attachment; filename="Gestión predial.xlsx"');
 
-//Se genera el excel
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-$objWriter->save('php://output');
+// //Se genera el excel
+// $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+// $objWriter->save('php://output');
 ?>
