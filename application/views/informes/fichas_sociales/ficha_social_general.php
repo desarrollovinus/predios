@@ -18,7 +18,7 @@ $objPHPExcel->getProperties()
 
 //Definicion de las configuraciones por defecto en todo el libro
 $objPHPExcel->getDefaultStyle()->getFont()->setName('Arial'); //Tipo de letra
-$objPHPExcel->getDefaultStyle()->getFont()->setSize(10); //Tamaño
+$objPHPExcel->getDefaultStyle()->getFont()->setSize(9); //Tamaño
 $objPHPExcel->getDefaultStyle()->getAlignment()->setWrapText(true);//Ajuste de texto
 $objPHPExcel->getDefaultStyle()->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);// Alineacion centrada
 
@@ -33,11 +33,11 @@ $hoja->getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(3);
 // Título de la hoja
 $hoja->setTitle("Caracterización general $ficha");
 
-//Se establecen las margenes
-$hoja->getPageMargins()->setTop(0.10); //Arriba
-$hoja->getPageMargins()->setRight(0.70); //Derecha
-$hoja->getPageMargins()->setLeft(0.80); //Izquierda
-$hoja->getPageMargins()->setBottom(0,90); //Abajo
+// //Se establecen las margenes
+// $hoja->getPageMargins()->setTop(1); //Arriba
+// $hoja->getPageMargins()->setRight(0.55); //Derecha
+// $hoja->getPageMargins()->setLeft(0.55); //Izquierda
+// $hoja->getPageMargins()->setBottom(1); //Abajo
 
 //Centrar página
 $hoja->getPageSetup()->setHorizontalCentered();
@@ -90,8 +90,8 @@ $objDrawing->setDescription('Logo de uso exclusivo de Vinus');
 $objDrawing->setPath('./img/logo_vinus.jpg');
 $objDrawing->setCoordinates('J1');
 $objDrawing->setHeight(60);
-$objDrawing->setWidth(60);
-$objDrawing->setOffsetX(30);
+$objDrawing->setWidth(55);
+$objDrawing->setOffsetX(20);
 $objDrawing->setOffsetY(5);
 $objDrawing->getShadow()->setDirection(160);
 $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
@@ -104,9 +104,9 @@ $objDrawing2->setDescription('Logo de uso exclusivo de ANI');
 $objDrawing2->setPath('./img/logo_ani.jpg');
 $objDrawing2->setCoordinates('A1');
 $objDrawing2->setHeight(50);
-$objDrawing2->setWidth(100);
+$objDrawing2->setWidth(90);
 $objDrawing2->setOffsetX(35);
-$objDrawing2->setOffsetY(0);
+$objDrawing2->setOffsetY(5);
 $objDrawing2->setWorksheet($objPHPExcel->getActiveSheet());
 // Estilos
 
@@ -118,7 +118,7 @@ $objDrawing2->setWorksheet($objPHPExcel->getActiveSheet());
 $columna = "A";
 // Asingnacion del tamaño de las columnas y filas
 for ($i=1; $i <= 50; $i++) {
-	$hoja->getColumnDimension($columna)->setWidth(8.7);
+	$hoja->getColumnDimension($columna)->setWidth(7.2);
 	$hoja->getRowDimension($i)->setRowHeight(20);
 	// siguiente columna
 	$columna++;
@@ -290,6 +290,12 @@ foreach ($this->Gestion_socialDAO->cargar_valores_ficha(1) as $valor1) {
 		$col++;
 		$col++;
 }
+
+// Si tiene otros usos
+if ($ficha_social->otros_usos != "") {
+	// Otros usos
+	$hoja->setCellValue("{$col}14", "{$ficha_social->otros_usos} _X_");
+} // if
 
 $hoja->getStyle("A15:N15")->applyFromArray($bordes);
 $hoja->setCellValue('A15', '¿En el área no requerida se puede restablecer el uso actual(en caso de requerimiento parcial)?:');
