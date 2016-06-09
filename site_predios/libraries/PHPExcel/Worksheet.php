@@ -1261,6 +1261,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 	 * @param int $fila Numeric fila a la que se le modificara el tamaño
 	 * @param float $columnSize Numeric tamaño de la columna, por defecto es 9.09
 	 * @param float $rowSize Numeric tamaño de la fila, por defecto es 13
+	 * @author Luis David Moreno Lopera - VINUS S.A.S
 	 */
 	public function setDinamicSizeRow($content='', $fila, $columns='A:A', $columnSize=9.09, $rowSize=13)
 	{

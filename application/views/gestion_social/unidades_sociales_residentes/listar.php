@@ -24,6 +24,7 @@
 					<a onclick="javascript:editar('<?php echo $usr->id; ?>')" style="cursor: pointer">
 						<img src="<?php echo base_url(); ?>img/edit.png" title="Editar información">
 					</a>
+					<?php echo anchor("informes_controller/ficha_social_usr/".str_replace(' ', '_', $usr->ficha_predial), '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización general unidades residentes"'); ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>
@@ -39,7 +40,7 @@
 			"sPaginationType": "full_numbers"
 		});
 
-		//esta sentencia es para darle el estilo a los botones jquery.ui 
+		//esta sentencia es para darle el estilo a los botones jquery.ui
 	    $( "#form input[type=submit], #form input[type=button]").button();
 	});
 </script>

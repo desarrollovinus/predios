@@ -447,6 +447,15 @@ class Informes_controller extends CI_Controller
 		$this->load->view('informes/fichas_sociales/ficha_social_general', $this->data);
 	}
 
+	function ficha_social_usr(){
+		$this->load->model(array('Gestion_socialDAO'));
+
+		$this->data["ficha"] = $this->uri->segment(3);
+		$this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($this->data["ficha"]);
+		$this->data['unidades_residentes'] = $this->Gestion_socialDAO->cargar_unidades_sociales_residentes($this->data["ficha"]);
+		$this->load->view('informes/fichas_sociales/ficha_social_usr', $this->data);
+	}
+
 	function gestion_predial_fotos(){
 		$ficha = $this->uri->segment(3);
 
