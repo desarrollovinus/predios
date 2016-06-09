@@ -550,7 +550,7 @@ $objPHPExcel->getActiveSheet()->setCellValue('F29', 'USO DE VÍA');
 $objPHPExcel->getActiveSheet()->setCellValue('O24', $predio->uso_terreno);
 $objPHPExcel->getActiveSheet()->setCellValue('O27', $predio->uso_edificacion);
 $objPHPExcel->getActiveSheet()->setCellValue('O29', $predio->topografia);
-$objPHPExcel->getActiveSheet()->setCellValue('Q58', $predio->area_total);
+$objPHPExcel->getActiveSheet()->setCellValue('Q58', $predio->area_total_catastral);
 $objPHPExcel->getActiveSheet()->setCellValue('Q61', $predio->area_requerida);
 $objPHPExcel->getActiveSheet()->setCellValue('Q63', $predio->area_residual);
 $objPHPExcel->getActiveSheet()->setCellValue('Q68', "=Q61+Q63");
