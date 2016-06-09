@@ -206,7 +206,7 @@ class InformesDAO extends CI_Model
 		$query =
 		"SELECT
 			tbl_predio.ficha_predial,
-			d.numero,
+			SUBSTRING(tbl_predio.ficha_predial, 5, 10) numero,
 			d.tramo,
 			d.abscisa_inicial,
 			d.abscisa_final,

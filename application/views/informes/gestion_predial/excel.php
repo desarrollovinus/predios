@@ -96,7 +96,7 @@ $bordes = array(
  */
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(5);
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(9);
-$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(6);
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(15);
 $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(18);
 $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(8);
 $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(8);
@@ -186,7 +186,7 @@ foreach ($predios as $predio) {
 	$objPHPExcel->getActiveSheet()->setCellValue('A'.$fila, $numero++);
 	$unidad = explode('-', $predio->ficha_predial); // Se divide la ficha para sacar unidad y número
 	$objPHPExcel->getActiveSheet()->setCellValue('B'.$fila, $unidad['0']);
-	$objPHPExcel->getActiveSheet()->setCellValue('C'.$fila, $unidad['1']);
+	$objPHPExcel->getActiveSheet()->setCellValue('C'.$fila, $predio->numero);
 	$objPHPExcel->getActiveSheet()->setCellValue('D'.$fila, $predio->tramo);
 	$objPHPExcel->getActiveSheet()->setCellValue('E'.$fila, $kms_inicial."+".$ms_inicial);
 	$objPHPExcel->getActiveSheet()->setCellValue('F'.$fila, $kms_final."+".$ms_final);

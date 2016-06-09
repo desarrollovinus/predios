@@ -132,18 +132,18 @@ $objPHPExcel->getActiveSheet()->setCellValue('B1', 'CONCESIÓN VÍAS DEL NUS - V
 $objPHPExcel->getActiveSheet()->setCellValue('B2', 'FORMATO DE GESTIÓN DE PROCESOS PREDIALES');
 $objPHPExcel->getActiveSheet()->setCellValue('B3', 'Fecha de generación: '.$this->InformesDAO->formatear_fecha(date('Y-m-d')).' - '.date('h:i A'));
 $objPHPExcel->getActiveSheet()->setCellValue('B5', 'PREDIOS REQUERIDOS');
-$objPHPExcel->getActiveSheet()->setCellValue('C5', 'ENVIADOS A A INTERVENTORÍA');
-$objPHPExcel->getActiveSheet()->setCellValue('D5', 'APROBADAS');
-$objPHPExcel->getActiveSheet()->setCellValue('E5', 'EN PRIMERA REVISIÓN');
-$objPHPExcel->getActiveSheet()->setCellValue('F5', 'ESTUDIO DE TÍTULOS APROBADO');
-$objPHPExcel->getActiveSheet()->setCellValue('G5', 'FICHA SOCIAL APROBADA');
-$objPHPExcel->getActiveSheet()->setCellValue('H5', 'AVALÚO (LONJA)');
-$objPHPExcel->getActiveSheet()->setCellValue('I5', 'AVALÚO (APROBADO)');
-$objPHPExcel->getActiveSheet()->setCellValue('J5', 'OFERTA DE COMPRA');
-$objPHPExcel->getActiveSheet()->setCellValue('K5', 'OFERTA NOTIFICADA');
-$objPHPExcel->getActiveSheet()->setCellValue('L5', 'ACEPTACIÓN DE LA OFERTA');
+$objPHPExcel->getActiveSheet()->setCellValue('C5', 'ENVIADOS A INTERVENTORÍA');
+$objPHPExcel->getActiveSheet()->setCellValue('D5', 'APROBADOS');
+$objPHPExcel->getActiveSheet()->setCellValue('E5', 'EN ÚNICA REVISIÓN');
+$objPHPExcel->getActiveSheet()->setCellValue('F5', 'ESTUDIOS DE TÍTULOS APROBADOS');
+$objPHPExcel->getActiveSheet()->setCellValue('G5', 'FICHAS SOCIALES APROBADAS');
+$objPHPExcel->getActiveSheet()->setCellValue('H5', 'AVALÚOS EN PROCESO');
+$objPHPExcel->getActiveSheet()->setCellValue('I5', 'AVALÚOS APROBADOS');
+$objPHPExcel->getActiveSheet()->setCellValue('J5', 'OFERTAS DE COMPRA EN PROCESO');
+$objPHPExcel->getActiveSheet()->setCellValue('K5', 'OFERTAS DE COMPRA NOTIFICADAS');
+$objPHPExcel->getActiveSheet()->setCellValue('L5', 'ACEPTACIONES DE OFERTA');
 $objPHPExcel->getActiveSheet()->setCellValue('M5', 'PERMISOS DE INTERVENCIÓN');
-$objPHPExcel->getActiveSheet()->setCellValue('N5', 'PROMESA DE COMPRAVENTA');
+$objPHPExcel->getActiveSheet()->setCellValue('N5', 'PROMESAS FIRMADAS');
 $objPHPExcel->getActiveSheet()->setCellValue('O5', 'PRIMER PAGO');
 $objPHPExcel->getActiveSheet()->setCellValue('P5', '% AVANCE DE INSUMOS');
 $objPHPExcel->getActiveSheet()->setCellValue('Q5', '% AVANCE PERMISOS DE INTERVENCIÓN');
@@ -223,6 +223,7 @@ $descripciones = array(
 	'Ofertas aceptadas',
 	'Permisos otorgados por propietarios que permiten el ingreso',
 	'Promesas de compraventa firmadas por propietarios',
+	'Predios que han tenido un primer pago',
 	'Porcentaje de avance con relación al número de permiso sobre la totalidad de predios y de porcentadje sobre la totalidad de la longitud',
 );
 
