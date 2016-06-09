@@ -205,7 +205,7 @@ foreach ($predios as $predio) {
 	$objPHPExcel->getActiveSheet()->setCellValue('Q'.$fila, $predio->uso_edificacion);
 	$objPHPExcel->getActiveSheet()->setCellValue('R'.$fila, $predio->uso_terreno);
 	$objPHPExcel->getActiveSheet()->setCellValue('S'.$fila, $predio->topografia);
-	$objPHPExcel->getActiveSheet()->setCellValue('T'.$fila, $predio->area_total);
+	$objPHPExcel->getActiveSheet()->setCellValue('T'.$fila, $predio->area_total_catastral);
 	$objPHPExcel->getActiveSheet()->setCellValue('U'.$fila, $predio->area_requerida);
 	$objPHPExcel->getActiveSheet()->setCellValue('V'.$fila, $predio->area_residual);
 	$objPHPExcel->getActiveSheet()->setCellValue('W'.$fila, "=T{$fila}-X{$fila}");
