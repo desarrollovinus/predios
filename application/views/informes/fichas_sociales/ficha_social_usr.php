@@ -1,4 +1,5 @@
 <?php
+$predio = $this->InformesDAO->obtener_informe_gestion_predial_ani($unidad_residente->ficha_predial);
 //Se crea un nuevo objeto PHPExcel
 $objPHPExcel = new PHPExcel();
 $hoja = $objPHPExcel->getActiveSheet();
@@ -26,7 +27,7 @@ $hoja->getPageSetup()->setScale(100);
 $hoja->getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(3);
 
 // Título de la hoja
-$hoja->setTitle("Caracterización general $ficha");
+$hoja->setTitle("Caracterización general $unidad_residente->ficha_predial");
 
 //Se establecen las margenes
 $hoja->getPageMargins()->setTop(0.10); //Arriba
@@ -117,7 +118,7 @@ $hoja->mergeCells("D{$fila}:I{$fila}");
 $hoja->mergeCells("M{$fila}:N{$fila}");
 $hoja->setCellValue("D{$fila}", "CONCESIÓN VÍAS DEL NUS - VINUS");
 $hoja->setCellValue("L{$fila}", "Código:");
-$hoja->setCellValue("M{$fila}", "F012");
+$hoja->setCellValue("M{$fila}", "F013");
 $fila++;
 
 $hoja->mergeCells("D{$fila}:I3");
@@ -150,7 +151,7 @@ $hoja->mergeCells("K{$fila}:N{$fila}");
 $hoja->setCellValue("A{$fila}", "Proyecto:");
 $hoja->setCellValue("C{$fila}", "Vias del Nus");
 $hoja->setCellValue("F{$fila}", "Ficha predial:");
-$hoja->setCellValue("H{$fila}", $ficha);
+$hoja->setCellValue("H{$fila}", $unidad_residente->ficha_predial);
 $hoja->setCellValue("J{$fila}", "Tramo:");
 $hoja->setCellValue("K{$fila}", $predio->tramo);
 $fila++;
@@ -175,7 +176,7 @@ $hoja->mergeCells("J{$fila}:N{$fila}");
 $hoja->setCellValue("A{$fila}", "Unidad social nro:");
 $hoja->setCellValue("D{$fila}", "{nro}");
 $hoja->setCellValue("F{$fila}", "Relacion con el inmueble");
-$hoja->setCellValue("J{$fila}", "{Relacion con el inmueble}");
+$hoja->setCellValue("J{$fila}", $unidad_residente->relacion_inmueble);
 $fila++;
 
 array_push($filas_estrechas, $fila);
@@ -192,11 +193,11 @@ $hoja->mergeCells("E{$fila}:H{$fila}");
 $hoja->mergeCells("I{$fila}:J{$fila}");
 $hoja->mergeCells("K{$fila}:L{$fila}");
 $hoja->setCellValue("A{$fila}", "Responsable de la unidad social");
-$hoja->setCellValue("E{$fila}", "{Responsable de la unidad social}");
+$hoja->setCellValue("E{$fila}", $unidad_residente->responsable);
 $hoja->setCellValue("I{$fila}", "Identificación");
-$hoja->setCellValue("K{$fila}", "{Identificacion}");
+$hoja->setCellValue("K{$fila}", "$unidad_residente->identificacion");
 $hoja->setCellValue("M{$fila}", "Edad");
-$hoja->setCellValue("N{$fila}", "{Edad}");
+$hoja->setCellValue("N{$fila}", $unidad_residente->edad);
 $fila++;
 
 $hoja->mergeCells("A{$fila}:C{$fila}");
@@ -204,9 +205,9 @@ $hoja->mergeCells("D{$fila}:F{$fila}");
 $hoja->mergeCells("G{$fila}:J{$fila}");
 $hoja->mergeCells("K{$fila}:N{$fila}");
 $hoja->setCellValue("A{$fila}", "Ocupación");
-$hoja->setCellValue("D{$fila}", "{Ocupación}");
+$hoja->setCellValue("D{$fila}", "$unidad_residente->ocupacion");
 $hoja->setCellValue("G{$fila}", "Otras actividades");
-$hoja->setCellValue("K{$fila}", "{Otras actividades}");
+$hoja->setCellValue("K{$fila}", $unidad_residente->otras_actividades);
 $fila++;
 
 $hoja->mergeCells("A{$fila}:C{$fila}");
@@ -214,9 +215,9 @@ $hoja->mergeCells("D{$fila}:E{$fila}");
 $hoja->mergeCells("F{$fila}:H{$fila}");
 $hoja->mergeCells("I{$fila}:N{$fila}");
 $hoja->setCellValue("A{$fila}", "Ingresos mensuales");
-$hoja->setCellValue("D{$fila}", "{Ingresos mensuales}");
+$hoja->setCellValue("D{$fila}", $unidad_residente->ingresos_mensuales);
 $hoja->setCellValue("F{$fila}", "Datos de verificacion");
-$hoja->setCellValue("I{$fila}", "{Datos de verificacion}");
+$hoja->setCellValue("I{$fila}", $unidad_residente->datos_verificacion);
 $fila++;
 
 array_push($filas_estrechas, $fila);
@@ -234,7 +235,178 @@ $hoja->setCellValue("F{$fila}", "Edad");
 $hoja->setCellValue("G{$fila}", "Ocupación");
 $hoja->setCellValue("I{$fila}", "Ingresos mensuales");
 $hoja->setCellValue("K{$fila}", "Datos de verificación");
+$fila++;
 
+$i = 1;
+$nombre_integrante = "nombre_integrante".$i;
+while ($unidad_residente->$nombre_integrante != null) {
+	$i = (string)$i;
+	$nombre_integrante = "nombre_integrante".$i;
+	$relacion_integrante = "relacion_integrante".$i;
+	$edad_integrante = "edad_integrante".$i;
+	$ocupacion_integrante = "ocupacion_integrante".$i;
+	$ingresos_integrante = "ingresos_integrante".$i;
+	$verificacion_integrante = "verificacion_integrante".$i;
+	$hoja->mergeCells("A{$fila}:C{$fila}");
+	$hoja->mergeCells("D{$fila}:E{$fila}");
+	$hoja->mergeCells("G{$fila}:H{$fila}");
+	$hoja->mergeCells("I{$fila}:J{$fila}");
+	$hoja->mergeCells("K{$fila}:N{$fila}");
+	$hoja->setCellValue("A{$fila}", $unidad_residente->$nombre_integrante);
+	$hoja->setCellValue("D{$fila}", $unidad_residente->$relacion_integrante);
+	$hoja->setCellValue("F{$fila}", $unidad_residente->$edad_integrante);
+	$hoja->setCellValue("G{$fila}", $unidad_residente->$ocupacion_integrante);
+	$hoja->setCellValue("I{$fila}", $unidad_residente->$ingresos_integrante);
+	$hoja->setCellValue("K{$fila}", $unidad_residente->$verificacion_integrante);
+	$i++;
+	$nombre_integrante = "nombre_integrante".$i;
+	$fila++;
+}
+
+array_push($filas_estrechas, $fila);
+$hoja->mergeCells("A{$fila}:N{$fila}");
+$fila++;
+
+$hoja->mergeCells("A{$fila}:K{$fila}");
+$hoja->mergeCells("L{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", "¿Cual es la suma aproximada de ingresos de la totalidad de integrantes de la unidad social?");
+$hoja->setCellValue("L{$fila}", $unidad_residente->total_ingresos);
+$fila++;
+
+$hoja->mergeCells("A{$fila}:E{$fila}");
+$hoja->mergeCells("F{$fila}:G{$fila}");
+$hoja->mergeCells("H{$fila}:L{$fila}");
+$hoja->mergeCells("M{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", "¿Hace cuanto vive en esta vivienda?");
+$hoja->setCellValue("F{$fila}", $unidad_residente->antiguedad);
+$hoja->setCellValue("H{$fila}", "Si es arrendamiento ¿cual es el canon?");
+$hoja->setCellValue("M{$fila}", $unidad_residente->canon);
+$fila++;
+
+$hoja->mergeCells("A{$fila}:G{$fila}");
+$hoja->mergeCells("K{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", "¿Algún mienbro de la unidad social cuenta con otro inmueble?");
+$hoja->setCellValue("H{$fila}", "SI ___");
+$hoja->setCellValue("I{$fila}", "NO ___");
+
+if ($unidad_residente->integrante_posee_inmuebe) {
+	$hoja->setCellValue("H{$fila}", "SI _X_");
+} else {
+	$hoja->setCellValue("I{$fila}", "NO _X_");
+}
+
+$hoja->setCellValue("J{$fila}", "¿Cuál?");
+$hoja->setCellValue("K{$fila}", $unidad_residente->integrante_inmueble);
+$fila++;
+
+$hoja->mergeCells("A{$fila}:G{$fila}");
+$hoja->mergeCells("J{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", "En caso de traslado, ¿Puede hacerse a dicho inmueble?");
+$hoja->setCellValue("H{$fila}", "SI ___");
+$hoja->setCellValue("I{$fila}", "NO ___");
+
+if ($unidad_residente->traslado_inmueble) {
+	$hoja->setCellValue("H{$fila}", "SI _X_");
+} else {
+	$hoja->setCellValue("I{$fila}", "NO _X_");
+}
+
+$hoja->setCellValue("J{$fila}", "¿Por qué?");
+$fila++;
+
+$hoja->mergeCells("A{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", $unidad_residente->traslado_razon);
+$fila++;
+
+$hoja->mergeCells("A{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", "¿Cuántos integrantes de la unidad social gozan de cualquiera de los siguientes servicios contratados con una entidad legalmente reconocida como para certificarlo?");
+$fila++;
+
+//servicios
+$hoja->mergeCells("A{$fila}:B{$fila}");
+$hoja->mergeCells("C{$fila}:D{$fila}");
+$hoja->mergeCells("E{$fila}:F{$fila}");
+$hoja->mergeCells("G{$fila}:H{$fila}");
+$hoja->mergeCells("I{$fila}:J{$fila}");
+$hoja->mergeCells("K{$fila}:L{$fila}");
+$hoja->mergeCells("M{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", "Guardería infantil");
+$hoja->setCellValue("C{$fila}", "Restaurante escolar");
+$hoja->setCellValue("E{$fila}", "Transporte escolar");
+$hoja->setCellValue("G{$fila}", "Educacion básica");
+$hoja->setCellValue("I{$fila}", "Rehabilitacíon");
+$hoja->setCellValue("K{$fila}", "Apoyo geriátrico");
+$hoja->setCellValue("M{$fila}", "Ninguno");
+$fila++;
+
+$hoja->mergeCells("A{$fila}:B{$fila}");
+$hoja->mergeCells("C{$fila}:D{$fila}");
+$hoja->mergeCells("E{$fila}:F{$fila}");
+$hoja->mergeCells("G{$fila}:H{$fila}");
+$hoja->mergeCells("I{$fila}:J{$fila}");
+$hoja->mergeCells("K{$fila}:L{$fila}");
+$hoja->mergeCells("M{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", $unidad_residente->servicio_guarderia);
+$hoja->setCellValue("C{$fila}", $unidad_residente->servicio_restaurante);
+$hoja->setCellValue("E{$fila}", $unidad_residente->servicio_transporte);
+$hoja->setCellValue("G{$fila}", $unidad_residente->servicio_educacion);
+$hoja->setCellValue("I{$fila}", $unidad_residente->servicio_rehabilitacion);
+$hoja->setCellValue("K{$fila}", $unidad_residente->servicio_geriatria);
+$hoja->setCellValue("M{$fila}", $unidad_residente->servicio_ninguno);
+
+
+$fila++;
+//
+$hoja->mergeCells("A{$fila}:G{$fila}");
+$hoja->mergeCells("K{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", "Ademas de residir, ¿la unidad social desarrolla actividades productivas en el inmueble?");
+$hoja->setCellValue("H{$fila}", "SI ___");
+$hoja->setCellValue("I{$fila}", "NO ___");
+
+if ($unidad_residente->desarrollo_actividades_productivas) {
+	$hoja->setCellValue("H{$fila}", "SI _X_");
+} else {
+	$hoja->setCellValue("I{$fila}", "NO _X_");
+}
+
+$hoja->setCellValue("J{$fila}", "¿Cuáles?");
+$hoja->setCellValue("K{$fila}", $unidad_residente->actividades_productivas);
+$fila++;
+
+array_push($filas_estrechas, $fila);
+$hoja->mergeCells("A{$fila}:N{$fila}");
+$fila++;
+
+$hoja->mergeCells("A{$fila}:N{$fila}");
+$hoja->getStyle("A{$fila}:N{$fila}")->applyFromArray($relleno_gris);
+$hoja->setCellValue("A{$fila}", "3. APORTE DE DOCUMENTOS");
+$fila++;
+
+$hoja->mergeCells("A{$fila}:N{$fila}");
+//pendiente
+$hoja->setCellValue("A{$fila}", "");
+$fila++;
+
+array_push($filas_estrechas, $fila);
+$hoja->mergeCells("A{$fila}:N{$fila}");
+$fila++;
+
+$hoja->mergeCells("A{$fila}:D{$fila}");
+$hoja->mergeCells("E{$fila}:N{$fila}");
+$hoja->setCellValue("A{$fila}", "Fecha de levantamiento de la información");
+$hoja->setCellValue("E{$fila}", "El profesional social certifica que en la fecha se levantó la onformacion contenida en el presente documento");
+$fila++;
+
+$fila2 = $fila + 1;
+$hoja->mergeCells("A{$fila}:D{$fila2}");
+$hoja->mergeCells("E{$fila}:I{$fila}");
+$hoja->mergeCells("J{$fila}:N{$fila}");
+$hoja->setCellValue("E{$fila}", "Nombre / Cargo");
+$hoja->setCellValue("J{$fila}", "Firma / CC");
+$fila++;
+
+$hoja->mergeCells("E{$fila}:I{$fila}");
+$hoja->mergeCells("J{$fila}:N{$fila}");
 // Asignación del tamaño de las columnas
 for ($columna="A"; $columna < "N"; $columna++) {
 	$hoja->getColumnDimension($columna)->setWidth(8.7);
@@ -255,7 +427,7 @@ foreach ($filas_estrechas as $f) {
 
 header('Cache-Control: max-age=0');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment; filename="'.$ficha.' - Caracterización general".xlsx"');
+header('Content-Disposition: attachment; filename="'.$unidad_residente->ficha_predial.' - Caracterización general".xlsx"');
 
 //Se genera el excel
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
