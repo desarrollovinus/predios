@@ -1,5 +1,6 @@
 <?php
 //Zona horaria
+error_reporting(-1);
 date_default_timezone_set('America/Bogota');
 
 //Se carga la librer&iacute;a de PDF y la libreria de impresion rapida
@@ -450,9 +451,8 @@ class Informes_controller extends CI_Controller
 	function ficha_social_usr(){
 		$this->load->model(array('Gestion_socialDAO'));
 
-		$this->data["ficha"] = $this->uri->segment(3);
-		$this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($this->data["ficha"]);
-		$this->data['unidades_residentes'] = $this->Gestion_socialDAO->cargar_unidades_sociales_residentes($this->data["ficha"]);
+		$this->data["id"] = $this->uri->segment(3);
+		$this->data['unidad_residente'] = $this->Gestion_socialDAO->cargar_unidad_social_residente($this->data["id"]);
 		$this->load->view('informes/fichas_sociales/ficha_social_usr', $this->data);
 	}
 
