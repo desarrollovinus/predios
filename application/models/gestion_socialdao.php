@@ -88,9 +88,80 @@ class Gestion_socialDAO extends CI_Model
 
 
 	function cargar_unidad_social_residente($id){
-		$this->db->select('*');
-		$this->db->where('id', $id);
-	 	return $this->db->get('tbl_unidades_sociales_residentes')->row();
+		$sql = "SELECT
+			usr.id,
+			usr.ficha_predial,
+			vrelacion.nombre AS relacion_inmueble,
+			usr.responsable,
+			usr.identificacion,
+			usr.edad,
+			vocupacion.nombre AS ocupacion,
+			usr.otras_actividades,
+			usr.ingresos_mensuales,
+			usr.datos_verificacion,
+			usr.nombre_integrante1,
+			usr.nombre_integrante2,
+			usr.nombre_integrante3,
+			usr.nombre_integrante4,
+			usr.nombre_integrante5,
+			vrelacion1.nombre AS relacion_integrante1,
+			vrelacion2.nombre AS relacion_integrante2,
+			vrelacion3.nombre AS relacion_integrante3,
+			vrelacion4.nombre AS relacion_integrante4,
+			vrelacion5.nombre AS relacion_integrante5,
+			usr.edad_integrante1,
+			usr.edad_integrante2,
+			usr.edad_integrante3,
+			usr.edad_integrante4,
+			usr.edad_integrante5,
+			vocupacion1.nombre AS ocupacion_integrante1,
+			vocupacion2.nombre AS ocupacion_integrante2,
+			vocupacion3.nombre AS ocupacion_integrante3,
+			vocupacion4.nombre AS ocupacion_integrante4,
+			vocupacion5.nombre AS ocupacion_integrante5,
+			usr.ingresos_integrante1,
+			usr.ingresos_integrante2,
+			usr.ingresos_integrante3,
+			usr.ingresos_integrante4,
+			usr.ingresos_integrante5,
+			usr.verificacion_integrante1,
+			usr.verificacion_integrante2,
+			usr.verificacion_integrante3,
+			usr.verificacion_integrante4,
+			usr.verificacion_integrante5,
+			usr.total_ingresos,
+			usr.antiguedad,
+			usr.canon,
+			usr.integrante_posee_inmuebe,
+			usr.integrante_inmueble,
+			usr.traslado_inmueble,
+			usr.traslado_razon,
+			usr.servicio_educacion,
+			usr.servicio_geriatria,
+			usr.servicio_guarderia,
+			usr.servicio_ninguno,
+			usr.servicio_rehabilitacion,
+			usr.servicio_restaurante,
+			usr.servicio_transporte,
+			usr.desarrollo_actividades_productivas,
+			usr.actividades_productivas
+		FROM
+			tbl_unidades_sociales_residentes AS usr
+		LEFT JOIN tbl_valores_social AS vrelacion ON usr.relacion_inmueble = vrelacion.id
+		LEFT JOIN tbl_valores_social AS vocupacion ON usr.ocupacion = vocupacion.id
+		LEFT JOIN tbl_valores_social AS vrelacion1 ON usr.relacion_integrante1 = vrelacion1.id
+		LEFT JOIN tbl_valores_social AS vrelacion2 ON usr.relacion_integrante2 = vrelacion1.id
+		LEFT JOIN tbl_valores_social AS vrelacion3 ON usr.relacion_integrante3 = vrelacion1.id
+		LEFT JOIN tbl_valores_social AS vrelacion4 ON usr.relacion_integrante4 = vrelacion1.id
+		LEFT JOIN tbl_valores_social AS vrelacion5 ON usr.relacion_integrante5 = vrelacion1.id
+		LEFT JOIN tbl_valores_social AS vocupacion1 ON usr.ocupacion_integrante1 = vocupacion1.id
+		LEFT JOIN tbl_valores_social AS vocupacion2 ON usr.ocupacion_integrante2 = vocupacion2.id
+		LEFT JOIN tbl_valores_social AS vocupacion3 ON usr.ocupacion_integrante3 = vocupacion3.id
+		LEFT JOIN tbl_valores_social AS vocupacion4 ON usr.ocupacion_integrante4 = vocupacion4.id
+		LEFT JOIN tbl_valores_social AS vocupacion5 ON usr.ocupacion_integrante5 = vocupacion5.id
+		WHERE
+			usr.id = {$id}";
+	 	return $this->db->query($sql)->row();
 	}
 
 	function cargar_unidades_sociales_productivas($ficha_predial=null){
