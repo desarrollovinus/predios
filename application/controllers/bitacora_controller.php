@@ -27,6 +27,11 @@ class Bitacora_controller extends CI_Controller
 		$this->data['contenido_principal'] = 'bitacora/index_view';
 		$this->load->view('includes/template', $this->data);
 	}
+
+	function ftp()
+	{
+		echo "http://orfeoweb.hatovial.com/orfeo384/buscar_radicado_predios.php";
+	}
 	
 	function lista_fichas() {
 		$this->load->model('PrediosDAO');
@@ -41,13 +46,14 @@ class Bitacora_controller extends CI_Controller
 		$ficha = utf8_encode($this->input->post('ficha'));
 		$fecha = utf8_encode($this->input->post('fecha'));
 		$remitente = utf8_encode($this->input->post('remitente'));
+		$radicado = utf8_encode($this->input->post('radicado'));
 		$titulo = utf8_encode($this->input->post('titulo'));
 		$observacion = utf8_encode($this->input->post('observacion'));
 		$usuario = $this->session->userdata('id_usuario');
 		
 		$this->load->model('BitacoraDAO');
 		
-		if($this->BitacoraDAO->insertar_anotacion($ficha, $fecha, $titulo, $remitente, $observacion, $usuario))
+		if($this->BitacoraDAO->insertar_anotacion($ficha, $fecha, $titulo, $remitente, $radicado, $observacion, $usuario))
 		{
 			echo "correcto";
 		}
@@ -112,7 +118,7 @@ class Bitacora_controller extends CI_Controller
 		$permisos = $this->session->userdata('permisos');
 		
 		$fila = 0;
-		$respuesta = '<table width="100%" id="tabla"><thead><tr><th>Fecha</th><th>Remitente</th><th>Titulo</th><th>Observaci&oacute;n</th><th></th></tr></thead><tbody>';
+		$respuesta = '<table width="100%" id="tabla"><thead><tr><th>Fecha</th><th>Remitente</th><th>Titulo</th><th>Observaci&oacute;n</th><th>Radicado</th><th></th></tr></thead><tbody>';
 		
 		foreach ($bitacora as $anotacion):
 			$respuesta.='<tr class="';
@@ -136,7 +142,26 @@ class Bitacora_controller extends CI_Controller
 				$respuesta.='<td>';
 					$respuesta.= utf8_decode($anotacion->observacion);
 				$respuesta.='</td>';
-				$respuesta.='<td style="width:70px;">';
+
+				$radicado = $anotacion->radicado;
+				$anio = substr($radicado, 0,4);
+				$dependencia = substr($radicado, 4,3);
+				$pdf = 'http://orfeoweb.hatovial.com/orfeo384/bodega/'.$anio.'/'.$dependencia.'/'.$radicado.'.pdf';
+				$tif = 'http://orfeoweb.hatovial.com/orfeo384/bodega/'.$anio.'/'.$dependencia.'/'.$radicado.'.tif';
+
+				if (strlen(file_get_contents("$pdf")))
+				{
+					$archivo = $pdf;
+				} else {
+					$archivo = $tif;
+				}
+
+				$respuesta.='<td>';
+
+					$respuesta.= '<a target="_blank" href="'.$archivo.'" onClick="window.open(this.href, this.target, width=800,height=600); return false;">'.$radicado.'</a>';
+
+				$respuesta.='</td>';
+				$respuesta.='<td width="90px">';
 					if(isset($permisos['Bit&aacute;cora']['Editar anotaciones'])) {
 						$respuesta.= '<a title="Editar" href="'.site_url('bitacora_controller/editar_anotacion').'" rel="Editar" id="'.$anotacion->id_bitacora.'"><img src="'.base_url().'img/edit.png"></a>';
 					}
@@ -192,6 +217,7 @@ class Bitacora_controller extends CI_Controller
 			$this->load->model('BitacoraDAO');
 			$anotacion['titulo'] = utf8_encode($this->input->post('titulo'));
 			$anotacion['remitente'] = utf8_encode($this->input->post('remitente'));
+			$anotacion['radicado'] = utf8_encode($this->input->post('radicado'));
 			$anotacion['fecha'] = utf8_encode($this->input->post('fecha'));
 			$anotacion['observacion'] = utf8_encode($this->input->post('observacion'));
 			if( ! $this->BitacoraDAO->editar_anotacion($id_bitacora, $anotacion) ) {

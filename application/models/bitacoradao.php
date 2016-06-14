@@ -33,11 +33,12 @@ class BitacoraDAO extends CI_Model
 		return $resultado;
 	}
 	
-	function insertar_anotacion($ficha_predial, $fecha, $titulo, $remitente, $observacion, $usuario)
+	function insertar_anotacion($ficha_predial, $fecha, $titulo, $remitente, $radicado, $observacion, $usuario)
 	{
 		$this->db->set('ficha_predial', $ficha_predial);
 		$this->db->set('titulo', $titulo);
 		$this->db->set('remitente', $remitente);
+		$this->db->set('radicado', $radicado);
 		$this->db->set('fecha', $fecha);
 		$this->db->set('observacion', $observacion);
 		$this->db->set('usuario', $usuario);
