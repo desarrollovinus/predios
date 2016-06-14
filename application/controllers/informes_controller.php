@@ -45,7 +45,7 @@ class Informes_controller extends CI_Controller
 		$this->data['menu'] = 'informes/menu';
 
 		//Librería de Excel
-        $this->load->library(array('PHPExcel'));
+        $this->load->library(array('PHPExcel', 'PHPWord'));
 
 	}
 
@@ -410,16 +410,14 @@ class Informes_controller extends CI_Controller
 		$this->data['linderos'] = 				$this->PrediosDAO->obtener_linderos($this->data['predio']->ficha_predial);
 		$this->data['propietarios'] = 			$this->PropietariosDAO->obtener_propietarios($this->data['predio']->ficha_predial);
 
-
-
-		header("Content-Type: application/msword; charset=utf-8");
-		header("Expires: 0");
-		header("Cache-Control:  must-revalidate, post-check=0, pre-check=0");
-		header("Content-disposition: attachment; filename=\"Estudio de titulos - ".$this->data['predio']->ficha_predial.".doc\"");
+		// header("Content-Type: application/msword; charset=utf-8");
+		// header("Expires: 0");
+		// header("Cache-Control:  must-revalidate, post-check=0, pre-check=0");
+		// header("Content-disposition: attachment; filename=\"Estudio de titulos - ".$this->data['predio']->ficha_predial.".doc\"");
 
 
 
-		$this->load->view('informes/estudio_titulos/plantilla', $this->data);
+		$this->load->view('informes/estudio_titulos/word', $this->data);
 	}
 
 	function gestion_predial() {
