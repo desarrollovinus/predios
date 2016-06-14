@@ -27,7 +27,7 @@ $hoja->getPageSetup()->setScale(100);
 $hoja->getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(3);
 
 // Título de la hoja
-$hoja->setTitle("Caracterización general $unidad_residente->ficha_predial");
+$hoja->setTitle("Unidad social residente $unidad_residente->ficha_predial");
 
 //Se establecen las margenes
 $hoja->getPageMargins()->setTop(0.10); //Arriba
@@ -441,7 +441,7 @@ foreach ($hoja->getMergeCells() as $cells) {
 	preg_match_all('![a-zA-Z]+!', $cells, $cols);
 	$value = $hoja->getCell($cols[0][0].$rows[0][0])->getValue();
 	if (strpos($value, "?") !== false && strpos($value, "¿") === false) {
-		$newValue = str_replace("?", "ñ", $hoja->getCell($cols[0][0].$rows[0][0])->getValue());
+		$newValue = str_replace("?", "ñ", $value);
 		$hoja->setCellValue($cols[0][0].$rows[0][0], $newValue);
 	}
 }
