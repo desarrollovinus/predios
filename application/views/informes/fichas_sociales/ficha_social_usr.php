@@ -263,6 +263,16 @@ while ($unidad_residente->$nombre_integrante != null) {
 	$fila++;
 }
 
+// si no hay ningún integrante se deja una fila en blanco
+if ($i == 1) {
+	$hoja->mergeCells("A{$fila}:C{$fila}");
+	$hoja->mergeCells("D{$fila}:E{$fila}");
+	$hoja->mergeCells("G{$fila}:H{$fila}");
+	$hoja->mergeCells("I{$fila}:J{$fila}");
+	$hoja->mergeCells("K{$fila}:N{$fila}");
+	$fila++;
+}
+
 array_push($filas_estrechas, $fila);
 $hoja->mergeCells("A{$fila}:N{$fila}");
 $fila++;
@@ -394,7 +404,7 @@ $fila++;
 $hoja->mergeCells("A{$fila}:D{$fila}");
 $hoja->mergeCells("E{$fila}:N{$fila}");
 $hoja->setCellValue("A{$fila}", "Fecha de levantamiento de la información");
-$hoja->setCellValue("E{$fila}", "El profesional social certifica que en la fecha se levantó la onformacion contenida en el presente documento");
+$hoja->setCellValue("E{$fila}", "El profesional social certifica que en la fecha se levantó la información contenida en el presente documento");
 $fila++;
 
 $fila2 = $fila + 1;
@@ -425,9 +435,20 @@ foreach ($filas_estrechas as $f) {
 	$hoja->getRowDimension($f)->setRowHeight(5.7);
 }
 
+// cambia los signos de interrogacion por ñ siempre y cuando solo exista el signo de cierre solamente
+foreach ($hoja->getMergeCells() as $cells) {
+	preg_match_all('!\d+!', $cells, $rows);
+	preg_match_all('![a-zA-Z]+!', $cells, $cols);
+	$value = $hoja->getCell($cols[0][0].$rows[0][0])->getValue();
+	if (strpos($value, "?") !== false && strpos($value, "¿") === false) {
+		$newValue = str_replace("?", "ñ", $hoja->getCell($cols[0][0].$rows[0][0])->getValue());
+		$hoja->setCellValue($cols[0][0].$rows[0][0], $newValue);
+	}
+}
+
 header('Cache-Control: max-age=0');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment; filename="'.$unidad_residente->ficha_predial.' - Caracterización general".xlsx"');
+header('Content-Disposition: attachment; filename="'.$unidad_residente->ficha_predial.' - Unidad social residente".xlsx"');
 
 //Se genera el excel
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
