@@ -100,10 +100,10 @@ $table->addCell(10000, $styleCell)->addText(utf8_decode("Nº PREDIO"), 'parrafo1
 $table->addCell(10000, $styleCell)->addText(utf8_decode("ABSCISA INICIAL"), 'parrafo1', $alineacion_centrada);
 $table->addCell(10000, $styleCell)->addText(utf8_decode("ABSCISA FINAL"), 'parrafo1', $alineacion_centrada);
 $table->addRow();
-$abscisa_inicial = explode(".", (string)((int)$descripcion->abscisa_inicial / 1000));
-$abscisa_inicial = "K".$abscisa_inicial[0]."+".$abscisa_inicial[1];
-$abscisa_final = explode(".", (string)((int)$descripcion->abscisa_final / 1000));
-$abscisa_final = "K".$abscisa_final[0]."+".$abscisa_final[1];
+$abscisa_inicial = explode(".", $descripcion->abscisa_inicial / 1000);
+$abscisa_inicial = "K".$abscisa_inicial[0] ."+" .$descripcion->abscisa_inicial % 1000;
+$abscisa_final = explode(".", $descripcion->abscisa_final / 1000);
+$abscisa_final = "K".$abscisa_final[0]. "+". $descripcion->abscisa_final % 1000;
 $table->addCell(10000, $styleCell)->addText(utf8_decode("VÍAS DEL NUS"), 'parrafo2', $alineacion_centrada);
 $table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($descripcion->tramo)), 'parrafo2', $alineacion_centrada);
 $table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($predio->ficha_predial)), 'parrafo2', $alineacion_centrada);
@@ -231,6 +231,10 @@ foreach ($documentos_items as $item) {
 
 $seccion1->addText(utf8_decode("9. FECHA DE ELABORACION Y AJUSTE"), 'titulo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
+
+$seccion1->addText(utf8_decode("EL presente estudio de títulos se realizó el ". $this->InformesDAO->formatear_fecha(date('Y-m-d'))), 'parrafo2', $alineacion_izquierda);
+$seccion1->addTextBreak();
+
 
 $footer = $seccion1->createFooter();
 $footer->addText(utf8_decode("Concesión Vías del NUS S.A.S | Calle 59 No.48 35 Copacabana, Antioquia (Kilómetro 4 + 500 Autopista Norte)"), 'titulo3', $alineacion_centrada);
