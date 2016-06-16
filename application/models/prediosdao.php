@@ -69,7 +69,7 @@ class PrediosDAO extends CI_Model
 		$this->db->insert('auditoria', $auditoria);
 		#fin accion de auditoria
 	}
-	
+
 	/**
 	 * Inserta la identificaci&oacute;n de un predio bas&aacute;ndose en un array.
 	 *
@@ -78,7 +78,7 @@ class PrediosDAO extends CI_Model
 	 */
 	function insertar_identificacion($identificacion)
 	{
-		//el array asociativo pasado por parametro debe tener sus indices nombrados 
+		//el array asociativo pasado por parametro debe tener sus indices nombrados
 		//de la misma forma en que aparecen las columnas de la tabla
 		#accion de auditoria
 		$auditoria = array(
@@ -91,7 +91,7 @@ class PrediosDAO extends CI_Model
 
 		$this->db->insert('tbl_identificacion', $identificacion);
 	}
-	
+
 	/**
 	 * Inserta la descripci&oacute;n de un predio bas&aacute;ndose en un array.
 	 *
@@ -100,7 +100,7 @@ class PrediosDAO extends CI_Model
 	 */
 	function insertar_descripcion($descripcion)
 	{
-		//el array asociativo pasado por parametro debe tener sus indices nombrados 
+		//el array asociativo pasado por parametro debe tener sus indices nombrados
 		//de la misma forma en que aparecen las columnas de la tabla
 		#accion de auditoria
 		$auditoria = array(
@@ -113,7 +113,7 @@ class PrediosDAO extends CI_Model
 
 		$this->db->insert('tbl_descripcion', $descripcion);
 	}
-	
+
 	/**
 	 * Inserta los linderos de un predio.
 	 *
@@ -135,7 +135,7 @@ class PrediosDAO extends CI_Model
 		$this->db->insert('auditoria', $auditoria);
 		#fin accion de auditoria
 	}
-	
+
 	/**
 	 * Inserta los datos de un predio.
 	 *
@@ -154,7 +154,7 @@ class PrediosDAO extends CI_Model
 		$this->db->set('ficha_predial', $ficha_predial);
 		$this->db->set('fecha_hora', $fecha_hora);
 		$this->db->set('usuario', $usuario);
-		
+
 		//se inserta en la tabla
 		$this->db->insert('tbl_predio');
 
@@ -167,14 +167,14 @@ class PrediosDAO extends CI_Model
 		$this->db->insert('auditoria', $auditoria);
 		#fin accion de auditoria
 	}
-	
+
 	/**
 	 * Obtiene la id de la identificaci&oacute;n del predio.
 	 *
 	 * @access	private
 	 * @param	string	la ficha_predial.
 	 * @return	string	la id de la identificaci&oacute;n del predio.
-	 */	
+	 */
 	private function obtener_id_identificacion($ficha_predial)
 	{
 		//se selecciona la columna id_identificacion
@@ -186,14 +186,14 @@ class PrediosDAO extends CI_Model
 
 		return $resultados;
 	}
-	
+
 	/**
 	 * Obtiene la id de la descripci&oacute;n del predio.
 	 *
 	 * @access	private
 	 * @param	string	la ficha_predial.
 	 * @return	string	la id de la descripcion del predio.
-	 */	
+	 */
 	private function obtener_id_descripcion($ficha_predial)
 	{
 		//se selecciona la columna id_descripcion
@@ -203,14 +203,14 @@ class PrediosDAO extends CI_Model
 		//se obtienen los resultados
 		return $this->db->get('tbl_descripcion')->row();
 	}
-	
+
 	/**
 	 * Obtiene la id de la descripci&oacute;n de los linderos del predio.
 	 *
 	 * @access	private
 	 * @param	string	la ficha_predial.
 	 * @return	string	la id de la descripci&oacute;n de los linderos del predio.
-	 */	
+	 */
 	private function obtener_id_linderos($ficha_predial)
 	{
 		//se selecciona la columna id_predio_req
@@ -220,7 +220,7 @@ class PrediosDAO extends CI_Model
 		//se obtienen los resultados
 		return $this->db->get('tbl_predio_req')->row();
 	}
-	
+
 	function obtener_fichas()
 	{
 		$sql_ =
@@ -311,16 +311,16 @@ class PrediosDAO extends CI_Model
 
 		return $this->db->query($sql)->result();
 	}
-	
+
 	function listar_fichas($palabra_clave, $max_filas) {
 		$this->db->select('ficha_predial');
-		$this->db->like('ficha_predial', $palabra_clave); 
+		$this->db->like('ficha_predial', $palabra_clave);
 		$this->db->order_by('ficha_predial');
 		$resultado = $this->db->get('tbl_predio', $max_filas)->result();
 
 		return $resultado;
 	}
-	
+
 	function obtener_predios_contratista($contratista)
 	{
 		/*$this->db->select('id_predio');
@@ -333,7 +333,7 @@ class PrediosDAO extends CI_Model
 		$this->db->where('tbl_usuarios.id_usuario', 'tbl_predio.usuario');
 		$this->db->where('tbl_identificacion.ficha_predial', 'tbl_predio.ficha_predial');
 		return $this->db->get()->result();*/
-		
+
 		$query = "	SELECT
 			tbl_predio.id_predio,
 			tbl_predio.fecha_hora,
@@ -477,7 +477,7 @@ class PrediosDAO extends CI_Model
 		$this->db->order_by('orden');
 		return $this->db->get('tbl_estados_semaforo')->result();
 	} // obtener_funciones_predios_obra
-	
+
 	function obtener_predio($id_predio)
 	{
 		$this->db->where('id_predio', $id_predio);
@@ -511,7 +511,7 @@ class PrediosDAO extends CI_Model
 
 		return $resultado;
 	}
-	
+
 	function obtener_descripcion($ficha_predial)
 	{
 		$this->db->where('ficha_predial', $ficha_predial);
@@ -528,14 +528,14 @@ class PrediosDAO extends CI_Model
 
 		return $resultado;
 	}
-	
+
 	function obtener_identificacion($ficha_predial)
 	{
 		// $this->db->where('ficha_predial', $ficha_predial);
 		// $resultado = $this->db->get('tbl_identificacion')->row();
 		$sql =
 		"SELECT
-			*, ta.nombre AS nobre_titulo_adquisicion
+			*, ta.nombre AS nombre_titulo_adquisicion
 		FROM
 			tbl_identificacion AS i
 		LEFT JOIN tbl_titulos_adquisicion AS ta ON i.titulo_adquisicion = ta.id
@@ -555,7 +555,7 @@ class PrediosDAO extends CI_Model
 
 		return $resultado;
 	}
-	
+
 	function obtener_linderos($ficha_predial)
 	{
 		$this->db->where('ficha_predial', $ficha_predial);
@@ -572,7 +572,7 @@ class PrediosDAO extends CI_Model
 
 		return $resultado;
 	}
-	
+
 	function obtener_titulos_adquisicion()
 	{
 		$this->db->order_by('nombre');
@@ -584,7 +584,7 @@ class PrediosDAO extends CI_Model
 		$this->db->where('ficha_predial', $ficha_predial);
 		$this->db->where('id_tipo', $tipo);
 		$this->db->where('numero', $numero);
-		//el array asociativo pasado por parametro debe tener sus indices nombrados 
+		//el array asociativo pasado por parametro debe tener sus indices nombrados
 		//de la misma forma en que aparecen las columnas de la tabla
 		$this->db->update('tbl_construcciones', $construcciones);
 
@@ -602,7 +602,7 @@ class PrediosDAO extends CI_Model
 	{
 		$this->db->where('ficha_predial', $ficha_predial);
 		$this->db->where('numero', $numero);
-		//el array asociativo pasado por parametro debe tener sus indices nombrados 
+		//el array asociativo pasado por parametro debe tener sus indices nombrados
 		//de la misma forma en que aparecen las columnas de la tabla
 		$this->db->update('tbl_cultivos_especies', $cultivos_especies);
 
@@ -615,11 +615,11 @@ class PrediosDAO extends CI_Model
 		$this->db->insert('auditoria', $auditoria);
 		#fin accion de auditoria
 	}
-	
+
 	function actualizar_identificacion($ficha_predial, $identificacion)
 	{
 		$this->db->where('ficha_predial', $ficha_predial);
-		//el array asociativo pasado por parametro debe tener sus indices nombrados 
+		//el array asociativo pasado por parametro debe tener sus indices nombrados
 		//de la misma forma en que aparecen las columnas de la tabla
 		$this->db->update('tbl_identificacion', $identificacion);
 
@@ -632,11 +632,11 @@ class PrediosDAO extends CI_Model
 		$this->db->insert('auditoria', $auditoria);
 		#fin accion de auditoria
 	}
-	
+
 	function actualizar_descripcion($ficha_predial, $descripcion)
 	{
 		$this->db->where('ficha_predial', $ficha_predial);
-		//el array asociativo pasado por parametro debe tener sus indices nombrados 
+		//el array asociativo pasado por parametro debe tener sus indices nombrados
 		//de la misma forma en que aparecen las columnas de la tabla
 		$this->db->update('tbl_descripcion', $descripcion);
 
@@ -649,14 +649,14 @@ class PrediosDAO extends CI_Model
 		$this->db->insert('auditoria', $auditoria);
 		#fin accion de auditoria
 	}
-	
+
 	function actualizar_linderos($ficha_predial, $linderos)
 	{
 		$datos = array(
 			'linderos' => $linderos
 		);
 		$this->db->where('ficha_predial', $ficha_predial);
-		//el array asociativo pasado por parametro debe tener sus indices nombrados 
+		//el array asociativo pasado por parametro debe tener sus indices nombrados
 		//de la misma forma en que aparecen las columnas de la tabla
 		$this->db->update('tbl_predio_req', $datos);
 
@@ -669,8 +669,8 @@ class PrediosDAO extends CI_Model
 		$this->db->insert('auditoria', $auditoria);
 		#fin accion de auditoria
 	}
-	
-	function obtener_predios_menu() 
+
+	function obtener_predios_menu()
 	{
 		$this->db->order_by("id_predio", "desc");
 		$this->db->select('ficha_predial, id_predio');
@@ -700,10 +700,10 @@ class PrediosDAO extends CI_Model
 
 	function obtener_predio_siguiente($ficha_predial, $palabra_clave) {
 		$query = "
-			SELECT 
+			SELECT
 				tbl_predio.id_predio, tbl_predio.ficha_predial
-			FROM 
-				tbl_predio, 
+			FROM
+				tbl_predio,
 				tbl_usuarios
 			WHERE
 				tbl_predio.usuario=tbl_usuarios.id_usuario AND
@@ -724,10 +724,10 @@ class PrediosDAO extends CI_Model
 
 	function obtener_predio_anterior($ficha_predial, $palabra_clave) {
 		$query = "
-			SELECT 
+			SELECT
 				tbl_predio.id_predio, tbl_predio.ficha_predial
-			FROM 
-				tbl_predio, 
+			FROM
+				tbl_predio,
 				tbl_usuarios
 			WHERE
 				tbl_predio.usuario=tbl_usuarios.id_usuario AND
