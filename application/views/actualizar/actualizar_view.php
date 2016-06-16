@@ -23,7 +23,121 @@
 	<div class="clear">&nbsp;</div>
 
 	<div id="accordion">
-		
+		<?php if (false) { ?>
+			
+		<!-- seccion 4 -->
+		<h3><a href="#seccion4">GESTI&Oacute;N DE PROCESOS</a></h3>
+		<div>
+			<?php echo form_fieldset('<b>FICHA PREDIAL</b>'); ?>
+			<table style="text-align:'left'">
+				<tbody>
+					<tr>
+						<td width="30%"><?php echo form_label('Env&iacute;o a interventor&iacute;a','f_envio_int'); ?></td>
+						<td width="20%"><?php echo form_input('f_envio_int', utf8_decode($identificacion->f_envio_int)); ?></td>
+						<td width="30%"><?php echo form_label('Radicado','rad_env_int'); ?></td>
+						<td width="20%"><?php echo form_input('rad_env_int', utf8_decode($identificacion->rad_env_int)); ?></td>
+					</tr>
+					<tr>
+						<td width="30%"><?php echo form_label('Aprobaci&oacute;n','f_aprob_ficha'); ?></td>
+						<td width="20%"><?php echo form_input('f_aprob_ficha', utf8_decode($identificacion->f_aprob_ficha)); ?></td>
+						<td width="30%"><?php echo form_label('Radicado','rad_aprob_ficha'); ?></td>
+						<td width="20%"><?php echo form_input('rad_aprob_ficha', utf8_decode($identificacion->rad_aprob_ficha)); ?></td>
+					</tr>
+					<tr>
+						<td width="30%"><?php echo form_label('En corrección','f_rev_ficha'); ?></td>
+						<td width="20%"><?php echo form_input('f_rev_ficha', utf8_decode($identificacion->f_rev_ficha)); ?></td>
+						<td width="30%"><?php echo form_label('Radicado devolución ficha','rad_rev_ficha'); ?></td>
+						<td width="20%"><?php echo form_input('rad_rev_ficha', utf8_decode($identificacion->rad_rev_ficha)); ?></td>
+					</tr>
+				</tbody>
+			</table>
+			<?php echo form_fieldset_close(); ?>
+
+			<?php echo form_fieldset('<b>FICHA SOCIAL</b>'); ?>
+			<table style="text-align:'left'">
+				<tr>
+					<td width="30%"><?php echo form_label('Aprobación','f_aprob_soc'); ?></td>
+					<td width="20%"><?php echo form_input('f_aprob_soc', utf8_decode($identificacion->f_aprob_soc)); ?></td>
+					<td width="30%"><?php echo form_label('Radicado','rad_aprob_soc'); ?></td>
+					<td width="20%"><?php echo form_input('rad_aprob_soc', utf8_decode($identificacion->rad_aprob_soc)); ?></td>
+				</tr>
+				<tr>
+					<td width="30%"><?php echo form_label('Aprobación estudio de títulos','f_aprob_tit'); ?></td>
+					<td width="20%"><?php echo form_input('f_aprob_tit', utf8_decode($identificacion->f_aprob_tit)); ?></td>
+					<td width="30%"><?php echo form_label('Radicado','rad_aprob_tit'); ?></td>
+					<td width="20%"><?php echo form_input('rad_aprob_tit', utf8_decode($identificacion->rad_aprob_tit)); ?></td>
+				</tr>
+				<tr>
+					<td width="20%"><?php echo form_label('inicio del proceso de avalúo','envio_avaluador'); ?></td>
+					<td width="30%"><?php echo form_input('envio_avaluador', utf8_decode($identificacion->f_envio_av)); ?></td>
+					<td width="20%"><?php echo form_label('Radicado env&iacute;o avaluador','radicado_envio_avaluador'); ?></td>
+					<td width="30%"><?php echo form_input('radicado_envio_avaluador', utf8_decode($identificacion->r_envio_av)); ?></td>
+				</tr>
+				<tr>
+					<td><?php echo form_label('Fecha del aval&uacute;o','f_recibo_av'); ?></td>
+					<td><?php echo form_input('f_recibo_av', utf8_decode($identificacion->f_recibo_av)); ?></td>
+					<td width="20%"><?php echo form_label('Radicado aprobación','r_rec_av'); ?></td>
+					<td width="30%"><?php echo form_input('r_rec_av', utf8_decode($identificacion->r_rec_av)); ?></td>
+				</tr>
+				<tr>
+					<td><?php echo form_label('Fecha de la oferta de compra','f_oferta_c'); ?></td>
+					<td><?php echo form_input('f_oferta_c', utf8_decode($identificacion->f_oferta_c)); ?></td>
+					<td width="20%"><?php echo form_label('Radicado env&iacute;o avaluador','r_oferta_c'); ?></td>
+					<td width="30%"><?php echo form_input('r_oferta_c', utf8_decode($identificacion->r_oferta_c)); ?></td>
+				</tr>
+				<tr>
+					<td width="20%"><?php echo form_label('Oferta de compra notificada','f_oferta_notif'); ?></td>
+					<td width="30%"><?php echo form_input('f_oferta_notif', utf8_decode($identificacion->f_oferta_notif)); ?></td>
+					<td width="20%"><?php echo form_label('Radicado','rad_of_notif'); ?></td>
+					<td width="30%"><?php echo form_input('rad_of_notif', utf8_decode($identificacion->rad_of_notif)); ?></td>
+				</tr>
+				<tr>
+					<td width="20%"><?php echo form_label('Oferta de compra aceptada','f_oferta_ac'); ?></td>
+					<td width="30%"><?php echo form_input('f_oferta_ac', utf8_decode($identificacion->f_oferta_ac)); ?></td>
+					<td width="20%"><?php echo form_label('Radicado','rad_of_ac'); ?></td>
+					<td width="30%"><?php echo form_input('rad_of_ac', utf8_decode($identificacion->rad_of_ac)); ?></td>
+				</tr>
+
+				<tr>
+					<td width="20%"><?php echo form_label('Permiso de intervención','f_permiso_int'); ?></td>
+					<td width="30%"><?php echo form_input('f_permiso_int', utf8_decode($identificacion->f_permiso_int)); ?></td>
+					<td width="20%"><?php echo form_label('Radicado','rad_permiso_int'); ?></td>
+					<td width="30%"><?php echo form_input('rad_permiso_int', utf8_decode($identificacion->rad_permiso_int)); ?></td>
+				</tr>
+				<tr>
+					<td width="20%"><?php echo form_label('Firma de promesa','f_firma_prom'); ?></td>
+					<td width="30%"><?php echo form_input('f_firma_prom', utf8_decode($identificacion->f_firma_prom)); ?></td>
+					<td width="20%"><?php echo form_label('Radicado','rad_firma_prom'); ?></td>
+					<td width="30%"><?php echo form_input('rad_firma_prom', utf8_decode($identificacion->rad_firma_prom)); ?></td>
+				</tr>
+			</table>
+			<?php echo form_fieldset_close(); ?>
+
+			<?php echo form_fieldset('<b>AVAL&Uacute;O</b>'); ?>
+			<table style="text-align:'left'">
+
+			</table>
+			<?php echo form_fieldset_close(); ?>
+
+			<?php echo form_fieldset('<b>OFERTA DE COMPRAVENTA</b>'); ?>
+			<table style="text-align:'left'">
+
+			</table>
+			<?php echo form_fieldset_close(); ?>
+
+			<?php echo form_fieldset('<b>OFERTA ACEPTADA</b>'); ?>
+			<table style="text-align:'left'">
+
+			</table>
+			<?php echo form_fieldset_close(); ?>
+
+			<?php echo form_fieldset('<b>EXPROPIACI&Oacute;N</b>'); ?>
+			<table style="text-align:'left'">
+
+			</table>
+			<?php echo form_fieldset_close(); ?>
+		</div>
+		<?php } ?>
 
 		<!-- seccion 1 -->
 		<h3><a href="#seccion1">PREDIO REQUERIDO</a></h3>
@@ -264,8 +378,18 @@
 		<div>
 			<?php echo form_fieldset('<b>Fecha</b>'); ?>
 			<table>
+				<?php 
+				$_titulos_adq = array(' ' => ' ');
+				foreach($titulos_adquisicion as $titulo_adq):
+					$_titulos_adq[$titulo_adq->id] = $titulo_adq->nombre;
+				endforeach;
+				?>
+				
 				<tr>
-					<td width="50%"><?php echo form_input('fecha_estudio', utf8_decode($identificacion->fecha_estudio)); ?></td>
+					<td width="20%"><?php echo form_label('Fecha del estudio','fecha_estudio'); ?></td>
+					<td width="30%"><?php echo form_input('fecha_estudio', utf8_decode($identificacion->fecha_estudio)); ?></td>
+					<td width="20%"><?php echo form_label('T&iacute;tulo de adquisici&oacute;n','titulo_adquisicion'); ?></td>
+					<td width="30%"><?php echo form_dropdown('titulo_adquisicion', $_titulos_adq, utf8_decode($identificacion->titulo_adquisicion)); ?></td>
 				</tr>
 			</table>
 			<?php echo form_fieldset_close(); ?>
@@ -289,6 +413,9 @@
 			<?php echo form_fieldset_close(); ?>
 			<?php echo form_fieldset('<b>Concepto</b>'); ?>
 			<div align="center"><?php echo form_textarea('concepto', utf8_decode($identificacion->conc_titu)); ?></div>
+			<?php echo form_fieldset_close(); ?>
+			<?php echo form_fieldset('<b>Segregaciones del inmueble</b>'); ?>
+			<div align="center"><?php echo form_textarea('segregaciones', utf8_decode($identificacion->segreg_titu)); ?></div>
 			<?php echo form_fieldset_close(); ?>
 		</div>
 		
@@ -452,87 +579,7 @@
 			<?php echo form_fieldset_close(); ?>
 		</div>
 
-		<!-- seccion 4 -->
-		<h3><a href="#seccion4">GESTI&Oacute;N DE PROCESOS</a></h3>
-		<div>
-			<table style="text-align:'left'">
-				<tbody>
-					<tr>
-						<td width="30%"><?php echo form_label('Env&iacute;o a la interventor&iacute;a','f_envio_int'); ?></td>
-						<td width="20%"><?php echo form_input('f_envio_int', utf8_decode($identificacion->f_envio_int)); ?></td>
-						<td width="30%"><?php echo form_label('Radicado','rad_env_int'); ?></td>
-						<td width="20%"><?php echo form_input('rad_env_int', utf8_decode($identificacion->rad_env_int)); ?></td>
-					</tr>
-					<tr>
-						<td width="30%"><?php echo form_label('Aprobaci&oacute;n de la ficha predial','f_aprob_ficha'); ?></td>
-						<td width="20%"><?php echo form_input('f_aprob_ficha', utf8_decode($identificacion->f_aprob_ficha)); ?></td>
-						<td width="30%"><?php echo form_label('Radicado','rad_aprob_ficha'); ?></td>
-						<td width="20%"><?php echo form_input('rad_aprob_ficha', utf8_decode($identificacion->rad_aprob_ficha)); ?></td>
-					</tr>
-					<tr>
-						<td width="30%"><?php echo form_label('Ficha en única revisión','f_rev_ficha'); ?></td>
-						<td width="20%"><?php echo form_input('f_rev_ficha', utf8_decode($identificacion->f_rev_ficha)); ?></td>
-						<td width="30%"><?php echo form_label('Radicado devolución ficha','rad_rev_ficha'); ?></td>
-						<td width="20%"><?php echo form_input('rad_rev_ficha', utf8_decode($identificacion->rad_rev_ficha)); ?></td>
-					</tr>
-					<tr>
-						<td width="30%"><?php echo form_label('Aprobación estudio de títulos','f_aprob_tit'); ?></td>
-						<td width="20%"><?php echo form_input('f_aprob_tit', utf8_decode($identificacion->f_aprob_tit)); ?></td>
-						<td width="30%"><?php echo form_label('Radicado','rad_aprob_tit'); ?></td>
-						<td width="20%"><?php echo form_input('rad_aprob_tit', utf8_decode($identificacion->rad_aprob_tit)); ?></td>
-					</tr>
-					<tr>
-						<td width="30%"><?php echo form_label('Aprobación de la ficha social','f_aprob_soc'); ?></td>
-						<td width="20%"><?php echo form_input('f_aprob_soc', utf8_decode($identificacion->f_aprob_soc)); ?></td>
-						<td width="30%"><?php echo form_label('Radicado','rad_aprob_soc'); ?></td>
-						<td width="20%"><?php echo form_input('rad_aprob_soc', utf8_decode($identificacion->rad_aprob_soc)); ?></td>
-					</tr>
-					<tr>
-						<td width="20%"><?php echo form_label('inicio del proceso de avalúo','envio_avaluador'); ?></td>
-						<td width="30%"><?php echo form_input('envio_avaluador', utf8_decode($identificacion->f_envio_av)); ?></td>
-						<td width="20%"><?php echo form_label('Radicado env&iacute;o avaluador','radicado_envio_avaluador'); ?></td>
-						<td width="30%"><?php echo form_input('radicado_envio_avaluador', utf8_decode($identificacion->r_envio_av)); ?></td>
-					</tr>
-					<tr>
-						<td><?php echo form_label('Fecha del aval&uacute;o','f_recibo_av'); ?></td>
-						<td><?php echo form_input('f_recibo_av', utf8_decode($identificacion->f_recibo_av)); ?></td>
-						<td width="20%"><?php echo form_label('Radicado aprobación','r_rec_av'); ?></td>
-						<td width="30%"><?php echo form_input('r_rec_av', utf8_decode($identificacion->r_rec_av)); ?></td>
-					</tr>
-					<tr>
-						<td><?php echo form_label('Fecha de la oferta de compra','f_oferta_c'); ?></td>
-						<td><?php echo form_input('f_oferta_c', utf8_decode($identificacion->f_oferta_c)); ?></td>
-						<td width="20%"><?php echo form_label('Radicado env&iacute;o avaluador','r_oferta_c'); ?></td>
-						<td width="30%"><?php echo form_input('r_oferta_c', utf8_decode($identificacion->r_oferta_c)); ?></td>
-					</tr>
-					<tr>
-						<td width="20%"><?php echo form_label('Oferta de compra notificada','f_oferta_notif'); ?></td>
-						<td width="30%"><?php echo form_input('f_oferta_notif', utf8_decode($identificacion->f_oferta_notif)); ?></td>
-						<td width="20%"><?php echo form_label('Radicado','rad_of_notif'); ?></td>
-						<td width="30%"><?php echo form_input('rad_of_notif', utf8_decode($identificacion->rad_of_notif)); ?></td>
-					</tr>
-					<tr>
-						<td width="20%"><?php echo form_label('Oferta de compra aceptada','f_oferta_ac'); ?></td>
-						<td width="30%"><?php echo form_input('f_oferta_ac', utf8_decode($identificacion->f_oferta_ac)); ?></td>
-						<td width="20%"><?php echo form_label('Radicado','rad_of_ac'); ?></td>
-						<td width="30%"><?php echo form_input('rad_of_ac', utf8_decode($identificacion->rad_of_ac)); ?></td>
-					</tr>
-
-					<tr>
-						<td width="20%"><?php echo form_label('Permiso de intervención','f_permiso_int'); ?></td>
-						<td width="30%"><?php echo form_input('f_permiso_int', utf8_decode($identificacion->f_permiso_int)); ?></td>
-						<td width="20%"><?php echo form_label('Radicado','rad_permiso_int'); ?></td>
-						<td width="30%"><?php echo form_input('rad_permiso_int', utf8_decode($identificacion->rad_permiso_int)); ?></td>
-					</tr>
-					<tr>
-						<td width="20%"><?php echo form_label('Firma de promesa','f_firma_prom'); ?></td>
-						<td width="30%"><?php echo form_input('f_firma_prom', utf8_decode($identificacion->f_firma_prom)); ?></td>
-						<td width="20%"><?php echo form_label('Radicado','rad_firma_prom'); ?></td>
-						<td width="30%"><?php echo form_input('rad_firma_prom', utf8_decode($identificacion->rad_firma_prom)); ?></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+		
 
 		<!-- seccion 7 -->
 		<h3><a href="#seccion7">FICHA PREDIAL</a></h3>

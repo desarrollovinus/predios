@@ -365,16 +365,6 @@ class PrediosDAO extends CI_Model
 
 	function obtener_unidades_funcionales()
 	{
-		$sql_=
-		"SELECT
-			SUBSTRING_INDEX(p.ficha_predial, '-', 1) AS Nombre
-		FROM
-			tbl_predio AS p
-		GROUP BY
-			Nombre
-		ORDER BY
-			Nombre ASC";
-
 		$sql =
 		"SELECT
 			SUBSTRING_INDEX(p.ficha_predial, '-', 1) Nombre,
@@ -396,7 +386,27 @@ class PrediosDAO extends CI_Model
 				WHERE
 					pr.requerido = 1
 				AND SUBSTRING_INDEX(pr.ficha_predial, '-', 1) = SUBSTRING_INDEX(p.ficha_predial, '-', 1)
-			) Requeridos
+			) Requeridos,
+			(
+				SELECT
+					count(
+						SUBSTRING_INDEX(pr.ficha_predial, '-', 1)
+					)
+				FROM
+					tbl_predio pr
+				WHERE
+					pr.requerido = 0
+				AND SUBSTRING_INDEX(pr.ficha_predial, '-', 1) = SUBSTRING_INDEX(p.ficha_predial, '-', 1)
+			) No_Requeridos,
+			(
+				SELECT
+					COUNT(i.rad_env_int)
+				FROM
+					tbl_identificacion AS i
+				WHERE
+					SUBSTRING_INDEX(i.ficha_predial, '-', 1) = SUBSTRING_INDEX(p.ficha_predial, '-', 1)
+				AND i.rad_env_int <> ''
+			) Ficha_Enviada
 		FROM
 			tbl_predio AS p
 		GROUP BY
@@ -551,6 +561,12 @@ class PrediosDAO extends CI_Model
 		#fin accion de auditoria
 
 		return $resultado;
+	}
+	
+	function obtener_titulos_adquisicion()
+	{
+		$this->db->order_by('nombre');
+		return $this->db->get('tbl_titulos_adquisicion')->result();
 	}
 
 	function actualizar_construcciones($ficha_predial, $tipo, $numero, $construcciones)
