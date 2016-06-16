@@ -123,6 +123,9 @@ $table->addRow();
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Municipio:"), 'parrafo2', $alineacion_izquierda);
 $table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($identificacion->municipio)), 'parrafo2', $alineacion_izquierda);
 $table->addRow();
+$table->addCell(10000, $styleCell)->addText(utf8_decode("Vereda:"), 'parrafo2', $alineacion_izquierda);
+$table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($identificacion->barrio)), 'parrafo2', $alineacion_izquierda);
+$table->addRow();
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Departamento:"), 'parrafo2', $alineacion_izquierda);
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Antioquia"), 'parrafo2', $alineacion_izquierda);
 $table->addRow();
@@ -154,6 +157,9 @@ $table->addCell(10000, $styleCell)->addText(utf8_decode($descripcion->area_total
 $table->addCell(10000, $styleCell)->addText(utf8_decode($descripcion->area_total_titulos), 'parrafo2', $alineacion_centrada);
 $seccion1->addTextBreak();
 
+$seccion1->addText(utf8_decode("Título de adquisición: " . $identificacion->titulo_adquisicion), 'parrafo2', $alineacion_izquierda);
+$seccion1->addTextBreak();
+
 $seccion1->addText(utf8_decode("Descripción, Cabida y Linderos: "), 'titulo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
 
@@ -161,6 +167,9 @@ $seccion1->addText(utf8_decode(utf8_decode($linderos->linderos)), 'parrafo2', $a
 $seccion1->addTextBreak();
 
 $seccion1->addText(utf8_decode("2. TITULARIDAD DEL INMUEBLE"), 'titulo2', $alineacion_izquierda);
+$seccion1->addTextBreak();
+
+$seccion1->addText(utf8_decode("Título de adquisicion: "), 'parrafo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
 
 $PHPWord->addTableStyle('tabla5', $tabla1);
@@ -198,6 +207,18 @@ foreach ($gravamenes as $item) {
 
 $seccion1->addText(utf8_decode("5. SEGREGACIONES DEL INMUEBLE"), 'titulo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
+
+if ($identificacion->segreg_titu[0] == "?") {
+  $segregacion_titulo = explode("?", substr(utf8_decode(utf8_decode($identificacion->segreg_titu)), 1));
+  foreach ($segregacion_titulo as $item) {
+    if ($item == null) { break; }
+    $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED');
+    $seccion1->addTextBreak();
+  }
+} else {
+  $seccion1->addListItem(utf8_decode(utf8_decode($identificacion->segreg_titu)), 0, 'parrafo2', 'TYPE_BULLET_FILLED');
+  $seccion1->addTextBreak();
+}
 
 $seccion1->addText(utf8_decode("6. OBSERVACIONES DEL INMUEBLE"), 'titulo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
