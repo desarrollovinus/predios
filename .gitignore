@@ -1,6 +1,8 @@
 # Archivos de configuracion
 application/config/database.php
 application/config/config.php
+# Archivos
+files/*
 # Archivos de mysql workbench
 *.mwb
 #----------------------------
