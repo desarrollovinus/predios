@@ -68,7 +68,7 @@ $table->addRow(1000);
 // $table->addCell(4000, $styleCell)->addText('COCAN 900.193.471-9', 'titulo1', $alineacion_centrada);
 $table->addCell(10000, $styleCell)->addImage('./img/logo_vinus.png',
 array(
-  'width' => 80,
+  'width' => 68,
   'height' => 80,
   'align' => 'left',
   'marginTop' => -1,
@@ -232,12 +232,17 @@ foreach ($documentos_items as $item) {
 $seccion1->addText(utf8_decode("9. FECHA DE ELABORACION Y AJUSTE"), 'titulo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
 
-$seccion1->addText(utf8_decode("EL presente estudio de títulos se realizó el ". $this->InformesDAO->formatear_fecha(date('Y-m-d'))), 'parrafo2', $alineacion_izquierda);
+$seccion1->addText(utf8_decode("El presente estudio de títulos se realizó el ". $this->InformesDAO->formatear_fecha(date('Y-m-d').'.')), 'parrafo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
+$seccion1->addTextBreak();
+
+$seccion1->addText(utf8_decode("LUIS ALFREDO RESTREPO SEPULVEDA"), 'titulo2', $alineacion_centrada);
+$seccion1->addText(utf8_decode("C.C Nº 15.505.215"), 'parrafo2', $alineacion_centrada);
+$seccion1->addText(utf8_decode("T.P Nº 73.599 del C.S de la Judicatura"), 'parrafo2', $alineacion_centrada);
 
 
 $footer = $seccion1->createFooter();
-$footer->addText(utf8_decode("Concesión Vías del NUS S.A.S | Calle 59 No.48 35 Copacabana, Antioquia (Kilómetro 4 + 500 Autopista Norte)"), 'titulo3', $alineacion_centrada);
+$footer->addText(utf8_decode("Concesión Vías del NUS S.A.S. | Calle 59 No.48 35 Copacabana, Antioquia (Kilómetro 4 + 500 Autopista Norte)"), 'titulo3', $alineacion_centrada);
 $footer->addText(utf8_decode("PBX (574) 401 2277 FAX: (574) 401 2277"), 'titulo3', $alineacion_centrada);
 $footer->addPreserveText(utf8_decode('www.vinus.com.co | Página {PAGE} de {NUMPAGES}'), 'titulo3', $alineacion_centrada);
 
