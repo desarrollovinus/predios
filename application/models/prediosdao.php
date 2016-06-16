@@ -531,8 +531,18 @@ class PrediosDAO extends CI_Model
 	
 	function obtener_identificacion($ficha_predial)
 	{
-		$this->db->where('ficha_predial', $ficha_predial);
-		$resultado = $this->db->get('tbl_identificacion')->row();
+		// $this->db->where('ficha_predial', $ficha_predial);
+		// $resultado = $this->db->get('tbl_identificacion')->row();
+		$sql =
+		"SELECT
+			*, ta.nombre AS nobre_titulo_adquisicion
+		FROM
+			tbl_identificacion AS i
+		LEFT JOIN tbl_titulos_adquisicion AS ta ON i.titulo_adquisicion = ta.id
+		WHERE
+			i.ficha_predial = '{$ficha_predial}'";
+
+		$resultado = $this->db->query($sql)->row();
 
 		#accion de auditoria
 		$auditoria = array(
