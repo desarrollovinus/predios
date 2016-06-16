@@ -65,7 +65,7 @@ class Actualizar_controller extends CI_Controller {
 			//se carga el modelo ProcesosDAO
 			$this->load->model(array('ProcesosDAO', 'TramosDAO', 'ContratistasDAO', 'PrediosDAO', 'PropietariosDAO'));
 			//se asignan los valores que se van a enviar a la vista
-			$this->data['funciones_predios_obra'] =			$this->PrediosDAO->obtener_funciones_predios_obra();
+			$this->data['funciones_predios_obra'] =	$this->PrediosDAO->obtener_funciones_predios_obra();
 			$this->data['estados_via'] =			$this->PrediosDAO->obtener_estados_via();
 			$this->data['estados'] = 				$this->ProcesosDAO->obtener_estados_proceso();
 			$this->data['tramos'] = 				$this->TramosDAO->obtener_tramos();
@@ -75,6 +75,7 @@ class Actualizar_controller extends CI_Controller {
 			$this->data['descripcion'] = 			$this->PrediosDAO->obtener_descripcion($this->data['predio']->ficha_predial);
 			$this->data['linderos'] = 				$this->PrediosDAO->obtener_linderos($this->data['predio']->ficha_predial);
 			$this->data['propietarios'] = 			$this->PropietariosDAO->obtener_propietarios($this->data['predio']->ficha_predial);
+			$this->data['titulos_adquisicion'] = 	$this->PrediosDAO->obtener_titulos_adquisicion();
 			$this->data['titulo_pagina'] = 			'Actualizar - '.$this->data['predio']->ficha_predial;
 			$this->data['contenido_principal'] = 	'actualizar/actualizar_view';
 			//se carga la vista y se envian los datos
@@ -211,7 +212,9 @@ class Actualizar_controller extends CI_Controller {
 			'total_avaluo' => 		utf8_encode($this->input->post('total_avaluo')),
 			'valor_mtr' => 			utf8_encode($this->input->post('valor_metro_cuadrado')),
 			'valor_total_mej' => 	utf8_encode($this->input->post('valor_total_mejoras')),
-			'valor_total_terr' => 	utf8_encode($this->input->post('valor_total_terreno'))
+			'valor_total_terr' => 	utf8_encode($this->input->post('valor_total_terreno')),
+			'segreg_titu' => 		utf8_encode($this->input->post('segregaciones')),
+			'titulo_adquisicion' => utf8_encode($this->input->post('titulo_adquisicion'))
 		);
 
 		//se inserta la identificacion del predio
