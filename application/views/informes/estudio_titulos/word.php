@@ -160,7 +160,7 @@ $seccion1->addTextBreak();
 $seccion1->addText(utf8_decode("Descripción, Cabida y Linderos: "), 'titulo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
 
-$seccion1->addText(utf8_decode(utf8_decode($linderos->linderos)), 'parrafo2', $alineacion_izquierda);
+$seccion1->addText(utf8_decode(utf8_decode($linderos->linderos)), 'parrafo2', $alineacion_justificada);
 $seccion1->addTextBreak();
 
 $seccion1->addText(utf8_decode("2. TITULARIDAD DEL INMUEBLE"), 'titulo2', $alineacion_izquierda);
@@ -188,7 +188,7 @@ $seccion1->addText(utf8_decode("3. TRADICION DEL INMUEBLE"), 'titulo2', $alineac
 $titulo_adq_items = explode("?", substr(utf8_decode(utf8_decode($identificacion->titulos_adq)), 1));
 foreach ($titulo_adq_items as $item) {
   if ($item == null) { break; }
-  $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED');
+  $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
   $seccion1->addTextBreak();
 }
 
@@ -198,7 +198,7 @@ $seccion1->addTextBreak();
 $gravamenes = explode("?", substr(utf8_decode(utf8_decode($identificacion->gravamenes)), 1));
 foreach ($gravamenes as $item) {
   if ($item == null) { break; }
-  $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED');
+  $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
   $seccion1->addTextBreak();
 }
 
@@ -209,11 +209,11 @@ if ($identificacion->segreg_titu[0] == "?") {
   $segregacion_titulo = explode("?", substr(utf8_decode(utf8_decode($identificacion->segreg_titu)), 1));
   foreach ($segregacion_titulo as $item) {
     if ($item == null) { break; }
-    $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED');
+    $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
     $seccion1->addTextBreak();
   }
 } else {
-  $seccion1->addText(utf8_decode(utf8_decode($identificacion->segreg_titu)), 'parrafo2', $alineacion_izquierda);
+  $seccion1->addText(utf8_decode(utf8_decode($identificacion->segreg_titu)), 'parrafo2', $alineacion_justificada);
   $seccion1->addTextBreak();
 }
 
@@ -223,7 +223,7 @@ $seccion1->addTextBreak();
 $observaciones_titulo = explode("?", substr(utf8_decode(utf8_decode($identificacion->ob_titu)), 1));
 foreach ($observaciones_titulo as $observacion) {
   if ($observacion == null) { break; }
-  $seccion1->addListItem($observacion, 0, 'parrafo2', 'TYPE_BULLET_FILLED');
+  $seccion1->addListItem($observacion, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
   $seccion1->addTextBreak();
 }
 
@@ -233,7 +233,7 @@ $seccion1->addTextBreak();
 $concepto_items = explode("?", substr(utf8_decode(utf8_decode($identificacion->conc_titu)), 1));
 foreach ($concepto_items as $item) {
   if ($item == null) { break; }
-  $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED');
+  $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
   $seccion1->addTextBreak();
 }
 
@@ -243,7 +243,7 @@ $seccion1->addTextBreak();
 $documentos_items = explode("?", substr(utf8_decode(utf8_decode($identificacion->doc_estud)), 1));
 foreach ($documentos_items as $item) {
   if ($item == null) { break; }
-  $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED');
+  $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
   $seccion1->addTextBreak();
 }
 
