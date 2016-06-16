@@ -76,7 +76,7 @@ array(
   'wrappingStyle' => 'behind'
 ));
 
-$table->addCell(10000, $styleCell)->addText(utf8_decode("ESTUDIO DE TÍTULOS PREDIO "). utf8_decode(utf8_decode($descripcion->uso_edificacion)), 'titulo2', $alineacion_centrada);
+$table->addCell(10000, $styleCell)->addText(utf8_decode("ESTUDIO DE TÍTULOS PREDIO "). utf8_decode(utf8_decode($descripcion->uso_terreno)), 'titulo2', $alineacion_centrada);
 
 $table->addCell(10000, $styleCell)->addImage('./img/logo_ani.jpg',
 array(
@@ -88,7 +88,7 @@ array(
 ));
 $cabecera->addTextBreak();
 
-$seccion1->addText(utf8_decode("ESTUDIO DE TÍTULOS PREDIO "). utf8_decode(utf8_decode($descripcion->uso_edificacion)), 'titulo2', $alineacion_centrada);
+$seccion1->addText(utf8_decode("ESTUDIO DE TÍTULOS PREDIO "). utf8_decode(utf8_decode($descripcion->uso_terreno)), 'titulo2', $alineacion_centrada);
 $seccion1->addTextBreak();
 
 $PHPWord->addTableStyle('tabla2', $tabla1);
@@ -233,8 +233,7 @@ $seccion1->addText(utf8_decode("9. FECHA DE ELABORACION Y AJUSTE"), 'titulo2', $
 $seccion1->addTextBreak();
 
 $seccion1->addText(utf8_decode("El presente estudio de títulos se realizó el ". $this->InformesDAO->formatear_fecha(date('Y-m-d').'.')), 'parrafo2', $alineacion_izquierda);
-$seccion1->addTextBreak();
-$seccion1->addTextBreak();
+$seccion1->addTextBreak(2);
 
 $seccion1->addText(utf8_decode("LUIS ALFREDO RESTREPO SEPULVEDA"), 'titulo2', $alineacion_centrada);
 $seccion1->addText(utf8_decode("C.C Nº 15.505.215"), 'parrafo2', $alineacion_centrada);
