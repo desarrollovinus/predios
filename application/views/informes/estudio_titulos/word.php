@@ -45,7 +45,7 @@ $PHPWord->addFontStyle('parrafo2', array( 'name'=>'Arial', 'size'=> 12, 'color'=
  */
 $tabla1 = array('borderColor'=>'000000', 'borderSize'=> 6);
 $tabla2 = array('borderSize' => 8, 'borderColor' => '1E1E1E',  'cellMarginTop' => 100, 'rules' => 'cols');
-$tabla3 = array('cellMarginTop' => 50, 'rules' => 'cols');
+$tabla3 = array('cellMarginTop' => 5, 'rules' => 'cols');
 $tabla4 = array('borderRightSize' => 50, 'borderBottomColor' => '009900',    'borderBottomSize' => 50, 'borderRightColor' => '00CCFF',    'borderTopSize' => 50, 'borderTopColor' => '00CCFF',    'borderLeftSize' => 50, 'borderLeftColor' => '00CCFF');
 
 /**
@@ -120,11 +120,11 @@ $table->addRow();
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Dirección:"), 'parrafo2', $alineacion_izquierda);
 $table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($identificacion->direccion)), 'parrafo2', $alineacion_izquierda);
 $table->addRow();
-$table->addCell(10000, $styleCell)->addText(utf8_decode("Municipio:"), 'parrafo2', $alineacion_izquierda);
-$table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($identificacion->municipio)), 'parrafo2', $alineacion_izquierda);
-$table->addRow();
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Vereda:"), 'parrafo2', $alineacion_izquierda);
 $table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($identificacion->barrio)), 'parrafo2', $alineacion_izquierda);
+$table->addRow();
+$table->addCell(10000, $styleCell)->addText(utf8_decode("Municipio:"), 'parrafo2', $alineacion_izquierda);
+$table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($identificacion->municipio)), 'parrafo2', $alineacion_izquierda);
 $table->addRow();
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Departamento:"), 'parrafo2', $alineacion_izquierda);
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Antioquia"), 'parrafo2', $alineacion_izquierda);
@@ -152,12 +152,9 @@ $table->addCell(10000, $styleCell)->addText(utf8_decode("CATASTRAL"), 'titulo2',
 $table->addCell(10000, $styleCell)->addText(utf8_decode("REGISTRAL"), 'titulo2', $alineacion_centrada);
 $table->addCell(10000, $styleCell)->addText(utf8_decode("TITULOS (E.P)"), 'titulo2', $alineacion_centrada);
 $table->addRow();
-$table->addCell(10000, $styleCell)->addText(utf8_decode($descripcion->area_total_catastral), 'parrafo2', $alineacion_centrada);
-$table->addCell(10000, $styleCell)->addText(utf8_decode($descripcion->area_total_registral), 'parrafo2', $alineacion_centrada);
-$table->addCell(10000, $styleCell)->addText(utf8_decode($descripcion->area_total_titulos), 'parrafo2', $alineacion_centrada);
-$seccion1->addTextBreak();
-
-$seccion1->addText(utf8_decode("Título de adquisición: " . $identificacion->titulo_adquisicion), 'parrafo2', $alineacion_izquierda);
+$table->addCell(10000, $styleCell)->addText(utf8_decode($descripcion->area_total_catastral . " m2"), 'parrafo2', $alineacion_centrada);
+$table->addCell(10000, $styleCell)->addText(utf8_decode($descripcion->area_total_registral . " m2"), 'parrafo2', $alineacion_centrada);
+$table->addCell(10000, $styleCell)->addText(utf8_decode($descripcion->area_total_titulos . " m2"), 'parrafo2', $alineacion_centrada);
 $seccion1->addTextBreak();
 
 $seccion1->addText(utf8_decode("Descripción, Cabida y Linderos: "), 'titulo2', $alineacion_izquierda);
@@ -167,9 +164,6 @@ $seccion1->addText(utf8_decode(utf8_decode($linderos->linderos)), 'parrafo2', $a
 $seccion1->addTextBreak();
 
 $seccion1->addText(utf8_decode("2. TITULARIDAD DEL INMUEBLE"), 'titulo2', $alineacion_izquierda);
-$seccion1->addTextBreak();
-
-$seccion1->addText(utf8_decode("Título de adquisicion: "), 'parrafo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
 
 $PHPWord->addTableStyle('tabla5', $tabla1);
@@ -184,6 +178,9 @@ foreach ($propietarios as $propietario) {
   $table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($propietario->documento)), 'parrafo2', $alineacion_izquierda);
   $table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($propietario->participacion)), 'parrafo2', $alineacion_izquierda);
 }
+$seccion1->addTextBreak();
+
+$seccion1->addText(utf8_decode("Título de adquisición: ". $identificacion->nombre_titulo_adquisicion), 'parrafo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
 
 // para mostrar viñetas se usa TYPE_BULLET_FILLED con la funcion addListItem
@@ -216,7 +213,7 @@ if ($identificacion->segreg_titu[0] == "?") {
     $seccion1->addTextBreak();
   }
 } else {
-  $seccion1->addListItem(utf8_decode(utf8_decode($identificacion->segreg_titu)), 0, 'parrafo2', 'TYPE_BULLET_FILLED');
+  $seccion1->addText(utf8_decode(utf8_decode($identificacion->segreg_titu)), 'parrafo2', $alineacion_izquierda);
   $seccion1->addTextBreak();
 }
 
@@ -250,13 +247,13 @@ foreach ($documentos_items as $item) {
   $seccion1->addTextBreak();
 }
 
-$seccion1->addText(utf8_decode("9. FECHA DE ELABORACION Y AJUSTE"), 'titulo2', $alineacion_izquierda);
+$seccion1->addText(utf8_decode("9. FECHA DE ELABORACIÓN Y AJUSTE"), 'titulo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
 
 $seccion1->addText(utf8_decode("El presente estudio de títulos se realizó el ". $this->InformesDAO->formatear_fecha(date('Y-m-d').'.')), 'parrafo2', $alineacion_izquierda);
 $seccion1->addTextBreak(2);
 
-$seccion1->addText(utf8_decode("LUIS ALFREDO RESTREPO SEPULVEDA"), 'titulo2', $alineacion_centrada);
+$seccion1->addText(utf8_decode("LUIS ALFREDO RESTREPO SEPÚLVEDA"), 'titulo2', $alineacion_centrada);
 $seccion1->addText(utf8_decode("C.C Nº 15.505.215"), 'parrafo2', $alineacion_centrada);
 $seccion1->addText(utf8_decode("T.P Nº 73.599 del C.S de la Judicatura"), 'parrafo2', $alineacion_centrada);
 
