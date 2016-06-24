@@ -8,6 +8,10 @@
   "globals": {
     "jQuery": true,
 		"$": false,
-		"console": false
+		"console": false,
+		"window" : true,
+		"document": true,
+		"Image": true,
+		"alert": true
   }
 }

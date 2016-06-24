@@ -24,7 +24,8 @@
 			</tr>
 		</tbody>
 	</table>
-	<div id="fotos-container">
+	<div id="error"></div>
+	<div id="fotos-container" onchange="ordenar()">
 
 	<?php
 
@@ -99,12 +100,17 @@
 		e.target.parentNode.setAttribute("orden", e.target.value);
 	});
 
+	ranges.change((e) => {
+		e.target.parentNode.getElementsByTagName("strong")[0].innerHTML = `Foto: ${e.target.value}`;
+		e.target.parentNode.setAttribute("orden", e.target.value);
+	});
+
 	function ordenar() {
-		let $fotos = $("#fotos-container");
+		var $fotos = $("#fotos-container");
 		$fotos.find('.fotos').sort((a, b) => {
 			return a.getAttribute('orden') - b.getAttribute('orden');
 		})
-		.appendTo($fotos);
+		.appendTo($("#fotos-container"));
 	}
 
 	function actualizar_foto(orden, nombre) {
@@ -117,10 +123,9 @@
 				async: false,
 				success: function(respuesta){
 					console.log(respuesta);
-					ordenar();
 				},//Success
 				error: function(respuesta){
-						console.log(respuesta);
+					console.log(respuesta);
 				}//Error
 		});//Ajax
 	}
@@ -157,11 +162,12 @@
 	    // Si se borró correctamente
 	    if (exito) {
 	    	$("#foto" + numero).hide("slow");
-				setTimeout(()=>{location.reload();}, 1000);
+			setTimeout(()=>{location.reload();}, 1000);
 	    }
 	}
 
 	$(document).ready(function(){
+		ordenar();
 		$('#form input[name^=fecha]').datepicker();
 
 		// Declaración del arreglo
@@ -193,21 +199,24 @@
                 datos['fecha'] = $("input[name=fecha]").val();
                 datos['descripcion'] = $("input[name=descripcion]").val();
                 datos['ficha'] = "<?php echo $this->uri->segment(3); ?>";
+								datos['orden'] = "<?php echo $max + 1; ?>";
 
                 console.log(datos);
             }, // onsubmit
             onComplete: function(archivo, respuesta){
+				console.log(respuesta);
                 if(respuesta == "existe"){
                     // Se muestra el mensaje de error
-                    alert('No se puede subir el certificado. Ya existe.');
-
+                    $("#error").html('<span class="alerta_icono"></span>No se puede subir el certificado. Ya existe.');
                     return false;
                 } // if
                 // Si la respuesta es verdadera
-                if(respuesta){
+                if(respuesta == 1) {
                 	location.reload();
-                }else{
-	                alert("No se pudo subir el certificado");
+                }else if(respuesta === "size") {
+					$("#error").html('<span class="alerta_icono"></span>Por favor suba solo fotos horizontales.');
+                } else {
+					$("#error").html('<span class="alerta_icono"></span>No se pudo subir el certificado.');
                 } // if
             } // oncomplete
         }); // AjaxUpload

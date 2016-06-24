@@ -261,21 +261,25 @@ class Archivos_controller extends CI_Controller
 		$directorio = $this->ruta_archivos.str_replace(' ','_', $this->input->post("ficha")).'/'.$this->nombre_carpeta_fotos;
 
 		$nombre = $fecha.'.'.$extension = end(explode(".", $_FILES['userfile']['name']));
-
+		$ruta = $_FILES['userfile']['tmp_name'];
+		list($ancho, $alto) = getimagesize($ruta);
 		// Si el fichero existe
-        if (file_exists($directorio.$nombre)) {
-            echo "existe";
-        // Si se sube corectamente
-        } elseif($this->accionesDAO->procesar_foto($_FILES['userfile']['tmp_name'], $directorio, $nombre)) {
-        	// Se prepara el arreglo con el que se guarda los datos de la foto
-        	$datos = array(
-        		"fecha" => $this->input->post("fecha"),
-        		"descripcion" => $this->input->post("descripcion"),
-        		"ficha_predial" => $this->input->post("ficha"),
-        		"archivo" => $nombre
-    		);
+    if (file_exists($directorio.$nombre)) {
+        echo "existe";
+    // Si se sube corectamente
+		}	elseif ($alto > $ancho) {
+				echo "size";
+		} elseif($this->accionesDAO->procesar_foto($_FILES['userfile']['tmp_name'], $directorio, $nombre)) {
+	    	// Se prepara el arreglo con el que se guarda los datos de la foto
+	    	$datos = array(
+	    		"fecha" => $this->input->post("fecha"),
+	    		"descripcion" => $this->input->post("descripcion"),
+	    		"ficha_predial" => $this->input->post("ficha"),
+	    		"archivo" => $nombre,
+					"orden" => $this->input->post("orden")
+			);
 
-    		// Si se guarda el registro en base de datos correctamente
+			// Si se guarda el registro en base de datos correctamente
     		if ($this->accionesDAO->guardar_foto($datos)) {
     			echo true;
     		} // if
