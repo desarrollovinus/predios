@@ -34,10 +34,15 @@ class AccionesDAO extends CI_Model {
         }
     }
 
+		function actualizar_foto($nombre, $data){
+			$this->db->where('archivo', $nombre);
+			$this->db->update('tbl_fotos', $data);
+		}
+
 	/**
-     * Script que procesa la foto y la redimensiona, logrando reducir su tamaño 
+     * Script que procesa la foto y la redimensiona, logrando reducir su tamaño
      * hasta en un 98%
-     * 
+     *
      * @param  [string] $ruta [Ruta del archivo temporal que se va a subir]
      */
     function procesar_foto($ruta, $directorio, $nombre){
@@ -60,7 +65,7 @@ class AccionesDAO extends CI_Model {
 
         /**
          * Si el ancho y el alto de la imagen no superan los maximos,
-         * ancho final y alto final son los que tiene actualmente 
+         * ancho final y alto final son los que tiene actualmente
          */
         if( ($ancho <= $ancho_maximo) && ($alto <= $alto_maximo) ){
             //Si ancho
@@ -82,8 +87,8 @@ class AccionesDAO extends CI_Model {
             */
             $ancho_final = ceil($y_ratio * $ancho);
             $alto_final = $alto_maximo;
-        }//Fin if  
-        
+        }//Fin if
+
         /**
          * Si el ancho y el alto de la imagen no superan los maximos,
          * ancho final y alto final son los que tiene actualmente
@@ -110,7 +115,7 @@ class AccionesDAO extends CI_Model {
             */
             $ancho_final = ceil($y_ratio * $ancho);
             $alto_final = $alto_maximo;
-        }  
+        }
 
         //Creamos una imagen en blanco de tamaño $ancho_final  por $alto_final .
         $imagen_temporal = imagecreatetruecolor($ancho_final,$alto_final);
