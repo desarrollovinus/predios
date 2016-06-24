@@ -160,7 +160,14 @@ $seccion1->addTextBreak();
 $seccion1->addText(utf8_decode("Descripción, Cabida y Linderos: "), 'titulo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
 
-$seccion1->addText(utf8_decode(utf8_decode($linderos->linderos)), 'parrafo2', $alineacion_justificada);
+$lind_titulo = explode("?", substr(utf8_decode(utf8_decode($identificacion->lind_titulo)), 1));
+foreach ($lind_titulo as $item) {
+  if ($item == null) { break; }
+  $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
+  $seccion1->addTextBreak();
+}
+
+// $seccion1->addText(utf8_decode(utf8_decode($linderos->lind_titulo)), 'parrafo2', $alineacion_justificada);
 $seccion1->addTextBreak();
 
 $seccion1->addText(utf8_decode("2. TITULARIDAD DEL INMUEBLE"), 'titulo2', $alineacion_izquierda);
