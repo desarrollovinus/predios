@@ -182,16 +182,14 @@
                 // Se valida que tenga fecha y descripcion
                 if ($("input[name=fecha]").val() == "" || $("input[name=descripcion]").val() == "") {
                 	// Mensaje de advertencia
-                	alert("Tiene que especificar una fecha y una descripción");
-
-                	return false;
+					$("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>Tiene que especificar una fecha y una descripción</p></div>');
+					return false;
                 } // if
 
                 // Se valida que sea una foto
                 if (!(ext && /^(jpg|JPG|jpeg|JPEG)$/.test(ext))){
                     //Se muestra el mensaje de error
-                    alert("No es una foto");
-
+					$("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>No es una foto</p></div>');
                     return false;
                 } // if
 
@@ -207,16 +205,16 @@
 				console.log(respuesta);
                 if(respuesta == "existe"){
                     // Se muestra el mensaje de error
-                    $("#error").html('<span class="alerta_icono"></span>No se puede subir el certificado. Ya existe.');
-                    return false;
+					$("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>No se puede subir el certificado, Ya existe</p></div>');
+					return false;
                 } // if
                 // Si la respuesta es verdadera
                 if(respuesta == 1) {
                 	location.reload();
-                }else if(respuesta === "size") {
-					$("#error").html('<span class="alerta_icono"></span>Por favor suba solo fotos horizontales.');
+                }else if(respuesta == "size") {
+					$("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>Solo se permiten fotos horizontales.</p></div>');
                 } else {
-					$("#error").html('<span class="alerta_icono"></span>No se pudo subir el certificado.');
+					$("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>No se pudo subir el certificado.</p></div>');
                 } // if
             } // oncomplete
         }); // AjaxUpload
