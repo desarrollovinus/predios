@@ -273,7 +273,7 @@ $hoja->setCellValue('I13', 'NO ___');
 
 if ($ficha_social->area_adquirir == "1") {
 	$hoja->setCellValue('H13', 'SI _X_');
-} else if($ficha_social->area_adquirir == "2"){
+} else if($ficha_social->area_adquirir == "0"){
 	$hoja->setCellValue('I13', 'NO _X_');
 }
 
@@ -536,7 +536,9 @@ $fila++;
 $hoja->getStyle("A{$fila}:N{$fila}")->applyFromArray($bordes);
 $hoja->mergeCells("A{$fila}:N{$fila}");
 $hoja->setCellValue("A{$fila}", $ficha_social->observaciones);
-$hoja->setDinamicSizeRow($ficha_social->observaciones, $fila, "A:N");
+if (strlen($ficha_social->observaciones) > 0) {
+	$hoja->setDinamicSizeRow($ficha_social->observaciones, $fila, "A:N");
+}
 $fila++;
 
 $hoja->getStyle("A{$fila}:N{$fila}")->applyFromArray($bordes);
