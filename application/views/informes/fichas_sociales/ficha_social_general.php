@@ -31,7 +31,7 @@ $hoja->getPageSetup()->setScale(100);
 $hoja->getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(3);
 
 // Título de la hoja
-$hoja->setTitle("Caracterización general $ficha");
+$hoja->setTitle("Caracterización general");
 
 // //Se establecen las margenes
 // $hoja->getPageMargins()->setTop(1); //Arriba
@@ -260,9 +260,9 @@ $hoja->setCellValue('J12', '¿Se requieren edificaciones?');
 $hoja->setCellValue('M12', 'SI ___');
 $hoja->setCellValue('N12', 'NO ___');
 
-if ($ficha_social->requerimiento_edificaciones) {
+if ($ficha_social->requerimiento_edificaciones == "1") {
 	$hoja->setCellValue('M12', 'SI _X_');
-} else {
+} else if($ficha_social->requerimiento_edificaciones == "0") {
 	$hoja->setCellValue('N12', 'NO _X_');
 }
 
@@ -271,9 +271,9 @@ $hoja->setCellValue('A13', '¿El valor del área a adquirir es inferior a 3 SLMM
 $hoja->setCellValue('H13', 'SI ___');
 $hoja->setCellValue('I13', 'NO ___');
 
-if ($ficha_social->area_adquirir) {
+if ($ficha_social->area_adquirir == "1") {
 	$hoja->setCellValue('H13', 'SI _X_');
-} else {
+} else if($ficha_social->area_adquirir == "0"){
 	$hoja->setCellValue('I13', 'NO _X_');
 }
 
@@ -298,9 +298,9 @@ $hoja->getStyle("A15:N15")->applyFromArray($bordes);
 $hoja->setCellValue('A15', '¿En el área no requerida se puede restablecer el uso actual(en caso de requerimiento parcial)?:');
 $hoja->setCellValue('M15', 'SI ___');
 $hoja->setCellValue('N15', 'NO ___');
-if ($ficha_social->restablecer_uso_area_no_requerida) {
+if ($ficha_social->restablecer_uso_area_no_requerida == "1") {
 	$hoja->setCellValue('M15', 'SI _X_');
-} else {
+} else if($ficha_social->restablecer_uso_area_no_requerida == "0"){
 	$hoja->setCellValue('N15', 'NO _X_');
 }
 
@@ -309,9 +309,9 @@ $hoja->setCellValue('A16', '¿Existe vivienda en el inmueble?');
 $hoja->setCellValue('E16', 'SI ___');
 $hoja->setCellValue('F16', 'NO ___');
 
-if ($ficha_social->existe_vivienda) {
+if ($ficha_social->existe_vivienda == "1") {
 	$hoja->setCellValue('E16', 'SI _X_');
-} else {
+} else if($ficha_social->existe_vivienda == "0"){
 	$hoja->setCellValue('F16', 'NO _X_');
 }
 
@@ -319,10 +319,10 @@ $hoja->setCellValue('G16', '¿La vivienda se encuentra habitada?');
 $hoja->setCellValue('M16', 'SI ___');
 $hoja->setCellValue('N16', 'NO ___');
 
-if ($ficha_social->vivienda_habitada) {
+if ($ficha_social->vivienda_habitada == "1") {
 	$hoja->setCellValue('M16', 'SI _X_');
-} else {
-	$hoja->setCellValue('M16', 'SI _X_');
+} else if($ficha_social->vivienda_habitada == "0") {
+	$hoja->setCellValue('N16', 'NO _X_');
 }
 
 
@@ -429,9 +429,9 @@ $hoja->mergeCells("A{$fila}:L{$fila}");
 $hoja->setCellValue("A{$fila}", "¿Existen edificaciones con infraesructura mínima para el desarrollo de actividades productivas?");
 $hoja->setCellValue("M{$fila}", "SI ___");
 $hoja->setCellValue("N{$fila}", "NO ___");
-if ($ficha_social->edificaciones_unidades_productivas) {
+if ($ficha_social->edificaciones_unidades_productivas == "1") {
 	$hoja->setCellValue("M{$fila}", "SI _X_");
-} else {
+} else if($ficha_social->edificaciones_unidades_productivas == "0"){
 	$hoja->setCellValue("N{$fila}", "NO _X_");
 }
 $fila++;
@@ -513,6 +513,13 @@ foreach ($unidades_residentes as $unidad_residente) {
 }
 
 $fila2 = $fila - $unidades_identificadas - 2;
+
+if ($unidades_identificadas > 0) {
+	$hoja->setCellValue("F{$fila2}", "SI _X_");
+} else {
+	$hoja->setCellValue("G{$fila2}", "NO _X_");
+}
+
 // cuantas unidades sociales identificadas hay
 $hoja->setCellValue("J{$fila2}", $unidades_identificadas);
 
@@ -529,7 +536,9 @@ $fila++;
 $hoja->getStyle("A{$fila}:N{$fila}")->applyFromArray($bordes);
 $hoja->mergeCells("A{$fila}:N{$fila}");
 $hoja->setCellValue("A{$fila}", $ficha_social->observaciones);
-$hoja->setDinamicSizeRow($ficha_social->observaciones, $fila, "A:N");
+if (strlen($ficha_social->observaciones) > 0) {
+	$hoja->setDinamicSizeRow($ficha_social->observaciones, $fila, "A:N");
+}
 $fila++;
 
 $hoja->getStyle("A{$fila}:N{$fila}")->applyFromArray($bordes);

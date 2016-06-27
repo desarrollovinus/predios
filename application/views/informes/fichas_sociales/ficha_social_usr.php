@@ -27,7 +27,7 @@ $hoja->getPageSetup()->setScale(100);
 $hoja->getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(3);
 
 // Título de la hoja
-$hoja->setTitle("Unidad social residente $unidad_residente->ficha_predial");
+$hoja->setTitle("Unidad social residente");
 
 //Se establecen las margenes
 $hoja->getPageMargins()->setTop(0.10); //Arriba
