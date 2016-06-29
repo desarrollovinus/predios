@@ -16,14 +16,14 @@ class PDF extends FPDF{
 	    // Logo ANI
 	    $this->setXY(15, 10);
 	    $this->Cell( 37, 36, $this->Image('./img/logo_ani.jpg', $this->GetX()+2, $this->GetY()+4, 33.78), 1, 0, 'C', false );
-	    
+
 	    $this->setX(52);
 	    $this->MultiCell(85,9, utf8_decode('PROYECTO CONCESIÓN VÍAS DEL NUS VINUS'),1,'C');
 	    $this->setX(52);
 	    $this->MultiCell(85,9, utf8_decode('REGISTRO FOTOGRÁFICO'),1,'C');
 	    $this->setX(52);
 	    $this->MultiCell(85,9, utf8_decode('PREDIO '.$GLOBALS['ficha']),1,'C');
-	    
+
 	    // Logo Vinus
 	    $this->setXY(137,10);
 	    $this->Cell( 30, 36, $this->Image('./img/logo_vinus.png', $this->GetX()+2, $this->GetY()+2, 25), 1, 0, 'C', false );
@@ -36,7 +36,7 @@ class PDF extends FPDF{
 	    $this->Cell(39,12, utf8_decode('Versión 1.00'),1,1,'C');
 	    $this->setX(167);
 	    $this->Cell(39,12, utf8_decode('Fecha: 29/04/2016'),1,0,'C');
-	    
+
 	    // Salto de línea
 	    $this->Ln(5);
 	}//Fin header
@@ -52,7 +52,7 @@ class PDF extends FPDF{
 	    //Se define la fuente del footer
 	    $this->SetFont('Arial','',8);
 	    // Número de página
-	    $this->Cell(0,10, utf8_decode('Sistema de Pestión Predial - Página').$this->PageNo().' de {nb}',0,0,'R');
+	    $this->Cell(0,10, utf8_decode('Sistema de Pestión Predial - Página ').$this->PageNo().' de {nb}',0,0,'R');
 	}
 }//Fin PDF
 
@@ -82,7 +82,7 @@ if(count($fotos) > 0) {
 		$dato = $this->accionesDAO->consultar_foto($foto);
 
 		if(isset($dato->fecha)){ $fecha = $dato->fecha; } else {$fecha = "";}
-		if(isset($dato->descripcion)){ $descripcion = $dato->descripcion; } else {$descripcion = "";}
+		if(isset($dato->descripcion)){ $descripcion = utf8_decode($dato->descripcion); } else {$descripcion = "";}
 
 		if ($cont%2 != 0) {
 			$pdf->setY($pdf->GetY());
@@ -114,14 +114,14 @@ if(count($fotos) > 0) {
 		$cont++;
 		$pdf->Ln();*/
 
-		
+
 		// $pdf->Cell(95, 50, "FOTO ".$cont,1,0,'C');
 		// $cont++;
 		if($cont%2 == 0){
 			$pdf->Ln();
 		}
 
-		if($cont == 6){
+		if($cont % 6 == 0){
 			$pdf->AddPage();
 		}
 
