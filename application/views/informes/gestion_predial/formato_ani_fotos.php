@@ -79,10 +79,8 @@ if(count($fotos) > 0) {
 	// Recorrido de las fotos
 	foreach($fotos as $foto) {
 		// Se consulta los datos de la foto
-		$dato = $this->accionesDAO->consultar_foto($foto);
-
-		if(isset($dato->fecha)){ $fecha = $dato->fecha; } else {$fecha = "";}
-		if(isset($dato->descripcion)){ $descripcion = utf8_decode($dato->descripcion); } else {$descripcion = "";}
+		if(isset($foto->fecha)){ $fecha = $foto->fecha; } else {$fecha = "";}
+		if(isset($foto->descripcion)){ $descripcion = utf8_decode($foto->descripcion); } else {$descripcion = "";}
 
 		if ($cont%2 != 0) {
 			$pdf->setY($pdf->GetY());
@@ -92,7 +90,7 @@ if(count($fotos) > 0) {
 			$pdf->setXY(110, $pdf->GetY() - 59);
 			$x = $pdf->GetX();
 		}
-		$pdf->Cell(95, 55, $pdf->Image(base_url().$directorio.'/'.$foto, $pdf->GetX()+3, $pdf->GetY()+3, null, 45),0,1,'C');
+		$pdf->Cell(95, 55, $pdf->Image(base_url().$directorio.'/'.$foto->archivo, $pdf->GetX()+3, $pdf->GetY()+3, null, 45),0,1,'C');
 
 		$pdf->SetFont('Arial','',9);
 		$pdf->SetX($x);

@@ -13,8 +13,15 @@ class AccionesDAO extends CI_Model {
 		return $this->db->get('tbl_acciones')->result();
 	}
 
-    function consultar_foto($nombre){
+    function consultar_foto($nombre=null, $ficha=null){
         $this->db->select("*");
+
+		if ($ficha) {
+			//obtener todas las fotos de una ficha especifica
+			$this->db->where('ficha_predial', $ficha);
+			$this->db->order_by('orden', 'ASC');
+			return $this->db->get('tbl_fotos')->result();
+		}
         $this->db->where("archivo", $nombre);
         return $this->db->get('tbl_fotos')->row();
     }
