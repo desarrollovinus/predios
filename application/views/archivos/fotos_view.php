@@ -40,7 +40,7 @@
 		?>
 			<div class="fotos" id="foto<?php echo $cont; ?>" orden="<?php echo ($dato->orden) ? $dato->orden: $max;?>">
 				<!-- Foto -->
-				<img src="<?php echo base_url().$directorio."/".$foto; ?>" width="280px"><br>
+				<img src="<?php echo base_url().$directorio."/".$foto; ?>" height="210"><br>
 
 				<!-- Eliminar -->
 				<a href="#">
