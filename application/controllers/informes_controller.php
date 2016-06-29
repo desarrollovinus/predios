@@ -456,47 +456,9 @@ class Informes_controller extends CI_Controller
 
 	function gestion_predial_fotos(){
 		$ficha = $this->uri->segment(3);
-
-		if( ! $ficha)
-		{
-			redirect('actualizar_controller');
-		} else {
-			if( ! is_dir($this->ruta_archivos.$ficha) )
-			{
-				@mkdir($this->ruta_archivos.$ficha, 0777);
-			}
-			if( ! is_dir($this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos) )
-			{
-				@mkdir($this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos, 0777);
-			}
-
-			//se abre el directorio
-			if($directorio = opendir($this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos))
-			{
-				//se arma un array de nombres de archivo
-				$nombres = array();
-
-				while(($file = readdir($directorio)) !== FALSE)
-				{
-					if($file != '.' && $file != '..')
-					{
-						array_push($nombres, $file);
-					}
-				}
-
-				//se cierra el directorio
-				closedir();
-
-
-			}
-		}
-
-
-
-
-		$this->data['fotos'] = $nombres;
-		$this->data['directorio'] = $this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos;
 		$this->load->model('accionesDAO');
+		$this->data['fotos'] = $this->accionesDAO->consultar_foto(null, $ficha);
+		$this->data['directorio'] = $this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos;
 		$this->load->view('informes/gestion_predial/formato_ani_fotos', $this->data);
 	}
 

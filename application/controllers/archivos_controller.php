@@ -267,8 +267,6 @@ class Archivos_controller extends CI_Controller
     if (file_exists($directorio.$nombre)) {
         echo "existe";
     // Si se sube corectamente
-		}	elseif ($alto > $ancho) {
-				echo "size";
 		} elseif($this->accionesDAO->procesar_foto($_FILES['userfile']['tmp_name'], $directorio, $nombre)) {
 	    	// Se prepara el arreglo con el que se guarda los datos de la foto
 	    	$datos = array(
