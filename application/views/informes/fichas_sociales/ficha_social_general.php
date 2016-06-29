@@ -462,21 +462,7 @@ $hoja->setCellValue("A{$fila}", "¿Existen unidades sociales identificadas?");
 $hoja->setCellValue("F{$fila}", "SI ___");
 $hoja->setCellValue("G{$fila}", "NO ___");
 $hoja->setCellValue("H{$fila}", "¿Cuantas?");
-$hoja->setCellValue("K{$fila}", "Identificación:");
 $fila++;
-
-$hoja->getStyle("A{$fila}:N{$fila}")->applyFromArray($bordes);
-$hoja->mergeCells("B{$fila}:C{$fila}");
-$hoja->mergeCells("D{$fila}:E{$fila}");
-$hoja->mergeCells("F{$fila}:H{$fila}");
-$hoja->mergeCells("I{$fila}:J{$fila}");
-$hoja->mergeCells("K{$fila}:N{$fila}");
-$hoja->setCellValue("A{$fila}", "Nro");
-$hoja->setCellValue("B{$fila}", "Categoría");
-$hoja->setCellValue("D{$fila}", "Relacion con el inmueble");
-$hoja->setCellValue("F{$fila}", "Responsable unidad social");
-$hoja->setCellValue("I{$fila}", "Numero de integrantes");
-$hoja->setCellValue("K{$fila}", "Firma del responsable de la unidad social");
 $fila++;
 
 $unidades_identificadas = 0;
@@ -513,11 +499,27 @@ foreach ($unidades_residentes as $unidad_residente) {
 }
 
 $fila2 = $fila - $unidades_identificadas - 2;
+$fila3 = $fila2 + 1;
 
 if ($unidades_identificadas > 0) {
 	$hoja->setCellValue("F{$fila2}", "SI _X_");
+	$hoja->setCellValue("K{$fila2}", "Identificación:");
+	$hoja->getStyle("A{$fila3}:N{$fila3}")->applyFromArray($bordes);
+	$hoja->mergeCells("B{$fila3}:C{$fila3}");
+	$hoja->mergeCells("D{$fila3}:E{$fila3}");
+	$hoja->mergeCells("F{$fila3}:H{$fila3}");
+	$hoja->mergeCells("I{$fila3}:J{$fila3}");
+	$hoja->mergeCells("K{$fila3}:N{$fila3}");
+	$hoja->setCellValue("A{$fila3}", "Nro");
+	$hoja->setCellValue("B{$fila3}", "Categoría");
+	$hoja->setCellValue("D{$fila3}", "Relacion con el inmueble");
+	$hoja->setCellValue("F{$fila3}", "Responsable unidad social");
+	$hoja->setCellValue("I{$fila3}", "Numero de integrantes");
+	$hoja->setCellValue("K{$fila3}", "Firma del responsable de la unidad social");
 } else {
 	$hoja->setCellValue("G{$fila2}", "NO _X_");
+	$hoja->getStyle("A{$fila3}:N{$fila3}")->applyFromArray($bordes);
+	$hoja->getRowDimension($fila3)->setRowHeight(0);
 }
 
 // cuantas unidades sociales identificadas hay
