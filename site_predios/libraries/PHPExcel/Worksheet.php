@@ -1259,17 +1259,26 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 	 * @param string $content	String contenido de la fila
 	 * @param string $columns String rango de columnas de una fila Ejemplo "A:C"
 	 * @param int $fila Numeric fila a la que se le modificara el tamaño
-	 * @param float $columnSize Numeric tamaño de la columna, por defecto es 9.09
-	 * @param float $rowSize Numeric tamaño de la fila, por defecto es 13
 	 * @author Luis David Moreno Lopera - VINUS S.A.S
 	 */
-	public function setDinamicSizeRow($content='', $fila, $columns='A:A', $columnSize=9.09, $rowSize=13)
+	public function setDinamicSizeRow($content='', $fila, $columns='A:A')
 	{
 		$nCol = explode(":", $columns);
-		$nCol = count(range($nCol[0], $nCol[1]));
-		$limitCol = 8 * $nCol;
+		$limitCol = 0;
+		if ($content == strtoupper($content)) {
+			for ($nCol[0]; $nCol[0] < $nCol[1]; $nCol[0]++) {
+				$maxSpace = $this->getColumnDimension($nCol[0])->getWidth() / 1.1;
+				$limitCol += $maxSpace;
+			}
+		} else {
+			for ($nCol[0]; $nCol[0] < $nCol[1]; $nCol[0]++) {
+				$maxSpace = $this->getColumnDimension($nCol[0])->getWidth() / 0.9;
+				$limitCol += $maxSpace;
+			}
+		}
+
 		$content = strlen($content);
-		$this->getRowDimension($fila)->setRowHeight(ceil($content / $limitCol) * $rowSize);
+		$this->getRowDimension($fila)->setRowHeight(ceil($content / $limitCol) * 13);
 	}
 
 	/**
