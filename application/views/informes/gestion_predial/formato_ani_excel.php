@@ -43,7 +43,7 @@ $objPHPExcel->getActiveSheet()->getPageMargins()->setBottom(0,90); //Abajo
 $objPHPExcel->getActiveSheet()->getPageSetup()->setHorizontalCentered();
 $objPHPExcel->getDefaultStyle()->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-// Ocultar la cuadrícula: 
+// Ocultar la cuadrícula:
 $objPHPExcel->getActiveSheet()->setShowGridlines(false);
 
 /*******************************************************
@@ -221,7 +221,7 @@ $objPHPExcel->getActiveSheet()->mergeCells('F30:I30');
 /**
  * Aplicacion de los estilos
  */
-// Borde externo en negrita 
+// Borde externo en negrita
 $objPHPExcel->getActiveSheet()->getStyle('A1:I14')->applyFromArray($borde_negrita_externo);
 $objPHPExcel->getActiveSheet()->getStyle('J1:O14')->applyFromArray($borde_negrita_externo);
 $objPHPExcel->getActiveSheet()->getStyle('P1:AE14')->applyFromArray($borde_negrita_externo);
@@ -454,9 +454,8 @@ $objPHPExcel->getActiveSheet()->setCellValue('U26', $predio->norte_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U28', $predio->sur_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U30', $predio->oriente_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U32', $predio->occidente_long);
-// $objPHPExcel->getActiveSheet()->setCellValue('W26', $predio->nom_norte);
-$objPHPExcel->getActiveSheet()->setCellValue('W26', $objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_norte, 26, "W", "AD"));
-// $objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_norte, 26, "W", "Z");
+$objPHPExcel->getActiveSheet()->setCellValue('W26', $predio->nom_norte);
+$objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_norte, 26, "W:AD");
 $objPHPExcel->getActiveSheet()->setCellValue('W28', $predio->nom_sur);
 $objPHPExcel->getActiveSheet()->setCellValue('W30', $predio->nom_oriente);
 $objPHPExcel->getActiveSheet()->setCellValue('W32', $predio->nom_occ);
@@ -486,7 +485,7 @@ for ($i=1; $i <= $total_filas; $i++) {
 	// Celdas a combinar
 	$objPHPExcel->getActiveSheet()->mergeCells("B{$fila}:F{$fila}");
 	$objPHPExcel->getActiveSheet()->mergeCells("I{$fila}:J{$fila}");
-	
+
 	// Estilos de celda
 	$objPHPExcel->getActiveSheet()->getStyle("B{$fila}:F{$fila}")->applyFromArray($borde_puntos_externo);
 	$objPHPExcel->getActiveSheet()->getStyle("G{$fila}")->applyFromArray($borde_puntos_externo);
@@ -507,7 +506,7 @@ foreach ($cultivos as $cultivo) {
 	$objPHPExcel->getActiveSheet()->setCellValue("G{$fila}", $cultivo->cantidad);
 	$objPHPExcel->getActiveSheet()->setCellValue("H{$fila}", $cultivo->densidad);
 	$objPHPExcel->getActiveSheet()->setCellValue("I{$fila}", $cultivo->unidad);
-	
+
 	// Aumento de fila
 	$fila++;
 } // foreach

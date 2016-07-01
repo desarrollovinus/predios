@@ -1264,17 +1264,13 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 	public function setDinamicSizeRow($content='', $fila, $columns='A:A')
 	{
 		$nCol = explode(":", $columns);
-		$limitCol = 0;
-		if ($content == strtoupper($content)) {
-			for ($nCol[0]; $nCol[0] < $nCol[1]; $nCol[0]++) {
-				$maxSpace = $this->getColumnDimension($nCol[0])->getWidth() / 1.1;
-				$limitCol += $maxSpace;
-			}
-		} else {
-			for ($nCol[0]; $nCol[0] < $nCol[1]; $nCol[0]++) {
-				$maxSpace = $this->getColumnDimension($nCol[0])->getWidth() / 0.9;
-				$limitCol += $maxSpace;
-			}
+		$limitCol = 1;
+		$content == strtoupper($content) ? $charSpace = 1.0:$charSpace = 0.9 ;
+
+		while ($nCol[0] != $nCol[1]) {
+			$maxSpace = $this->getColumnDimension($nCol[0])->getWidth() / $charSpace;
+			$limitCol += $maxSpace;
+			$nCol[0]++;
 		}
 
 		$content = strlen($content);
