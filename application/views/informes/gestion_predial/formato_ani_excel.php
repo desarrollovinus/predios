@@ -454,6 +454,7 @@ $objPHPExcel->getActiveSheet()->setCellValue('U26', $predio->norte_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U28', $predio->sur_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U30', $predio->oriente_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U32', $predio->occidente_long);
+// $objPHPExcel->getActiveSheet()->setCellValue('W26', $predio->nom_norte);
 $objPHPExcel->getActiveSheet()->setCellValue('W26', $predio->nom_norte);
 $objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_norte, 26, "W:AD");
 $objPHPExcel->getActiveSheet()->setCellValue('W28', $predio->nom_sur);
