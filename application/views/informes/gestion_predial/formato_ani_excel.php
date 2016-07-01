@@ -43,7 +43,7 @@ $objPHPExcel->getActiveSheet()->getPageMargins()->setBottom(0,90); //Abajo
 $objPHPExcel->getActiveSheet()->getPageSetup()->setHorizontalCentered();
 $objPHPExcel->getDefaultStyle()->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-// Ocultar la cuadrícula: 
+// Ocultar la cuadrícula:
 $objPHPExcel->getActiveSheet()->setShowGridlines(false);
 
 /*******************************************************
@@ -221,7 +221,7 @@ $objPHPExcel->getActiveSheet()->mergeCells('F30:I30');
 /**
  * Aplicacion de los estilos
  */
-// Borde externo en negrita 
+// Borde externo en negrita
 $objPHPExcel->getActiveSheet()->getStyle('A1:I14')->applyFromArray($borde_negrita_externo);
 $objPHPExcel->getActiveSheet()->getStyle('J1:O14')->applyFromArray($borde_negrita_externo);
 $objPHPExcel->getActiveSheet()->getStyle('P1:AE14')->applyFromArray($borde_negrita_externo);
@@ -454,6 +454,64 @@ $objPHPExcel->getActiveSheet()->setCellValue('U26', $predio->norte_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U28', $predio->sur_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U30', $predio->oriente_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U32', $predio->occidente_long);
+$objPHPExcel->getActiveSheet()->setCellValue('W26', $predio->nom_norte);
+$objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_norte, 26, "W:AD");
+// $objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_norte, 26, "W", "Z");
+$objPHPExcel->getActiveSheet()->setCellValue('W28', $predio->nom_sur);
+$objPHPExcel->getActiveSheet()->setCellValue('W30', $predio->nom_oriente);
+$objPHPExcel->getActiveSheet()->setCellValue('W32', $predio->nom_occ);
+
+
+/********************************************************************
+************ Cultivos, especies y construcciones ********************
+********************************************************************/
+
+// Se consultan los cultivos, construcciones y construcciones anexas
+$cultivos = $this->PrediosDAO->obtener_cultivos($ficha);
+$construcciones = $this->PrediosDAO->obtener_construcciones($ficha, '1');
+$construcciones_anexas = $this->PrediosDAO->obtener_construcciones($ficha, '2');
+
+// Se cuentan los cultivos y las construcciones (mas 7 filas de encabezados y otros datos que tiene la ficha)
+$total_cultivos = count($cultivos);
+$total_construcciones = count($construcciones) + count($construcciones_anexas) + 9;
+
+// Si hay más cultivos que construcciones, ese será el total de filas a crear, sino, será el total de contrucciones
+($total_cultivos > $total_construcciones) ? $total_filas = $total_cultivos : $total_filas = $total_construcciones ;
+
+// Fila inicial
+$fila = 37;
+
+// Recorrido del total de filas para formatear el espacio de los cultivos
+for ($i=1; $i <= $total_filas; $i++) {
+	// Celdas a combinar
+	$objPHPExcel->getActiveSheet()->mergeCells("B{$fila}:F{$fila}");
+	$objPHPExcel->getActiveSheet()->mergeCells("I{$fila}:J{$fila}");
+
+	// Estilos de celda
+	$objPHPExcel->getActiveSheet()->getStyle("B{$fila}:F{$fila}")->applyFromArray($borde_puntos_externo);
+	$objPHPExcel->getActiveSheet()->getStyle("G{$fila}")->applyFromArray($borde_puntos_externo);
+	$objPHPExcel->getActiveSheet()->getStyle("H{$fila}")->applyFromArray($borde_puntos_externo);
+	$objPHPExcel->getActiveSheet()->getStyle("I{$fila}:J{$fila}")->applyFromArray($borde_puntos_externo);
+
+	// Aumento de fila
+	$fila++;
+} // for
+
+// Fila inicial
+$fila = 37;
+
+// Recorrido para llenar el dato de los cultivos y especies
+foreach ($cultivos as $cultivo) {
+	// Datos
+$objPHPExcel->getActiveSheet()->setCellValue('F24', $predio->barrio);
+$objPHPExcel->getActiveSheet()->setCellValue('F26', $predio->municipio);
+$objPHPExcel->getActiveSheet()->setCellValue('O24', $predio->uso_terreno);
+$objPHPExcel->getActiveSheet()->setCellValue('O26', $predio->uso_edificacion);
+$objPHPExcel->getActiveSheet()->setCellValue('O28', $predio->topografia);
+$objPHPExcel->getActiveSheet()->setCellValue('U26', $predio->norte_long);
+$objPHPExcel->getActiveSheet()->setCellValue('U28', $predio->sur_long);
+$objPHPExcel->getActiveSheet()->setCellValue('U30', $predio->oriente_long);
+$objPHPExcel->getActiveSheet()->setCellValue('U32', $predio->occidente_long);
 // $objPHPExcel->getActiveSheet()->setCellValue('W26', $predio->nom_norte);
 $objPHPExcel->getActiveSheet()->setCellValue('W26', $objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_norte, 26, "W", "AD"));
 // $objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_norte, 26, "W", "Z");
@@ -512,6 +570,14 @@ foreach ($cultivos as $cultivo) {
 	$fila++;
 } // foreach
 
+	// Aumento de fila
+	$fila++;
+} // foreach
+
+	$fila++;
+}
+// Recorrido de construcciones
+$fila = 32;
 // Fila inicial
 $fila = 37;
 $fila_construcciones = $fila;
