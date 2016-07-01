@@ -441,8 +441,8 @@ $objPHPExcel->getActiveSheet()->setCellValue('U13', "$kms_final + $ms_final");
 $objPHPExcel->getActiveSheet()->setCellValue('AC12', $predio->abscisa_final - $predio->abscisa_inicial);
 $objPHPExcel->getActiveSheet()->setCellValue('B18', $predio->nombre_propietario.$propietarios_adicionales);
 $objPHPExcel->getActiveSheet()->setCellValue('U16', $predio->documento_propietario);
-$objPHPExcel->getActiveSheet()->setCellValue('U18', $predio->direccion_propietario);
-// $objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->direccion_propietario, 18, "U:Z");
+// $objPHPExcel->getActiveSheet()->setCellValue('U18', $predio->direccion_propietario);
+$objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->direccion_propietario, 18, "U:Z");
 $objPHPExcel->getActiveSheet()->setCellValue('U20', $predio->direccion);
 $objPHPExcel->getActiveSheet()->setCellValue('AB17', $predio->matricula);
 $objPHPExcel->getActiveSheet()->setCellValue('AB21', " ".$predio->no_catastral);
@@ -624,6 +624,8 @@ $objPHPExcel->getActiveSheet()->mergeCells("M{$fila}:Z{$fila}");
 
 // Encabezados
 $objPHPExcel->getActiveSheet()->setCellValue("M{$fila}", '¿Tiene el inmueble licencia urbanística, Urbanización, parcelación, subdivisión, construcción, Intervención, Espacio Público?');
+if ($predio->c_licencia == "1") { $objPHPExcel->getActiveSheet()->setCellValue("AB{$fila}", "SI"); }else{ $objPHPExcel->getActiveSheet()->setCellValue("AB{$fila}", "NO");}
+
 
 // Estilos
 $objPHPExcel->getActiveSheet()->getStyle("M{$fila}:Z{$fila}")->applyFromArray($borde_puntos_externo);
@@ -638,6 +640,7 @@ $objPHPExcel->getActiveSheet()->mergeCells("M{$fila}:Z{$fila}");
 
 // Encabezados
 $objPHPExcel->getActiveSheet()->setCellValue("M{$fila}", '¿Tiene el inmueble reglamento de Propiedad Horizontal LEY 675 DE 2001?');
+if ($predio->c_reglamento == "1") { $objPHPExcel->getActiveSheet()->setCellValue("AB{$fila}", "SI"); }else{ $objPHPExcel->getActiveSheet()->setCellValue("AB{$fila}", "NO");}
 
 // Estilos
 $objPHPExcel->getActiveSheet()->getStyle("M{$fila}:Z{$fila}")->applyFromArray($borde_puntos_externo);
@@ -652,6 +655,7 @@ $objPHPExcel->getActiveSheet()->mergeCells("M{$fila}:Z{$fila}");
 
 // Encabezados
 $objPHPExcel->getActiveSheet()->setCellValue("M{$fila}", '¿Tiene el inmueble aprobado plan parcial en el momento del levantamiento de la Ficha Predial?');
+if ($predio->c_levantamiento == "1") { $objPHPExcel->getActiveSheet()->setCellValue("AB{$fila}", "SI"); }else{ $objPHPExcel->getActiveSheet()->setCellValue("AB{$fila}", "NO");}
 
 // Estilos
 $objPHPExcel->getActiveSheet()->getStyle("M{$fila}:Z{$fila}")->applyFromArray($borde_puntos_externo);
@@ -666,6 +670,7 @@ $objPHPExcel->getActiveSheet()->mergeCells("M{$fila}:Z{$fila}");
 
 // Encabezados
 $objPHPExcel->getActiveSheet()->setCellValue("M{$fila}", '¿Aplica Informe de análisis de Área Remanente?');
+if ($predio->c_informe == "1") { $objPHPExcel->getActiveSheet()->setCellValue("AB{$fila}", "SI"); }else{ $objPHPExcel->getActiveSheet()->setCellValue("AB{$fila}", "NO");}
 
 // Estilos
 $objPHPExcel->getActiveSheet()->getStyle("M{$fila}:Z{$fila}")->applyFromArray($borde_puntos_externo);
@@ -680,6 +685,7 @@ $objPHPExcel->getActiveSheet()->mergeCells("M{$fila}:Z{$fila}");
 
 // Encabezados
 $objPHPExcel->getActiveSheet()->setCellValue("M{$fila}", '¿De acuerdo al estudio de títulos, la franja que estipula el decreto 2770 debe adquirirse?');
+if ($predio->c_adquisicion == "1") { $objPHPExcel->getActiveSheet()->setCellValue("AB{$fila}", "SI"); }else{ $objPHPExcel->getActiveSheet()->setCellValue("AB{$fila}", "NO");}
 
 // Estilos
 $objPHPExcel->getActiveSheet()->getStyle("M{$fila}:Z{$fila}")->applyFromArray($borde_puntos_externo);
