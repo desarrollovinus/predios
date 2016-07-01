@@ -441,7 +441,7 @@ $objPHPExcel->getActiveSheet()->setCellValue('U13', "$kms_final + $ms_final");
 $objPHPExcel->getActiveSheet()->setCellValue('AC12', $predio->abscisa_final - $predio->abscisa_inicial);
 $objPHPExcel->getActiveSheet()->setCellValue('B18', $predio->nombre_propietario.$propietarios_adicionales);
 $objPHPExcel->getActiveSheet()->setCellValue('U16', $predio->documento_propietario);
-$objPHPExcel->getActiveSheet()->setCellValue('U18', $predio->direccion_propietario);
+$objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->direccion_propietario, 18, "U:Z");
 $objPHPExcel->getActiveSheet()->setCellValue('U20', $predio->direccion);
 $objPHPExcel->getActiveSheet()->setCellValue('AB17', $predio->matricula);
 $objPHPExcel->getActiveSheet()->setCellValue('AB21', " ".$predio->no_catastral);
@@ -454,11 +454,10 @@ $objPHPExcel->getActiveSheet()->setCellValue('U26', $predio->norte_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U28', $predio->sur_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U30', $predio->oriente_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U32', $predio->occidente_long);
-$objPHPExcel->getActiveSheet()->setCellValue('W26', $predio->nom_norte);
 $objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_norte, 26, "W:AD");
-$objPHPExcel->getActiveSheet()->setCellValue('W28', $predio->nom_sur);
-$objPHPExcel->getActiveSheet()->setCellValue('W30', $predio->nom_oriente);
-$objPHPExcel->getActiveSheet()->setCellValue('W32', $predio->nom_occ);
+$objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_sur, 28, "W:AD");
+$objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_sur, 30, "W:AD");
+$objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_sur, 32, "W:AD");
 
 
 /********************************************************************
@@ -502,7 +501,7 @@ $fila = 37;
 // Recorrido para llenar el dato de los cultivos y especies
 foreach ($cultivos as $cultivo) {
 	// Datos
-	$objPHPExcel->getActiveSheet()->setCellValue("B{$fila}", $cultivo->descripcion);
+	$objPHPExcel->getActiveSheet()->setDinamicSizeRow($cultivo->descripcion, $fila, "B:F");
 	$objPHPExcel->getActiveSheet()->setCellValue("G{$fila}", $cultivo->cantidad);
 	$objPHPExcel->getActiveSheet()->setCellValue("H{$fila}", $cultivo->densidad);
 	$objPHPExcel->getActiveSheet()->setCellValue("I{$fila}", $cultivo->unidad);
@@ -529,7 +528,7 @@ foreach ($construcciones as $construccion) {
 
 	// Datos
 	$objPHPExcel->getActiveSheet()->setCellValue("M{$fila}", $cont++);
-	$objPHPExcel->getActiveSheet()->setCellValue("N{$fila}", $construccion->descripcion);
+	$objPHPExcel->getActiveSheet()->setDinamicSizeRow($construccion->descripcion, $fila, "N:Z");
 	$objPHPExcel->getActiveSheet()->setCellValue("AB{$fila}", $construccion->cantidad);
 	$objPHPExcel->getActiveSheet()->setCellValue("AD{$fila}", $construccion->unidad);
 
@@ -585,7 +584,7 @@ foreach ($construcciones_anexas as $construccion_anexa) {
 
 	// Datos
 	$objPHPExcel->getActiveSheet()->setCellValue("M{$fila}", $cont++);
-	$objPHPExcel->getActiveSheet()->setCellValue("N{$fila}", $construccion_anexa->descripcion);
+	$objPHPExcel->getActiveSheet()->setDinamicSizeRow($construccion_anexa->descripcion, $fila, "N:Z");
 	$objPHPExcel->getActiveSheet()->setCellValue("AB{$fila}", $construccion_anexa->cantidad);
 	$objPHPExcel->getActiveSheet()->setCellValue("AD{$fila}", $construccion_anexa->unidad);
 
@@ -735,7 +734,8 @@ $fila++;
 $fila_observaciones = $fila;
 
 // Datos
-$objPHPExcel->getActiveSheet()->setCellValue("T{$fila}", $predio->observacion);
+$objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->observacion, $fila, "T:AD");
+
 
 //Tamaño de celdas y aumento de fila
 $objPHPExcel->getActiveSheet()->getRowDimension($fila)->setRowHeight(3); $fila++;
