@@ -454,8 +454,9 @@ $objPHPExcel->getActiveSheet()->setCellValue('U26', $predio->norte_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U28', $predio->sur_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U30', $predio->oriente_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U32', $predio->occidente_long);
-$objPHPExcel->getActiveSheet()->setCellValue('W26', $predio->nom_norte);
-$objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_norte, 26, "W:Z");
+// $objPHPExcel->getActiveSheet()->setCellValue('W26', $predio->nom_norte);
+$objPHPExcel->getActiveSheet()->setCellValue('W26', $objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_norte, 26, "W", "AD"));
+// $objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_norte, 26, "W", "Z");
 $objPHPExcel->getActiveSheet()->setCellValue('W28', $predio->nom_sur);
 $objPHPExcel->getActiveSheet()->setCellValue('W30', $predio->nom_oriente);
 $objPHPExcel->getActiveSheet()->setCellValue('W32', $predio->nom_occ);
@@ -513,6 +514,7 @@ foreach ($cultivos as $cultivo) {
 
 // Fila inicial
 $fila = 37;
+$fila_construcciones = $fila;
 $cont = 1;
 
 // Recorrido para formatear y llenar las construcciones
@@ -536,17 +538,20 @@ foreach ($construcciones as $construccion) {
 	$fila++;
 } // foreach construcciones
 
+$fila_construcciones_fin = $fila - 1;
+
 // Celdas a combinar
-$objPHPExcel->getActiveSheet()->mergeCells("Y{$fila}:Z{$fila}");
+$objPHPExcel->getActiveSheet()->mergeCells("U{$fila}:Z{$fila}");
 
 // Texto
-$objPHPExcel->getActiveSheet()->setCellValue("Y{$fila}", 'TOTAL ÁREA CONSTRUIDA');
+$objPHPExcel->getActiveSheet()->setCellValue("U{$fila}", 'TOTAL ÁREA CONSTRUIDA');
+$objPHPExcel->getActiveSheet()->setCellValue("AB{$fila}", "=SUM(AB{$fila_construcciones}:AB{$fila_construcciones_fin})");
 
 // Estilos
-$objPHPExcel->getActiveSheet()->getStyle("Y{$fila}")->applyFromArray($negrita);
+$objPHPExcel->getActiveSheet()->getStyle("U{$fila}:AB{$fila}")->applyFromArray($negrita);
 
 // Aumento de fila
-$fila = $fila + 1;
+$fila = $fila + 2;
 
 // Celdas a combinar
 $objPHPExcel->getActiveSheet()->mergeCells("N{$fila}:Z{$fila}");
@@ -563,6 +568,8 @@ $objPHPExcel->getActiveSheet()->getStyle("M{$fila}:AD{$fila}")->applyFromArray($
 
 // Aumento de fila
 $fila++;
+
+$fila_construcciones_anexas = $fila;
 
 $cont = 1;
 
@@ -587,17 +594,22 @@ foreach ($construcciones_anexas as $construccion_anexa) {
 	$fila++;
 } // construcciones anexas
 
+$fila_construcciones_anexas_fin = $fila - 1;
+
 // Celdas a combinar
-$objPHPExcel->getActiveSheet()->mergeCells("Y{$fila}:Z{$fila}");
+$objPHPExcel->getActiveSheet()->mergeCells("U{$fila}:Z{$fila}");
 
 // Texto
-$objPHPExcel->getActiveSheet()->setCellValue("Y{$fila}", 'TOTAL ÁREA CONSTRUIDA');
+$objPHPExcel->getActiveSheet()->setCellValue("U{$fila}", 'TOTAL ÁREA CONSTRUIDA');
+$objPHPExcel->getActiveSheet()->setCellValue("AB{$fila}", "=SUM(AB{$fila_construcciones_anexas}:AB{$fila_construcciones_anexas_fin})");
 
 // Estilos
-$objPHPExcel->getActiveSheet()->getStyle("Y{$fila}")->applyFromArray($negrita);
+$objPHPExcel->getActiveSheet()->getStyle("U{$fila}:AB{$fila}")->applyFromArray($negrita);
+// Estilos
+$objPHPExcel->getActiveSheet()->getStyle("U{$fila}")->applyFromArray($negrita);
 
 // Aumento de fila
-$fila = $fila + 1;
+$fila = $fila + 2;
 
 // Encabezados
 $objPHPExcel->getActiveSheet()->setCellValue("AB{$fila}", 'SI/NO');
