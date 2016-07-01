@@ -1268,7 +1268,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 		$columna = $nCol[0];
 
 		$contenido = $content;
-		$content == strtoupper($content) ? $charSpace = 1.0:$charSpace = 0.9 ;
+		$content == strtoupper($content) ? $charSpace = 1.0: $charSpace = 0.9 ;
 
 		while ($nCol[0] != $nCol[1]) {
 			$maxSpace = $this->getColumnDimension($nCol[0])->getWidth() / $charSpace;
@@ -1277,7 +1277,11 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 		}
 
 		$content = strlen($content);
-		$this->getRowDimension($fila)->setRowHeight(ceil($content / $limitCol) * 13);
+		$newSize = ceil($content / $limitCol) * 13;
+		$oldSize = $this->getRowDimension($fila)->getRowHeight();
+		if ($oldSize < $newSize) {
+			$this->getRowDimension($fila)->setRowHeight($newSize);
+		}
 		$this->setCellValue("{$columna}{$fila}", trim($contenido));
 
 	}
