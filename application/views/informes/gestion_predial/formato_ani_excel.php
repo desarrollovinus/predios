@@ -37,7 +37,7 @@ $objPHPExcel->getActiveSheet()->getPageSetup()->setScale(77);
 $objPHPExcel->getActiveSheet()->getPageMargins()->setTop(0.10); //Arriba
 $objPHPExcel->getActiveSheet()->getPageMargins()->setRight(0.70); //Derecha
 $objPHPExcel->getActiveSheet()->getPageMargins()->setLeft(0.80); //Izquierda
-$objPHPExcel->getActiveSheet()->getPageMargins()->setBottom(0,90); //Abajo
+// $objPHPExcel->getActiveSheet()->getPageMargins()->setBottom(0,90); //Abajo
 
 //Centrar página
 $objPHPExcel->getActiveSheet()->getPageSetup()->setHorizontalCentered();
@@ -441,7 +441,8 @@ $objPHPExcel->getActiveSheet()->setCellValue('U13', "$kms_final + $ms_final");
 $objPHPExcel->getActiveSheet()->setCellValue('AC12', $predio->abscisa_final - $predio->abscisa_inicial);
 $objPHPExcel->getActiveSheet()->setCellValue('B18', $predio->nombre_propietario.$propietarios_adicionales);
 $objPHPExcel->getActiveSheet()->setCellValue('U16', $predio->documento_propietario);
-$objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->direccion_propietario, 18, "U:Z");
+$objPHPExcel->getActiveSheet()->setCellValue('U18', $predio->direccion_propietario);
+// $objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->direccion_propietario, 18, "U:Z");
 $objPHPExcel->getActiveSheet()->setCellValue('U20', $predio->direccion);
 $objPHPExcel->getActiveSheet()->setCellValue('AB17', $predio->matricula);
 $objPHPExcel->getActiveSheet()->setCellValue('AB21', " ".$predio->no_catastral);
@@ -471,7 +472,7 @@ $construcciones_anexas = $this->PrediosDAO->obtener_construcciones($ficha, '2');
 
 // Se cuentan los cultivos y las construcciones (mas 7 filas de encabezados y otros datos que tiene la ficha)
 $total_cultivos = count($cultivos);
-$total_construcciones = count($construcciones) + count($construcciones_anexas) + 9;
+$total_construcciones = count($construcciones) + count($construcciones_anexas) + 11;
 
 // Si hay más cultivos que construcciones, ese será el total de filas a crear, sino, será el total de contrucciones
 ($total_cultivos > $total_construcciones) ? $total_filas = $total_cultivos : $total_filas = $total_construcciones ;
@@ -685,8 +686,8 @@ $objPHPExcel->getActiveSheet()->getStyle("M{$fila}:Z{$fila}")->applyFromArray($b
 $objPHPExcel->getActiveSheet()->getStyle("N{$fila}:Z{$fila}")->applyFromArray($borde_puntos_externo);
 $objPHPExcel->getActiveSheet()->getStyle("AB{$fila}")->applyFromArray($borde_puntos_externo);
 
-// Aumento de fila
-$fila++;
+// La fila a asignarse es la suma de donde arranca hasta el total
+$fila = 37 + $total_filas; 
 
 // Tamaño de fila
 $objPHPExcel->getActiveSheet()->getRowDimension($fila)->setRowHeight(3);
