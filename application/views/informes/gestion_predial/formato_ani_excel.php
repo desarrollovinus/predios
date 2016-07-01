@@ -454,9 +454,9 @@ $objPHPExcel->getActiveSheet()->setCellValue('U26', $predio->norte_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U28', $predio->sur_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U30', $predio->oriente_long);
 $objPHPExcel->getActiveSheet()->setCellValue('U32', $predio->occidente_long);
+// $objPHPExcel->getActiveSheet()->setCellValue('W26', $predio->nom_norte);
 $objPHPExcel->getActiveSheet()->setCellValue('W26', $predio->nom_norte);
 $objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_norte, 26, "W:AD");
-// $objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->nom_norte, 26, "W", "Z");
 $objPHPExcel->getActiveSheet()->setCellValue('W28', $predio->nom_sur);
 $objPHPExcel->getActiveSheet()->setCellValue('W30', $predio->nom_oriente);
 $objPHPExcel->getActiveSheet()->setCellValue('W32', $predio->nom_occ);
@@ -574,10 +574,6 @@ foreach ($cultivos as $cultivo) {
 	$fila++;
 } // foreach
 
-	$fila++;
-}
-// Recorrido de construcciones
-$fila = 32;
 // Fila inicial
 $fila = 37;
 $fila_construcciones = $fila;
