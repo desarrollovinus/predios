@@ -1276,7 +1276,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 			$nCol[0]++;
 		}
 
-		$content = strlen($content);
+		$content = strlen($content) + 8;
 		$newSize = ceil($content / $limitCol) * 13;
 		$oldSize = $this->getRowDimension($fila)->getRowHeight();
 		if ($oldSize < $newSize) {
