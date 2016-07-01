@@ -1267,18 +1267,12 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 	{
 		$nCol = explode(":", $columns);
 		$limitCol = 1;
-		if ($content == strtoupper($content)) {
-			while ($nCol[0] != $nCol[1]) {
-				$maxSpace = $this->getColumnDimension($nCol[0])->getWidth() / 1.1;
-				$limitCol += $maxSpace;
-				$nCol[0]++;
-			}
-		} else {
-			while ($nCol[0] != $nCol[1]) {
-				$maxSpace = $this->getColumnDimension($nCol[0])->getWidth() / 0.9;
-				$limitCol += $maxSpace;
-				$nCol[0]++;
-			}
+		$content == strtoupper($content) ? $charSpace = 1.0:$charSpace = 0.9 ;
+
+		while ($nCol[0] != $nCol[1]) {
+			$maxSpace = $this->getColumnDimension($nCol[0])->getWidth() / $charSpace;
+			$limitCol += $maxSpace;
+			$nCol[0]++;
 		}
 
 		$content = strlen($content);
