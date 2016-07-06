@@ -36,22 +36,21 @@
 		// Recorrido de las fotos
 		foreach($fotos as $foto) {
 			// Se consulta los datos de la foto
-			$dato = $this->accionesDAO->consultar_foto($foto);
 		?>
-			<div class="fotos" id="foto<?php echo $cont; ?>" orden="<?php echo ($dato->orden) ? $dato->orden: $max;?>">
+			<div class="fotos" id="foto<?php echo $cont; ?>" orden="<?php echo ($foto->orden) ? $foto->orden: $max;?>">
 				<!-- Foto -->
-				<img src="<?php echo base_url().$directorio."/".$foto; ?>" height="210"><br>
+				<img src="<?php echo base_url().$directorio."/".$foto->archivo; ?>" height="210"><br>
 
 				<!-- Eliminar -->
 				<a href="#">
-					<img onCLick="javascript:eliminar_foto('<?php echo $cont; ?>', '<?php echo $directorio."/".$foto; ?>', '<?php echo $foto; ?>')" alt="Eliminar foto" title="Eliminar foto" src="<?php echo base_url(); ?>img/delete.png" width="16px" align="right"><br>
+					<img onCLick="javascript:eliminar_foto('<?php echo $cont; ?>', '<?php echo $directorio."/".$foto->archivo; ?>', '<?php echo $foto->archivo; ?>')" alt="Eliminar foto" title="Eliminar foto" src="<?php echo base_url(); ?>img/delete.png" width="16px" align="right"><br>
 				</a>
 
 				<!-- Datos de la foto -->
 				<strong>Foto <?php echo $cont; ?></strong><br>
-				<strong>Fecha: </strong><?php if(isset($dato->fecha)){ echo $dato->fecha; } ?><br>
-				<strong>Desripción: </strong><?php if(isset($dato->fecha)){ echo $dato->descripcion; } ?><br>
-				<input onChange="javascript:actualizar_foto(this.value, '<?php echo $foto; ?>')" type="range" name="orden" value='<?php echo ($dato->orden) ? $dato->orden: $max; ?>' min="1" max='<?php echo $max?>'>
+				<strong>Fecha: </strong><?php if(isset($foto->fecha)){ echo $foto->fecha; } ?><br>
+				<strong>Desripción: </strong><?php if(isset($foto->fecha)){ echo $foto->descripcion; } ?><br>
+				<input onChange="javascript:actualizar_foto(this.value, '<?php echo $foto->archivo; ?>')" type="range" name="orden" value='<?php echo ($foto->orden) ? $foto->orden: $max; ?>' min="1" max='<?php echo $max?>'>
 			</div>
 		<?php
 			$cont++;
@@ -88,6 +87,7 @@
 </div>
 
 <script type="text/javascript">
+	// se obtienen todos los input de tipo range
 	let ranges = $("[type=range]");
 
 	for (let i = 0; i < ranges.length; i++) {
