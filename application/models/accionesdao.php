@@ -143,6 +143,26 @@ class AccionesDAO extends CI_Model {
             return false;
         }
     }//Fin procesar_foto
+
+	function consultar_coordenadas($ficha) {
+		$this->db->select("*");
+		$this->db->where('ficha_predial', $ficha);
+		$this->db->order_by('id', 'ASC');
+		return $this->db->get('tbl_coordenadas')->result();
+	}
+
+	function insertar_coordenadas($datos) {
+		if($this->db->insert_batch('tbl_coordenadas', $datos)){
+			return true;
+		}
+	}
+
+	function eliminar_coordenadas($ficha){
+        // Se borran todas las coordenadas del predio
+        $this->db->where('ficha_predial', $ficha);
+        return $this->db->delete('tbl_coordenadas');
+	}
+
 }
 /* End of file accionesdao.php */
 /* Location: ./site_predios/application/models/accionesdao.php */
