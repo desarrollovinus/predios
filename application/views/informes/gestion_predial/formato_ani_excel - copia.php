@@ -609,11 +609,12 @@ foreach ($this->PrediosDAO->obtener_construcciones($predio->ficha_predial, '2') 
 
 	$fila++;
 }
-if ($predio->c_licencia == "1") { $objPHPExcel->getActiveSheet()->setCellValue("AB52", "SI"); }else{ $objPHPExcel->getActiveSheet()->setCellValue("AB52", "NO");}
-if ($predio->c_reglamento == "1") { $objPHPExcel->getActiveSheet()->setCellValue("AB53", "SI"); }else{ $objPHPExcel->getActiveSheet()->setCellValue("AB53", "NO");}
-if ($predio->c_levantamiento == "1") { $objPHPExcel->getActiveSheet()->setCellValue("AB54", "SI"); }else{ $objPHPExcel->getActiveSheet()->setCellValue("AB54", "NO");}
-if ($predio->c_informe == "1") { $objPHPExcel->getActiveSheet()->setCellValue("AB55", "SI"); }else{ $objPHPExcel->getActiveSheet()->setCellValue("AB55", "NO");}
-if ($predio->c_adquisicion == "1") { $objPHPExcel->getActiveSheet()->setCellValue("AB56", "SI"); }else{ $objPHPExcel->getActiveSheet()->setCellValue("AB56", "NO");}
+// if ($predio->c_licencia == "1") { $objPHPExcel->getActiveSheet()->setCellValue("AB52", "SI"); }else{ $objPHPExcel->getActiveSheet()->setCellValue("AB52", "NO");}
+
+// if ($predio->c_reglamento == "1") { $objPHPExcel->getActiveSheet()->setCellValue("AB53", "SI"); }else{ $objPHPExcel->getActiveSheet()->setCellValue("AB53", "NO");}
+// if ($predio->c_levantamiento == "1") { $objPHPExcel->getActiveSheet()->setCellValue("AB54", "SI"); }else{ $objPHPExcel->getActiveSheet()->setCellValue("AB54", "NO");}
+// if ($predio->c_informe == "1") { $objPHPExcel->getActiveSheet()->setCellValue("AB55", "SI"); }else{ $objPHPExcel->getActiveSheet()->setCellValue("AB55", "NO");}
+// if ($predio->c_adquisicion == "1") { $objPHPExcel->getActiveSheet()->setCellValue("AB56", "SI"); }else{ $objPHPExcel->getActiveSheet()->setCellValue("AB56", "NO");}
 
 // Título de la hoja
 $objPHPExcel->getActiveSheet()->setTitle("Ficha predial");
