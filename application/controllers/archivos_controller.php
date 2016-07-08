@@ -380,6 +380,12 @@ class Archivos_controller extends CI_Controller
 		$this->data['vertices'] = $this->accionesDAO->consultar_coordenadas($this->input->post('ficha_predial'));
 		$this->load->view('actualizar/vertices', $this->data);
 	}
+
+	function generar_kml() {
+		$this->data["ficha"] = $this->uri->segment(3);
+		$this->load->model("accionesDAO");
+		$this->load->view('plantillas/kml-plantilla', $this->data);
+	}
 }
 /* End of file archivos_controller.php */
 /* Location: ./site_predios/application/controllers/archivos_controller.php */
