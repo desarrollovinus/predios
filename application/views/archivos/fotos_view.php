@@ -197,7 +197,7 @@
                 datos['fecha'] = $("input[name=fecha]").val();
                 datos['descripcion'] = $("input[name=descripcion]").val();
                 datos['ficha'] = "<?php echo $this->uri->segment(3); ?>";
-								datos['orden'] = "<?php echo $max + 1; ?>";
+				datos['orden'] = "<?php echo $max + 1; ?>";
 
                 console.log(datos);
             }, // onsubmit

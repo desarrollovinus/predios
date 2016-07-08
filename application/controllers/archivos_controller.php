@@ -333,6 +333,59 @@ class Archivos_controller extends CI_Controller
 			// echo true;
         } // if
 	}
+
+	function subir_csv () {
+		$this->load->model("accionesDAO");
+
+		$csv = $_FILES['userfile']['tmp_name'];
+		$filas = count(file($csv));
+		$fichero = fopen($csv, "r");
+		$cont = 0;
+		$this->accionesDAO->eliminar_coordenadas($this->input->post('ficha'));
+		$contenido = array();
+		// estado de la inserción de datos
+		$estado = true;
+		while(($datos = fgetcsv($fichero, 100)) !== FALSE)
+		{
+			// condicion para omitir la primera y ultima fila
+			if ($cont > 0 && $cont < $filas - 1) {
+				if ($cont % 2 != 0) {
+					$arreglo = array(
+						'ficha_predial' => $this->input->post('ficha'),
+						'punto' => $datos[0],
+						'x' => $datos[1],
+						'y' => $datos[2],
+						'distancia' => NULL
+					);
+				} else {
+					$arreglo = array(
+						'ficha_predial' => $this->input->post('ficha'),
+						'punto' => $datos[0],
+						'x' => NULL,
+						'y' => NULL,
+						'distancia' => $datos[3]
+					);
+				}
+				array_push($contenido, $arreglo);
+			}
+			$cont++;
+		}
+		// si no se inserto correctamente la coordenada devuelve false
+		if (!$this->accionesDAO->insertar_coordenadas($contenido)) { $estado = false; }
+		echo $estado;
+	}
+
+	function cargar_vertices(){
+		$this->load->model("accionesDAO");
+		$this->data['vertices'] = $this->accionesDAO->consultar_coordenadas($this->input->post('ficha_predial'));
+		$this->load->view('actualizar/vertices', $this->data);
+	}
+
+	function generar_kml() {
+		$this->data["ficha"] = $this->uri->segment(3);
+		$this->load->model("accionesDAO");
+		$this->load->view('plantillas/kml-plantilla', $this->data);
+	}
 }
 /* End of file archivos_controller.php */
 /* Location: ./site_predios/application/controllers/archivos_controller.php */
