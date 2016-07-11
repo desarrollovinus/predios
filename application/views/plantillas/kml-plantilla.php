@@ -145,15 +145,15 @@
 
 
 <Placemark>
-    <name>Área</name>
+    <name>Área requerida</name>
     <Style>
         <!-- Color de la linea  -->
         <LineStyle>
-            <color>ff0000ff</color>
+            <color>ff0f0477</color>
         </LineStyle>
         <!-- Color interior del poligono  -->
         <PolyStyle>
-            <color>3b0000ff</color>
+            <color>red</color>
             <fill>1</fill>
         </PolyStyle>
     </Style>
@@ -161,18 +161,20 @@
     <ExtendedData>
         <SchemaData schemaUrl="">
             <SimpleData name="Predio N°"><?php echo $ficha ?></SimpleData>
-            <SimpleData name="Tramo">PORCESITO - SANTIAGO</SimpleData>
-            <SimpleData name="Propietario">JESUS HUMBERTO ROLDAN JIMENEZ</SimpleData>
+            <SimpleData name="Tramo"><?php echo $predio->tramo ?></SimpleData>
+            <SimpleData name="Propietario"><?php echo $predio->nombre_propietario ?></SimpleData>
         </SchemaData>
     </ExtendedData>
     <!-- visibilidad de la tabla de datos al iniciar el google earth 1:visible kml- 0: no visible  -->
-    <gx:balloonVisibility>1</gx:balloonVisibility>
+    <gx:balloonVisibility>0</gx:balloonVisibility>
 
     <Polygon>
         <outerBoundaryIs>
             <LinearRing>
                 <coordinates>
-                    -75.18892531435638,6.548624671398745,0 -75.18892531435638,6.548624671398751,0 -75.18885179204484,6.548636643523492,0 -75.18865209686709,6.548655410868842,0 -75.18858260804268,6.548659059669588,0 -75.18852814571575,6.548661040909389,0 -75.18841773115402,6.548662590705499,0 -75.18837690374357,6.548445128062151,0 -75.18836428475967,6.548387764553587,0 -75.18836428475967,6.548387764553587,0 -75.18836391577274,6.548386087208637,0 -75.18835778942247,6.548358237974669,0 -75.18852542249216,6.548356431787862,0 -75.18869289550732,6.548348888384806,0 -75.18886001220143,6.54833561660679,0 -75.1890265767257,6.548316632008362,0 -75.18904471360564,6.548290153039898,0 -75.18910859160899,6.548277919907505,0 -75.18917275565285,6.54827277736488,0 -75.18919624464566,6.548291314671472,0 -75.18936401973798,6.548260253152018,0 -75.18935641838419,6.548293619040271,0 -75.18934597189687,6.54833947354234,0 -75.1893018384805,6.548385705789912,0 -75.1892527800446,6.548451553979923,0 -75.18916353921246,6.548587807603575,0 -75.18902734970389,6.548618571859374,0 -75.1889271408466,6.54863588997897,0 -75.18892531435638,6.548624671398745,0
+                    <?php foreach ($coordenadas as $punto){
+                        echo $punto["x"].",".$punto["y"].","."0 ";
+                    }?>
                 </coordinates>
             </LinearRing>
         </outerBoundaryIs>
@@ -181,22 +183,26 @@
 
 <!-- Punto de área -->
 <Placemark>
-    <name>Area:3300.5 m2 </name>
+    <name>Área requerida: <?php echo $predio->area_requerida ?> m2 </name>
     <styleUrl>#msn_placemark_circle0</styleUrl>
     <Point>
-        <coordinates>-75.18892475,6.54845965,0</coordinates>
+        <coordinates><?php echo $area["x"].",".$area["y"].","."0 " ?></coordinates>
     </Point>
 </Placemark>
 
 <!-- Vertices -->
-<Placemark>
-<name>1</name>
-<styleUrl>#msn_placemark_circle</styleUrl>
-<Point>
-    <coordinates>-75.18835779,6.54835824,0</coordinates>
-</Point>
-</Placemark>
-
+<Folder>
+    <name>Vértices</name>
+<?php foreach ($coordenadas as $punto): ?>
+    <Placemark>
+    <name><?php echo $punto["punto"]; ?></name>
+    <styleUrl>#msn_placemark_circle</styleUrl>
+    <Point>
+        <coordinates><?php echo $punto["x"].",".$punto["y"].","."0 "; ?></coordinates>
+    </Point>
+    </Placemark>
+<?php endforeach; ?>
+</Folder>
 </Document>
 </kml>
 
