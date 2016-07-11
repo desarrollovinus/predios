@@ -435,7 +435,7 @@ class Informes_controller extends CI_Controller
 		$this->load->model(array('InformesDAO', 'Gestion_socialDAO'));
 
 		// Se recibe por post la variable que define si es un registro nuevo o editado
-    $this->data["ficha"] = $this->uri->segment(3);
+    	$this->data["ficha"] = $this->uri->segment(3);
 		$this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($this->data["ficha"]);
 		$this->data['ficha_social'] = $this->Gestion_socialDAO->cargar_ficha($this->data["ficha"]);
 		$this->data['valores_fichas'] = $this->Gestion_socialDAO->cargar_valores_ficha_social($this->data["ficha"], 0);
