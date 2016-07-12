@@ -1,5 +1,11 @@
 <?php
-error_reporting(-1);
+// error_reporting(-1);
+
+require('site_predios/libraries/proj4php/vendor/autoload.php');
+
+use proj4php\Proj4php;
+use proj4php\Proj;
+use proj4php\Point;
 
 ini_set('post_max_size','100M');
 ini_set('upload_max_filesize','100M');
@@ -332,6 +338,92 @@ class Archivos_controller extends CI_Controller
 			// Se retorna verdadero
 			// echo true;
         } // if
+	}
+
+	function subir_csv () {
+		$this->load->model("accionesDAO");
+
+		$csv = $_FILES['userfile']['tmp_name'];
+		$filas = count(file($csv));
+		$fichero = fopen($csv, "r");
+		$cont = 0;
+		$this->accionesDAO->eliminar_coordenadas($this->input->post('ficha'));
+		$contenido = array();
+		// estado de la inserción de datos
+		$estado = true;
+		while(($datos = fgetcsv($fichero, 100)) !== FALSE)
+		{
+			// condicion para omitir la primera y ultima fila
+			if ($cont > 0 && $cont < $filas - 1) {
+				if ($cont % 2 != 0) {
+					$arreglo = array(
+						'ficha_predial' => $this->input->post('ficha'),
+						'punto' => $datos[0],
+						'x' => $datos[1],
+						'y' => $datos[2],
+						'distancia' => NULL
+					);
+				} else {
+					$arreglo = array(
+						'ficha_predial' => $this->input->post('ficha'),
+						'punto' => $datos[0],
+						'x' => NULL,
+						'y' => NULL,
+						'distancia' => $datos[3]
+					);
+				}
+				array_push($contenido, $arreglo);
+			}
+			$cont++;
+		}
+		// si no se inserto correctamente la coordenada devuelve false
+		if (!$this->accionesDAO->insertar_coordenadas($contenido)) { $estado = false; }
+		echo $estado;
+	}
+
+	function cargar_vertices(){
+		$this->load->model("accionesDAO");
+		$this->data['vertices'] = $this->accionesDAO->consultar_coordenadas($this->input->post('ficha_predial'));
+		$this->load->view('actualizar/vertices', $this->data);
+	}
+
+	function generar_kml() {
+		$this->load->model(array("accionesDAO", "InformesDAO"));
+		$this->data["ficha"] = $this->uri->segment(3);
+		$this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($this->data["ficha"]);
+		$corMagna = $this->accionesDAO->consultar_coordenadas($this->data["ficha"]);
+		$corGeo = array();
+		$proj4 = new Proj4php();
+		$projMagna = new Proj('EPSG:3116', $proj4);
+		$projWGS84 = new Proj('EPSG:4326', $proj4);
+		$xSum = 0;
+		$ySum = 0;
+		//conversion de magna a WGS84
+		foreach ($corMagna as $coordenada) {
+			if ($coordenada->x != NULL) {
+				$pointSrc = new Point($coordenada->x, $coordenada->y, $projMagna);
+				$pointDest = $proj4->transform($projWGS84, $pointSrc);
+				$corXY = explode(" ", $pointDest->toShortString());
+				$corXY = array("punto"=>$coordenada->punto, "x"=> $corXY[0], "y"=>$corXY[1]);
+				array_push($corGeo, $corXY);
+				$xSum += (float)$coordenada->x;
+				$ySum += (float)$coordenada->y;
+			}
+		}
+		//se calcula el punto medio del predio
+		$puntos = (float)explode(" ", $coordenada->punto)[0];
+		$pointSrc = new Point($xSum/$puntos, $ySum/$puntos, $projMagna);
+		$pointDest = $proj4->transform($projWGS84, $pointSrc);
+		$corXY = explode(" ", $pointDest->toShortString());
+
+		$area = array(
+			'x' => $corXY[0],
+			'y' => $corXY[1],
+		);
+
+		$this->data["coordenadas"] = $corGeo;
+		$this->data["area"] = $area;
+		$this->load->view('plantillas/kml-plantilla', $this->data);
 	}
 }
 /* End of file archivos_controller.php */

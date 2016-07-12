@@ -1,3 +1,4 @@
+<script src="<?php echo base_url(); ?>js/ajaxupload.2.0.min.js"></script>
 <?php $permisos = $this->session->userdata('permisos'); ?>
 <ul id="navigation">
 	<?php if(isset($permisos['Bit&aacute;cora']['Consultar'])) { ?><li><a href='#' rel="bitacora" title="Bit&aacute;cora"><img src="<?php echo base_url('img/bitacora.png'); ?>"></a></li><?php } ?>
@@ -5,26 +6,26 @@
 	<?php if(isset($permisos['Archivos y Fotos']['Consultar'])) { ?><li><a href='#' rel="fotos" title="Ver Fotos"><img src="<?php echo base_url('img/camara.png'); ?>"></a></li><?php } ?>
 	<?php if(isset($permisos['Pagos']['Consultar'])) { ?><li><a href='#' rel="pagos" title="Ver Pagos"><img src="<?php echo base_url('img/pagos2.png'); ?>"></a></li><?php } ?>
 </ul>
-	
+
 <div id="form">
 	<?php
 		echo form_fieldset('<b>Registro</b>');
 		echo form_open('actualizar_controller/actualizar_predio');
-		
+
 		echo form_hidden($this->security->get_csrf_token_name(),$this->security->get_csrf_hash());
 		echo form_label('Ficha predial:&nbsp;&nbsp;&nbsp;','ficha');
-		
+
 		echo form_input('ficha', $predio->ficha_predial, 'readonly');
 
 		echo form_label('&nbsp;&nbsp;&nbsp;N&uacute;mero:&nbsp;&nbsp;&nbsp;','numero_ficha');
 		echo form_input('numero_ficha', $descripcion->numero);
-		
+
 	?>
 	<div class="clear">&nbsp;</div>
 
 	<div id="accordion">
 		<?php if (false) { ?>
-			
+
 		<!-- seccion 4 -->
 		<h3><a href="#seccion4">GESTI&Oacute;N DE PROCESOS</a></h3>
 		<div>
@@ -170,7 +171,7 @@
 						<td width="20%"><?php echo form_label('Remanente','area_residual'); ?></td>
 						<td width="30%"><?php echo form_input('area_residual', utf8_decode($descripcion->area_residual)); ?>m&sup2;</td>
 					</tr>
-					
+
 					<tr>
 						<td width="20%"><?php echo form_label('construida','area_construida'); ?></td>
 						<td width="30%"><?php echo form_input('area_construida', utf8_decode($descripcion->area_construida)); ?>m&sup2;</td>
@@ -222,11 +223,11 @@
 					</tr>
 					<tr>
 						<td width="20%"><?php echo form_label('Estado del Proceso','estado_proceso'); ?></td>
-						<?php 
+						<?php
 							$estado_proceso = array(' ' => ' ');
 							foreach($estados as $estado):
 								$estado_proceso[$estado->estado] = $estado->estado;
-							endforeach; 
+							endforeach;
 						?>
 						<td width="30%"><?php echo form_dropdown('estado_proceso', $estado_proceso, utf8_decode($identificacion->estado_pro)); ?></td>
 					</tr>
@@ -250,8 +251,8 @@
 			</div>
 			<?php echo form_fieldset_close(); ?>
 		</div>
-		
-		
+
+
 		<!-- seccion 2 -->
 		<h3><a href="#seccion2">PREDIO ORIGINAL</a></h3>
 		<div>
@@ -265,7 +266,7 @@
 						<td width="20%"><?php echo form_label('Vereda o Barrio','vereda_barrio'); ?></td>
 						<td width="30%"><?php echo form_input('vereda_barrio', utf8_decode($identificacion->barrio)); ?></td>
 					</tr>
-					<tr>					
+					<tr>
 						<td width="30%"><?php echo form_label('Direcci&oacute;n / Nombre','direccion_nombre'); ?></td>
 						<td width="20%"><?php echo form_input('direccion_nombre', utf8_decode($identificacion->direccion)); ?></td>
 						<td width="30%"><?php echo form_label('Tramo','tramo'); ?></td>
@@ -290,7 +291,7 @@
 						<td width="20%"><?php echo form_label('Fecha','fecha_predio_inicial'); ?></td>
 						<td width="30%"><?php echo form_input('fecha_predio_inicial', utf8_decode($identificacion->fecha_escritura)); ?></td>
 					</tr>
-					<tr>					
+					<tr>
 						<td><?php echo form_label('Oficina registro','oficina_registro_predio_inicial'); ?></td>
 						<td><?php echo form_input('oficina_registro_predio_inicial', utf8_decode($identificacion->of_registro)); ?></td>
 						<td><?php echo form_label('N&uacute;mero de la notar&iacute;a','numero_notaria_predio_inicial'); ?></td>
@@ -349,7 +350,7 @@
 											'name' => "boton_eliminar$id",
 											'id' => "boton_eliminar$id",
 											'value' => 'Eliminar propietario'
-										); 
+										);
 										echo form_input($boton_eliminar);
 									?>
 								</td>
@@ -368,23 +369,23 @@
 					'name' => 'boton_agregar',
 					'id' => 'boton_agregar',
 					'value' => 'Agregar'
-				); 
+				);
 				echo form_input($boton_agregar);
 			?>
 		</div>
-		
+
 		<!-- seccion 5 -->
 		<h3><a href="#seccion5">ESTUDIO DE T&Iacute;TULOS</a></h3>
 		<div>
 			<?php echo form_fieldset('<b>Fecha</b>'); ?>
 			<table>
-				<?php 
+				<?php
 				$_titulos_adq = array(' ' => ' ');
 				foreach($titulos_adquisicion as $titulo_adq):
 					$_titulos_adq[$titulo_adq->id] = $titulo_adq->nombre;
 				endforeach;
 				?>
-				
+
 				<tr>
 					<td width="20%"><?php echo form_label('Fecha del estudio','fecha_estudio'); ?></td>
 					<td width="30%"><?php echo form_input('fecha_estudio', utf8_decode($identificacion->fecha_estudio)); ?></td>
@@ -418,7 +419,7 @@
 			<div align="center"><?php echo form_textarea('segregaciones', utf8_decode($identificacion->segreg_titu)); ?></div>
 			<?php echo form_fieldset_close(); ?>
 		</div>
-		
+
 		<!-- seccion 6 -->
 		<h3><a href="#seccion6">GESTI&Oacute;N PREDIAL</a></h3>
 		<div>
@@ -432,7 +433,7 @@
 							$_contratistas = array(' ' => ' ');
 							foreach($contratistas as $contratista):
 								$_contratistas[$contratista->id_cont] = $contratista->nombre;
-							endforeach; 
+							endforeach;
 						?>
 						<td width="30%"><?php echo form_label('Encargado gesti&oacute;n predial','encargado_gestion_predial'); ?></td>
 						<td width="20%"><?php echo form_dropdown('encargado_gestion_predial',$_contratistas, utf8_decode($identificacion->enc_gestion)); ?></td>
@@ -459,7 +460,7 @@
 			</table>
 			<?php echo form_fieldset_close(); ?>
 			<div class="clear">&nbsp;</div>
-			
+
 			<?php echo form_fieldset('<b>Aval&uacute;o</b>'); ?>
 			<table style="text-align:'left'">
 				<tbody>
@@ -476,7 +477,7 @@
 						<td><?php echo form_input('valor_total_terreno', utf8_decode($identificacion->valor_total_terr)); ?></td>
 					</tr>
 					<tr>
-						
+
 					</tr>
 				</tbody>
 			</table>
@@ -488,7 +489,7 @@
 				<title>Document</title>
 			</head>
 			<body>
-				
+
 			</body>
 			</html>
 
@@ -579,7 +580,7 @@
 			<?php echo form_fieldset_close(); ?>
 		</div>
 
-		
+
 
 		<!-- seccion 7 -->
 		<h3><a href="#seccion7">FICHA PREDIAL</a></h3>
@@ -588,7 +589,7 @@
 			<?php echo form_fieldset('<b>DATOS B&Aacute;SICOS</b>'); ?>
 				<table style="text-align:left" width="100%">
 					<tbody>
-						
+
 					</tbody>
 				</table>
 			<?php echo form_fieldset_close(); ?>
@@ -625,7 +626,7 @@
 					</tbody>
 				</table>
 			<?php echo form_fieldset_close(); ?>
-			
+
 			<!-- INVENTARIO DE CULTIVOS Y ESPECIES -->
 			<?php echo form_fieldset('<b>INVENTARIO DE CULTIVOS Y ESPECIES</b>'); ?>
 				<table style="text-align:left" width="100%">
@@ -648,7 +649,7 @@
 					</tbody>
 				</table>
 			<?php echo form_fieldset_close(); ?>
-				
+
 			<!-- DESCRIPCIÓN DE LAS CONSTRUCCIONES -->
 			<?php echo form_fieldset('<b>DESCRIPCI&OacuteN DE LAS CONSTRUCCIONES</b>'); ?>
 				<table style="text-align:left" width="100%">
@@ -671,7 +672,7 @@
 					</tbody>
 				</table>
 			<?php echo form_fieldset_close(); ?>
-			
+
 			<!-- DESCRIPCIÓN DE LAS CONSTRUCCIONES ANEXAS -->
 			<?php echo form_fieldset('<b>DESCRIPCI&Oacute;N DE LAS CONSTRUCCIONES ANEXAS</b>'); ?>
 				<table style="text-align:left" width="100%">
@@ -693,7 +694,7 @@
 						<?php } ?>
 					</tbody>
 				</table>
-				
+
 				<!-- CHECKS -->
 				<table style="text-align:left" width="100%">
 					<tr>
@@ -737,7 +738,7 @@
 							$_funciones = array(' ' => ' ');
 							foreach($funciones_predios_obra as $funciones):
 								$_funciones[$funciones->id] = $funciones->nombre;
-							endforeach; 
+							endforeach;
 						?>
 						<td width="20%"><?php echo form_dropdown('funcion_predio',$_funciones, $identificacion->id_funcion_predio, "style='width: 100%;'"); ?></td>
 
@@ -771,7 +772,7 @@
 							<td width="20%"><?php echo form_label('Meta contractual (A&ntilde;o YYYY)','meta_contractual'); ?></td>
 							<td width="30%"><?php echo form_input('meta_contractual'); ?></td>
 						</tr>
-						
+
 						<tr>
 							<td width="20%"><?php echo form_label('Disponibilidad izquierda','disponibilidad_izquierda'); ?></td>
 							<td width="30%"><?php echo form_dropdown('disponibilidad_izquierda', array('0' => 'No disponible - Negocio', '2' => 'No disponible - Expropiaci&oacute;n', '1' => 'Disponible'), $descripcion->disponibilidad_izquierda); ?></td>
@@ -781,8 +782,8 @@
 					</tbody>
 				</table>
 			<?php echo form_fieldset_close(); ?>
-			<div class="clear">&nbsp;</div>			
-			
+			<div class="clear">&nbsp;</div>
+
 			<!--AVALÚO COMERCIAL CORPORATIVO -->
 			<?php echo form_fieldset('<b>Aval&uacute;o comercial corporativo</b>'); ?>
 				<table style="text-align:left">
@@ -796,14 +797,25 @@
 					</tbody>
 				</table>
 			<?php echo form_fieldset_close(); ?>
-			<div class="clear">&nbsp;</div>	
+			<div class="clear">&nbsp;</div>
+		</div>
+		<!-- LISTA DE VÉRTICES  -->
+		<h3><a href= "#seccion9">VÉRTICES</a></h3>
+		<div>
+			<div id="error"></div>
+			<label for="btn_subir_csv">Actualizar registros (CSV)</label>
+			<input type="file" id="btn_subir_csv">
+			<div id="vertices"></div>
+			<p style="font-size:0.8em;">
+				Src: Magna-Sirgas / Colombia Bogotá Zone
+			</p>
 		</div>
 	</div>
 
 	<br /><input type="hidden" id="errores" />
 	<div class="clear">&nbsp;</div>
 	<input type="hidden" id="boton_hidden" name="boton_hidden" value="" />
-	<?php 		
+	<?php
 		$guardar = array(
 			'type' => 'button',
 			'name' => 'guardar',
@@ -811,7 +823,7 @@
 			'value' => 'Guardar y volver'
 		);
 		echo form_input($guardar);
-		
+
 		$continuar = array(
 			'type' => 'button',
 			'name' => 'continuar',
@@ -819,7 +831,7 @@
 			'value' => 'Guardar y continuar'
 		);
 		echo form_input($continuar);
-		
+
 		$salir = array(
 			'type' => 'button',
 			'name' => 'salir',
@@ -827,9 +839,9 @@
 			'value' => 'Cancelar y volver'
 		);
 		echo form_input($salir).'<br>';
-		
+
 		$permisos = $this->session->userdata('permisos');
-		
+
 		if(isset($permisos['Bit&aacute;cora']['Consultar'])) {
 			$bitacora = array(
 				'type' => 'button',
@@ -839,7 +851,7 @@
 			);
 			echo form_input($bitacora);
 		}
-		
+
 		if(isset($permisos['Archivos y Fotos']['Consultar'])) {
 			$archivos = array(
 				'type' => 'button',
@@ -848,7 +860,7 @@
 				'value' => 'Ver archivos'
 			);
 			echo form_input($archivos);
-			
+
 			$fotos = array(
 				'type' => 'button',
 				'name' => 'fotos',
@@ -857,7 +869,7 @@
 			);
 			echo form_input($fotos);
 		}
-		
+
 		if(isset($permisos['Pagos']['Consultar'])) {
 			$pagos = array(
 				'type' => 'button',
@@ -867,15 +879,37 @@
 			);
 			echo form_input($pagos);
 		}
-	
+
 		echo form_close();
 		echo form_fieldset_close();
 	?>
 </div>
 <script type="text/javascript">
+	var datos = {};
+	new AjaxUpload('#btn_subir_csv', {
+		action: '<?php echo site_url("archivos_controller/subir_csv"); ?>',
+		type: 'POST',
+		data: datos,
+		onSubmit : function(archivo , ext){
+			$("#error").html("");
+			if (ext[0] != "csv") {
+				$("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>No es un archivo csv</p></div>');
+				return false;
+			}
+			datos['ficha'] = $('#form input[name=ficha]').val();
+		}, // onsubmit
+		onComplete: function(archivo, respuesta){
+			if (respuesta) {
+				console.log(respuesta);
+				$("#vertices").load("<?php echo site_url('archivos_controller/cargar_vertices'); ?>", {"ficha_predial": $('#form input[name=ficha]').val()});
+			}
+
+		} // oncomplete
+	}); // AjaxUpload
 	//este script se ejecuta una vez se haya cargado el documento completamente (cuando el documento este ready)
-	$(document).ready(function() 
+	$(document).ready(function()
 	{
+		$("#vertices").load("<?php echo site_url('archivos_controller/cargar_vertices'); ?>", {"ficha_predial": $('#form input[name=ficha]').val()});
 		$('#navigation a').stop().animate({'marginLeft':'85px'},1000);
 
         $('#navigation > li').hover(
@@ -886,7 +920,7 @@
                 $('a',$(this)).stop().animate({'marginLeft':'85px'},200);
             }
         );
-		
+
 		//esta funcion determina si hay un punto en una tira de caracteres
 		function hay_punto(string)
 		{
@@ -907,7 +941,7 @@
 			}
 			return false;
 		}
-	
+
 		//esta funcion verifica si todos los documentos de los propietarios estan diligenciados
 		function hay_documentos_propietarios_vacios()
 		{
@@ -919,7 +953,7 @@
 			});
 			return false;
 		}
-	
+
 		//esta funcion saca la ventana de confirmacion jquery
 		function abrir_ventana_dialogo(titulo, mensaje, funcion)
 		{
@@ -956,7 +990,7 @@
 				}
 			});
 		}
-	
+
 		//esta funcion saca la ventana de alerta jquery
 		function abrir_ventana_alerta(titulo, mensaje, funcion)
 		{
@@ -964,7 +998,7 @@
 			$('#cargando').append('<div id="dialog-message"></div>');
 			//al div que se acaba de crear se le agrega el atributo title="�Desea borrar este propietario?"
 			$('#dialog-message').attr('title', titulo);
-			//tambien se le agrega el siguiente codigo html entre sus tags de inicio y final 
+			//tambien se le agrega el siguiente codigo html entre sus tags de inicio y final
 			$('#dialog-message').html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>' + mensaje + '</p>');
 			//se le da formato con la libreria de jquery y se muestra con las opciones siguientes
 			$( "#dialog-message" ).dialog({
@@ -1013,14 +1047,14 @@
 			console.log(ficha_predial);
 			window.open("<?php echo site_url('pagos_controller/vista_actualizar'); ?>/" + ficha_predial,"pagos","resizable=no,location=no,menubar=no, scrollbars=yes,status=no,toolbar=no,fullscreen=no, dependent=no,width=1020,height=600,left=100,top=0" );
 		});
-		
+
 		//este script unido con jquery es el encargado de dar el estilo css a las secciones del formulario dinamicamente
 		$( "#accordion" ).accordion
 		({
 			autoHeight: false,
 			navigation: true
 		});
-		
+
 		//este script se encarga de verificar que estos campos sean de tipo double
 		$('#form input[name^=area], #form input[name^=total], #form input[name^=valor]').keypress(function(event){
 			//48 es el codigo del caracter 0
@@ -1028,7 +1062,7 @@
 			//46 es el codigo del caracter .
 			//8  es el codigo del backspace
 			//0  es el codigo de los caracteres no alfanum�ricos y de puntuacion
-	
+
 			//si es un caracter no numerico
 			if (event.which != 0 && event.which != 8 && (event.which < 48 || event.which > 57)) {
 				//si es un punto
@@ -1047,7 +1081,7 @@
 				}
 			}
 		});
-		
+
 		//este script se encarga de desplegar el calendario en cada uno de los elementos especificados
 		$('#form input[name^=fecha], #form input[name=inicio_trabajo_fisico], ' +
 				'#form input[name=entrega_plano_interventoria], #form input[name=aprobacion_definitiva_plano], ' +
@@ -1081,21 +1115,21 @@
 // f_oferta_ac
 // f_permiso_int
 // f_firma_prom
-		
+
 		//este script se encarga de validar la entrada de un numero entero para la adicion de propietarios
 		$('#form input[name=agregar]').keypress(function(event){
 			//48 es el codigo del caracter 0
 			//57 es el codigo del caracter 9
 			//8  es el codigo del backspace
 			//0  es el codigo de los caracteres no alfanum�ricos y de puntuacion
-	
+
 			//si es un caracter no numerico
 			if (event.which != 0 && event.which != 8 && (event.which < 48 || event.which > 57)) {
 				//se cancela el evento
 				event.preventDefault();
 			}
 		});
-		
+
 		//se encarga de adicionar los propietarios
 		$('#boton_agregar').click(function(){
 			//obtengo la cantidad de propietarios a insertar
@@ -1121,7 +1155,7 @@
 			//le pongo estilo a los botones de eliminacion. name^=boton_eliminar quiere decir: todos los input que su nombre empiece con boton_eliminar
 			$('#form input[name^=boton_eliminar]').button();
 		});
-	
+
 		//este script se encarga de agregar el evento clic a cada boton creado dinamicamente - en vivo (live)
 		$('#form input[name^=boton_eliminar]').live('click', function(event){
 			//se obtiene la id del elemento DOM que genera el evento
@@ -1132,12 +1166,12 @@
 			var propietario = arrayLetras[1];
 			//se invoca la ventana de dialogo jquery y se le pasa la funcion que debe ejecutar en caso de que el usuario acepte
 			abrir_ventana_dialogo(
-				'Desea borrar este propietario?', 
-				'Los datos del propietario ' + propietario + ' ser&aacute;n borrados definitivamente. Desea confirmar esta acci&oacute;n?', 
+				'Desea borrar este propietario?',
+				'Los datos del propietario ' + propietario + ' ser&aacute;n borrados definitivamente. Desea confirmar esta acci&oacute;n?',
 				function(){
 					$.post(
-						'<?php echo site_url('actualizar_controller/eliminar_propietario'); ?>', 
-						{ id_propietario:$('#form input[name=id_propietario' + propietario + ']').val(), ficha_predial:"<?php echo $predio->ficha_predial; ?>", <?php echo $this->security->get_csrf_token_name(); ?>:"<?php echo $this->security->get_csrf_hash(); ?>" }, 
+						'<?php echo site_url('actualizar_controller/eliminar_propietario'); ?>',
+						{ id_propietario:$('#form input[name=id_propietario' + propietario + ']').val(), ficha_predial:"<?php echo $predio->ficha_predial; ?>", <?php echo $this->security->get_csrf_token_name(); ?>:"<?php echo $this->security->get_csrf_hash(); ?>" },
 						function(data){
 							var mensaje = eval(data);
 							if(mensaje.respuesta == "correcto")
@@ -1148,13 +1182,13 @@
 									$('#form fieldset[id=' + propietario + ']').remove();
 								});
 							}
-						}, 
+						},
 						"json"
 					);
 				}
 			);
 		});
-	
+
 		//este script se encarga de agregar el evento keypress a cada input creado dinamicamente - en vivo (live)
 		$('#form input[name^=documento_propietario]').live('keypress',function(event){
 			//48 es el codigo del caracter 0
@@ -1162,14 +1196,14 @@
 			//46 es el codigo del caracter .
 			//8  es el codigo del backspace
 			//0  es el codigo de los caracteres no alfanum�ricos y de puntuacion
-			
+
 			//si es un caracter no numerico y distinto del punto
 			if(event.which != 0 && event.which != 8 && (event.which < 48 || event.which > 57) && event.which != 46)
 			{
 				event.preventDefault();
 			}
 		});
-	
+
 		//este script se encarga de verificar que estos campos generados dinamicamente sean de tipo double
 		$('#form input[name^=participacion]').live('keypress',function(event){
 			//48 es el codigo del caracter 0
@@ -1177,7 +1211,7 @@
 			//46 es el codigo del caracter .
 			//8  es el codigo del backspace
 			//0  es el codigo de los caracteres no alfanum�ricos y de puntuacion
-	
+
 			//si es un caracter no numerico
 			if (event.which != 0 && event.which != 8 && (event.which < 48 || event.which > 57)) {
 				//si es un punto
@@ -1196,7 +1230,7 @@
 				}
 			}
 		});
-	
+
 		//este script genera el evento clic del boton Guardar y Salir
 		$('#form input[name=guardar], #form input[name=continuar]').click(function(){
 			$('#form input[name=boton_hidden]').val($(this).attr('id'));
@@ -1205,20 +1239,20 @@
 			{
 				abrir_ventana_alerta(
 					'Ficha predial',
-					'No ha ingresado la ficha predial.', 
+					'No ha ingresado la ficha predial.',
 					function(){
 						$('#form input[name=ficha]').scrollTo('slow');
 					}
 				);
 				return false;
 			}
-	
+
 			//se verifica que se haya seleccionado un estado del proceso
 			if($('#form select[name=estado_proceso]').val() == " ")
 			{
 				abrir_ventana_alerta(
 					'Estado del proceso',
-					'Indique el estado actual del proceso.', 
+					'Indique el estado actual del proceso.',
 					function(){
 						$('#form a[href=#seccion1]').click();
 						$('#form select[name=estado_proceso]').scrollTo('slow');
@@ -1226,7 +1260,7 @@
 				);
 				return false;
 			}
-	
+
 			//se obtiene la cantidad de propietarios adicionados
 			var nro_propietarios = $('#form input[name=propietarios_hidden]').val();
 			//se recorren los controles de los propietarios
@@ -1240,7 +1274,7 @@
 					{
 						abrir_ventana_alerta(
 							'Documento del propietario',
-							'Ingrese el documento del propietario ' + i + '.', 
+							'Ingrese el documento del propietario ' + i + '.',
 							function(){
 								$('#form a[href=#seccion2]').click();
 								$('#form input[name=documento_propietario' + i + ']').scrollTo('slow');
@@ -1250,23 +1284,23 @@
 					}
 				}
 			}
-	
+
 			//se envia el formulario, previa pregunta del deseo de hacerlo
 			abrir_ventana_dialogo(
-					'Confirmar registro', 
-					'Desea confirmar la actualizaci&oacute;n de este registro?', 
+					'Confirmar registro',
+					'Desea confirmar la actualizaci&oacute;n de este registro?',
 					function(){
 						$('#form form').submit();
 					}
 			);
-			
+
 		});
-	
+
 		//si dan clic en el boton salir sin guardar
 		$('#form input[name=salir]').click(function(){
 			history.back();
 		});
-	
+
 		//como los datos a enviar son demasiados, se opta por usar una libreria de jquery que se encarga
 		//de serializar todos los campos y los manda por POST via ajax
 		var opciones = {
@@ -1307,7 +1341,7 @@
 				});
             }
 		};
-	
+
 		//aqui se intercepta el evento submit y se ejecutan las funciones pasadas por parametro al ajaxForm
 		$('#form form').ajaxForm(opciones);
 
