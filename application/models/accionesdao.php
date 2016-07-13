@@ -144,6 +144,12 @@ class AccionesDAO extends CI_Model {
         }
     }//Fin procesar_foto
 
+	function consultar_coordenada($ficha) {
+		$this->db->select("*");
+		$this->db->where('ficha_predial', $ficha);
+		return $this->db->get('tbl_coordenadas')->row();
+	}
+
 	function consultar_coordenadas($ficha) {
 		$this->db->select("*");
 		$this->db->where('ficha_predial', $ficha);
