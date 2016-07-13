@@ -20,7 +20,7 @@ class Actualizar_controller extends CI_Controller {
 		if($this->session->userdata('id_usuario') != TRUE) {
 			//redirecciono al controlador de sesion
 			redirect('sesion_controller');
-		}	
+		}
 		//se obtienen los permisos del usuario
 		$permisos = $this->session->userdata('permisos');
 		if( ! isset($permisos['Fichas']['Consultar']) ) {
@@ -37,7 +37,7 @@ class Actualizar_controller extends CI_Controller {
 	 */
 	function index() {
 		//se carga el modelo que gestiona las consultas del modulo de Predios y del modulo de Contratistas
-		$this->load->model(array('PrediosDAO', 'ContratistasDAO'));
+		$this->load->model(array('PrediosDAO', 'ContratistasDAO', 'AccionesDAO'));
 		//se arma el array asociativo que se envia a la vista
 		$this->data['fichas'] = 				$this->PrediosDAO->obtener_fichas();
 		$this->data['contratistas'] =			$this->ContratistasDAO->obtener_contratistas();
@@ -46,7 +46,7 @@ class Actualizar_controller extends CI_Controller {
 		//se carga la vista y se envia el array asociativo
 		$this->load->view('includes/template', $this->data);
 	}
-	
+
 	/**
 	 * Muestra la informaci�n de la ficha seleccionada
 	 */
@@ -91,7 +91,7 @@ class Actualizar_controller extends CI_Controller {
 	 * Esta funcion retorna las fichas asociadas a un contratista via JSON
 	 */
 	function fichas_contratista() {
-		//se carga el modelo asociado a los predios	
+		//se carga el modelo asociado a los predios
 		$this->load->model('PrediosDAO');
 		//se obtiene el contratista enviado via POST
 		$contratista = $this->input->post('contratista');
@@ -132,7 +132,7 @@ class Actualizar_controller extends CI_Controller {
 
 		//se actualiza el predio si está o no requerido
 		$this->PrediosDAO->actualizar_predio($ficha_predial, $this->input->post('requerido'));
-		
+
 		//se prepara la identificacion del predio
 		$identificacion = array(
 			'barrio' => 			utf8_encode($this->input->post('vereda_barrio')),
@@ -219,7 +219,7 @@ class Actualizar_controller extends CI_Controller {
 
 		//se inserta la identificacion del predio
 		$this->PrediosDAO->actualizar_identificacion($ficha_predial, $identificacion);
-		
+
 		//se prepara la descripcion
 		$descripcion = array(
 			'uso_edificacion' => 		utf8_encode($this->input->post('uso_edificacion')),
@@ -250,13 +250,13 @@ class Actualizar_controller extends CI_Controller {
 			'disponibilidad_izquierda' => utf8_encode($this->input->post('disponibilidad_izquierda')),
 			'disponibilidad_derecha' => utf8_encode($this->input->post('disponibilidad_derecha'))
 		);
-		
+
 		//se inserta la descripcion del predio
 		$this->PrediosDAO->actualizar_descripcion($ficha_predial, $descripcion);
-		
+
 		//se insertan los linderos del predio
 		// $this->PrediosDAO->actualizar_linderos($ficha_predial, utf8_encode($this->input->post('linderos_predio_requerido')));
-		
+
 		/********************
 		**** Formato ANI ****
 		*********************/
@@ -330,16 +330,16 @@ class Actualizar_controller extends CI_Controller {
 			// Se actualiza los cultivos y especies
 			$this->PrediosDAO->actualizar_construcciones($ficha_predial, '2', $i, $construcciones_anexas);
 		}
-		
+
 		//se procede a insertar los propietarios
 		//se obtiene el numero de propietarios que se han agregado en el formulario
 		$numero_propietarios = utf8_encode($this->input->post('propietarios_hidden'));
-		
+
 		//pueden haber propietarios que hayan sido eliminados del formulario
 		//se va revisar uno por uno todos los que hayan sido agregados
 		//teniendo como criterio de insercion que el documento del propietario no este vacio
 		//se deja la validacion de este campo del lado cliente
-		
+
 		//se carga el modelo que gestiona la informacion de todos los propietarios
 		$this->load->model('PropietariosDAO');
 
@@ -347,7 +347,7 @@ class Actualizar_controller extends CI_Controller {
 		$this->PropietariosDAO->eliminar_relaciones_predio($ficha_predial);
 
 		// Se recorren los propietarios
-		for ($i = 1; $i <= $numero_propietarios; $i++) 
+		for ($i = 1; $i <= $numero_propietarios; $i++)
 		{
 			//variable del formulario que me indica si el propietario ya hab�a sido agregado anteriormente
 			$id_propietario = utf8_encode($this->input->post("id_propietario$i"));
@@ -355,7 +355,7 @@ class Actualizar_controller extends CI_Controller {
 			if($id_propietario){
 				// echo "El propietario {$i} ({$this->input->post("documento_propietario$i")}) ya está asociado al predio. \n";
 
-				//se verifica que el documento haya sido ingresado			
+				//se verifica que el documento haya sido ingresado
 				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
 
 				//se eliminan puntos, comas y espacios en blanco
@@ -372,14 +372,14 @@ class Actualizar_controller extends CI_Controller {
 					'documento' => 		$documento_propietario,
 					'telefono' => 		$this->input->post("telefono$i")
 				);
-				
+
 				// //se actualiza el propietario
 				$this->PropietariosDAO->actualizar_propietario($id_propietario, $info_propietario);
 			//si no se habia agregado anteriormente, se agrega
 			} else {
 				// echo "El propietario {$i} ({$this->input->post("documento_propietario$i")}) se va a asociar al predio. \n";
 
-				//se verifica que el documento haya sido ingresado			
+				//se verifica que el documento haya sido ingresado
 				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
 				if($documento_propietario){
 					// echo "verificando cédula... \n";
@@ -395,7 +395,7 @@ class Actualizar_controller extends CI_Controller {
 
 					if(!$propietario){
 						// echo "El propietario no existe en la base de datos. Creando... \n";
-				
+
 						$info_propietario = array(
 							'tipo_documento' => utf8_encode($this->input->post("tipo_documento$i")),
 							'direccion' => 		$this->input->post("direccion_propietario$i"),
@@ -411,14 +411,14 @@ class Actualizar_controller extends CI_Controller {
 						//se recupera para insertar la relacion con el predio
 						$propietario = $this->PropietariosDAO->existe_propietario($documento_propietario);
 					} // if propietario
-					
+
 					// Se asigna el id del propietario
 					$id_propietario = $propietario->id_propietario;
 				} // if documento propietario
 			} // if id_propietario
 
 			// echo "Propietario {$id_propietario}\n";
-			
+
 			//se inserta la relacion del propietario con el predio
 			$this->PropietariosDAO->insertar_relacion_predio($id_propietario, $ficha_predial, $this->input->post("participacion$i"));
 		} // for numero_propietarios
@@ -431,7 +431,7 @@ class Actualizar_controller extends CI_Controller {
 
 
 
-		/*for ($i = 1; $i <= $numero_propietarios; $i++) 
+		/*for ($i = 1; $i <= $numero_propietarios; $i++)
 		{
 			//variable del formulario que me indica si el propietario ya hab�a sido agregado anteriormente
 			$id_propietario = utf8_encode($this->input->post("id_propietario$i"));
@@ -439,12 +439,12 @@ class Actualizar_controller extends CI_Controller {
 			{
 				//se obtiene el documento del propietario
 				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
-				
+
 				//se eliminan puntos, comas y espacios en blanco
 				$documento_propietario = str_replace('.', '', $documento_propietario);
 				$documento_propietario = str_replace(',', '', $documento_propietario);
 				$documento_propietario = str_replace(' ', '', $documento_propietario);
-				
+
 				//se prepara el array que contiene la informacion del propietario
 				$info_propietario = array(
 					'tipo_documento' => utf8_encode($this->input->post("tipo_documento$i")),
@@ -452,7 +452,7 @@ class Actualizar_controller extends CI_Controller {
 					'documento' => 		$documento_propietario,
 					'telefono' => 		$this->input->post("telefono$i")
 				);
-				
+
 				//se actualiza el propietario
 				$this->PropietariosDAO->actualizar_propietario($id_propietario, $info_propietario);
 				$this->PropietariosDAO->insertar_relacion_predio($id_propietario, $ficha_predial, utf8_encode($this->input->post("participacion$i")));
@@ -460,7 +460,7 @@ class Actualizar_controller extends CI_Controller {
 			//si no se habia agregado anteriormente, se agrega
 			else
 			{
-				//se verifica que el documento haya sido ingresado			
+				//se verifica que el documento haya sido ingresado
 				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
 				if($documento_propietario)
 				{
@@ -468,7 +468,7 @@ class Actualizar_controller extends CI_Controller {
 					$documento_propietario = str_replace('.', '', $documento_propietario);
 					$documento_propietario = str_replace(',', '', $documento_propietario);
 					$documento_propietario = str_replace(' ', '', $documento_propietario);
-					
+
 					//se busca si el propietario ya existe en la base de datos
 					//si no existe se inserta
 					$propietario = $this->PropietariosDAO->existe_propietario($documento_propietario);
@@ -496,7 +496,7 @@ class Actualizar_controller extends CI_Controller {
 						//se recupera para insertar la relacion con el predio
 						$propietario = $this->PropietariosDAO->existe_propietario(number_format($documento_propietario, 0));
 					}
-					
+
 					//se inserta la relacion del propietario con el predio
 					$this->PropietariosDAO->insertar_relacion_predio($propietario->id_propietario, $ficha_predial, utf8_encode($this->input->post("participacion$i")));				}
 			}
@@ -531,7 +531,7 @@ class Actualizar_controller extends CI_Controller {
 				$respuesta = array('respuesta' => 'correcto');
 				echo json_encode($respuesta);
 			}
-			else 
+			else
 			{
 				//se envia la respuesta via JSON
 				$respuesta = array('respuesta' => 'No se pudo borrar al propietario');
