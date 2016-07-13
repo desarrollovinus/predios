@@ -46,7 +46,11 @@
 
 								<?php echo anchor("informes_controller/gestion_predial_fotos/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/pdf.png"', 'title="Generar registro fotográfico"'); ?>
 
-								<?php echo anchor("archivos_controller/generar_kml/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/kml.png"', 'title="Generar KML"'); ?>
+								<?php
+									if ($this->AccionesDAO->consultar_coordenada($ficha->ficha_predial) != null) {
+										echo anchor("archivos_controller/generar_kml/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/kml.png"', 'title="Generar KML"');
+									}
+								?>
 							</td>
 						</tr>
 					<?php endforeach; ?>
