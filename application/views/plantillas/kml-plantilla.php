@@ -153,7 +153,7 @@
 
 
 <Placemark>
-    <name>Área requerida</name>
+    <name><?php echo $ficha ?></name>
     <Style>
         <!-- Color de la linea  -->
         <LineStyle>
@@ -161,14 +161,17 @@
         </LineStyle>
         <!-- Color interior del poligono  -->
         <PolyStyle>
-            <color><?php echo "7f".$predio->color_via; ?></color>
+            <color><?php if ($predio->color_via) {
+                echo "7f".$predio->color_via;
+            } else {
+                echo "7fffffff";
+            }?></color>
             <fill>1</fill>
         </PolyStyle>
     </Style>
     <!-- Tabla de datos  -->
     <ExtendedData>
         <SchemaData schemaUrl="">
-            <SimpleData name="Predio N°"><?php echo $ficha ?></SimpleData>
             <SimpleData name="Tramo"><?php echo $predio->tramo ?></SimpleData>
             <SimpleData name="Municipio"><?php echo $predio->municipio ?></SimpleData>
             <SimpleData name="Abscisa inicial"><?php echo $predio->abscisa_inicial ?></SimpleData>
@@ -176,6 +179,8 @@
             <SimpleData name="Propietario"><?php echo $predio->nombre_propietario ?></SimpleData>
             <SimpleData name="Estado del proceso"><?php echo $predio->estado_pro ?></SimpleData>
             <SimpleData name="Area requerida"><?php echo $predio->area_requerida ?></SimpleData>
+            <SimpleData name="Cédula catastral"><?php echo $predio->no_catastral ?></SimpleData>
+            <SimpleData name="Estado de la vía"><?php echo $predio->estado_via ?></SimpleData>
         </SchemaData>
     </ExtendedData>
     <!-- visibilidad de la tabla de datos al iniciar el google earth 1:visible kml- 0: no visible  -->
