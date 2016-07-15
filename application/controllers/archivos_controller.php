@@ -388,9 +388,10 @@ class Archivos_controller extends CI_Controller
 	}
 
 	function generar_kml() {
-		$this->load->model(array("accionesDAO", "InformesDAO"));
+		$this->load->model(array("accionesDAO", "InformesDAO", "PrediosDAO"));
 		$this->data["ficha"] = $this->uri->segment(3);
 		$this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($this->data["ficha"]);
+		$this->data["estados_via"] = $this->PrediosDAO->obtener_estados_via();
 		$corMagna = $this->accionesDAO->consultar_coordenadas($this->data["ficha"]);
 		$corGeo = array();
 		$proj4 = new Proj4php();
