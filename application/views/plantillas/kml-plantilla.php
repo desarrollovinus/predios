@@ -158,8 +158,8 @@
         <Icon>
             <href><?php echo base_url()."img/convenciones.png"; ?></href>
         </Icon>
-        <overlayXY x="0" y="0" xunits="fraction" yunits="fraction"/>
-        <screenXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+        <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+        <screenXY x="0" y="1" xunits="fraction" yunits="fraction"/>
         <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
         <size x="0" y="0" xunits="fraction" yunits="fraction"/>
     </ScreenOverlay>
