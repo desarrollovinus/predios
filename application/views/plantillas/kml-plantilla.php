@@ -170,16 +170,12 @@
     <Style>
         <!-- Color de la linea  -->
         <LineStyle>
-            <color><?php echo "ff".$predio->color_via; ?></color>
+            <color><?php echo ($predio->color_via) ? "ff".$predio->color_via: "ffffffff" ; ?></color>
             <width>6</width>
         </LineStyle>
         <!-- Color interior del poligono  -->
         <PolyStyle>
-            <color><?php if ($predio->color_proceso) {
-                echo "7f".$predio->color_proceso;
-            } else {
-                echo "7fffffff";
-            }?></color>
+            <color><?php echo ($predio->color_proceso) ? "7f".$predio->color_proceso: "ffffffff" ; ?></color>
             <fill>1</fill>
         </PolyStyle>
     </Style>

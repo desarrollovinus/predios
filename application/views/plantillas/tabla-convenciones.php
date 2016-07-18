@@ -73,6 +73,11 @@
                         Estado de las vías:
                     </th>
                 </div>
+                <td>
+                    <div style="border-bottom: 3px solid #ffffff">
+                        Sin estado
+                    </div>
+                </td>
                 <?php foreach ($estados_via as $estado): ?>
                     <td>
                         <div style="border-bottom: 3px solid #<?php echo $estado->color ?>; ">
@@ -82,21 +87,19 @@
                 <?php endforeach; ?>
             </tr>
         <tr>
-            <th rowspan="2">
+            <th>
                 Estado del proceso:
             </th>
-            <?php $cont = 0; ?>
+            <td>
+                <div style="border-bottom: 20px solid #ffffff">
+                    Sin estado
+                </div>
+            </td>
             <?php foreach ($estados_proceso as $estado): ?>
                 <td>
                     <div style="border-bottom: 20px solid #<?php echo $estado->color ?>; ">
                         <?php echo $estado->estado; ?>
                     </div>
-                    <?php if ($cont > 9) {
-                        echo "</tr><tr>";
-                        $cont = 0;
-                    }
-                    $cont++;
-                     ?>
                 </td>
             <?php endforeach; ?>
         </tr>
