@@ -151,19 +151,32 @@
     </IconStyle>
 </Style>
 
+<Folder>
+    <name>Convención</name>
+    <ScreenOverlay>
+        <name>Convención</name>
+        <Icon>
+            <href>http://localhost/vinus/predios/img/convenciones.png</href>
+        </Icon>
+        <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+        <screenXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+        <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+        <size x="0" y="0" xunits="fraction" yunits="fraction"/>
+    </ScreenOverlay>
+ </Folder>
 
 <Placemark>
-    <name><?php echo $ficha; ?></name>
+    <name>Predio <?php echo $ficha; ?></name>
     <Style>
         <!-- Color de la linea  -->
         <LineStyle>
-            <color><?php echo "ff".$predio->color_proceso; ?></color>
+            <color><?php echo "ff".$predio->color_via; ?></color>
             <width>6</width>
         </LineStyle>
         <!-- Color interior del poligono  -->
         <PolyStyle>
-            <color><?php if ($predio->color_via) {
-                echo "7f".$predio->color_via;
+            <color><?php if ($predio->color_proceso) {
+                echo "7f".$predio->color_proceso;
             } else {
                 echo "7fffffff";
             }?></color>

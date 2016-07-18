@@ -388,10 +388,9 @@ class Archivos_controller extends CI_Controller
 	}
 
 	function generar_kml() {
-		$this->load->model(array("accionesDAO", "InformesDAO", "PrediosDAO"));
+		$this->load->model(array("accionesDAO", "InformesDAO"));
 		$this->data["ficha"] = $this->uri->segment(3);
 		$this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($this->data["ficha"]);
-		$this->data["estados_via"] = $this->PrediosDAO->obtener_estados_via();
 		$corMagna = $this->accionesDAO->consultar_coordenadas($this->data["ficha"]);
 		$corGeo = array();
 		$proj4 = new Proj4php();
@@ -425,6 +424,13 @@ class Archivos_controller extends CI_Controller
 		$this->data["coordenadas"] = $corGeo;
 		$this->data["area"] = $area;
 		$this->load->view('plantillas/kml-plantilla', $this->data);
+	}
+
+	function convencion_predio() {
+		$this->load->model(array("PrediosDAO"));
+		$this->data["estados_via"] = $this->PrediosDAO->obtener_estados_via();
+		$this->data["estados_proceso"] = $this->PrediosDAO->obtener_procesos_actuales();
+		$this->load->view('plantillas/tabla-convenciones', $this->data);
 	}
 }
 /* End of file archivos_controller.php */
