@@ -471,6 +471,14 @@ class PrediosDAO extends CI_Model
 		return $this->db->get('tbl_estados_semaforo')->result();
 	} // obtener_estados_via
 
+	function obtener_procesos_actuales() {
+		$this->db->select('*');
+		$this->db->from('tbl_identificacion');
+		$this->db->join('tbl_estados_proceso', 'tbl_identificacion.estado_pro = tbl_estados_proceso.estado');
+		$this->db->group_by('estado_pro');
+		return $this->db->get()->result();
+	}
+
 	function obtener_funciones_predios_obra()
 	{
 		$this->db->where('funcion_predio_obra', '1');
