@@ -151,18 +151,32 @@
     </IconStyle>
 </Style>
 
+<Folder>
+    <name>Convención</name>
+    <ScreenOverlay>
+        <name>Convención</name>
+        <Icon>
+            <href>http://localhost/vinus/predios/img/convenciones.png</href>
+        </Icon>
+        <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+        <screenXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+        <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+        <size x="0" y="0" xunits="fraction" yunits="fraction"/>
+    </ScreenOverlay>
+ </Folder>
 
 <Placemark>
-    <name><?php echo $ficha ?></name>
+    <name>Predio <?php echo $ficha; ?></name>
     <Style>
         <!-- Color de la linea  -->
         <LineStyle>
-            <color><?php echo "ff".$predio->color_proceso ?></color>
+            <color><?php echo "ff".$predio->color_via; ?></color>
+            <width>6</width>
         </LineStyle>
         <!-- Color interior del poligono  -->
         <PolyStyle>
-            <color><?php if ($predio->color_via) {
-                echo "7f".$predio->color_via;
+            <color><?php if ($predio->color_proceso) {
+                echo "7f".$predio->color_proceso;
             } else {
                 echo "7fffffff";
             }?></color>
@@ -172,15 +186,15 @@
     <!-- Tabla de datos  -->
     <ExtendedData>
         <SchemaData schemaUrl="">
-            <SimpleData name="Tramo"><?php echo $predio->tramo ?></SimpleData>
-            <SimpleData name="Municipio"><?php echo $predio->municipio ?></SimpleData>
-            <SimpleData name="Abscisa inicial"><?php echo $predio->abscisa_inicial ?></SimpleData>
-            <SimpleData name="Abscisa final"><?php echo $predio->abscisa_final ?></SimpleData>
-            <SimpleData name="Propietario"><?php echo $predio->nombre_propietario ?></SimpleData>
-            <SimpleData name="Estado del proceso"><?php echo $predio->estado_pro ?></SimpleData>
-            <SimpleData name="Area requerida"><?php echo $predio->area_requerida ?></SimpleData>
-            <SimpleData name="Cédula catastral"><?php echo $predio->no_catastral ?></SimpleData>
-            <SimpleData name="Estado de la vía"><?php echo $predio->estado_via ?></SimpleData>
+            <SimpleData name="Tramo"><?php echo $predio->tramo; ?></SimpleData>
+            <SimpleData name="Municipio"><?php echo $predio->municipio; ?></SimpleData>
+            <SimpleData name="Abscisa inicial"><?php echo $predio->abscisa_inicial; ?></SimpleData>
+            <SimpleData name="Abscisa final"><?php echo $predio->abscisa_final; ?></SimpleData>
+            <SimpleData name="Propietario"><?php echo $predio->nombre_propietario; ?></SimpleData>
+            <SimpleData name="Estado del proceso"><?php echo $predio->estado_pro; ?></SimpleData>
+            <SimpleData name="Area requerida"><?php echo $predio->area_requerida; ?></SimpleData>
+            <SimpleData name="Cédula catastral"><?php echo $predio->no_catastral; ?></SimpleData>
+            <SimpleData name="Estado de la vía"><?php echo $predio->estado_via; ?></SimpleData>
         </SchemaData>
     </ExtendedData>
     <!-- visibilidad de la tabla de datos al iniciar el google earth 1:visible kml- 0: no visible  -->
