@@ -425,6 +425,13 @@ class Archivos_controller extends CI_Controller
 		$this->data["area"] = $area;
 		$this->load->view('plantillas/kml-plantilla', $this->data);
 	}
+
+	function convencion_predio() {
+		$this->load->model(array("PrediosDAO"));
+		$this->data["estados_via"] = $this->PrediosDAO->obtener_estados_via();
+		$this->data["estados_proceso"] = $this->PrediosDAO->obtener_procesos_actuales();
+		$this->load->view('plantillas/tabla-convenciones', $this->data);
+	}
 }
 /* End of file archivos_controller.php */
 /* Location: ./site_predios/application/controllers/archivos_controller.php */
