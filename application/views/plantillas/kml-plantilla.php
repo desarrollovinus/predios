@@ -191,10 +191,10 @@
             <SimpleData name="Abscisa inicial"><?php echo $predio->abscisa_inicial; ?></SimpleData>
             <SimpleData name="Abscisa final"><?php echo $predio->abscisa_final; ?></SimpleData>
             <SimpleData name="Propietario"><?php echo $predio->nombre_propietario; ?></SimpleData>
-            <SimpleData name="Estado del proceso"><?php echo $predio->estado_pro; ?></SimpleData>
             <SimpleData name="Area requerida"><?php echo $predio->area_requerida; ?></SimpleData>
             <SimpleData name="Cédula catastral"><?php echo $predio->no_catastral; ?></SimpleData>
             <SimpleData name="Estado de la vía"><?php echo $predio->estado_via; ?></SimpleData>
+            <SimpleData name="Estado del proceso"><?php echo $predio->estado_pro; ?></SimpleData>
         </SchemaData>
     </ExtendedData>
     <!-- visibilidad de la tabla de datos al iniciar el google earth 1:visible kml- 0: no visible  -->
