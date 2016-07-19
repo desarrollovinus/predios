@@ -693,7 +693,7 @@ $objPHPExcel->getActiveSheet()->getStyle("N{$fila}:Z{$fila}")->applyFromArray($b
 $objPHPExcel->getActiveSheet()->getStyle("AB{$fila}")->applyFromArray($borde_puntos_externo);
 
 // La fila a asignarse es la suma de donde arranca hasta el total
-$fila = 37 + $total_filas; 
+$fila = 37 + $total_filas;
 
 // Tamaño de fila
 $objPHPExcel->getActiveSheet()->getRowDimension($fila)->setRowHeight(3);
@@ -800,7 +800,7 @@ $fila_elaboro = $fila;
 $objPHPExcel->getActiveSheet()->getRowDimension($fila)->setRowHeight(3); $fila++;
 
 $fila_area_sobrante = $fila;
-$fila_area_total_requerida = $fila + 1;
+$fila_area_total_requerida = $fila - 4;
 
 // Celdas a combinar
 $objPHPExcel->getActiveSheet()->mergeCells("M{$fila}:O{$fila}");

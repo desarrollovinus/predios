@@ -235,8 +235,10 @@
 <!-- Vertices -->
 <Folder>
     <name>Vértices</name>
+    <visibility>0</visibility>
 <?php foreach ($coordenadas as $punto): ?>
     <Placemark>
+    <visibility>0</visibility>
     <name><?php echo $punto["punto"]; ?></name>
     <styleUrl>#msn_placemark_circle</styleUrl>
     <Point>
