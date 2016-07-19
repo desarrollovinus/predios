@@ -1,3 +1,4 @@
+<script src="<?php echo base_url(); ?>js/html2canvas.min.js"></script>
 <style media="screen">
     body {
         font-family: arial;
@@ -50,11 +51,11 @@
     }
 
 </style>
-
+<body>
 <div id="convenciones">
     <div class="cabecera">
         <div>
-            <img src="http://sicc.vinus.com.co/img/Logo_vinus.png" alt="ANI" height="60px" />
+            <img src="<?php  echo base_url()."img/logo_vinus.png" ?>" alt="VINUS" height="60px" />
         </div>
 
         <div>
@@ -62,7 +63,7 @@
         </div>
 
         <div>
-            <img src="http://sicc.vinus.com.co/img/logo_ani.jpg" alt="ANI" height="60px" />
+            <img src="<?php echo base_url()."img/logo_ani.png" ?>" alt="ANI" height="60px" />
         </div>
     </div>
 
@@ -105,3 +106,12 @@
         </tr>
     </table>
 </div>
+</body>
+<script type="text/javascript">
+    html2canvas(document.body, {
+        onrendered: function(canvas) {
+            var can = document.body.appendChild(canvas);
+            can.id = "canvas";
+        }
+    });
+</script>
