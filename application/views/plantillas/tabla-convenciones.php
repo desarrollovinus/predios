@@ -55,7 +55,7 @@
 <div id="convenciones">
     <div class="cabecera">
         <div>
-            <img src="<?php  echo base_url()."img/logo_vinus.png" ?>" alt="VINUS" height="60px" />
+            <img src="<?php  echo base_url()."img/logo_vinus_horizontal.png" ?>" alt="VINUS" height="60px" />
         </div>
 
         <div>
