@@ -428,7 +428,7 @@ class Archivos_controller extends CI_Controller
 
 	function convencion_predio() {
 		$this->load->model(array("PrediosDAO"));
-		$this->data["estados_via"] = $this->PrediosDAO->obtener_estados_via();
+		$this->data["estados_via"] = $this->PrediosDAO->obtener_estados_via_actuales();
 		$this->data["estados_proceso"] = $this->PrediosDAO->obtener_procesos_actuales();
 		$this->load->view('plantillas/tabla-convenciones', $this->data);
 	}

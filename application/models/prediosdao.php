@@ -471,20 +471,31 @@ class PrediosDAO extends CI_Model
 		return $this->db->get('tbl_estados_semaforo')->result();
 	} // obtener_estados_via
 
-	function obtener_procesos_actuales() {
-		$this->db->select('*');
-		$this->db->from('tbl_identificacion');
-		$this->db->join('tbl_estados_proceso', 'tbl_identificacion.estado_pro = tbl_estados_proceso.estado');
-		$this->db->group_by('estado_pro');
-		return $this->db->get()->result();
-	}
-
 	function obtener_funciones_predios_obra()
 	{
 		$this->db->where('funcion_predio_obra', '1');
 		$this->db->order_by('orden');
 		return $this->db->get('tbl_estados_semaforo')->result();
 	} // obtener_funciones_predios_obra
+
+	function obtener_procesos_actuales() {
+		$this->db->select('*');
+		$this->db->from('tbl_identificacion');
+		$this->db->join('tbl_estados_proceso', 'tbl_identificacion.estado_pro = tbl_estados_proceso.estado');
+		$this->db->group_by('estado_pro');
+		return $this->db->get()->result();
+	} // obtener_procesos_actuales
+
+	function obtener_estados_via_actuales()
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_identificacion');
+		$this->db->where('funcion_predio_obra', '0');
+		$this->db->join('tbl_estados_semaforo', 'tbl_identificacion.id_estado_via = tbl_estados_semaforo.id');
+		$this->db->order_by('orden');
+		$this->db->group_by('nombre');
+		return $this->db->get()->result();
+	} // obtener_estados_via_actuales
 
 	function obtener_predio($id_predio)
 	{
