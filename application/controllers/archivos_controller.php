@@ -177,16 +177,40 @@ class Archivos_controller extends CI_Controller
 		$this->load->model("accionesDAO");
 
 		$ficha = $this->uri->segment(3);
+		$tipo = $this->uri->segment(4);
+		$aux = $this->uri->segment(5);
 
-		$this->data['fotos'] = $this->accionesDAO->consultar_foto(null, $ficha);
+		switch ($tipo) {
+			case 'pre':
+				$tipo = 1;
+				break;
+			case 'gen':
+				$tipo = 2;
+				break;
+			case 'usr':
+				$tipo = 3;
+				break;
+			case 'usp':
+				$tipo = 4;
+				break;
+			default:
+				$tipo = NULL;
+				break;
+		}
+
+		$this->data['tipo'] = $tipo;
+		$this->data['fotos'] = $this->accionesDAO->consultar_foto(null, $ficha, $tipo);
 		$this->load->library('user_agent');
 		$this->data['es_ie'] = $this->agent->is_browser('Internet Explorer');
 		$this->data['directorio'] = $this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos;
 		$this->data['script'] = "/site_predios/archivos_controller/subir_archivos/$ficha";
 		$this->data['titulo_pagina'] = "Archivos - ficha predial $ficha";
-		$this->data['contenido_principal'] = 'archivos/fotos_view';
-		$this->load->view('includes/template',$this->data);
-
+		if ($aux) {
+			$this->load->view('archivos/fotos_view',$this->data);
+		} else {
+			$this->data['contenido_principal'] = 'archivos/fotos_view';
+			$this->load->view('includes/template', $this->data);
+		}
 	}
 
 	function subir_archivos()
@@ -246,7 +270,8 @@ class Archivos_controller extends CI_Controller
     		"descripcion" => $this->input->post("descripcion"),
     		"ficha_predial" => $this->input->post("ficha"),
     		"archivo" => $nombre,
-			"orden" => $this->input->post("orden")
+			"orden" => $this->input->post("orden"),
+			"tipo" => $this->input->post("tipo")
 		);
 
 		// Si se guarda el registro en base de datos correctamente
@@ -279,46 +304,6 @@ class Archivos_controller extends CI_Controller
 		// else {
 		// 	echo "Debe seleccionar al menos una foto";
 		// }
-	}
-
-	function obtener_fotos() {
-		$ficha = $this->uri->segment(3);
-
-			if( ! is_dir($this->ruta_archivos.$ficha) )
-		{
-			@mkdir($this->ruta_archivos.$ficha, 0777);
-		}
-		if( ! is_dir($this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos) )
-		{
-			@mkdir($this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos, 0777);
-		}
-
-		//se abre el directorio
-		if($directorio = opendir($this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos))
-		{
-			//se arma un array de nombres de archivo
-			$nombres = array();
-
-			while(($file = readdir($directorio)) !== FALSE)
-			{
-				if($file != '.' && $file != '..')
-				{
-					array_push($nombres, $file);
-				}
-			}
-
-			//se cierra el directorio
-			closedir();
-
-			$this->load->library('user_agent');
-			$this->data['es_ie'] = $this->agent->is_browser('Internet Explorer');
-			$this->data['fotos'] = $nombres;
-			$this->data['directorio'] = $this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos;
-			$this->data['script'] = "/site_predios/archivos_controller/subir_archivos/$ficha";
-			$this->data['titulo_pagina'] = "Archivos - ficha predial $ficha";
-			$this->data['contenido_principal'] = 'archivos/fotos_view';
-			$this->load->view('archivos/vista_auxiliar',$this->data);
-		}
 	}
 
 	function actualizar_foto() {

@@ -37,4 +37,9 @@ $('#tabla-vertices').dataTable({
     "sPaginationType": "full_numbers"/*,
     "order": [[ 2, "asc" ]]*/
 });
+$(document).ready(function(){
+    $( "tr" ).click(() => {
+        console.log( this );
+    });
+});
 </script>
