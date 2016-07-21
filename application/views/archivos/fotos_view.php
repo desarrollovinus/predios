@@ -198,6 +198,7 @@
                 datos['descripcion'] = $("input[name=descripcion]").val();
                 datos['ficha'] = "<?php echo $this->uri->segment(3); ?>";
 				datos['orden'] = "<?php echo $max + 1; ?>";
+				datos['tipo'] = "<?php echo $tipo; ?>";
 
                 console.log(datos);
             }, // onsubmit

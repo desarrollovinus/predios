@@ -7,7 +7,7 @@
 	echo form_label('Ficha predial:&nbsp;&nbsp;&nbsp;','ficha');
 	echo form_input('ficha', $predio->ficha_predial, 'readonly');
 
-	// Arreglo 
+	// Arreglo
 	$valores_f = array();
 
 	// se recorren los valores de checks
@@ -81,13 +81,13 @@
 					<tr>
 						<td><label class="form-label" for="distribucion_alcobas" style="width: 10%;">Alcobas</label></td>
 						<td><input type="text" class="form-control" id="distribucion_alcobas" value="<?php if(isset($ficha_social->distribucion_alcobas)){echo $ficha_social->distribucion_alcobas;} ?>" style="width: 15%;"></td>
-						
+
 						<td><label class="form-label" for="distribucion_bano" style="width: 10%;">Baños</label></td>
 						<td><input type="text" class="form-control" id="distribucion_bano" value="<?php if(isset($ficha_social->distribucion_bano)){echo $ficha_social->distribucion_bano;} ?>" style="width: 15%;"></td>
 
 						<td><label class="form-label" for="distribucion_cocinas" style="width: 10%;">Cocinas</label></td>
 						<td><input type="text" class="form-control" id="distribucion_cocinas" style="width: 15%;" value="<?php if(isset($ficha_social->distribucion_cocinas)){echo $ficha_social->distribucion_cocinas;} ?>" style="width: 25%;"></td>
-						
+
 						<td><label class="form-label" for="distribucion_comedor" style="width: 10%;">Comedor</label></td>
 						<td><input type="text" class="form-control" id="distribucion_comedor" value="<?php if(isset($ficha_social->distribucion_comedor)){echo $ficha_social->distribucion_comedor;} ?>" style="width: 15%;"></td>
 
@@ -96,7 +96,7 @@
 					</tr>
 				</tbody>
 			</table>
-			
+
 			<table style="text-align:'left'" width="100%">
 				<tbody>
 					<tr>
@@ -156,14 +156,14 @@
 		<!-- seccion 2 -->
 		<h3><a href="#seccion2">DIAGN&Oacute;STICO SOCIOECON&Oacute;MICO</a></h3>
 		<div>
-			
+
 
 
 		</div>
 
 		<!-- seccion 3 -->
 		<h3><a href="#seccion3">REGISTRO FOTOGR&Aacute;FICO</a></h3>
-		<div>
+		<div id="fotos">
 
 
 
@@ -172,7 +172,7 @@
 	<br /><input type="hidden" id="errores" />
 	<div class="clear">&nbsp;</div>
 	<input type="hidden" id="boton_hidden" name="boton_hidden" value="" />
-	<?php 		
+	<?php
 		$guardar = array(
 			'type' => 'button',
 			'name' => 'guardar',
@@ -180,7 +180,7 @@
 			'value' => 'Guardar y volver'
 		);
 		echo form_input($guardar);
-		
+
 		// $continuar = array(
 		// 	'type' => 'button',
 		// 	'name' => 'continuar',
@@ -188,7 +188,7 @@
 		// 	'value' => 'Guardar y continuar'
 		// );
 		// echo form_input($continuar);
-		
+
 		$salir = array(
 			'type' => 'button',
 			'name' => 'salir',
@@ -201,6 +201,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		// Se cargan las fotos
+		$("#fotos").load("<?php echo site_url('archivos_controller/ver_fotos/'.$predio->ficha_predial.'/gen/aux'); ?>");
 		//este script unido con jquery es el encargado de dar el estilo css a las secciones del formulario dinamicamente
 		$( "#accordion" ).accordion
 		({
@@ -221,7 +223,7 @@
 
 		$('#form input[name^=fecha]').datepicker();
 
-		//esta sentencia es para darle el estilo a los botones jquery.ui 
+		//esta sentencia es para darle el estilo a los botones jquery.ui
 	    $( "#form input[type=submit], #form input[type=button]").button();
 
 	    //este script genera el evento clic del boton Guardar y Salir
@@ -291,7 +293,7 @@
 		            existe = respuesta;
 		        }//Error
 		    });//Ajax
-		    		
+
     		// Si existe
     		if (existe == "1") {
     			// url para modificar
