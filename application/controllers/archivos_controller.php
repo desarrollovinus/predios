@@ -280,7 +280,7 @@ class Archivos_controller extends CI_Controller
 
 		// Si se guarda el registro en base de datos correctamente
 		if ($this->accionesDAO->guardar_foto($datos)) {
-			echo $nombre;
+			echo true;
 		} // if
     } // subir_fotos
 
