@@ -114,17 +114,10 @@
 				type: "POST",
 				dataType: "HTML",
 				async: false,
-				success: function(respuesta){
-					console.log(respuesta);
-				},//Success
-				error: function(respuesta){
-					console.log(respuesta);
-				}//Error
 		});//Ajax
 	}
 
 	function eliminar_foto(numero, url, nombre){
-		console.log(nombre);
 		//Variable de exito
 	    var exito;
 
@@ -136,16 +129,17 @@
 	        type: "POST",
 	        dataType: "HTML",
 	        async: false,
-	        success: function(respuesta){ console.log(respuesta);
+	        success: function(respuesta){
 	            //Si la respuesta no es error
 	            if(respuesta){
 	                //Se almacena la respuesta como variable de éxito
 	                exito = respuesta;
-					var datos = {ficha:"<?php echo $ficha ?>", tipo: "<?php echo $tipo ?>", aux: true};
-					$.get("<?php echo site_url('archivos_controller/ver_fotos'); ?>", datos, function(vista){
-						console.log(datos);
-						$("#vista-fotos").html(vista);
-					});
+					setTimeout(function () {
+						var datos = {ficha:"<?php echo $ficha ?>", tipo: "<?php echo $tipo ?>", aux: true};
+						$.get("<?php echo site_url('archivos_controller/ver_fotos'); ?>", datos, function(vista){
+							$("#vista-fotos").html(vista);
+						});
+					}, 500);
 	            } else {
 	                //La variable de éxito será un mensaje de error
 	                exito = "error";
@@ -196,11 +190,14 @@
                 datos['ficha'] = "<?php echo $ficha; ?>";
 				datos['orden'] = "<?php echo $max + 1; ?>";
 				datos['tipo'] = "<?php echo $tipo; ?>";
-
-                console.log(datos);
+				setTimeout(function () {
+					var datos = {ficha:"<?php echo $ficha ?>", tipo: "<?php echo $tipo ?>", aux: true};
+					$.get("<?php echo site_url('archivos_controller/ver_fotos'); ?>", datos, function(vista){
+						$("#vista-fotos").html(vista);
+					});
+				}, 1000);
             }, // onsubmit
             onComplete: function(archivo, respuesta){
-				console.log(respuesta);
                 if(respuesta == "existe"){
                     // Se muestra el mensaje de error
 					$("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>No se puede subir el certificado, Ya existe</p></div>');
@@ -209,12 +206,6 @@
                 // Si la respuesta es un error
                 if(respuesta == "error") {
 					$("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>No se pudo subir el certificado.</p></div>');
-                } else {
-					var datos = {ficha:"<?php echo $ficha ?>", tipo: "<?php echo $tipo ?>", aux: true};
-					$.get("<?php echo site_url('archivos_controller/ver_fotos'); ?>", datos, function(vista){
-						console.log(datos);
-						$("#vista-fotos").html(vista);
-					});
                 } // if
             } // oncomplete
         }); // AjaxUpload
