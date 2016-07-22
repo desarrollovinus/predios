@@ -175,40 +175,44 @@ class Archivos_controller extends CI_Controller
 	function ver_fotos()
 	{
 		$this->load->model("accionesDAO");
+		$ficha = $this->input->get('ficha');
+		$tipo = $this->input->get('tipo');
+		$this->data['ficha'] = $ficha;
+		$this->data['tipo'] = $tipo;
+		$aux = $this->input->get('aux');
 
-		$ficha = $this->uri->segment(3);
-		$tipo = $this->uri->segment(4);
-		$aux = $this->uri->segment(5);
+		//si la ficha no existe
+		if( ! $ficha)
+		{
+			redirect('actualizar_controller');
+		}
+		else
+		{
+			// si la carpeta con el nombre de la ficha no existe se crea
+			if( ! is_dir($this->ruta_archivos.$ficha) )
+			{
+				@mkdir($this->ruta_archivos.$ficha, 0777);
+			}
 
-		switch ($tipo) {
-			case 'pre':
-				$tipo = 1;
-				break;
-			case 'gen':
-				$tipo = 2;
-				break;
-			case 'usr':
-				$tipo = 3;
-				break;
-			case 'usp':
-				$tipo = 4;
-				break;
-			default:
-				$tipo = NULL;
-				break;
+			// si la carpeta fotos no existe se crea
+			if( ! is_dir($this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos) )
+			{
+				@mkdir($this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos, 0777);
+			}
 		}
 
 		$this->data['tipo'] = $tipo;
-		$this->data['fotos'] = $this->accionesDAO->consultar_foto(null, $ficha, $tipo);
+		$this->data['fotos'] = $this->accionesDAO->consultar_foto($ficha, $tipo);
 		$this->load->library('user_agent');
 		$this->data['es_ie'] = $this->agent->is_browser('Internet Explorer');
 		$this->data['directorio'] = $this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos;
 		$this->data['script'] = "/site_predios/archivos_controller/subir_archivos/$ficha";
 		$this->data['titulo_pagina'] = "Archivos - ficha predial $ficha";
+		$this->data['contenido_principal'] = 'archivos/fotos_view';
+
 		if ($aux) {
-			$this->load->view('archivos/fotos_view',$this->data);
+			$this->load->view('archivos/vista_auxiliar',$this->data);
 		} else {
-			$this->data['contenido_principal'] = 'archivos/fotos_view';
 			$this->load->view('includes/template', $this->data);
 		}
 	}
@@ -276,7 +280,7 @@ class Archivos_controller extends CI_Controller
 
 		// Si se guarda el registro en base de datos correctamente
 		if ($this->accionesDAO->guardar_foto($datos)) {
-			echo true;
+			echo $nombre;
 		} // if
     } // subir_fotos
 

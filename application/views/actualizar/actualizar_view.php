@@ -1037,7 +1037,7 @@
 		$('#form input[name=fotos], a[rel=fotos]').click(function(){
 			var ficha_predial = $('#form input[name=ficha]').val();
 			ficha_predial = ficha_predial.replace(' ', '_');
-			window.open("<?php echo site_url("archivos_controller/ver_fotos"); ?>/" + ficha_predial + "/pre/aux","fotos","resizable=no,location=no,menubar=no, scrollbars=yes,status=no,toolbar=no,fullscreen=no, dependent=no,width=1020,height=600,left=100,top=0" );
+			window.open("<?php echo site_url("archivos_controller/ver_fotos?ficha="); ?>" + ficha_predial + "&tipo=1&aux=true","fotos","resizable=no,location=no,menubar=no, scrollbars=yes,status=no,toolbar=no,fullscreen=no, dependent=no,width=1020,height=600,left=100,top=0" );
 		});
 
 		$('#form input[name=pagos], a[rel=pagos]').click(function(){
