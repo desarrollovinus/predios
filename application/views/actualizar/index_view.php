@@ -37,7 +37,7 @@
 								<?php
 									if (isset($permisos['Archivos y Fotos']['Consultar'])) {
 										echo anchor("archivos_controller/ver_archivos/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/archivos.png"', 'title="Subir archivos"');
-										echo anchor("archivos_controller/ver_fotos/".str_replace(' ', '_', $ficha->ficha_predial).'/pre', '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"');
+										echo anchor("archivos_controller/ver_fotos?ficha=".$ficha->ficha_predial."&tipo=1", '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"');
 									}
 								?>
 								<?php if (isset($permisos['Fichas']['Imprimir estudio de t&iacute;tulos'])) { ?><?php echo anchor("informes_controller/estudio_titulos/".$ficha->id_predio, '<img src="'.base_url().'img/doc.png"', 'title="Estudio de T&iacute;tulos"'); ?><?php } ?>

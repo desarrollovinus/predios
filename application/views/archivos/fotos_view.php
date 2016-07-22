@@ -1,3 +1,4 @@
+<div id="vista-fotos">
 <script src="<?php echo base_url(); ?>js/ajaxupload.2.0.min.js"></script>
 
 <div id="form">
@@ -7,23 +8,15 @@
 
 	echo form_fieldset('<b>Gestor de fotos</b>');
 	?>
-	<table style="text-align:'left'">
-		<tbody>
-			<tr>
-				<td width="10%"><?php echo form_label('Fecha','fecha'); ?></td>
-				<td width="20%"><?php echo form_input('fecha'); ?></td>
-				<td width="10%"><?php echo form_label('Descripción','descripcion'); ?></td>
-				<td width="20%"><?php echo form_input('descripcion'); ?></td>
-				<td idth="40%">
-					<?php
-					if(isset($permisos['Archivos y Fotos']['Subir'])) {
-						echo '<p><input type="file" id="btn_subir_certificado" class="btn_fotos"></p>';
-					}
-					?>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	<div style="display:inline-block;" width="10%"><?php echo form_label('Fecha','fecha'); ?></div>
+	<div style="display:inline-block;" width="20%"><?php echo form_input('fecha'); ?></div>
+	<div style="display:inline-block;" width="10%"><?php echo form_label('Descripción','descripcion'); ?></div>
+	<div style="display:inline-block;" width="20%"><?php echo form_input('descripcion'); ?></div>
+	<?php
+		if(isset($permisos['Archivos y Fotos']['Subir'])) {
+			echo '<p><input type="file" id="btn_subir_certificado" class="btn_fotos"></p>';
+		}
+	?>
 	<div id="error"></div>
 	<div id="fotos-container" onchange="ordenar()">
 
@@ -148,6 +141,11 @@
 	            if(respuesta){
 	                //Se almacena la respuesta como variable de éxito
 	                exito = respuesta;
+					var datos = {ficha:"<?php echo $ficha ?>", tipo: "<?php echo $tipo ?>", aux: true};
+					$.get("<?php echo site_url('archivos_controller/ver_fotos'); ?>", datos, function(vista){
+						console.log(datos);
+						$("#vista-fotos").html(vista);
+					});
 	            } else {
 	                //La variable de éxito será un mensaje de error
 	                exito = "error";
@@ -162,7 +160,6 @@
 	    // Si se borró correctamente
 	    if (exito) {
 	    	$("#foto" + numero).hide("slow");
-			setTimeout(()=>{location.reload();}, 1000);
 	    }
 	}
 
@@ -196,7 +193,7 @@
                 // Se arregan al arreglo JSON los datos a enviar
                 datos['fecha'] = $("input[name=fecha]").val();
                 datos['descripcion'] = $("input[name=descripcion]").val();
-                datos['ficha'] = "<?php echo $this->uri->segment(3); ?>";
+                datos['ficha'] = "<?php echo $ficha; ?>";
 				datos['orden'] = "<?php echo $max + 1; ?>";
 				datos['tipo'] = "<?php echo $tipo; ?>";
 
@@ -209,13 +206,15 @@
 					$("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>No se puede subir el certificado, Ya existe</p></div>');
 					return false;
                 } // if
-                // Si la respuesta es verdadera
-                if(respuesta == 1) {
-                	location.reload();
-                }else if(respuesta == "size") {
-					$("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>Solo se permiten fotos horizontales.</p></div>');
-                } else {
+                // Si la respuesta es un error
+                if(respuesta == "error") {
 					$("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>No se pudo subir el certificado.</p></div>');
+                } else {
+					var datos = {ficha:"<?php echo $ficha ?>", tipo: "<?php echo $tipo ?>", aux: true};
+					$.get("<?php echo site_url('archivos_controller/ver_fotos'); ?>", datos, function(vista){
+						console.log(datos);
+						$("#vista-fotos").html(vista);
+					});
                 } // if
             } // oncomplete
         }); // AjaxUpload
@@ -225,3 +224,4 @@
 		});
 	});
 </script>
+</div>

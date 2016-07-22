@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title><?php echo $titulo_pagina; ?></title>
-		
+
 		<!-- estilos -->
 		<link rel="stylesheet" href="<?php echo base_url(); ?>css/estilo.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="<?php echo base_url(); ?>css/cupertino/jquery-ui-1.8.16.custom.css" type="text/css" />
@@ -10,10 +10,10 @@
 		<!-- <link rel="stylesheet" href="<?php echo base_url(); ?>css/base/jquery.ui.datepicker.css" type="text/css" />-->
 		<link rel="stylesheet" href="<?php echo base_url(); ?>css/demos.css" type="text/css">
 		<link rel="stylesheet" href="<?php echo base_url(); ?>css/fancydropdown.css" type="text/css">
-		
+
 		<!-- icono -->
 		<link rel="shortcut icon" href="<?php echo site_url('img/favicon.ico'); ?>">
-		
+
 		<!-- scripts -->
 		<script type="text/javascript" src="<?php echo base_url(); ?>js/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.form.js"></script>
@@ -38,17 +38,15 @@
 		</script>
 	</head>
 	<body>
-		<div id="principal">
-			<div id="contenido">
-				<?php if(isset($error)) {?>
-					<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
-						<p>
-							<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
-							<strong>Alerta:</strong> <?php echo $this->session->flashdata('error'); ?>
-						</p>
-					</div>
-				<?php } else { $this->load->view($contenido_principal); } ?>
-			</div>
+		<div>
+			<?php if(isset($error)) {?>
+				<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+					<p>
+						<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+						<strong>Alerta:</strong> <?php echo $this->session->flashdata('error'); ?>
+					</p>
+				</div>
+			<?php } else { $this->load->view($contenido_principal); } ?>
 		</div>
 		<div id="cargando"></div>
 	</body>
