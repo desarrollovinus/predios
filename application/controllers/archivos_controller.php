@@ -177,6 +177,8 @@ class Archivos_controller extends CI_Controller
 		$this->load->model("accionesDAO");
 		$ficha = $this->input->get('ficha');
 		$tipo = $this->input->get('tipo');
+		$id = $this->input->get('id');
+		$this->data['id'] = $id;
 		$this->data['ficha'] = $ficha;
 		$this->data['tipo'] = $tipo;
 		$aux = $this->input->get('aux');
@@ -202,7 +204,7 @@ class Archivos_controller extends CI_Controller
 		}
 
 		$this->data['tipo'] = $tipo;
-		$this->data['fotos'] = $this->accionesDAO->consultar_foto($ficha, $tipo);
+		$this->data['fotos'] = $this->accionesDAO->consultar_foto($ficha, $tipo, $id);
 		$this->load->library('user_agent');
 		$this->data['es_ie'] = $this->agent->is_browser('Internet Explorer');
 		$this->data['directorio'] = $this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos;
@@ -269,13 +271,17 @@ class Archivos_controller extends CI_Controller
     // Si se sube corectamente
 	} elseif($this->accionesDAO->procesar_foto($_FILES['userfile']['tmp_name'], $directorio, $nombre)) {
     	// Se prepara el arreglo con el que se guarda los datos de la foto
+		// si el tipo es 3 se registra en el campo unidad social residente sino en la unidad social productiva
+		$id = ($this->input->post("tipo") == 3) ? "id_usr" : "id_usp";
+
     	$datos = array(
     		"fecha" => $this->input->post("fecha"),
     		"descripcion" => $this->input->post("descripcion"),
     		"ficha_predial" => $this->input->post("ficha"),
     		"archivo" => $nombre,
 			"orden" => $this->input->post("orden"),
-			"tipo" => $this->input->post("tipo")
+			"tipo" => $this->input->post("tipo"),
+			$id => $this->input->post("id")
 		);
 
 		// Si se guarda el registro en base de datos correctamente

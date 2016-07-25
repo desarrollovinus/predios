@@ -13,9 +13,15 @@ class AccionesDAO extends CI_Model {
 		return $this->db->get('tbl_acciones')->result();
 	}
 
-    function consultar_foto($ficha=null, $tipo=null){
+    function consultar_foto($ficha, $tipo=null, $id=null){
         $this->db->select("*");
-
+		if ($id) {
+			if ($tipo == 3) {
+				$this->db->where('id_usr', $id);
+			} else if ($tipo == 4) {
+				$this->db->where('id_usp', $id);
+			}
+		}
 		//obtener todas las fotos de una ficha especifica
 		$this->db->where('ficha_predial', $ficha);
 		$this->db->where('tipo', $tipo);
