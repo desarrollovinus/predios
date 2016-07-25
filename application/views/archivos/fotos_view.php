@@ -190,6 +190,7 @@
                 datos['ficha'] = "<?php echo $ficha; ?>";
 				datos['orden'] = "<?php echo $max + 1; ?>";
 				datos['tipo'] = "<?php echo $tipo; ?>";
+				datos['id'] = "<?php echo $id; ?>";
 				setTimeout(function () {
 					var datos = {ficha:"<?php echo $ficha ?>", tipo: "<?php echo $tipo ?>", aux: true};
 					$.get("<?php echo site_url('archivos_controller/ver_fotos'); ?>", datos, function(vista){
