@@ -25,27 +25,28 @@ class AccionesDAO extends CI_Model {
 		//obtener todas las fotos de una ficha especifica
 		$this->db->where('ficha_predial', $ficha);
 		$this->db->where('tipo', $tipo);
+		$this->db->where('categoria', 2);
 		$this->db->order_by('orden', 'ASC');
-		return $this->db->get('tbl_fotos')->result();    }
+		return $this->db->get('tbl_archivos')->result();    }
 
     function eliminar_foto($nombre)
     {
         // Se borran todas las relaciones del predio
         $this->db->where('archivo', $nombre);
-        return $this->db->delete('tbl_fotos');
+        return $this->db->delete('tbl_archivos');
     }
 
     function guardar_foto($datos)
     {
         // Si se guarda correctamente
-        if($this->db->insert('tbl_fotos', $datos)){
+        if($this->db->insert('tbl_archivos', $datos)){
             return true;
         }
     }
 
 		function actualizar_foto($nombre, $data){
 			$this->db->where('archivo', $nombre);
-			$this->db->update('tbl_fotos', $data);
+			$this->db->update('tbl_archivos', $data);
 		}
 
 	/**
