@@ -275,10 +275,11 @@ class Archivos_controller extends CI_Controller
 		$id = ($this->input->post("tipo") == 3) ? "id_usr" : "id_usp";
 
     	$datos = array(
-    		"fecha" => $this->input->post("fecha"),
+			"archivo" => $nombre,
+			"categoria" => 2,
     		"descripcion" => $this->input->post("descripcion"),
+			"fecha" => $this->input->post("fecha"),
     		"ficha_predial" => $this->input->post("ficha"),
-    		"archivo" => $nombre,
 			"orden" => $this->input->post("orden"),
 			"tipo" => $this->input->post("tipo"),
 			$id => $this->input->post("id")
