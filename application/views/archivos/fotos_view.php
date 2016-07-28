@@ -192,7 +192,7 @@
 				datos['tipo'] = "<?php echo $tipo; ?>";
 				datos['id'] = "<?php echo $id; ?>";
 				setTimeout(function () {
-					var datos = {ficha:"<?php echo $ficha ?>", tipo: "<?php echo $tipo ?>", aux: true};
+					var datos = {ficha:"<?php echo $ficha ?>", tipo: "<?php echo $tipo ?>", aux: true, id: "<?php echo $id ?>"};
 					$.get("<?php echo site_url('archivos_controller/ver_fotos'); ?>", datos, function(vista){
 						$("#vista-fotos").html(vista);
 					});
