@@ -10,7 +10,7 @@
 			<th>Relación con inmueble</th>
 			<th>Responsable</th>
 			<th>Integrantes</th>
-			<th>Opciones</th>
+			<th width="15%">Opciones</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -25,6 +25,7 @@
 						<img src="<?php echo base_url(); ?>img/edit.png" title="Editar información">
 					</a>
 					<?php echo anchor("informes_controller/ficha_social_usr/". $usr->id, '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización general unidades residentes"'); ?>
+					<?php echo anchor("archivos_controller/ver_fotos?ficha=".$usr->ficha_predial."&tipo=3&id=".$usr->id, '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"'); ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>

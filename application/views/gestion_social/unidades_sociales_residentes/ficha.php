@@ -202,18 +202,6 @@
 			</table>
 		</div>
 
-		<!-- seccion 4 -->
-		<h3><a href="#seccion4">DOCUMENTOS ADJUNTOS</a></h3>
-		<div>
-
-		</div>
-
-		<!-- seccion 4 -->
-		<h3><a href="#seccion5">REGISTRO FOTOGRÁFICO</a></h3>
-		<div id="fotos">
-
-		</div>
-
 	</div>
 
 	<br /><input type="hidden" id="errores" />
@@ -266,12 +254,6 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		//Carga de fotos
-		var datos = {ficha:"<?php echo $usr->ficha_predial; ?>", tipo: "3", aux: true, id:"<?php echo $id ?>"};
-	  	$.get("<?php echo site_url('archivos_controller/ver_fotos/'); ?>", datos, function(vista){
-		   $("#fotos").html(vista);
-	  	});
-
 		$( "#accordion" ).accordion
 		({
 			autoHeight: false,
