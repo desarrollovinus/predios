@@ -50,8 +50,9 @@
 
 				<tbody>
 					<tr>
+
 						<td width="50%"><?php echo form_label('Relaci&oacute;n con el inmueble','relacion_inmueble'); ?></td>
-						<td width="10%"><?php echo form_dropdown('relacion_inmueble', $_relacion, utf8_decode($usr->relacion_inmueble)); ?></td>
+						<td width="10%"><?php echo form_dropdown('relacion_inmueble', $_relacion, utf8_decode($usr->id_relacion_inmueble)); ?></td>
 						<td width="30%"><?php echo form_label('Responsable','responsable'); ?></td>
 						<td width="10%"><?php echo form_input('responsable', utf8_decode($usr->responsable)); ?></td>
 					</tr>
@@ -63,7 +64,7 @@
 					</tr>
 					<tr>
 						<td width="30%"><?php echo form_label('Ocupaci&oacute;n','ocupacion'); ?></td>
-						<td width="20%"><?php echo form_dropdown('ocupacion', $_ocupacion, utf8_decode($usr->ocupacion)); ?></td>
+						<td width="20%"><?php echo form_dropdown('ocupacion', $_ocupacion, utf8_decode($usr->id_ocupacion)); ?></td>
 						<td width="30%"><?php echo form_label('Otras actividades','otras_actividades'); ?></td>
 						<td width="10%"><?php echo form_input('otras_actividades', utf8_decode($usr->otras_actividades)); ?></td>
 					</tr>
@@ -234,14 +235,14 @@
 		           return datos = respuesta;
 		        }//Success
 		    });//Ajax
+        	// console.log(datos);
 
-        	console.log(datos);
 			// Se alimentan los campos si tienen información
 			for (i = 1; i <= 5; i++) {
         		$("input[name='nombre_integrante" + i + "']").val(datos["nombre_integrante" + i]);
-        		$("select[name='relacion_integrante" + i + "']").val(datos["relacion_integrante" + i]);
+        		$("select[name='relacion_integrante" + i + "']").val(datos["id_relacion_integrante" + i]);
         		$("input[name='edad_integrante" + i + "']").val(datos["edad_integrante" + i]);
-        		$("select[name='ocupacion_integrante" + i + "']").val(datos["ocupacion_integrante" + i]);
+        		$("select[name='ocupacion_integrante" + i + "']").val(datos["id_ocupacion_integrante" + i]);
         		$("input[name='ingresos_integrante" + i + "']").val(datos["ingresos_integrante" + i]);
         		$("input[name='verificacion_integrante" + i + "']").val(datos["verificacion_integrante" + i]);
 			} // for
