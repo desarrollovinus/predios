@@ -10,7 +10,7 @@
 			<th>Relación con inmueble</th>
 			<th>Responsable</th>
 			<th>Integrantes</th>
-			<th>Opciones</th>
+			<th width="15%">Opciones</th>
 		</tr>
 	</thead>
 	<tbody>
