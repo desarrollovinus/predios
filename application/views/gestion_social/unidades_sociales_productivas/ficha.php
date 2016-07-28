@@ -204,12 +204,6 @@
 		<div>
 
 		</div>
-
-		<!-- seccion 4 -->
-		<h3><a href="#seccion4">REGISTRO FOTOGRÁFICO</a></h3>
-		<div id="fotos">
-
-		</div>
 	</div>
 
 	<br /><input type="hidden" id="errores" />
@@ -232,12 +226,6 @@
 ?>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			//Carga de fotos
-			var datos = {ficha:"<?php echo $usp->ficha_predial; ?>", tipo: "4", aux: true, id:"<?php echo $id ?>"};
-			$.get("<?php echo site_url('archivos_controller/ver_fotos/'); ?>", datos, function(vista){
-			   $("#fotos").html(vista);
-			});
-
 			// Se guardan los cambios en la ficha social
         	$.ajax({
 		        url: "<?php echo site_url('gestion_social_controller/cargar_unidad_social_productiva'); ?>",

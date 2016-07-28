@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/demo_table_jui.css" type="text/css" />
-<?php // if (isset($permisos['Fichas']['Actualizar'])) { ?><img src="<?php echo base_url(); ?>img/edit.png" title="Actualizar" >: Actualizar Ficha <?php // } ?> 
+<?php // if (isset($permisos['Fichas']['Actualizar'])) { ?><img src="<?php echo base_url(); ?>img/edit.png" title="Actualizar" >: Actualizar Ficha <?php // } ?>
 
 <table style="width:100%; font-size: 13px">
 	<thead>
@@ -23,6 +23,7 @@
 						</a>
 
 						<?php echo anchor("informes_controller/ficha_social_general/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización general"'); ?>
+						<?php echo anchor("archivos_controller/ver_fotos?ficha=".$ficha->ficha_predial."&tipo=2", '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"'); ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>

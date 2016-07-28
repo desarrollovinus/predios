@@ -273,6 +273,7 @@ class Archivos_controller extends CI_Controller
     	// Se prepara el arreglo con el que se guarda los datos de la foto
 		// si el tipo es 3 se registra en el campo unidad social residente sino en la unidad social productiva
 		$id = ($this->input->post("tipo") == 3) ? "id_usr" : "id_usp";
+		$id_valor = ($this->input->post("id") == 0) ? NULL : $this->input->post("id");
 
     	$datos = array(
 			"archivo" => $nombre,
@@ -282,7 +283,7 @@ class Archivos_controller extends CI_Controller
     		"ficha_predial" => $this->input->post("ficha"),
 			"orden" => $this->input->post("orden"),
 			"tipo" => $this->input->post("tipo"),
-			$id => $this->input->post("id")
+			$id => $id_valor
 		);
 
 		// Si se guarda el registro en base de datos correctamente
