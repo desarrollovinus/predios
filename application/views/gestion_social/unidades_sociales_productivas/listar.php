@@ -24,6 +24,7 @@
 					<a onclick="javascript:editar('<?php echo $usp->id; ?>', '<?php echo $usp->ficha_predial; ?>')" style="cursor: pointer">
 						<img src="<?php echo base_url(); ?>img/edit.png" title="Editar unidad social productiva">
 					</a>
+					<?php echo anchor("archivos_controller/ver_fotos?ficha=".$usp->ficha_predial."&tipo=4&id=".$usp->id, '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"'); ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>
@@ -39,7 +40,7 @@
 			"sPaginationType": "full_numbers"
 		});
 
-		//esta sentencia es para darle el estilo a los botones jquery.ui 
+		//esta sentencia es para darle el estilo a los botones jquery.ui
 	    $( "#form input[type=submit], #form input[type=button]").button();
 	});
 </script>

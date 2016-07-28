@@ -162,12 +162,6 @@
 		</div>
 
 		<!-- seccion 3 -->
-		<h3><a href="#seccion3">REGISTRO FOTOGR&Aacute;FICO</a></h3>
-		<div id="fotos">
-
-
-
-		</div>
 	</div>
 	<br /><input type="hidden" id="errores" />
 	<div class="clear">&nbsp;</div>
@@ -201,11 +195,6 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		// Se cargan las fotos
-		var datos = {ficha:"<?php echo $predio->ficha_predial ?>", tipo: "2", aux: true};
-		$.get("<?php echo site_url('archivos_controller/ver_fotos/'); ?>", datos, function(vista){
-   			$("#fotos").html(vista);
-		});
 		//este script unido con jquery es el encargado de dar el estilo css a las secciones del formulario dinamicamente
 		$( "#accordion" ).accordion
 		({
