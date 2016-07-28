@@ -8,7 +8,7 @@
 			<th>Primer propietario</th>
 			<th>Unidades residentes</th>
 			<th>Unidades productivas</th>
-			<th>Opciones</th>
+			<th width="15%">Opciones</th>
 		</tr>
 		<tbody>
 			<?php foreach ($fichas as $ficha): ?>
