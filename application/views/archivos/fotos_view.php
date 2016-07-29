@@ -30,9 +30,9 @@
 		foreach($fotos as $foto) {
 			// Se consulta los datos de la foto
 		?>
-			<div class="fotos" id="foto<?php echo $cont; ?>" orden="<?php echo ($foto->orden) ? $foto->orden: $max;?>">
+			<div style="height:210px; max-width:320px; padding-bottom:2em;" class="fotos" id="foto<?php echo $cont; ?>" orden="<?php echo ($foto->orden) ? $foto->orden: $max;?>">
 				<!-- Foto -->
-				<img src="<?php echo base_url().$directorio."/".$foto->archivo; ?>" height="210"><br>
+				<img src="<?php echo base_url().$directorio."/".$foto->archivo; ?>" width="100%" style="max-width:300px;"><br>
 
 				<!-- Eliminar -->
 				<a href="#">
