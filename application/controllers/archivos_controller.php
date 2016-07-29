@@ -202,7 +202,20 @@ class Archivos_controller extends CI_Controller
 				@mkdir($this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos, 0777);
 			}
 		}
-
+		switch ($tipo) {
+			// caracterizacion general
+			case '2':
+				$this->data['menu'] = 'gestion_social/menu';
+				break;
+			// unidades sociales residentes
+			case '3':
+				$this->data['menu'] = 'gestion_social/unidades_sociales_residentes/menu';
+				break;
+			// unidades sociales productivas
+			case '4':
+				$this->data['menu'] = 'gestion_social/unidades_sociales_productivas/menu';
+				break;
+		}
 		$this->data['tipo'] = $tipo;
 		$this->data['fotos'] = $this->accionesDAO->consultar_foto($ficha, $tipo, $id);
 		$this->load->library('user_agent');
