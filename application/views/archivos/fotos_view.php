@@ -135,7 +135,7 @@
 	                //Se almacena la respuesta como variable de éxito
 	                exito = respuesta;
 					setTimeout(function () {
-						var datos = {ficha:"<?php echo $ficha ?>", tipo: "<?php echo $tipo ?>", aux: true};
+						var datos = {ficha:"<?php echo $ficha ?>", tipo: "<?php echo $tipo ?>", aux: true, id: "<?php echo $id ?>"};
 						$.get("<?php echo site_url('archivos_controller/ver_fotos'); ?>", datos, function(vista){
 							$("#vista-fotos").html(vista);
 						});
