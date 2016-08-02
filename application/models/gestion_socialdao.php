@@ -196,7 +196,7 @@ class Gestion_socialDAO extends CI_Model
 				FROM
 					tbl_archivos AS a
 				WHERE
-					a.ficha_predial = usp.ficha_predial AND a.tipo=4 AND a.categoria=2
+					a.ficha_predial = usp.ficha_predial AND a.tipo=4 AND a.categoria=2 AND a.id_usp = usp.id
 			) AS fotos,
 			(
 				SELECT
@@ -204,7 +204,7 @@ class Gestion_socialDAO extends CI_Model
 				FROM
 					tbl_archivos AS a
 				WHERE
-					a.ficha_predial = usp.ficha_predial AND a.tipo=4 AND a.categoria=1
+					a.ficha_predial = usp.ficha_predial AND a.tipo=4 AND a.categoria=1 AND a.id_usp = usp.id
 			) AS archivos
 		FROM
 			tbl_unidades_sociales_productivas AS usp
@@ -233,7 +233,7 @@ class Gestion_socialDAO extends CI_Model
 				FROM
 					tbl_archivos AS a
 				WHERE
-					a.ficha_predial = usr.ficha_predial AND a.tipo=3 AND a.categoria=2
+					a.ficha_predial = usr.ficha_predial AND a.tipo=3 AND a.categoria=2 AND a.id_usr = usr.id
 			) AS fotos,
 			(
 				SELECT
@@ -241,7 +241,7 @@ class Gestion_socialDAO extends CI_Model
 				FROM
 					tbl_archivos AS a
 				WHERE
-					a.ficha_predial = usr.ficha_predial AND a.tipo=3 AND a.categoria=1
+					a.ficha_predial = usr.ficha_predial AND a.tipo=3 AND a.categoria=1 AND a.id_usr = usr.id
 			) AS archivos
 		FROM
 			tbl_unidades_sociales_residentes AS usr
