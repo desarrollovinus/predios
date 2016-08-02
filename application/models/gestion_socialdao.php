@@ -189,7 +189,23 @@ class Gestion_socialDAO extends CI_Model
 			(IF(usp.nombre_arrendatario2 <> '', 1, 0)) +
 			(IF(usp.nombre_arrendatario3 <> '', 1, 0)) +
 			(IF(usp.nombre_arrendatario4 <> '', 1, 0)) +
-			(IF(usp.nombre_arrendatario5 <> '', 1, 0)) arrendatarios
+			(IF(usp.nombre_arrendatario5 <> '', 1, 0)) arrendatarios,
+			(
+				SELECT
+					COUNT(a.id)
+				FROM
+					tbl_archivos AS a
+				WHERE
+					a.ficha_predial = usp.ficha_predial AND a.tipo=4 AND a.categoria=2
+			) AS fotos,
+			(
+				SELECT
+					COUNT(a.id)
+				FROM
+					tbl_archivos AS a
+				WHERE
+					a.ficha_predial = usp.ficha_predial AND a.tipo=4 AND a.categoria=1
+			) AS archivos
 		FROM
 			tbl_unidades_sociales_productivas AS usp
 		LEFT JOIN tbl_valores_social AS v ON usp.relacion_inmueble = v.id";
@@ -210,7 +226,23 @@ class Gestion_socialDAO extends CI_Model
 			(IF(usr.nombre_integrante2 <> '', 1, 0)) +
 			(IF(usr.nombre_integrante3 <> '', 1, 0)) +
 			(IF(usr.nombre_integrante4 <> '', 1, 0)) +
-			(IF(usr.nombre_integrante5 <> '', 1, 0)) integrantes
+			(IF(usr.nombre_integrante5 <> '', 1, 0)) integrantes,
+			(
+				SELECT
+					COUNT(a.id)
+				FROM
+					tbl_archivos AS a
+				WHERE
+					a.ficha_predial = usr.ficha_predial AND a.tipo=3 AND a.categoria=2
+			) AS fotos,
+			(
+				SELECT
+					COUNT(a.id)
+				FROM
+					tbl_archivos AS a
+				WHERE
+					a.ficha_predial = usr.ficha_predial AND a.tipo=3 AND a.categoria=1
+			) AS archivos
 		FROM
 			tbl_unidades_sociales_residentes AS usr
 		LEFT JOIN tbl_valores_social AS v ON usr.relacion_inmueble = v.id";

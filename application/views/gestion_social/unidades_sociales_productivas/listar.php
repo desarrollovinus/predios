@@ -10,6 +10,8 @@
 			<th>Relación con inmueble</th>
 			<th>Titular</th>
 			<th>Arrendatarios</th>
+			<th>Fotos</th>
+			<th>Archivos</th>
 			<th width="15%">Opciones</th>
 		</tr>
 	</thead>
@@ -20,6 +22,8 @@
 				<td><?php echo $usp->relacion_inmueble; ?></td>
 				<td><?php echo $usp->titular; ?></td>
 				<td align="right"><?php echo $usp->arrendatarios; ?></td>
+				<td align="right"><?php echo $usp->fotos; ?></td>
+				<td align="right"><?php echo $usp->archivos; ?></td>
 				<td>
 					<a onclick="javascript:editar('<?php echo $usp->id; ?>', '<?php echo $usp->ficha_predial; ?>')" style="cursor: pointer">
 						<img src="<?php echo base_url(); ?>img/edit.png" title="Editar unidad social productiva">
