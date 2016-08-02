@@ -296,6 +296,22 @@ class PrediosDAO extends CI_Model
 				WHERE
 					usp.ficha_predial = p.ficha_predial
 			) AS usp,
+			(
+				SELECT
+					COUNT(a.id)
+				FROM
+					tbl_archivos AS a
+				WHERE
+					a.ficha_predial = p.ficha_predial AND a.tipo=2 AND a.categoria=2
+			) AS fotos,
+			(
+				SELECT
+					COUNT(a.id)
+				FROM
+					tbl_archivos AS a
+				WHERE
+					a.ficha_predial = p.ficha_predial AND a.tipo=2 AND a.categoria=1
+			) AS archivos,
 			CASE p.requerido
 		WHEN '1' THEN
 			'Si'

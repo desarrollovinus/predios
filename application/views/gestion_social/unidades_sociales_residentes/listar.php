@@ -10,6 +10,8 @@
 			<th>Relación con inmueble</th>
 			<th>Responsable</th>
 			<th>Integrantes</th>
+			<th>Fotos</th>
+			<th>Archivos</th>
 			<th width="15%">Opciones</th>
 		</tr>
 	</thead>
@@ -20,6 +22,8 @@
 				<td><?php echo $usr->relacion_inmueble; ?></td>
 				<td><?php echo $usr->responsable; ?></td>
 				<td align="right"><?php echo $usr->integrantes; ?></td>
+				<td align="right"><?php echo $usr->fotos; ?></td>
+				<td align="right"><?php echo $usr->archivos; ?></td>
 				<td>
 					<a onclick="javascript:editar('<?php echo $usr->id; ?>')" style="cursor: pointer">
 						<img src="<?php echo base_url(); ?>img/edit.png" title="Editar información">

@@ -8,6 +8,8 @@
 			<th>Primer propietario</th>
 			<th>Unidades residentes</th>
 			<th>Unidades productivas</th>
+			<th>Fotos</th>
+			<th>Archivos</th>
 			<th width="15%">Opciones</th>
 		</tr>
 		<tbody>
@@ -17,6 +19,8 @@
 					<td><?php echo $ficha->propietario; ?></td>
 					<td><?php echo $ficha->usr; ?></td>
 					<td><?php echo $ficha->usp; ?></td>
+					<td><?php echo $ficha->fotos; ?></td>
+					<td><?php echo $ficha->archivos; ?></td>
 					<td>
 						<a onclick="javascript:editar('<?php echo $ficha->id_predio; ?>', '<?php echo $ficha->ficha_predial; ?>')" style="cursor: pointer">
 							<img src="<?php echo base_url(); ?>img/edit.png" title="Editar información">
