@@ -457,7 +457,7 @@ class Informes_controller extends CI_Controller
 	function gestion_predial_fotos(){
 		$ficha = $this->uri->segment(3);
 		$this->load->model('accionesDAO');
-		$this->data['fotos'] = $this->accionesDAO->consultar_foto($ficha, 1);
+		$this->data['fotos'] = $this->accionesDAO->consultar_archivo($ficha, 1, 2);
 		$this->data['directorio'] = $this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos;
 		$this->load->view('informes/gestion_predial/formato_ani_fotos', $this->data);
 	}
