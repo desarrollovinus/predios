@@ -142,9 +142,9 @@
                 // Se arregan al arreglo JSON los datos a enviar
                 datos['fecha'] = $("input[name=fecha]").val();
                 datos['descripcion'] = $("input[name=descripcion]").val();
-                datos['ficha'] = "<?php echo $ficha; ?>";
-				datos['tipo'] = "<?php echo $tipo; ?>";
-				datos['id'] = "<?php echo $id; ?>";
+                datos['ficha'] = "<?= $ficha; ?>";
+				datos['tipo'] = "<?= $tipo; ?>";
+				datos['id'] = "<?= $id; ?>";
 				console.log(datos);
 				setTimeout(function () {
 					var datos = {ficha:"<?php echo $ficha ?>", tipo: "<?php echo $tipo ?>", aux: true, id: "<?php echo $id ?>"};
