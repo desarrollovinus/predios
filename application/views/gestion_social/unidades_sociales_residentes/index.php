@@ -41,6 +41,9 @@ $permisos = $this->session->userdata('permisos');
 		$("#tabla").load("<?php echo site_url('gestion_social_controller/cargar_unidades_sociales_residentes'); ?>");
 	} // listar
 
+	/**
+	 * Archivos unidad social residente
+	 */
 	function archivos_social(ficha, id) {
 		var datos = {ficha: ficha, tipo: 3, aux: true, id:id};
 		$.get("<?php echo site_url('archivos_controller/ver_archivos_social'); ?>", datos, function(vista){
