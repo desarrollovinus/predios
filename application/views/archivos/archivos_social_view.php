@@ -23,6 +23,7 @@
     <thead>
         <tr>
             <th>Nombre de archivo</th>
+			<th>Fecha</th>
 			<th width="20%">Formato</th>
             <th width="10%">Opciones</th>
         </tr>
@@ -31,13 +32,16 @@
         <?php foreach ($archivos as $archivo): ?>
             <tr>
                 <td><?= $archivo->descripcion ?></td>
+				<td><?= $archivo->fecha ?></td>
 				<td><?= substr($archivo->archivo, -3) ?></td>
                 <td align="right">
 					<?php echo anchor_popup(base_url().$directorio."/".$archivo->archivo, '<img border="0" title="Ver" src="'.base_url().'img/search.png">', "'DESCRIPCION','resizable=no,location=no,menubar=no, scrollbars=yes,status=no,toolbar=no,fullscreen=no,d ependent=no,width=800,height=564,left=100,top=100' ))");?>
 					<!-- Eliminar -->
-					<a href="#">
-						<img onCLick="javascript:eliminar_archivo('<?= $directorio.$archivo->archivo; ?>', '<?= $archivo->archivo; ?>')" alt="Eliminar foto" title="Eliminar foto" src="<?php echo base_url(); ?>img/delete.png" width="32px" align="right"><br>
-					</a>
+					<?php if (isset($permisos['Archivos y Fotos']['Eliminar'])): ?>
+						<a href="#">
+							<img onCLick="javascript:eliminar_archivo('<?= $directorio.$archivo->archivo; ?>', '<?= $archivo->archivo; ?>')" alt="Eliminar foto" title="Eliminar foto" src="<?php echo base_url(); ?>img/delete.png" width="32px" align="right"><br>
+						</a>
+					<?php endif; ?>
 				</td>
             </tr>
         <?php endforeach; ?>
