@@ -5,7 +5,7 @@ $permisos = $this->session->userdata('permisos');
 <div id="form">
 	<?php echo form_fieldset('<b>Unidades sociales productivas</b>'); ?>
 		<div id="tabla">
-			
+
 		</div>
 	<?php echo form_fieldset_close(); ?>
 </div>
@@ -13,7 +13,7 @@ $permisos = $this->session->userdata('permisos');
 <script type="text/javascript">
 	/**
 	 * Función de creación del registro
-	 * @return void 
+	 * @return void
 	 */
 	function crear()
 	{
@@ -23,7 +23,7 @@ $permisos = $this->session->userdata('permisos');
 
 	/**
 	 * Función que se activa al presionar el botón editar del menú
-	 * @return void 
+	 * @return void
 	 */
 	function editar(id, ficha_predial)
 	{
@@ -40,6 +40,16 @@ $permisos = $this->session->userdata('permisos');
 		$("#tabla").load("<?php echo site_url('gestion_social_controller/cargar_unidades_sociales_productivas'); ?>");
 	} // listar
 
+
+	/**
+	 * Archivos unidad social productiva
+	 */
+	function archivos_social(ficha, id) {
+		var datos = {ficha: ficha, tipo: 4, aux: true, id:id};
+		$.get("<?php echo site_url('archivos_controller/ver_archivos_social'); ?>", datos, function(vista){
+			$("#form").html(vista);
+		});
+	}
 
 	$(document).ready(function(){
 		// Por defecto, cargamos la interfaz de la tabla

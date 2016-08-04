@@ -13,7 +13,7 @@ class AccionesDAO extends CI_Model {
 		return $this->db->get('tbl_acciones')->result();
 	}
 
-    function consultar_foto($ficha, $tipo=null, $id=null){
+    function consultar_archivo($ficha, $tipo=null, $categoria=null , $id=null){
         $this->db->select("*");
 		if ($id) {
 			if ($tipo == 3) {
@@ -25,9 +25,10 @@ class AccionesDAO extends CI_Model {
 		//obtener todas las fotos de una ficha especifica
 		$this->db->where('ficha_predial', $ficha);
 		$this->db->where('tipo', $tipo);
-		$this->db->where('categoria', 2);
+		$this->db->where('categoria', $categoria);
 		$this->db->order_by('orden', 'ASC');
-		return $this->db->get('tbl_archivos')->result();    }
+		return $this->db->get('tbl_archivos')->result();
+    }
 
     function eliminar_foto($nombre)
     {
@@ -44,10 +45,25 @@ class AccionesDAO extends CI_Model {
         }
     }
 
-		function actualizar_foto($nombre, $data){
-			$this->db->where('archivo', $nombre);
-			$this->db->update('tbl_archivos', $data);
-		}
+	function actualizar_foto($nombre, $data){
+		$this->db->where('archivo', $nombre);
+		$this->db->update('tbl_archivos', $data);
+	}
+
+	function guardar_archivo_social($datos)
+    {
+        // Si se guarda correctamente
+        if($this->db->insert('tbl_archivos', $datos)){
+            return true;
+        }
+    }
+
+	function eliminar_archivo_social($nombre)
+	{
+		// Se borran todas las relaciones del predio
+		$this->db->where('archivo', $nombre);
+		return $this->db->delete('tbl_archivos');
+	}
 
 	/**
      * Script que procesa la foto y la redimensiona, logrando reducir su tamaño

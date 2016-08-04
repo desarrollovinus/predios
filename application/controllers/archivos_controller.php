@@ -11,7 +11,7 @@ ini_set('post_max_size','100M');
 ini_set('upload_max_filesize','100M');
 ini_set('max_execution_time','1000');
 ini_set('max_input_time','1000');
-
+error_reporting(-1);
 /**
  * Clase encargada de controlar las operaciones que se realizan sobre los archivos
  * @author Freddy Alexander Vivas Reyes
@@ -42,6 +42,7 @@ class Archivos_controller extends CI_Controller
 	/**
 	 * Metodo constructor del controlador
 	 */
+	 var $nombre_carpeta_archivos_social = "archivos_social/";
 	function __construct()
 	{
 		//se hereda el constructor del controlador padre
@@ -217,7 +218,7 @@ class Archivos_controller extends CI_Controller
 				break;
 		}
 		$this->data['tipo'] = $tipo;
-		$this->data['fotos'] = $this->accionesDAO->consultar_foto($ficha, $tipo, $id);
+		$this->data['fotos'] = $this->accionesDAO->consultar_archivo($ficha, $tipo, 2, $id);
 		$this->load->library('user_agent');
 		$this->data['es_ie'] = $this->agent->is_browser('Internet Explorer');
 		$this->data['directorio'] = $this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos;
@@ -441,6 +442,99 @@ class Archivos_controller extends CI_Controller
 		$this->data["estados_via"] = $this->PrediosDAO->obtener_estados_via_actuales();
 		$this->data["estados_proceso"] = $this->PrediosDAO->obtener_procesos_actuales();
 		$this->load->view('plantillas/tabla-convenciones', $this->data);
+	}
+
+	// ver archivos del area social
+	function ver_archivos_social() {
+		$this->load->model("accionesDAO");
+		$id = $this->input->get('id');
+		$ficha = $this->input->get('ficha');
+		$tipo = $this->input->get('tipo');
+		$aux = $this->input->get('aux');
+
+		$this->data['id'] = $id;
+		$this->data['ficha'] = $ficha;
+		$this->data['tipo'] = $tipo;
+		$this->data['archivos'] = $this->accionesDAO->consultar_archivo($ficha, $tipo, 1, $id);
+		$this->data['directorio'] = $this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_archivos_social;
+		$this->data['titulo_pagina'] = "Archivos - ficha predial $ficha";
+		$this->data['contenido_principal'] = 'archivos/archivos_social_view';
+		$this->load->view('archivos/vista_auxiliar', $this->data);
+	}
+
+	function subir_archivos_social() {
+		$this->load->model("accionesDAO");
+		$ficha = $this->input->post("ficha");
+
+		$permisos = $this->session->userdata('permisos');
+		if ( ! isset($permisos['Archivos y Fotos']['Subir']) ) {
+			$this->session->set_flashdata('error', 'Usted no cuenta con permisos para subir fotos.');
+			redirect('');
+		} // if
+
+		//si la ficha no existe
+		if(!$ficha)
+		{
+			redirect('actualizar_controller');
+		}
+		else
+		{
+			// si la carpeta con el nombre de la ficha no existe se crea
+			if( ! is_dir($this->ruta_archivos.$ficha) )
+			{
+				@mkdir($this->ruta_archivos.$ficha, 0777);
+			}
+
+			// si la carpeta archivos_social no existe se crea
+			if( ! is_dir($this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_archivos_social) )
+			{
+				@mkdir($this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_archivos_social, 0777);
+			}
+		}
+
+		//Se almacena la fecha
+        $fecha = date("Ymd-His");
+		$directorio = $this->ruta_archivos.str_replace(' ','_', $ficha).'/'.$this->nombre_carpeta_archivos_social;
+		$archivo = $_FILES['userfile']['tmp_name'];
+		$nombre = $fecha.'.'.$extension = end(explode(".", $_FILES['userfile']['name']));
+		// Si el fichero existe
+	    if (file_exists($directorio.$nombre)) {
+	        echo "existe";
+	    // Si se sube corectamente
+		} else if(move_uploaded_file($archivo, $directorio.'/'.$nombre)) {
+	    	// Se prepara el arreglo con el que se guarda los datos de la foto
+			// si el tipo es 3 se registra en el campo unidad social residente sino en la unidad social productiva
+			$id = ($this->input->post("tipo") == 3) ? "id_usr" : "id_usp";
+			$id_valor = ($this->input->post("id") == 0) ? NULL : $this->input->post("id");
+
+	    	$datos = array(
+				"archivo" => $nombre,
+				"categoria" => 1,
+	    		"descripcion" => $this->input->post("descripcion"),
+				"fecha" => $this->input->post("fecha"),
+	    		"ficha_predial" => $this->input->post("ficha"),
+				"tipo" => $this->input->post("tipo"),
+				$id => $id_valor
+			);
+
+			// Si se guarda el registro en base de datos correctamente
+			if ($this->accionesDAO->guardar_archivo_social($datos)) {
+				echo true;
+			}
+		}
+	}
+	// eliminar archivo area social
+	function eliminar_archivo_social(){
+		$this->load->model("accionesDAO");
+
+		// Se borra el archivo del servidor
+        if(unlink($this->input->post('archivo'))){
+        	// Se elimina el registro de la base de datos
+        	echo $this->accionesDAO->eliminar_foto($this->input->post('nombre'));
+
+			// Se retorna verdadero
+			// echo true;
+        } // if
 	}
 }
 /* End of file archivos_controller.php */
