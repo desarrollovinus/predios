@@ -13,31 +13,62 @@ class AccionesDAO extends CI_Model {
 		return $this->db->get('tbl_acciones')->result();
 	}
 
-    function consultar_foto($nombre){
+    function consultar_archivo($ficha, $tipo=null, $categoria=null , $id=null){
         $this->db->select("*");
-        $this->db->where("archivo", $nombre);
-        return $this->db->get('tbl_fotos')->row();
+		if ($id) {
+			if ($tipo == 3) {
+				$this->db->where('id_usr', $id);
+			} else if ($tipo == 4) {
+				$this->db->where('id_usp', $id);
+			}
+		}
+		//obtener todas las fotos de una ficha especifica
+		$this->db->where('ficha_predial', $ficha);
+		$this->db->where('tipo', $tipo);
+		$this->db->where('categoria', $categoria);
+		$this->db->order_by('orden', 'ASC');
+		return $this->db->get('tbl_archivos')->result();
     }
 
     function eliminar_foto($nombre)
     {
         // Se borran todas las relaciones del predio
         $this->db->where('archivo', $nombre);
-        return $this->db->delete('tbl_fotos');
+        return $this->db->delete('tbl_archivos');
     }
 
     function guardar_foto($datos)
     {
         // Si se guarda correctamente
-        if($this->db->insert('tbl_fotos', $datos)){
+        if($this->db->insert('tbl_archivos', $datos)){
             return true;
         }
     }
 
+	function actualizar_foto($nombre, $data){
+		$this->db->where('archivo', $nombre);
+		$this->db->update('tbl_archivos', $data);
+	}
+
+	function guardar_archivo_social($datos)
+    {
+        // Si se guarda correctamente
+        if($this->db->insert('tbl_archivos', $datos)){
+            return true;
+        }
+    }
+
+	function eliminar_archivo_social($nombre)
+	{
+		// Se borran todas las relaciones del predio
+		$this->db->where('archivo', $nombre);
+		return $this->db->delete('tbl_archivos');
+	}
+
 	/**
-     * Script que procesa la foto y la redimensiona, logrando reducir su tamaño 
+     * Script que procesa la foto y la redimensiona, logrando reducir su tamaño
      * hasta en un 98%
-     * 
+     *
      * @param  [string] $ruta [Ruta del archivo temporal que se va a subir]
      */
     function procesar_foto($ruta, $directorio, $nombre){
@@ -60,7 +91,7 @@ class AccionesDAO extends CI_Model {
 
         /**
          * Si el ancho y el alto de la imagen no superan los maximos,
-         * ancho final y alto final son los que tiene actualmente 
+         * ancho final y alto final son los que tiene actualmente
          */
         if( ($ancho <= $ancho_maximo) && ($alto <= $alto_maximo) ){
             //Si ancho
@@ -82,8 +113,8 @@ class AccionesDAO extends CI_Model {
             */
             $ancho_final = ceil($y_ratio * $ancho);
             $alto_final = $alto_maximo;
-        }//Fin if  
-        
+        }//Fin if
+
         /**
          * Si el ancho y el alto de la imagen no superan los maximos,
          * ancho final y alto final son los que tiene actualmente
@@ -110,7 +141,7 @@ class AccionesDAO extends CI_Model {
             */
             $ancho_final = ceil($y_ratio * $ancho);
             $alto_final = $alto_maximo;
-        }  
+        }
 
         //Creamos una imagen en blanco de tamaño $ancho_final  por $alto_final .
         $imagen_temporal = imagecreatetruecolor($ancho_final,$alto_final);
@@ -131,6 +162,32 @@ class AccionesDAO extends CI_Model {
             return false;
         }
     }//Fin procesar_foto
+
+	function consultar_coordenada($ficha) {
+		$this->db->select("*");
+		$this->db->where('ficha_predial', $ficha);
+		return $this->db->get('tbl_coordenadas')->row();
+	}
+
+	function consultar_coordenadas($ficha) {
+		$this->db->select("*");
+		$this->db->where('ficha_predial', $ficha);
+		$this->db->order_by('id', 'ASC');
+		return $this->db->get('tbl_coordenadas')->result();
+	}
+
+	function insertar_coordenadas($datos) {
+		if($this->db->insert_batch('tbl_coordenadas', $datos)){
+			return true;
+		}
+	}
+
+	function eliminar_coordenadas($ficha){
+        // Se borran todas las coordenadas del predio
+        $this->db->where('ficha_predial', $ficha);
+        return $this->db->delete('tbl_coordenadas');
+	}
+
 }
 /* End of file accionesdao.php */
 /* Location: ./site_predios/application/models/accionesdao.php */

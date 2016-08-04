@@ -7,7 +7,7 @@
 	echo form_label('Ficha predial:&nbsp;&nbsp;&nbsp;','ficha');
 	echo form_input('ficha', $predio->ficha_predial, 'readonly');
 
-	// Arreglo 
+	// Arreglo
 	$valores_f = array();
 
 	// se recorren los valores de checks
@@ -49,6 +49,8 @@
 							<?php if(in_array($valor1->id, $valores_f)) {$check = "checked";} else {$check = "";} ?>
 							<td><input type="checkbox" value="<?php echo $valor1->id; ?>" id="<?php echo $valor1->id; ?>" name="valor[]" <?php echo $check; ?> /><label for="<?php echo $valor1->id; ?>"><?php echo $valor1->nombre; ?></label></td>
 						<?php } ?>
+
+						<td><input type="text" name="otros_usos" placeholder="Otros" value="<?php echo $ficha_social->otros_usos; ?>" /></td>
 					</tr>
 				</tbody>
 			</table>
@@ -79,13 +81,13 @@
 					<tr>
 						<td><label class="form-label" for="distribucion_alcobas" style="width: 10%;">Alcobas</label></td>
 						<td><input type="text" class="form-control" id="distribucion_alcobas" value="<?php if(isset($ficha_social->distribucion_alcobas)){echo $ficha_social->distribucion_alcobas;} ?>" style="width: 15%;"></td>
-						
+
 						<td><label class="form-label" for="distribucion_bano" style="width: 10%;">Baños</label></td>
 						<td><input type="text" class="form-control" id="distribucion_bano" value="<?php if(isset($ficha_social->distribucion_bano)){echo $ficha_social->distribucion_bano;} ?>" style="width: 15%;"></td>
 
 						<td><label class="form-label" for="distribucion_cocinas" style="width: 10%;">Cocinas</label></td>
 						<td><input type="text" class="form-control" id="distribucion_cocinas" style="width: 15%;" value="<?php if(isset($ficha_social->distribucion_cocinas)){echo $ficha_social->distribucion_cocinas;} ?>" style="width: 25%;"></td>
-						
+
 						<td><label class="form-label" for="distribucion_comedor" style="width: 10%;">Comedor</label></td>
 						<td><input type="text" class="form-control" id="distribucion_comedor" value="<?php if(isset($ficha_social->distribucion_comedor)){echo $ficha_social->distribucion_comedor;} ?>" style="width: 15%;"></td>
 
@@ -94,7 +96,7 @@
 					</tr>
 				</tbody>
 			</table>
-			
+
 			<table style="text-align:'left'" width="100%">
 				<tbody>
 					<tr>
@@ -154,23 +156,17 @@
 		<!-- seccion 2 -->
 		<h3><a href="#seccion2">DIAGN&Oacute;STICO SOCIOECON&Oacute;MICO</a></h3>
 		<div>
-			
+
 
 
 		</div>
 
 		<!-- seccion 3 -->
-		<h3><a href="#seccion3">REGISTRO FOTOGR&Aacute;FICO</a></h3>
-		<div>
-
-
-
-		</div>
 	</div>
 	<br /><input type="hidden" id="errores" />
 	<div class="clear">&nbsp;</div>
 	<input type="hidden" id="boton_hidden" name="boton_hidden" value="" />
-	<?php 		
+	<?php
 		$guardar = array(
 			'type' => 'button',
 			'name' => 'guardar',
@@ -178,7 +174,7 @@
 			'value' => 'Guardar y volver'
 		);
 		echo form_input($guardar);
-		
+
 		// $continuar = array(
 		// 	'type' => 'button',
 		// 	'name' => 'continuar',
@@ -186,7 +182,7 @@
 		// 	'value' => 'Guardar y continuar'
 		// );
 		// echo form_input($continuar);
-		
+
 		$salir = array(
 			'type' => 'button',
 			'name' => 'salir',
@@ -219,7 +215,7 @@
 
 		$('#form input[name^=fecha]').datepicker();
 
-		//esta sentencia es para darle el estilo a los botones jquery.ui 
+		//esta sentencia es para darle el estilo a los botones jquery.ui
 	    $( "#form input[type=submit], #form input[type=button]").button();
 
 	    //este script genera el evento clic del boton Guardar y Salir
@@ -235,6 +231,7 @@
         	var restablecer_uso_area_no_requerida = $("select[name=restablecer_uso_area_no_requerida]");
         	var existe_vivienda = $("select[name=existe_vivienda]");
         	var vivienda_habitada = $("select[name=vivienda_habitada]");
+        	var otros_usos = $("input[name=otros_usos]");
         	var requerida_proyecto = $("select[name=requerida_proyecto]");
         	var distribucion_alcobas = $("input[id=distribucion_alcobas]");
         	var distribucion_cocinas = $("input[id=distribucion_cocinas]");
@@ -263,6 +260,7 @@
         		"distribucion_sala": distribucion_sala.val(),
         		"edificaciones_unidades_productivas": edificaciones_unidades_productivas.val(),
         		"edificaciones_unidades_productivas_descripcion": edificaciones_unidades_productivas_descripcion.val(),
+        		"otros_usos": otros_usos.val(),
         		"observaciones": observaciones.val()
         	}
         	// console.log(ficha.val());
@@ -287,7 +285,7 @@
 		            existe = respuesta;
 		        }//Error
 		    });//Ajax
-		    		
+
     		// Si existe
     		if (existe == "1") {
     			// url para modificar

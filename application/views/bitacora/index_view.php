@@ -57,8 +57,12 @@
 				<td><?php echo form_input('fecha'); ?></td>
 				<td><?php echo form_label('Titulo', 'titulo'); ?></td>
 				<td><?php echo form_input('titulo'); ?></td>
+			</tr>
+			<tr>
 				<td><?php echo form_label('Remitente', 'remitente'); ?></td>
 				<td><?php echo form_input('remitente'); ?></td>
+				<td><?php echo form_label('Radicado', 'radicado'); ?></td>
+				<td><?php echo form_input('radicado'); ?></td>
 			</tr>
 			<tr>
 				<td colspan="6"><?php echo form_label('Observaci&oacute;n'); ?></td>
@@ -78,8 +82,12 @@
 				<td><?php echo form_input('fecha_editar'); ?></td>
 				<td><?php echo form_label('Titulo', 'titulo_editar'); ?></td>
 				<td><?php echo form_input('titulo_editar'); ?></td>
+			</tr>
+			<tr>
 				<td><?php echo form_label('Remitente', 'remitente_editar'); ?></td>
 				<td><?php echo form_input('remitente_editar'); ?></td>
+				<td><?php echo form_label('Radicado', 'radicado_editar'); ?></td>
+				<td><?php echo form_input('radicado_editar'); ?></td>
 			</tr>
 			<tr>
 				<td colspan="6"><?php echo form_label('Observaci&oacute;n'); ?></td>
@@ -185,6 +193,7 @@
 					$('span.error').remove();
 					var fecha = $.trim($('#dialog-form-editar input[name=fecha_editar]').val());
 					var remitente = $.trim($('#dialog-form-editar input[name=remitente_editar]').val());
+					var radicado = $.trim($('#dialog-form-editar input[name=radicado_editar]').val());
 					var titulo = $.trim($('#dialog-form-editar input[name=titulo_editar]').val());
 					var observacion = $.trim($('#dialog-form-editar textarea[name=observacion_editar]').val());
 					var id_bitacora = $.trim($('#dialog-form-editar input[name=id_bitacora]').val());
@@ -216,7 +225,7 @@
 					
 					if( ! error )
 					{
-						$.post('<?php echo site_url('bitacora_controller/editar_anotacion'); ?>', { id_bitacora:id_bitacora, fecha:fecha, remitente:remitente, titulo:titulo, observacion:observacion, <?php echo $this->security->get_csrf_token_name(); ?>:"<?php echo $this->security->get_csrf_hash(); ?>" },
+						$.post('<?php echo site_url('bitacora_controller/editar_anotacion'); ?>', { id_bitacora:id_bitacora, fecha:fecha, radicado: radicado, remitente:remitente, titulo:titulo, observacion:observacion, <?php echo $this->security->get_csrf_token_name(); ?>:"<?php echo $this->security->get_csrf_hash(); ?>" },
 							function(json)
 							{
 								if(json.mensaje == 'correcto')
@@ -435,6 +444,7 @@
 					case 1:{ $('#dialog-form-editar input[name=remitente_editar]').val($(this).text()); }break;
 					case 2:{ $('#dialog-form-editar input[name=titulo_editar]').val($(this).text()); }break;
 					case 3:{ $('#dialog-form-editar textarea[name=observacion_editar]').val($(this).text()); }break;
+					case 4:{ $('#dialog-form-editar input[name=radicado_editar]').val($(this).text()); }break;
 				}
 			});
 

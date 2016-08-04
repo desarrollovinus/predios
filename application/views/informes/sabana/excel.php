@@ -1,7 +1,7 @@
 <?php
 // Modificación del límite en memoria para que permita generar el reporte
 ini_set('memory_limit', '-1');
-error_reporting(-1);
+// error_reporting(-1);
 
 //Se crea un nuevo objeto PHPExcel
 $objPHPExcel = new PHPExcel();
@@ -594,15 +594,15 @@ foreach ($predios as $predio) {
 	$objPHPExcel->getActiveSheet()->setCellValue("P$fila", "PR $kms_final + $ms_final");
 	$objPHPExcel->getActiveSheet()->setCellValue("Q$fila", $predio->margen_final);
 	$objPHPExcel->getActiveSheet()->setCellValue("R$fila", $longitud_efectiva);
-	$objPHPExcel->getActiveSheet()->setCellValue("S$fila", "{Crear}");
+	$objPHPExcel->getActiveSheet()->setCellValue("S$fila", "");
 	$objPHPExcel->getActiveSheet()->getStyle("T$fila")->getFill()->applyFromArray($disponibilidad_izquierda);
 	$objPHPExcel->getActiveSheet()->getStyle("X$fila")->getFill()->applyFromArray($disponibilidad_derecha);
 	$objPHPExcel->getActiveSheet()->setCellValue("Z$fila", $predio->meta_contractual);
-	$objPHPExcel->getActiveSheet()->setCellValue("AA$fila", "{Crear}");
-	$objPHPExcel->getActiveSheet()->setCellValue("AB$fila", $predio->area_total);
+	$objPHPExcel->getActiveSheet()->setCellValue("AA$fila", "");
+	$objPHPExcel->getActiveSheet()->setCellValue("AB$fila", $predio->area_total_catastral);
 	$objPHPExcel->getActiveSheet()->setCellValue("AC$fila", $predio->area_requerida);
 	$objPHPExcel->getActiveSheet()->setCellValue("AD$fila", $predio->area_residual);
-	$objPHPExcel->getActiveSheet()->setCellValue("AE$fila", "{Verificar}");
+	$objPHPExcel->getActiveSheet()->setCellValue("AE$fila", "");
 	$objPHPExcel->getActiveSheet()->setCellValue("AF$fila", $predio->area_construida);
 	$objPHPExcel->getActiveSheet()->setCellValue("AG$fila", $predio->area_cons_requerida);
 	$objPHPExcel->getActiveSheet()->setCellValue("AH$fila", $predio->matricula);

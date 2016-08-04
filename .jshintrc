@@ -1,0 +1,17 @@
+
+{
+	"esversion": 6,
+  "curly": true,
+  "eqeqeq": true,
+  "undef": true,
+	"node": true,
+  "globals": {
+    "jQuery": true,
+		"$": false,
+		"console": false,
+		"window" : true,
+		"document": true,
+		"Image": true,
+		"alert": true
+  }
+}

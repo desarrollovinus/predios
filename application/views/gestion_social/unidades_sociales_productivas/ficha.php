@@ -1,11 +1,11 @@
 <ul id="navigation">
-	<?php 
+	<?php
 	// if(isset($permisos['Bit&aacute;cora']['Consultar'])) { ?><li><a onclick="javascript:generar_unidad_social_productiva()" style="cursor: pointer;" title="Formato 13"><img src="<?php echo base_url('img/excel.png'); ?>"></a></li><?php // } ?>
 </ul>
 
 <div>
 	<?php
-	// Arreglo 
+	// Arreglo
 	$valores_f = array();
 
 	// se recorren los valores de checks
@@ -16,14 +16,14 @@
 	// Si trae id
 	if ($id != "0") {
 		echo form_label('Ficha predial:&nbsp;&nbsp;&nbsp;','ficha');
-		echo form_input('ficha', $usp->ficha_predial, 'readonly');	
+		echo form_input('ficha', $usp->ficha_predial, 'readonly');
 	} else {
 		?>
 		<!-- Unidad funcional -->
 		<label for="unidad_funcional">Unidad funcional</label>
 		<select id="unidad_funcional" class="form-control">
             <option value="0"></option>
-            
+
             <!-- Se recorren las unidades funcionales -->
             <?php foreach ($this->PrediosDAO->obtener_unidades_funcionales() as $unidad) { ?>
                 <option value="<?php echo $unidad->Nombre; ?>"><?php echo $unidad->Nombre; ?></option>
@@ -106,7 +106,7 @@
 						<?php
 						// Contador
 						$cont = 1;
-						
+
 						// Recorrido de los valores
 						foreach ($this->Gestion_socialDAO->cargar_valores_ficha(10) as $valor10) {
 							?>
@@ -202,7 +202,7 @@
 		<!-- seccion 3 -->
 		<h3><a href="#seccion3">DOCUMENTOS ADJUNTOS</a></h3>
 		<div>
-			
+
 		</div>
 	</div>
 
@@ -210,7 +210,7 @@
 	<div class="clear">&nbsp;</div>
 	<input type="hidden" id="boton_hidden" name="boton_hidden" value="" />
 
-	<?php 		
+	<?php
 		$guardar = array(
 			'type' => 'button',
 			'name' => 'guardar',
@@ -240,7 +240,7 @@
         	// console.log(datos);
 
         	// Se alimentan los campos si tienen información
-			for (i = 1; i <= 5; i++) { 
+			for (i = 1; i <= 5; i++) {
         		$("input[name='nombre_arrendatario" + i + "']").val(datos["nombre_arrendatario" + i]);
         		$("input[name='objeto_contrato" + i + "']").val(datos["objeto_contrato" + i]);
         		$("input[name='fecha_suscripcion" + i + "']").val(datos["fecha_suscripcion" + i]);
@@ -274,7 +274,7 @@
             }
         );
 
-        //esta sentencia es para darle el estilo a los botones jquery.ui 
+        //esta sentencia es para darle el estilo a los botones jquery.ui
 	    $( "#form input[type=submit], #form input[type=button]").button();
 
 	    // Cuando se elija una unidad funcional
@@ -293,7 +293,7 @@
 			            // console.log(respuesta)
 			        }//Success
 			    });//Ajax
-			    
+
 			    // Se resetea el select
 			    $("#numero_ficha").html("");
 
@@ -370,7 +370,7 @@
     		if (id > 0) {
     			// Agregar datos
     			datos["ficha_predial"] = ficha.val();
-    			
+
     			// url para modificar
     			url = "<?php echo site_url('gestion_social_controller/actualizar_usp'); ?>";
     		} else {

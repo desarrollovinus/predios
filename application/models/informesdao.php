@@ -5,7 +5,7 @@ class InformesDAO extends CI_Model
 	{
 		$query = "SELECT tbl_predio.ficha_predial AS 'PREDIO', tbl_actas.pg_ficha AS 'FICHA APROBADA', tbl_actas.pg_ef AS 'ENTREGA FISICA', tbl_actas.pg_comp AS 'COMPRAVENTA', tbl_actas.pg_reg 'REGISTRO', (SELECT tbl_propietario.nombre FROM tbl_propietario, tbl_relacion WHERE tbl_relacion.id_propietario=tbl_propietario.id_propietario AND tbl_relacion.ficha_predial=PREDIO LIMIT 1) AS 'PROPIETARIO'";
 		$query .= "FROM { OJ tbl_predio LEFT OUTER JOIN tbl_actas ON tbl_predio.id_predio=tbl_actas.id_predio } ";
-		$query .= "ORDER BY tbl_predio.ficha_predial"; 
+		$query .= "ORDER BY tbl_predio.ficha_predial";
 		$resultado = $this->db->query($query);
 
 		#accion de auditoria
@@ -19,10 +19,10 @@ class InformesDAO extends CI_Model
 
 		return $resultado;
 	}
-	
+
 	function obtener_informe_predios() {
 		$query = 	"SELECT tbl_predio.ficha_predial AS PREDIO, tbl_identificacion.total_avaluo AS  VALOR_TOTAL, (
-								SELECT SUM( tbl_pagos.valor ) 
+								SELECT SUM( tbl_pagos.valor )
 								FROM tbl_pagos
 								WHERE tbl_pagos.ficha_predial = PREDIO
 							) AS  TOTAL_PAGADO
@@ -49,7 +49,7 @@ class InformesDAO extends CI_Model
 			$condicion = "WHERE tbl_predio.requerido = {$requerido}";
 		}
 
-		$sql = 
+		$sql =
 		"SELECT
 		tbl_predio.ficha_predial AS ficha,
 		tbl_identificacion.no_catastral AS numero_catastral,
@@ -74,7 +74,7 @@ class InformesDAO extends CI_Model
 
 		return $this->db->query($sql)->result();
 	}
-	
+
 	function obtener_avaluos_vencidos() {
 		$contratistas = $this->db->get('tbl_contratistas')->result();
 		$array_contratistas = array();
@@ -82,22 +82,22 @@ class InformesDAO extends CI_Model
 		foreach ($contratistas as $contratista):
 			$array_contratistas[$contratista->id_cont] = $contratista->nombre;
 		endforeach;
-		
-		
-		
+
+
+
 		$this->db->from('tbl_predio');
 		$this->db->join('tbl_identificacion', 'tbl_identificacion.ficha_predial=tbl_predio.ficha_predial');
 		$predios = $this->db->get()->result();
 		$resultado = array();
 		foreach ($predios as $predio):
 			$fecha_recibo = $predio->f_recibo_av;
-			
+
 			$fecha_expiracion = explode("-", $fecha_recibo);
 			$fecha_expiracion[0]++;
 			$fecha_expiracion = strtotime(implode("-", $fecha_expiracion));
-			
+
 			$array = array();
-			
+
 			$hoy = strtotime(date("Y-m-d", time()));
 			$diferencia = (int)(($fecha_expiracion - $hoy) / 86400);
 			if($diferencia <= 0) {
@@ -113,7 +113,7 @@ class InformesDAO extends CI_Model
 				$array['fecha_avaluo'] = $predio->f_recibo_av;
 				$array['fecha_expiracion'] = date("Y-m-d", $fecha_expiracion);
 				$array['dias_expirado'] = - $diferencia;
-				$array['estado'] = $predio->estado_pro; 
+				$array['estado'] = $predio->estado_pro;
 				array_push($resultado, $array);
 			}
 		endforeach;
@@ -129,29 +129,29 @@ class InformesDAO extends CI_Model
 
 		return $resultado;
 	}
-	
-	function obtener_avaluos_en_vencimiento() {		
+
+	function obtener_avaluos_en_vencimiento() {
 		$contratistas = $this->db->get('tbl_contratistas')->result();
 		$array_contratistas = array();
 		$array_contratistas[0] = '';
 		foreach ($contratistas as $contratista):
 			$array_contratistas[$contratista->id_cont] = $contratista->nombre;
 		endforeach;
-		
-		
+
+
 		$this->db->from('tbl_predio');
 		$this->db->join('tbl_identificacion', 'tbl_identificacion.ficha_predial=tbl_predio.ficha_predial');
 		$predios = $this->db->get()->result();
 		$resultado = array();
 		foreach ($predios as $predio):
 			$fecha_recibo = $predio->f_recibo_av;
-			
+
 			$fecha_expiracion = explode("-", $fecha_recibo);
 			$fecha_expiracion[0]++;
 			$fecha_expiracion = strtotime(implode("-", $fecha_expiracion));
-			
+
 			$array = array();
-			
+
 			$hoy = strtotime(date("Y-m-d", time()));
 			$diferencia = (int)(($fecha_expiracion - $hoy) / 86400);
 			if($diferencia <= 30 && $diferencia > 0) {
@@ -159,7 +159,7 @@ class InformesDAO extends CI_Model
 				$array['contratista'] = $array_contratistas[(int)$predio->enc_gestion];
 				$array['fecha_expiracion'] = date("Y-m-d", $fecha_expiracion);
 				$array['dias_expirado'] = $diferencia;
-				$array['estado'] = $predio->estado_pro; 
+				$array['estado'] = $predio->estado_pro;
 				array_push($resultado, $array);
 			}
 		endforeach;
@@ -175,7 +175,7 @@ class InformesDAO extends CI_Model
 
 		return $resultado;
 	}
-	
+
 	function obtener_informes()
 	{
 		#accion de auditoria
@@ -191,7 +191,7 @@ class InformesDAO extends CI_Model
 	}
 
 	function obtener_informe_gestion_predial() {
-		$query = "select * from informe_gestion_predial"; 
+		$query = "select * from informe_gestion_predial";
 		return $this->db->query($query)->result();
 	}
 
@@ -206,7 +206,7 @@ class InformesDAO extends CI_Model
 		$query =
 		"SELECT
 			tbl_predio.ficha_predial,
-			d.numero,
+			SUBSTRING(tbl_predio.ficha_predial, 5, 10) AS numero,
 			d.tramo,
 			d.abscisa_inicial,
 			d.abscisa_final,
@@ -317,11 +317,15 @@ class InformesDAO extends CI_Model
 			tbl_funcion.nombre AS funcion_predio,
 			tbl_estado_via.nombre AS estado_via,
 			i.estado_predio,
+			i.estado_pro,
 			d.area_requerida,
 			d.area_cons_requerida,
 			d.area_construida,
 			d.area_total,
-			d.area_residual
+			d.area_total_catastral,
+			d.area_residual,
+			tbl_estado_via.color_kml AS color_via,
+			tbl_estados_proceso.color_kml AS color_proceso
 		FROM
 			tbl_predio
 		INNER JOIN tbl_descripcion AS d ON tbl_predio.ficha_predial = d.ficha_predial
@@ -329,6 +333,7 @@ class InformesDAO extends CI_Model
 		INNER JOIN tbl_predio_req AS pr ON pr.ficha_predial = tbl_predio.ficha_predial
 		LEFT JOIN tbl_estados_semaforo AS tbl_funcion ON i.id_funcion_predio = tbl_funcion.id
 		LEFT JOIN tbl_estados_semaforo AS tbl_estado_via ON tbl_estado_via.id = i.id_estado_via
+		LEFT JOIN tbl_estados_proceso ON tbl_estados_proceso.estado = i.estado_pro
 		{$condicion}
 		ORDER BY
 			tbl_predio.ficha_predial ASC";
@@ -345,7 +350,7 @@ class InformesDAO extends CI_Model
         if($fecha == '0000-00-00' || $fecha == '1969-12-31 19:00:00' || !$fecha){
             return false;
         }
-        
+
         $dia_num = date("j", strtotime($fecha));
         $dia = date("N", strtotime($fecha));
         $mes = date("m", strtotime($fecha));
@@ -372,14 +377,14 @@ class InformesDAO extends CI_Model
         if($mes == "9"){ $mes_es = "septiembre"; }
         if($mes == "10"){ $mes_es = "octubre"; }
         if($mes == "11"){ $mes_es = "noviembre"; }
-        if($mes == "12"){ $mes_es = "diciembre"; } 
+        if($mes == "12"){ $mes_es = "diciembre"; }
 
         //a&ntilde;o
         //$anio_es = $anio_es;
 
         //Se foramtea la fecha
         $fecha = /*$dia_es." ".*/$dia_num." de ".$mes_es." de ".$anio_es;
-        
+
         return $fecha;
     }//Fin formato_fecha()
 }

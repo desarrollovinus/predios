@@ -20,6 +20,7 @@
 						<!-- <th>Fecha de creaci&oacute;n</th> -->
 						<th>Ficha predial</th>
 						<th>Primer propietario</th>
+						<th>¿Requerido?</th>
 						<th>Opciones</th>
 					</tr>
 				</thead>
@@ -28,6 +29,7 @@
 						<tr>
 							<td><?php echo $ficha->ficha_predial; ?></td>
 							<td><?php echo $ficha->propietario; ?></td>
+							<td><?php echo $ficha->requerido; ?></td>
 							<td width="550px">
 								<?php echo anchor(site_url("consultas_controller/ficha/$ficha->id_predio"), '<img border="0" title="Consultar" src="'.base_url().'img/search.png">');?>
 								<?php if (isset($permisos['Fichas']['Actualizar'])) { ?><?php echo anchor("actualizar_controller/ficha/$ficha->id_predio", '<img src="'.base_url().'img/edit.png"', 'title="Actualizar"'); ?><?php } ?>
@@ -35,7 +37,7 @@
 								<?php
 									if (isset($permisos['Archivos y Fotos']['Consultar'])) {
 										echo anchor("archivos_controller/ver_archivos/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/archivos.png"', 'title="Subir archivos"');
-										echo anchor("archivos_controller/ver_fotos/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"');
+										echo anchor("archivos_controller/ver_fotos?ficha=".$ficha->ficha_predial."&tipo=1", '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"');
 									}
 								?>
 								<?php if (isset($permisos['Fichas']['Imprimir estudio de t&iacute;tulos'])) { ?><?php echo anchor("informes_controller/estudio_titulos/".$ficha->id_predio, '<img src="'.base_url().'img/doc.png"', 'title="Estudio de T&iacute;tulos"'); ?><?php } ?>
@@ -45,13 +47,10 @@
 								<?php echo anchor("informes_controller/gestion_predial_fotos/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/pdf.png"', 'title="Generar registro fotográfico"'); ?>
 
 								<?php
-								if (file_exists('./files/mapas/'.$ficha->ficha_predial.'.kml')) {
-									echo '
-									<a href="'.base_url().'files/mapas/'.$ficha->ficha_predial.'.kml" tittle="ver mapa">
-									<img src="'.base_url().'img/kml.png">
-									</a>';
-								}
-								 ?>
+									if ($this->AccionesDAO->consultar_coordenada($ficha->ficha_predial) != null) {
+										echo anchor("archivos_controller/generar_kml/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/kml.png"', 'title="Generar KML"');
+									}
+								?>
 							</td>
 						</tr>
 					<?php endforeach; ?>

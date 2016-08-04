@@ -7,20 +7,20 @@
 	// Si trae id
 	if ($id != "0") {
 		echo form_label('Ficha predial:&nbsp;&nbsp;&nbsp;','ficha');
-		echo form_input('ficha', $usr->ficha_predial, 'readonly');	
+		echo form_input('ficha', $usr->ficha_predial, 'readonly');
 	} else {
 		?>
 		<!-- Unidad funcional -->
 		<label for="unidad_funcional">Unidad funcional</label>
 		<select id="unidad_funcional" class="form-control">
             <option value="0"></option>
-            
+
             <!-- Se recorren las marcas -->
             <?php foreach ($this->PrediosDAO->obtener_unidades_funcionales() as $unidad) { ?>
                 <option value="<?php echo $unidad->Nombre; ?>"><?php echo $unidad->Nombre; ?></option>
             <?php } ?>
         </select>
-		
+
 		<!-- Número de ficha -->
 		<label for="unidad_funcional">Ficha</label>
 		<select id="numero_ficha">
@@ -46,12 +46,13 @@
 				foreach($this->Gestion_socialDAO->cargar_valores_ficha(9) as $ocupacion):
 					$_ocupacion[$ocupacion->id] = $ocupacion->nombre;
 				endforeach;
-				?>	
+				?>
 
 				<tbody>
 					<tr>
+
 						<td width="50%"><?php echo form_label('Relaci&oacute;n con el inmueble','relacion_inmueble'); ?></td>
-						<td width="10%"><?php echo form_dropdown('relacion_inmueble', $_relacion, utf8_decode($usr->relacion_inmueble)); ?></td>
+						<td width="10%"><?php echo form_dropdown('relacion_inmueble', $_relacion, utf8_decode($usr->id_relacion_inmueble)); ?></td>
 						<td width="30%"><?php echo form_label('Responsable','responsable'); ?></td>
 						<td width="10%"><?php echo form_input('responsable', utf8_decode($usr->responsable)); ?></td>
 					</tr>
@@ -63,7 +64,7 @@
 					</tr>
 					<tr>
 						<td width="30%"><?php echo form_label('Ocupaci&oacute;n','ocupacion'); ?></td>
-						<td width="20%"><?php echo form_dropdown('ocupacion', $_ocupacion, utf8_decode($usr->ocupacion)); ?></td>
+						<td width="20%"><?php echo form_dropdown('ocupacion', $_ocupacion, utf8_decode($usr->id_ocupacion)); ?></td>
 						<td width="30%"><?php echo form_label('Otras actividades','otras_actividades'); ?></td>
 						<td width="10%"><?php echo form_input('otras_actividades', utf8_decode($usr->otras_actividades)); ?></td>
 					</tr>
@@ -158,7 +159,7 @@
 				</tbody>
 			</table>
 			<?php echo form_fieldset_close(); ?>
-			
+
 			<!-- Integrantes que gozan con estos servicios contratados -->
 			<?php echo form_fieldset('<b>Integrantes que gozan con estos servicios contratados</b>'); ?>
 			<table style="text-align:'left'" width="100%">
@@ -201,18 +202,13 @@
 			</table>
 		</div>
 
-		<!-- seccion 4 -->
-		<h3><a href="#seccion4">DOCUMENTOS ADJUNTOS</a></h3>
-		<div>
-			
-		</div>
 	</div>
 
 	<br /><input type="hidden" id="errores" />
 	<div class="clear">&nbsp;</div>
 	<input type="hidden" id="boton_hidden" name="boton_hidden" value="" />
 
-	<?php 		
+	<?php
 		$guardar = array(
 			'type' => 'button',
 			'name' => 'guardar',
@@ -239,14 +235,14 @@
 		           return datos = respuesta;
 		        }//Success
 		    });//Ajax
+        	// console.log(datos);
 
-        	console.log(datos);
 			// Se alimentan los campos si tienen información
-			for (i = 1; i <= 5; i++) { 
+			for (i = 1; i <= 5; i++) {
         		$("input[name='nombre_integrante" + i + "']").val(datos["nombre_integrante" + i]);
-        		$("select[name='relacion_integrante" + i + "']").val(datos["relacion_integrante" + i]);
+        		$("select[name='relacion_integrante" + i + "']").val(datos["id_relacion_integrante" + i]);
         		$("input[name='edad_integrante" + i + "']").val(datos["edad_integrante" + i]);
-        		$("select[name='ocupacion_integrante" + i + "']").val(datos["ocupacion_integrante" + i]);
+        		$("select[name='ocupacion_integrante" + i + "']").val(datos["id_ocupacion_integrante" + i]);
         		$("input[name='ingresos_integrante" + i + "']").val(datos["ingresos_integrante" + i]);
         		$("input[name='verificacion_integrante" + i + "']").val(datos["verificacion_integrante" + i]);
 			} // for
@@ -273,7 +269,7 @@
             }
         );
 
-        //esta sentencia es para darle el estilo a los botones jquery.ui 
+        //esta sentencia es para darle el estilo a los botones jquery.ui
 	    $( "#form input[type=submit], #form input[type=button]").button();
 
 	    // Cuando se elija una unidad funcional
@@ -295,7 +291,7 @@
 
 			    // Se resetea el select
 			    $("#numero_ficha").html("");
-			    
+
 			    // Se recorren las fichas
 			    $.each(fichas, function(key, val){
 	                //Se agrega cada entidad al select
@@ -366,7 +362,7 @@
         	}
 
         	// Recorrido de los integrantes
-        	for (i = 1; i <= 5; i++) { 
+        	for (i = 1; i <= 5; i++) {
         		datos['nombre_integrante' + i]  = $("input[name=nombre_integrante" + i + "]").val();
         		datos['relacion_integrante' + i]  = $("select[name=relacion_integrante" + i + "]").val();
         		datos['edad_integrante' + i]  = $("input[name=edad_integrante" + i + "]").val();
@@ -379,7 +375,7 @@
     		if (id > 0) {
     			// Agregar datos
     			datos["ficha_predial"] = ficha.val();
-    			
+
     			// url para modificar
     			url = "<?php echo site_url('gestion_social_controller/actualizar_usr'); ?>";
     		} else {

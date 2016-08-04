@@ -10,7 +10,9 @@
 			<th>Relación con inmueble</th>
 			<th>Responsable</th>
 			<th>Integrantes</th>
-			<th>Opciones</th>
+			<th>Fotos</th>
+			<th>Archivos</th>
+			<th width="20%">Opciones</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -20,9 +22,16 @@
 				<td><?php echo $usr->relacion_inmueble; ?></td>
 				<td><?php echo $usr->responsable; ?></td>
 				<td align="right"><?php echo $usr->integrantes; ?></td>
+				<td align="right"><?php echo $usr->fotos; ?></td>
+				<td align="right"><?php echo $usr->archivos; ?></td>
 				<td>
 					<a onclick="javascript:editar('<?php echo $usr->id; ?>')" style="cursor: pointer">
 						<img src="<?php echo base_url(); ?>img/edit.png" title="Editar información">
+					</a>
+					<?php echo anchor("informes_controller/ficha_social_usr/". $usr->id, '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización general unidades residentes"'); ?>
+					<?php echo anchor("archivos_controller/ver_fotos?ficha=".$usr->ficha_predial."&tipo=3&id=".$usr->id, '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"'); ?>
+					<a onclick="javascript:archivos_social('<?= $usr->ficha_predial; ?>', '<?= $usr->id ?>')" style="cursor: pointer">
+						<img src="<?= base_url(); ?>img/archivos.png" title="Subir archivos">
 					</a>
 				</td>
 			</tr>
@@ -39,7 +48,7 @@
 			"sPaginationType": "full_numbers"
 		});
 
-		//esta sentencia es para darle el estilo a los botones jquery.ui 
+		//esta sentencia es para darle el estilo a los botones jquery.ui
 	    $( "#form input[type=submit], #form input[type=button]").button();
 	});
 </script>

@@ -20,7 +20,7 @@ class Actualizar_controller extends CI_Controller {
 		if($this->session->userdata('id_usuario') != TRUE) {
 			//redirecciono al controlador de sesion
 			redirect('sesion_controller');
-		}	
+		}
 		//se obtienen los permisos del usuario
 		$permisos = $this->session->userdata('permisos');
 		if( ! isset($permisos['Fichas']['Consultar']) ) {
@@ -37,7 +37,7 @@ class Actualizar_controller extends CI_Controller {
 	 */
 	function index() {
 		//se carga el modelo que gestiona las consultas del modulo de Predios y del modulo de Contratistas
-		$this->load->model(array('PrediosDAO', 'ContratistasDAO'));
+		$this->load->model(array('PrediosDAO', 'ContratistasDAO', 'AccionesDAO'));
 		//se arma el array asociativo que se envia a la vista
 		$this->data['fichas'] = 				$this->PrediosDAO->obtener_fichas();
 		$this->data['contratistas'] =			$this->ContratistasDAO->obtener_contratistas();
@@ -46,7 +46,7 @@ class Actualizar_controller extends CI_Controller {
 		//se carga la vista y se envia el array asociativo
 		$this->load->view('includes/template', $this->data);
 	}
-	
+
 	/**
 	 * Muestra la informaci�n de la ficha seleccionada
 	 */
@@ -65,7 +65,7 @@ class Actualizar_controller extends CI_Controller {
 			//se carga el modelo ProcesosDAO
 			$this->load->model(array('ProcesosDAO', 'TramosDAO', 'ContratistasDAO', 'PrediosDAO', 'PropietariosDAO'));
 			//se asignan los valores que se van a enviar a la vista
-			$this->data['funciones_predios_obra'] =			$this->PrediosDAO->obtener_funciones_predios_obra();
+			$this->data['funciones_predios_obra'] =	$this->PrediosDAO->obtener_funciones_predios_obra();
 			$this->data['estados_via'] =			$this->PrediosDAO->obtener_estados_via();
 			$this->data['estados'] = 				$this->ProcesosDAO->obtener_estados_proceso();
 			$this->data['tramos'] = 				$this->TramosDAO->obtener_tramos();
@@ -75,6 +75,7 @@ class Actualizar_controller extends CI_Controller {
 			$this->data['descripcion'] = 			$this->PrediosDAO->obtener_descripcion($this->data['predio']->ficha_predial);
 			$this->data['linderos'] = 				$this->PrediosDAO->obtener_linderos($this->data['predio']->ficha_predial);
 			$this->data['propietarios'] = 			$this->PropietariosDAO->obtener_propietarios($this->data['predio']->ficha_predial);
+			$this->data['titulos_adquisicion'] = 	$this->PrediosDAO->obtener_titulos_adquisicion();
 			$this->data['titulo_pagina'] = 			'Actualizar - '.$this->data['predio']->ficha_predial;
 			$this->data['contenido_principal'] = 	'actualizar/actualizar_view';
 			//se carga la vista y se envian los datos
@@ -90,7 +91,7 @@ class Actualizar_controller extends CI_Controller {
 	 * Esta funcion retorna las fichas asociadas a un contratista via JSON
 	 */
 	function fichas_contratista() {
-		//se carga el modelo asociado a los predios	
+		//se carga el modelo asociado a los predios
 		$this->load->model('PrediosDAO');
 		//se obtiene el contratista enviado via POST
 		$contratista = $this->input->post('contratista');
@@ -125,75 +126,100 @@ class Actualizar_controller extends CI_Controller {
 
 		//se lee la ficha predial
 		$ficha_predial = $this->input->post('ficha');
+
 		//se carga el modelo PrediosDAO
 		$this->load->model('PrediosDAO');
-		
+
+		//se actualiza el predio si está o no requerido
+		$this->PrediosDAO->actualizar_predio($ficha_predial, $this->input->post('requerido'));
+
 		//se prepara la identificacion del predio
 		$identificacion = array(
-			'estado_pro' => 		utf8_encode($this->input->post('estado_proceso')),
-			'municipio' => 			utf8_encode($this->input->post('municipio')),
 			'barrio' => 			utf8_encode($this->input->post('vereda_barrio')),
-			'direccion' => 			utf8_encode($this->input->post('direccion_nombre')),
-			'matricula_orig' => 	utf8_encode($this->input->post('numero_matricula_predio_inicial')),
-			'escritura_orig' => 	utf8_encode($this->input->post('numero_escritura')),
-			'of_registro' => 		utf8_encode($this->input->post('oficina_registro_predio_inicial')),
+			'conc_titu' => 			utf8_encode($this->input->post('concepto')),
 			'ciudad' => 			utf8_encode($this->input->post('ciudad_predio_inicial')),
-			'fecha_escritura' => 	utf8_encode($this->input->post('fecha_predio_inicial')),
-			'no_catastral' => 		utf8_encode($this->input->post('numero_catastral_predio_inicial')),
-			'no_notaria' => 		utf8_encode($this->input->post('numero_notaria_predio_inicial')),
-			'num_matricula_f' => 	utf8_encode($this->input->post('numero_matricula_predio_final')),
-			'num_escritura_f' => 	utf8_encode($this->input->post('escritura_sentencia')),
-			'of_registro_f' => 		utf8_encode($this->input->post('oficina_registro_predio_final')),
 			'ciudad_f' => 			utf8_encode($this->input->post('ciudad_predio_final')),
-			'fecha_esc_f' => 		utf8_encode($this->input->post('fecha_predio_final')),
-			'num_catastral_f' => 	utf8_encode($this->input->post('numero_catastral_predio_final')),
-			'num_notaria_f' => 		utf8_encode($this->input->post('numero_notaria_predio_final')),
-			'f_inicio_trab' => 		utf8_encode($this->input->post('inicio_trabajo_fisico')),
-			'f_ent_plano_int' => 	utf8_encode($this->input->post('entrega_plano_interventoria')),
-			'f_apro_def' => 		utf8_encode($this->input->post('aprobacion_definitiva_plano')),
-			'f_envio_int' => 		utf8_encode($this->input->post('envio_interventoria')),
-			'f_envio_ger' => 		utf8_encode($this->input->post('envio_gerencia_firmar')),
-			'f_recibo_pro' => 		utf8_encode($this->input->post('recibo_notificacion_propietario')),
-			'f_envio_av' => 		utf8_encode($this->input->post('envio_avaluador')),
-			'f_recibo_av' => 		utf8_encode($this->input->post('recibo_avaluo')),
-			'f_notificacion_pro' => utf8_encode($this->input->post('notificacion_propietario')),
-			'total_avaluo' => 		utf8_encode($this->input->post('total_avaluo')),
-			'valor_mtr' => 			utf8_encode($this->input->post('valor_metro_cuadrado')),
-			'valor_total_terr' => 	utf8_encode($this->input->post('valor_total_terreno')),
-			'valor_total_mej' => 	utf8_encode($this->input->post('valor_total_mejoras')),
-			'entregado' => 			utf8_encode($this->input->post('entregado')),
-			'f_entregado' => 		utf8_encode($this->input->post('fecha_entregado')),
-			'rad_ent' => 			utf8_encode($this->input->post('radicado')),
-			'rad_apro_pla' => 		utf8_encode($this->input->post('radicado_aprobacion_plano')),
-			'rad_no_pro' => 		utf8_encode($this->input->post('radicado_notificacion_propietario')),
+			'direccion' => 			utf8_encode($this->input->post('direccion_nombre')),
+			'doc_estud' => 			utf8_encode($this->input->post('documentos_estudiados')),
 			'enc_gestion' => 		utf8_encode($this->input->post('encargado_gestion_predial')),
-			'id_funcion_predio' => 	utf8_encode($this->input->post('funcion_predio')),
-			'id_estado_via' => 		utf8_encode($this->input->post('estado_via')),
-			'estado_predio' => 		utf8_encode($this->input->post('estado_predio')),
-			'r_envio_av' => 		utf8_encode($this->input->post('radicado_envio_avaluador')),
-			'rad_env_ger' => 		utf8_encode($this->input->post('radicado_envio_gerencia')),
-			'rad_env_int' => 		utf8_encode($this->input->post('radicado_envio_interventoria')),
+			'entregado' => 			utf8_encode($this->input->post('entregado')),
 			'env_esc_not' => 		utf8_encode($this->input->post('envio_escritura_notaria')),
+			'escritura_orig' => 	utf8_encode($this->input->post('numero_escritura')),
+			'estado_predio' => 		utf8_encode($this->input->post('estado_predio')),
+			'estado_pro' => 		utf8_encode($this->input->post('estado_proceso')),
+			'f_apro_def' => 		utf8_encode($this->input->post('aprobacion_definitiva_plano')),
+			'f_aprob_soc' => 		utf8_encode($this->input->post('f_aprob_soc')),
+			'f_aprob_tit' => 		utf8_encode($this->input->post('f_aprob_tit')),
+			'f_aprob_ficha' => 		utf8_encode($this->input->post('f_aprob_ficha')),
+			'f_ent_plano_int' => 	utf8_encode($this->input->post('entrega_plano_interventoria')),
+			'f_envio_av' => 		utf8_encode($this->input->post('envio_avaluador')),
+			'f_envio_ger' => 		utf8_encode($this->input->post('envio_gerencia_firmar')),
+			'f_envio_int' => 		utf8_encode($this->input->post('f_envio_int')),
+			'f_entregado' => 		utf8_encode($this->input->post('fecha_entregado')),
+			'f_inicio_trab' => 		utf8_encode($this->input->post('inicio_trabajo_fisico')),
+			'f_notificacion_pro' => utf8_encode($this->input->post('notificacion_propietario')),
+			'f_recibo_av' => 		utf8_encode($this->input->post('f_recibo_av')),
+			'f_recibo_pro' => 		utf8_encode($this->input->post('recibo_notificacion_propietario')),
+			'f_rev_ficha' => 		utf8_encode($this->input->post('f_rev_ficha')),
+			'f_oferta_c' => 		utf8_encode($this->input->post('f_oferta_c')),
+			'f_oferta_notif' => 		utf8_encode($this->input->post('f_oferta_notif')),
+			'f_oferta_ac' => 		utf8_encode($this->input->post('f_oferta_ac')),
+			'f_permiso_int' => 		utf8_encode($this->input->post('f_permiso_int')),
+			'f_firma_prom' => 		utf8_encode($this->input->post('f_firma_prom')),
+			'fecha_esc_f' => 		utf8_encode($this->input->post('fecha_predio_final')),
+			'fecha_escritura' => 	utf8_encode($this->input->post('fecha_predio_inicial')),
+			'fecha_estudio' => 		utf8_encode($this->input->post('fecha_estudio')),
+			'gravamenes' => 		utf8_encode($this->input->post('gravamenes_limitaciones')),
+			'id_estado_via' => 		utf8_encode($this->input->post('estado_via')),
+			'id_funcion_predio' => 	utf8_encode($this->input->post('funcion_predio')),
 			'ing_esc' => 			utf8_encode($this->input->post('ingreso_escritura')),
-			'rec_reg_vol' => 		utf8_encode($this->input->post('recibo_registro_enajenacion')),
-			'notif' => 				utf8_encode($this->input->post('notificacion')),
 			'ini_juic' => 			utf8_encode($this->input->post('inicio_juicio')),
 			'ini_sent' => 			utf8_encode($this->input->post('inicio_sentencia')),
 			'ing_sent' => 			utf8_encode($this->input->post('ingreso_sentencia_registro')),
-			'rec_reg_exp' => 		utf8_encode($this->input->post('recibo_registro_expropiacion')),
-			'rad_int' => 			utf8_encode($this->input->post('radicado_entrega_interventoria')),
-			'titulos_adq' => 		utf8_encode($this->input->post('titulos_adquisicion')),
 			'lind_titulo' => 		utf8_encode($this->input->post('linderos_segun_titulo')),
-			'gravamenes' => 		utf8_encode($this->input->post('gravamenes_limitaciones')),
-			'doc_estud' => 			utf8_encode($this->input->post('documentos_estudiados')),
+			'matricula_orig' => 	utf8_encode($this->input->post('numero_matricula_predio_inicial')),
+			'municipio' => 			utf8_encode($this->input->post('municipio')),
+			'no_catastral' => 		utf8_encode($this->input->post('numero_catastral_predio_inicial')),
+			'no_notaria' => 		utf8_encode($this->input->post('numero_notaria_predio_inicial')),
+			'notif' => 				utf8_encode($this->input->post('notificacion')),
+			'num_escritura_f' => 	utf8_encode($this->input->post('escritura_sentencia')),
+			'num_catastral_f' => 	utf8_encode($this->input->post('numero_catastral_predio_final')),
+			'num_matricula_f' => 	utf8_encode($this->input->post('numero_matricula_predio_final')),
+			'num_notaria_f' => 		utf8_encode($this->input->post('numero_notaria_predio_final')),
 			'ob_titu' => 			utf8_encode($this->input->post('observaciones_estudio_titulos')),
-			'conc_titu' => 			utf8_encode($this->input->post('concepto')),
-			'fecha_estudio' => 			utf8_encode($this->input->post('fecha_estudio'))
+			'of_registro' => 		utf8_encode($this->input->post('oficina_registro_predio_inicial')),
+			'of_registro_f' => 		utf8_encode($this->input->post('oficina_registro_predio_final')),
+			'r_envio_av' => 		utf8_encode($this->input->post('radicado_envio_avaluador')),
+			'r_oferta_c' => 		utf8_encode($this->input->post('r_oferta_c')),
+			'r_rec_av' => 			utf8_encode($this->input->post('r_rec_av')),
+			'rad_apro_pla' => 		utf8_encode($this->input->post('radicado_aprobacion_plano')),
+			'rad_aprob_ficha' => 	utf8_encode($this->input->post('rad_aprob_ficha')),
+			'rad_aprob_soc' => 		utf8_encode($this->input->post('rad_aprob_soc')),
+			'rad_aprob_tit' => 		utf8_encode($this->input->post('rad_aprob_tit')),
+			'rad_ent' => 			utf8_encode($this->input->post('radicado')),
+			'rad_env_ger' => 		utf8_encode($this->input->post('radicado_envio_gerencia')),
+			'rad_env_int' => 		utf8_encode($this->input->post('rad_env_int')),
+			'rad_int' => 			utf8_encode($this->input->post('radicado_entrega_interventoria')),
+			'rad_no_pro' => 		utf8_encode($this->input->post('radicado_notificacion_propietario')),
+			'rad_rev_ficha' => 		utf8_encode($this->input->post('rad_rev_ficha')),
+			'rec_reg_exp' => 		utf8_encode($this->input->post('recibo_registro_expropiacion')),
+			'rad_of_notif' => 		utf8_encode($this->input->post('rad_of_notif')),
+			'rad_of_ac' => 			utf8_encode($this->input->post('rad_of_ac')),
+			'rad_permiso_int' =>	utf8_encode($this->input->post('rad_permiso_int')),
+			'rad_firma_prom' => 	utf8_encode($this->input->post('rad_firma_prom')),
+			'rec_reg_vol' => 		utf8_encode($this->input->post('recibo_registro_enajenacion')),
+			'titulos_adq' => 		utf8_encode($this->input->post('titulos_adquisicion')),
+			'total_avaluo' => 		utf8_encode($this->input->post('total_avaluo')),
+			'valor_mtr' => 			utf8_encode($this->input->post('valor_metro_cuadrado')),
+			'valor_total_mej' => 	utf8_encode($this->input->post('valor_total_mejoras')),
+			'valor_total_terr' => 	utf8_encode($this->input->post('valor_total_terreno')),
+			'segreg_titu' => 		utf8_encode($this->input->post('segregaciones')),
+			'titulo_adquisicion' => utf8_encode($this->input->post('titulo_adquisicion'))
 		);
 
 		//se inserta la identificacion del predio
 		$this->PrediosDAO->actualizar_identificacion($ficha_predial, $identificacion);
-		
+
 		//se prepara la descripcion
 		$descripcion = array(
 			'uso_edificacion' => 		utf8_encode($this->input->post('uso_edificacion')),
@@ -205,6 +231,9 @@ class Actualizar_controller extends CI_Controller {
 			'serv_publicos' => 			utf8_encode($this->input->post('servicios_publicos')),
 			'nacimiento_agua' => 		utf8_encode($this->input->post('nacimiento_agua')),
 			'area_total' => 			utf8_encode($this->input->post('area_total')),
+			'area_total_catastral' =>	utf8_encode($this->input->post('area_total_catastral')),
+			'area_total_registral' =>	utf8_encode($this->input->post('area_total_registral')),
+			'area_total_titulos' =>		utf8_encode($this->input->post('area_total_titulos')),
 			'area_requerida' => 		utf8_encode($this->input->post('area_requerida')),
 			'area_residual' => 			utf8_encode($this->input->post('area_residual')),
 			'area_construida' => 		utf8_encode($this->input->post('area_construida')),
@@ -221,13 +250,13 @@ class Actualizar_controller extends CI_Controller {
 			'disponibilidad_izquierda' => utf8_encode($this->input->post('disponibilidad_izquierda')),
 			'disponibilidad_derecha' => utf8_encode($this->input->post('disponibilidad_derecha'))
 		);
-		
+
 		//se inserta la descripcion del predio
 		$this->PrediosDAO->actualizar_descripcion($ficha_predial, $descripcion);
-		
+
 		//se insertan los linderos del predio
 		// $this->PrediosDAO->actualizar_linderos($ficha_predial, utf8_encode($this->input->post('linderos_predio_requerido')));
-		
+
 		/********************
 		**** Formato ANI ****
 		*********************/
@@ -301,16 +330,16 @@ class Actualizar_controller extends CI_Controller {
 			// Se actualiza los cultivos y especies
 			$this->PrediosDAO->actualizar_construcciones($ficha_predial, '2', $i, $construcciones_anexas);
 		}
-		
+
 		//se procede a insertar los propietarios
 		//se obtiene el numero de propietarios que se han agregado en el formulario
 		$numero_propietarios = utf8_encode($this->input->post('propietarios_hidden'));
-		
+
 		//pueden haber propietarios que hayan sido eliminados del formulario
 		//se va revisar uno por uno todos los que hayan sido agregados
 		//teniendo como criterio de insercion que el documento del propietario no este vacio
 		//se deja la validacion de este campo del lado cliente
-		
+
 		//se carga el modelo que gestiona la informacion de todos los propietarios
 		$this->load->model('PropietariosDAO');
 
@@ -318,7 +347,7 @@ class Actualizar_controller extends CI_Controller {
 		$this->PropietariosDAO->eliminar_relaciones_predio($ficha_predial);
 
 		// Se recorren los propietarios
-		for ($i = 1; $i <= $numero_propietarios; $i++) 
+		for ($i = 1; $i <= $numero_propietarios; $i++)
 		{
 			//variable del formulario que me indica si el propietario ya hab�a sido agregado anteriormente
 			$id_propietario = utf8_encode($this->input->post("id_propietario$i"));
@@ -326,7 +355,7 @@ class Actualizar_controller extends CI_Controller {
 			if($id_propietario){
 				// echo "El propietario {$i} ({$this->input->post("documento_propietario$i")}) ya está asociado al predio. \n";
 
-				//se verifica que el documento haya sido ingresado			
+				//se verifica que el documento haya sido ingresado
 				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
 
 				//se eliminan puntos, comas y espacios en blanco
@@ -343,14 +372,14 @@ class Actualizar_controller extends CI_Controller {
 					'documento' => 		$documento_propietario,
 					'telefono' => 		$this->input->post("telefono$i")
 				);
-				
+
 				// //se actualiza el propietario
 				$this->PropietariosDAO->actualizar_propietario($id_propietario, $info_propietario);
 			//si no se habia agregado anteriormente, se agrega
 			} else {
 				// echo "El propietario {$i} ({$this->input->post("documento_propietario$i")}) se va a asociar al predio. \n";
 
-				//se verifica que el documento haya sido ingresado			
+				//se verifica que el documento haya sido ingresado
 				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
 				if($documento_propietario){
 					// echo "verificando cédula... \n";
@@ -366,7 +395,7 @@ class Actualizar_controller extends CI_Controller {
 
 					if(!$propietario){
 						// echo "El propietario no existe en la base de datos. Creando... \n";
-				
+
 						$info_propietario = array(
 							'tipo_documento' => utf8_encode($this->input->post("tipo_documento$i")),
 							'direccion' => 		$this->input->post("direccion_propietario$i"),
@@ -382,14 +411,14 @@ class Actualizar_controller extends CI_Controller {
 						//se recupera para insertar la relacion con el predio
 						$propietario = $this->PropietariosDAO->existe_propietario($documento_propietario);
 					} // if propietario
-					
+
 					// Se asigna el id del propietario
 					$id_propietario = $propietario->id_propietario;
 				} // if documento propietario
 			} // if id_propietario
 
 			// echo "Propietario {$id_propietario}\n";
-			
+
 			//se inserta la relacion del propietario con el predio
 			$this->PropietariosDAO->insertar_relacion_predio($id_propietario, $ficha_predial, $this->input->post("participacion$i"));
 		} // for numero_propietarios
@@ -402,7 +431,7 @@ class Actualizar_controller extends CI_Controller {
 
 
 
-		/*for ($i = 1; $i <= $numero_propietarios; $i++) 
+		/*for ($i = 1; $i <= $numero_propietarios; $i++)
 		{
 			//variable del formulario que me indica si el propietario ya hab�a sido agregado anteriormente
 			$id_propietario = utf8_encode($this->input->post("id_propietario$i"));
@@ -410,12 +439,12 @@ class Actualizar_controller extends CI_Controller {
 			{
 				//se obtiene el documento del propietario
 				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
-				
+
 				//se eliminan puntos, comas y espacios en blanco
 				$documento_propietario = str_replace('.', '', $documento_propietario);
 				$documento_propietario = str_replace(',', '', $documento_propietario);
 				$documento_propietario = str_replace(' ', '', $documento_propietario);
-				
+
 				//se prepara el array que contiene la informacion del propietario
 				$info_propietario = array(
 					'tipo_documento' => utf8_encode($this->input->post("tipo_documento$i")),
@@ -423,7 +452,7 @@ class Actualizar_controller extends CI_Controller {
 					'documento' => 		$documento_propietario,
 					'telefono' => 		$this->input->post("telefono$i")
 				);
-				
+
 				//se actualiza el propietario
 				$this->PropietariosDAO->actualizar_propietario($id_propietario, $info_propietario);
 				$this->PropietariosDAO->insertar_relacion_predio($id_propietario, $ficha_predial, utf8_encode($this->input->post("participacion$i")));
@@ -431,7 +460,7 @@ class Actualizar_controller extends CI_Controller {
 			//si no se habia agregado anteriormente, se agrega
 			else
 			{
-				//se verifica que el documento haya sido ingresado			
+				//se verifica que el documento haya sido ingresado
 				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
 				if($documento_propietario)
 				{
@@ -439,7 +468,7 @@ class Actualizar_controller extends CI_Controller {
 					$documento_propietario = str_replace('.', '', $documento_propietario);
 					$documento_propietario = str_replace(',', '', $documento_propietario);
 					$documento_propietario = str_replace(' ', '', $documento_propietario);
-					
+
 					//se busca si el propietario ya existe en la base de datos
 					//si no existe se inserta
 					$propietario = $this->PropietariosDAO->existe_propietario($documento_propietario);
@@ -467,7 +496,7 @@ class Actualizar_controller extends CI_Controller {
 						//se recupera para insertar la relacion con el predio
 						$propietario = $this->PropietariosDAO->existe_propietario(number_format($documento_propietario, 0));
 					}
-					
+
 					//se inserta la relacion del propietario con el predio
 					$this->PropietariosDAO->insertar_relacion_predio($propietario->id_propietario, $ficha_predial, utf8_encode($this->input->post("participacion$i")));				}
 			}
@@ -502,7 +531,7 @@ class Actualizar_controller extends CI_Controller {
 				$respuesta = array('respuesta' => 'correcto');
 				echo json_encode($respuesta);
 			}
-			else 
+			else
 			{
 				//se envia la respuesta via JSON
 				$respuesta = array('respuesta' => 'No se pudo borrar al propietario');

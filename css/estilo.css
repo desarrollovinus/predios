@@ -41,8 +41,8 @@ a, a:visited {
     min-height: 200px;
     padding: 1.5em;
     box-shadow: 0 6px 12px rgba(0,0,0,.25);
-    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.25);  
-    -moz-box-shadow: 0 6px 12px rgba(0,0,0,.25); 
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.25);
+    -moz-box-shadow: 0 6px 12px rgba(0,0,0,.25);
 }
 #panel-izquierdo{
 	/*background:#FFF;*/
@@ -89,7 +89,7 @@ input[type=text],textarea,input[type=password],input[type=file],select{
 	font-size:0.9em;
 	border-radius: 4px;
 	-moz-border-radius:4px;
-	-webkit-border-radius:4px;	
+	-webkit-border-radius:4px;
 }
 input[type=text]:focus,input[type=file]:focus,textarea:focus, select:focus, input[type=password]:focus{
 	border:1px solid #930;
@@ -133,11 +133,11 @@ textarea{
 	text-shadow: 0 1px 1px rgba(0,0,0,.3);
 	border:1px solid #122c13;
 	border-top:none;/*1px solid #122c13*/
-	color:#2779AA;	
+	color:#2779AA;
 	background: #D7EBF9;
 	background: -webkit-gradient(linear, left top, left bottom, from(#AED0EA), to(#D7EBF9));
 	background:-moz-linear-gradient(center top , #AED0EA, #D7EBF9) repeat scroll 0 0 transparent;
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#AED0EA', endColorstr='#D7EBF9');	
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#AED0EA', endColorstr='#D7EBF9');
 	border-radius:5px;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
@@ -154,30 +154,30 @@ textarea{
 	top:10px;
 
 	box-shadow: 0 3px 6px rgba(0,0,0,.25);
-    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);  
-    -moz-box-shadow: 0 3px 6px rgba(0,0,0,.25); 
-    
-    border-radius : 10px;  
-    -moz-border-radius : 10px;  
-    -webkit-border-radius : 10px;  
+    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+    -moz-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+
+    border-radius : 10px;
+    -moz-border-radius : 10px;
+    -webkit-border-radius : 10px;
     /* For WebKit (Safari, Google Chrome etc) */
-    background : -webkit-gradient(linear, left top, left bottom, from(rgb(239, 243, 245)), to(rgb(200, 215, 220)));  
+    background : -webkit-gradient(linear, left top, left bottom, from(rgb(239, 243, 245)), to(rgb(200, 215, 220)));
     /* For Mozilla/Gecko (Firefox etc) */
-    background : -moz-linear-gradient(top, rgb(239, 243, 245), rgb(200, 215, 220));  
+    background : -moz-linear-gradient(top, rgb(239, 243, 245), rgb(200, 215, 220));
     /* For Internet Explorer 8 */
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#F1F5F6, endColorstr=#C8D7DC);
 	height:80px;
 }
 #menu-flotante ul li{
 	/*position:relative;
-	
+
 	display:inline;
 	margin:1px;
 	padding: 15px;  */
 	display:inline;
-	position: relative;  
-    border: 1px solid #d6d6d6;  
-    padding: 15px;  
+	position: relative;
+    border: 1px solid #d6d6d6;
+    padding: 15px;
 	border:0;
 }
 #menu-flotante div {
@@ -193,41 +193,41 @@ textarea{
 	z-index:9999;
 	float:right;
 }
-.lavalamp {  
-    position: relative;  
-    border: 1px solid #d6d6d6;  
-    background: #fff;  
-    padding: 15px;  
+.lavalamp {
+    position: relative;
+    border: 1px solid #d6d6d6;
+    background: #fff;
+    padding: 15px;
     box-shadow: 0 3px 6px rgba(0,0,0,.25);
-    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);  
-    -moz-box-shadow: 0 3px 6px rgba(0,0,0,.25); 
-    
-    border-radius : 10px;  
-    -moz-border-radius : 10px;  
-    -webkit-border-radius : 10px;  
+    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+    -moz-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+
+    border-radius : 10px;
+    -moz-border-radius : 10px;
+    -webkit-border-radius : 10px;
     /* For WebKit (Safari, Google Chrome etc) */
-    background : -webkit-gradient(linear, left top, left bottom, from(rgb(240,240,240)), to(rgb(204,204,204)));  
+    background : -webkit-gradient(linear, left top, left bottom, from(rgb(240,240,240)), to(rgb(204,204,204)));
     /* For Mozilla/Gecko (Firefox etc) */
-    background : -moz-linear-gradient(top, rgb(240,240,240), rgb(204,204,204));  
+    background : -moz-linear-gradient(top, rgb(240,240,240), rgb(204,204,204));
     /* For Internet Explorer 8 */
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EFEFEF', endColorstr='#D6D6D6');
-    height: 18px;  
+    height: 18px;
 }
 .clear{
 	clear:both;
 }
-.floatr {  
-    position: absolute;  
-    top: 10px;  
-    z-index: 50;  
-    width: 70px;  
-    height: 30px;  
-    border-radius : 8px;  
-    -moz-border-radius : 8px;  
-    -webkit-border-radius : 8px;  
-    background : rgba(0,0,0,.20);  
-    -webkit-transition: all .4s ease-in-out;  
-    -moz-transition: all .4s ease-in-out;  
+.floatr {
+    position: absolute;
+    top: 10px;
+    z-index: 50;
+    width: 70px;
+    height: 30px;
+    border-radius : 8px;
+    -moz-border-radius : 8px;
+    -webkit-border-radius : 8px;
+    background : rgba(0,0,0,.20);
+    -webkit-transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
 }
 .derecha{
 	margin-left:10px;
@@ -281,17 +281,17 @@ a.botonCerrar{
 	box-shadow: 0 1px 2px rgba(0,0,0,.2);
 
 	border:1px solid #B7B7B7;
-	color:#FADDDE;	
+	color:#FADDDE;
 	background: #980C10;
 	background: -webkit-gradient(linear, left top, left bottom, from(#ED1C24), to(#AA1317));
 	background:-moz-linear-gradient(center top , #ED1C24, #AA1317) repeat scroll 0 0 transparent;
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ED1C24', endColorstr='#AA1317');	
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ED1C24', endColorstr='#AA1317');
 }
 a.botonCerrar:hover{
 	background: #AA1317;
 	background: -webkit-gradient(linear, left top, left bottom, from(#AA1317), to(#ED1C24));
 	background:-moz-linear-gradient(center top , #AA1317, #ED1C24) repeat scroll 0 0 transparent;
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#AA1317', endColorstr='#ED1C24');	
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#AA1317', endColorstr='#ED1C24');
 	color:#DE898C;
 }
 aside {
@@ -317,16 +317,16 @@ aside ul li{
 }
 aside ul li:hover, .current{
     box-shadow: 0 3px 6px rgba(0,0,0,.25);
-    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);  
-    -moz-box-shadow: 0 3px 6px rgba(0,0,0,.25); 
-    
+    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+    -moz-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+
     border-radius : 0 10px 10px 0;
-    -moz-border-radius : 0 10px 10px 0;  
-    -webkit-border-radius : 0 10px 10px 0;  
+    -moz-border-radius : 0 10px 10px 0;
+    -webkit-border-radius : 0 10px 10px 0;
     /* For WebKit (Safari, Google Chrome etc) */
-    background : -webkit-gradient(linear, left top, left bottom, from(rgb(241, 245, 246)), to(rgb(200, 215, 220)));  
+    background : -webkit-gradient(linear, left top, left bottom, from(rgb(241, 245, 246)), to(rgb(200, 215, 220)));
     /* For Mozilla/Gecko (Firefox etc) */
-    background : -moz-linear-gradient(top, rgb(241, 245, 246), rgb(200, 215, 220));  
+    background : -moz-linear-gradient(top, rgb(241, 245, 246), rgb(200, 215, 220));
     /* For Internet Explorer 8 */
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#F1F5F6, endColorstr=#C8D7DC)";
 	/*background:rgba(0,0,0,.6);*/
@@ -339,7 +339,7 @@ aside ul li a{
 	font-weight:bold;
 	text-align:center;
 	text-transform:uppercase;
-	
+
 	text-shadow: #666 -0.5px 1px 2px;
 }
 ul#navigation {
@@ -358,12 +358,12 @@ ul#navigation li a {
     display: block;
     margin-left: -2px;
     width: 100px;
-    height: 70px;    
+    height: 70px;
     border:1px solid #AFAFAF;
     /* For WebKit (Safari, Google Chrome etc) */
-    background : -webkit-gradient(linear, left top, left bottom, from(rgb(241, 245, 246)), to(rgb(200, 215, 220)));  
+    background : -webkit-gradient(linear, left top, left bottom, from(rgb(241, 245, 246)), to(rgb(200, 215, 220)));
     /* For Mozilla/Gecko (Firefox etc) */
-    background : -moz-linear-gradient(top, rgb(241, 245, 246), rgb(200, 215, 220));  
+    background : -moz-linear-gradient(top, rgb(241, 245, 246), rgb(200, 215, 220));
     /* For Internet Explorer 8 */
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#F1F5F6, endColorstr=#C8D7DC)";
 	/*background:rgba(0,0,0,.6);*/
@@ -376,12 +376,12 @@ ul#navigation li a {
     -khtml-border-top-left-radius: 10px;
 
     box-shadow: 0 3px 6px rgba(0,0,0,.25);
-    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);  
-    -moz-box-shadow: 0 3px 6px rgba(0,0,0,.25); 
+    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+    -moz-box-shadow: 0 3px 6px rgba(0,0,0,.25);
 }
 ul#navigation li a img {
-	margin-left: 34px; 
-	margin-top: 19px; 
+	margin-left: 34px;
+	margin-top: 19px;
 }
 #informacion {
 	height: 200px;
@@ -393,7 +393,7 @@ ul#menu {
 	list-style: none;
 	position: absolute;
 }
-ul#menu li {	
+ul#menu li {
 	display: inline-block;
 	font-size:16px;
 	height:50px;
@@ -402,23 +402,23 @@ ul#menu li {
 	vertical-align: top;
 	width: 170px;
 	/* For WebKit (Safari, Google Chrome etc) */
-    background : -webkit-gradient(linear, left top, left bottom, from(rgb(241, 245, 246)), to(rgb(200, 215, 220)));  
+    background : -webkit-gradient(linear, left top, left bottom, from(rgb(241, 245, 246)), to(rgb(200, 215, 220)));
     /* For Mozilla/Gecko (Firefox etc) */
-    background : -moz-linear-gradient(top, rgb(241, 245, 246), rgb(200, 215, 220));  
+    background : -moz-linear-gradient(top, rgb(241, 245, 246), rgb(200, 215, 220));
     /* For Internet Explorer 8 */
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#F1F5F6, endColorstr=#C8D7DC)";
 
     box-shadow: 0 3px 6px rgba(0,0,0,.25);
-    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);  
-    -moz-box-shadow: 0 3px 6px rgba(0,0,0,.25); 
-    
-    
+    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+    -moz-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+
+
 	transition: .2s;
 	-moz-transition: .2s; /* Firefox 4 */
 	-webkit-transition: .2s; /* Safari and Chrome */
 	-o-transition: .2s; /* Opera */
 }
-ul#menu li:hover {	
+ul#menu li:hover {
 	transform:scale(1.1);
 	-ms-transform:scale(1.1); /* IE 9 */
 	-moz-transform:scale(1.1); /* Firefox */
@@ -449,11 +449,99 @@ ul#menu li a {
     -webkit-border-bottom-right-radius: 10px;
     -webkit-border-top-right-radius: 10px;
     -khtml-border-bottom-right-radius: 10px;
-    -khtml-border-top-right-radius: 10px;	
+    -khtml-border-top-right-radius: 10px;
 }
 
 .fotos {
 	display: inline-block;
 	margin-bottom: 15px;
 	padding: 5px;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  margin: 10px 0;
+  width: 100%;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #4892d0;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #4892d0;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #4892d0;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 1px 1px 1px #000;
+  background: #4892d0;
+  border-radius: 5px;
+  border: 1px solid #000;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px #000;
+  border: 1px solid #000;
+  height: 27px;
+  width: 15px;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -9.5px;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 1px 1px 1px #000;
+  background: #4892d0;
+  border-radius: 5px;
+  border: 1px solid #000;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000;
+  border: 1px solid #000;
+  height: 27px;
+  width: 15px;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #4892d0;
+  border: 1px solid #000;
+  border-radius: 10px;
+  box-shadow: 1px 1px 1px #000;
+}
+input[type=range]::-ms-fill-upper {
+  background: #4892d0;
+  border: 1px solid #000;
+  border-radius: 10px;
+  box-shadow: 1px 1px 1px #000;
+}
+input[type=range]::-ms-thumb {
+  box-shadow: 1px 1px 1px #000;
+  border: 1px solid #000;
+  height: 27px;
+  width: 15px;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
 }
