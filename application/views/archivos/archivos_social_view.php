@@ -109,6 +109,10 @@
 	    });//Ajax
 	}
 
+	$('#form input[name=volver]').click(function(){
+		history.back();
+	});
+
 	$(document).ready(function(){
 		$('#tabla').dataTable({
 			"bJQueryUI": true,
@@ -169,10 +173,6 @@
                 } // if
             } // oncomplete
         }); // AjaxUpload
-
-		$('#form input[name=volver]').click(function(){
-			history.back();
-		});
 	});
 </script>
 </div>
