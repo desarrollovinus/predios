@@ -202,6 +202,11 @@
 			</table>
 		</div>
 
+		<h3><a href="#seccion4">DIAGNÓSTICO SOCIOECONÓMICO</a></h3>
+		<div id="diagnostico">
+
+		</div>
+
 	</div>
 
 	<br /><input type="hidden" id="errores" />
@@ -254,6 +259,13 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		// llamado a la vista diagnostico socioeconomico
+		var id = "<?php echo $id; ?>";
+		var ficha = $("input[name=ficha]");
+		var datos = {ficha: ficha.val(), tipo: 'id_usr', id:id};
+		$.get("<?php echo site_url('gestion_social_controller/diagnostico_social'); ?>", datos, function(vista){
+			$("#diagnostico").html(vista);
+		});
 		$( "#accordion" ).accordion
 		({
 			autoHeight: false,
@@ -306,8 +318,6 @@
 	    //este script genera el evento clic del boton Guardar y Salir
 		$('#form input[name=guardar], #form input[name=continuar]').click(function(){
 			// Recolección de datos
-        	var id = "<?php echo $id; ?>";
-        	var ficha = $("input[name=ficha]");
         	var relacion_inmueble = $("select[name=relacion_inmueble]");
         	var responsable = $("input[name=responsable]");
         	var identificacion = $("input[name=identificacion]");
