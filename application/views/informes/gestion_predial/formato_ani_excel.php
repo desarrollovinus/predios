@@ -843,7 +843,6 @@ $objPHPExcel->getActiveSheet()->getStyle("M{$fila_M2}:M{$fila}")->applyFromArray
 $objPHPExcel->getActiveSheet()->getStyle("T{$fila_observaciones}:AD{$fila}")->applyFromArray($borde_puntos_externo);
 $objPHPExcel->getActiveSheet()->getStyle("B{$fila_elaboro}:E{$fila}")->applyFromArray($borde_puntos_externo);
 $objPHPExcel->getActiveSheet()->getStyle("G{$fila_elaboro}:J{$fila}")->applyFromArray($borde_puntos_externo);
-// $objPHPExcel->getActiveSheet()->getStyle("Q{$fila_M2}:Q{$fila}")->getNumberFormat()->setFormatCode("#,##0");
 $objPHPExcel->getActiveSheet()->getStyle("Q{$fila}")->getNumberFormat()->setFormatCode('#,##0.000');
 
 // Datos

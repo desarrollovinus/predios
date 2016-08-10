@@ -193,7 +193,7 @@ foreach ($predios as $predio) {
 	// $objPHPExcel->getActiveSheet()->setCellValue('E'.$fila, $predio->abscisa_inicial);
 	// $objPHPExcel->getActiveSheet()->setCellValue('F'.$fila, $predio->abscisa_final);
 	$objPHPExcel->getActiveSheet()->setCellValue('G'.$fila, $predio->abscisa_final - $predio->abscisa_inicial);
-	$objPHPExcel->getActiveSheet()->setCellValue('H'.$fila, $predio->margen);
+	$objPHPExcel->getActiveSheet()->setCellValue('H'.$fila, $predio->margen_inicial." - ".$predio->margen_final);
 	$objPHPExcel->getActiveSheet()->setCellValue('I'.$fila, $predio->numero_propietarios);
 	$objPHPExcel->getActiveSheet()->setCellValue('J'.$fila, $predio->nombre_propietario);
 	$objPHPExcel->getActiveSheet()->setCellValue('K'.$fila, $predio->documento_propietario);
