@@ -142,7 +142,6 @@ class Gestion_social_controller extends CI_Controller {
 
 	function ficha_social_residente(){
 		$this->data['id'] = $this->uri->segment(3);
-		$this->data['diagnostico'] = $this->Gestion_socialDAO->cargar_diagnostico($this->uri->segment(4));
 		if ($this->uri->segment(3) != "0") {
 			$this->data['usr'] = $this->Gestion_socialDAO->cargar_unidad_social_residente($this->uri->segment(3));
 		} else {
