@@ -63,6 +63,13 @@ class Gestion_socialDAO extends CI_Model
 	 	return $this->db->get('tbl_valores_social')->result();
 	}
 
+	function cargar_valor_ficha($id)
+	{
+		$this->db->select('*');
+		$this->db->where('id', $id);
+	 	return $this->db->get('tbl_valores_social')->row();
+	}
+
 	function cargar_valores_ficha_social($ficha, $id_unidad_social){
 		$this->db->select('*');
 
