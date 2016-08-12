@@ -22,7 +22,7 @@ $objPHPExcel->getDefaultStyle()->getAlignment()->setVertical(PHPExcel_Style_Alig
 //Se establece la configuracion de la pagina
 // $objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE); //Orientacion horizontal
 $hoja->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_LEGAL); //Tamano oficio
-$hoja->getPageSetup()->setScale(100);
+$hoja->getPageSetup()->setScale(90);
 
 //Se indica el rango de filas que se van a repetir en el momento de imprimir. (Encabezado del reporte)
 $hoja->getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(3);
@@ -291,6 +291,7 @@ $fila++;
 
 $hoja->mergeCells("A{$fila}:I{$fila}");
 $hoja->setCellValue("A{$fila}", '¿Cuenta con los siguientes documentos para el desarrollo de la actividad?');
+$hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($bordes);
 $fila++;
 
 $valores_f = array();
@@ -365,7 +366,7 @@ $hoja->setCellValue("D{$fila}", 'Objeto del contrato');
 $hoja->setCellValue("F{$fila}", 'Fecha suscripción');
 $hoja->setCellValue("G{$fila}", 'Fecha terminación');
 $hoja->setCellValue("H{$fila}", 'Valor canon mensual');
-$hoja->setDinamicSizeRow('Valor terminacion anticipada', $fila, 'I:J');
+$hoja->setDinamicSizeRow('Valor terminación anticipada', $fila, 'I:J');
 $fila++;
 
 
