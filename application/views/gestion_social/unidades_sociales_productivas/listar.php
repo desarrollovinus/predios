@@ -12,7 +12,7 @@
 			<th>Arrendatarios</th>
 			<th>Fotos</th>
 			<th>Archivos</th>
-			<th width="15%">Opciones</th>
+			<th width="20%">Opciones</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -25,6 +25,7 @@
 				<td align="right"><?= $usp->fotos; ?></td>
 				<td align="right"><?= $usp->archivos; ?></td>
 				<td>
+					<?php echo anchor("informes_controller/ficha_social_usp/".str_replace(' ', '_', $usp->id), '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización unidad social productiva"'); ?>
 					<a onclick="javascript:editar('<?= $usp->id; ?>', '<?= $usp->ficha_predial; ?>')" style="cursor: pointer">
 						<img src="<?= base_url(); ?>img/edit.png" title="Editar unidad social productiva">
 					</a>

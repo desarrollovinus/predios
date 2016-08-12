@@ -96,7 +96,7 @@ $hoja->getStyle("A1:N50")->applyFromArray($centrado);
 
 // Asignación del tamaño de las columnas
 for ($columna="A"; $columna < "J"; $columna++) {
-	$hoja->getColumnDimension($columna)->setWidth(12.5);
+	$hoja->getColumnDimension($columna)->setWidth(11.5);
 }
 
 // asignacion del tamaño de las filas
@@ -104,6 +104,11 @@ for ($i=6; $i <= 50; $i++) {
 	$hoja->getRowDimension($i)->setRowHeight(20);
 }
 
+// Asignación del tamaño de las filas y aplicacion de bordes
+for ($i=1; $i <= 3; $i++) {
+	$hoja->getRowDimension($i)->setRowHeight(26);
+	$hoja->getStyle("A{$i}:I{$i}")->applyFromArray($bordes);
+}
 
 // Logos
 // Logo Vinus
@@ -115,7 +120,7 @@ $objDrawing->setCoordinates('G1');
 $objDrawing->setHeight(60);
 $objDrawing->setWidth(60);
 $objDrawing->setOffsetX(10);
-$objDrawing->setOffsetY(10);
+$objDrawing->setOffsetY(15);
 $objDrawing->getShadow()->setDirection(160);
 $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
 
@@ -128,7 +133,7 @@ $objDrawing2->setCoordinates('A1');
 $objDrawing2->setHeight(50);
 $objDrawing2->setWidth(120);
 $objDrawing2->setOffsetX(20);
-$objDrawing2->setOffsetY(0);
+$objDrawing2->setOffsetY(10);
 $objDrawing2->setWorksheet($objPHPExcel->getActiveSheet());
 
 //encabezado
@@ -178,7 +183,7 @@ $hoja->setCellValue("B{$fila}", 'Vías del Nus');
 $hoja->setCellValue("D{$fila}", 'Ficha predial');
 $hoja->setCellValue("E{$fila}", $predio->ficha_predial);
 $hoja->setCellValue("G{$fila}", 'Tramo');
-$hoja->setCellValue("H{$fila}", $predio->tramo);
+$hoja->setDinamicSizeRow($predio->tramo, $fila, 'H:I');
 $fila++;
 
 $hoja->mergeCells("B{$fila}:C{$fila}");
@@ -189,10 +194,9 @@ $hoja->getStyle("D{$fila}:F{$fila}")->applyFromArray($bordes_externos);
 $hoja->getStyle("G{$fila}:I{$fila}")->applyFromArray($bordes_externos);
 $hoja->setCellValue("A{$fila}", 'Municipio');
 $hoja->setCellValue("B{$fila}", $predio->municipio);
-$hoja->setCellValue("D{$fila}", 'Vereda / Barrio');
+$hoja->setDinamicSizeRow('Vereda / Barrio', $fila, 'D:E');
 $hoja->setCellValue("E{$fila}", $predio->barrio);
 $hoja->setCellValue("G{$fila}", 'Dirección');
-// $hoja->setCellValue("H{$fila}", $predio->direccion);
 $hoja->setDinamicSizeRow($predio->direccion, $fila, "H:I");
 $fila++;
 
@@ -214,10 +218,11 @@ $hoja->mergeCells("A{$fila}:I{$fila}");
 array_push($filas_estrechas, $fila);
 $fila++;
 
+$fila_aux = $fila;
 $hoja->mergeCells("A{$fila}:I{$fila}");
 $hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($relleno_gris);
 $hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($negrita);
-$hoja->setCellValue("A{$fila}", '1. IDENTIFICACIÓN DE LA UNIDAD SOCIAL PRODUCTIVA');
+$hoja->setCellValue("A{$fila}", '2. IDENTIFICACIÓN DE LA UNIDAD SOCIAL PRODUCTIVA');
 $fila++;
 
 $hoja->mergeCells("B{$fila}:F{$fila}");
@@ -234,7 +239,7 @@ $hoja->mergeCells("A{$fila}:C{$fila}");
 $hoja->mergeCells("D{$fila}:I{$fila}");
 $hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($bordes_externos);
 $hoja->setCellValue("A{$fila}", 'Datos de verificación');
-$hoja->setCellValue("D{$fila}", $unidad_productiva->datos_verificacion);
+$hoja->setDinamicSizeRow($unidad_productiva->datos_verificacion, $fila, 'D:I');
 $fila++;
 
 $hoja->mergeCells("A{$fila}:B{$fila}");
@@ -284,11 +289,179 @@ $hoja->setCellValue("F{$fila}", '¿Cuál?');
 $hoja->setCellValue("G{$fila}", $unidad_productiva->contabilidad);
 $fila++;
 
-// Asignación del tamaño de las filas y aplicacion de bordes
-for ($i=1; $i <= 3; $i++) {
-	$hoja->getRowDimension($i)->setRowHeight(26);
-	$hoja->getStyle("A{$i}:I{$i}")->applyFromArray($bordes);
+$hoja->mergeCells("A{$fila}:I{$fila}");
+$hoja->setCellValue("A{$fila}", '¿Cuenta con los siguientes documentos para el desarrollo de la actividad?');
+$fila++;
+
+$valores_f = array();
+
+foreach ($valores_fichas as $valor_ficha) {
+	array_push($valores_f, $valor_ficha->id_valor_social);
 }
+
+foreach ($this->Gestion_socialDAO->cargar_valores_ficha(10) as $valor10) {
+	$hoja->mergeCells("A{$fila}:C{$fila}");
+	$hoja->setCellValue("A{$fila}", (in_array($valor10->id, $valores_f)) ? 	'_X_ '.$valor10->nombre : '___ '.$valor10->nombre );
+	$fila++;
+}
+
+$hoja->mergeCells("A{$fila}:G{$fila}");
+$hoja->mergeCells("H{$fila}:I{$fila}");
+$hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($bordes_externos);
+$hoja->setCellValue("A{$fila}", '¿Cuánto considera que recibe por utilidades netas mensuales aproximadamente?');
+$hoja->setCellValue("H{$fila}", $unidad_productiva->utilidades_netas);
+$fila++;
+
+$hoja->mergeCells("A{$fila}:D{$fila}");
+$hoja->mergeCells("H{$fila}:I{$fila}");
+$hoja->getStyle("A{$fila}:F{$fila}")->applyFromArray($bordes_externos);
+$hoja->getStyle("G{$fila}:I{$fila}")->applyFromArray($bordes_externos);
+$hoja->setDinamicSizeRow('En caso de poder continuar la actividad, estaría interesado', $fila, 'A:D');
+$hoja->setCellValue("E{$fila}", ($unidad_productiva->continua_actividad) ? "SI _X_" : "SI ___");
+$hoja->setCellValue("F{$fila}", (!$unidad_productiva->continua_actividad) ? "NO _X_" : "NO ___");
+$hoja->setCellValue("G{$fila}", '¿Por qué?');
+$hoja->setDinamicSizeRow($unidad_productiva->continua_actividad_razon, $fila, 'H:I');
+$hoja->getStyle("A{$fila_aux}:I{$fila}")->applyFromArray($borde_negrita_externo);
+$fila++;
+
+$hoja->mergeCells("A{$fila}:I{$fila}");
+array_push($filas_estrechas, $fila);
+$fila++;
+
+$fila_aux = $fila;
+$hoja->mergeCells("A{$fila}:I{$fila}");
+$hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($relleno_gris);
+$hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($negrita);
+$hoja->setCellValue("A{$fila}", '3. ARRENDADORES');
+$fila++;
+
+$hoja->mergeCells("B{$fila}:F{$fila}");
+$hoja->mergeCells("H{$fila}:I{$fila}");
+$hoja->getStyle("A{$fila}:F{$fila}")->applyFromArray($bordes_externos);
+$hoja->getStyle("G{$fila}:I{$fila}")->applyFromArray($bordes_externos);
+$hoja->setCellValue("A{$fila}", 'Nombre');
+$hoja->setCellValue("B{$fila}", $unidad_productiva->nombre_arrendador);
+$hoja->setCellValue("G{$fila}", 'Identificación');
+$hoja->setCellValue("H{$fila}", $unidad_productiva->identificacion_arrendador);
+$fila++;
+
+$hoja->mergeCells("A{$fila}:C{$fila}");
+$hoja->mergeCells("D{$fila}:I{$fila}");
+$hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($bordes_externos);
+$hoja->setCellValue("A{$fila}", 'Datos de verificación');
+$hoja->setDinamicSizeRow($unidad_productiva->datos_contacto, $fila, 'D:I');
+$fila++;
+
+$hoja->mergeCells("A{$fila}:I{$fila}");
+$hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($bordes_externos);
+$hoja->setCellValue("A{$fila}", 'Contratos de arrendamiento en ejecución');
+$fila++;
+
+$hoja->mergeCells("A{$fila}:C{$fila}");
+$hoja->mergeCells("D{$fila}:E{$fila}");
+$hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($bordes);
+$hoja->setCellValue("A{$fila}", 'Nombre e identificación del arrendatario');
+$hoja->setCellValue("D{$fila}", 'Objeto del contrato');
+$hoja->setCellValue("F{$fila}", 'Fecha suscripción');
+$hoja->setCellValue("G{$fila}", 'Fecha terminación');
+$hoja->setCellValue("H{$fila}", 'Valor canon mensual');
+$hoja->setDinamicSizeRow('Valor terminacion anticipada', $fila, 'I:J');
+$fila++;
+
+
+$arrendatarios = array(	'nombre_arrendatario1' => $unidad_productiva->nombre_arrendatario1,
+						'nombre_arrendatario2' => $unidad_productiva->nombre_arrendatario2,
+						'nombre_arrendatario3' => $unidad_productiva->nombre_arrendatario3,
+						'nombre_arrendatario4' => $unidad_productiva->nombre_arrendatario4,
+						'nombre_arrendatario5' => $unidad_productiva->nombre_arrendatario5,
+						'objeto_contrato1' => $unidad_productiva->objeto_contrato1,
+						'objeto_contrato2' => $unidad_productiva->objeto_contrato2,
+						'objeto_contrato3' => $unidad_productiva->objeto_contrato3,
+						'objeto_contrato4' => $unidad_productiva->objeto_contrato4,
+						'objeto_contrato5' => $unidad_productiva->objeto_contrato5,
+						'fecha_suscripcion1' => $unidad_productiva->fecha_suscripcion1,
+						'fecha_suscripcion2' => $unidad_productiva->fecha_suscripcion2,
+						'fecha_suscripcion3' => $unidad_productiva->fecha_suscripcion3,
+						'fecha_suscripcion4' => $unidad_productiva->fecha_suscripcion4,
+						'fecha_suscripcion5' => $unidad_productiva->fecha_suscripcion5,
+						'fecha_terminacion1' => $unidad_productiva->fecha_terminacion1,
+						'fecha_terminacion2' => $unidad_productiva->fecha_terminacion2,
+						'fecha_terminacion3' => $unidad_productiva->fecha_terminacion3,
+						'fecha_terminacion4' => $unidad_productiva->fecha_terminacion4,
+						'fecha_terminacion5' => $unidad_productiva->fecha_terminacion5,
+						'valor_canon_mensual1' => $unidad_productiva->valor_canon_mensual1,
+						'valor_canon_mensual2' => $unidad_productiva->valor_canon_mensual2,
+						'valor_canon_mensual3' => $unidad_productiva->valor_canon_mensual3,
+						'valor_canon_mensual4' => $unidad_productiva->valor_canon_mensual4,
+						'valor_canon_mensual5' => $unidad_productiva->valor_canon_mensual5,
+						'valor_terminacion_anticipada1' => $unidad_productiva->valor_terminacion_anticipada1,
+						'valor_terminacion_anticipada2' => $unidad_productiva->valor_terminacion_anticipada2,
+						'valor_terminacion_anticipada3' => $unidad_productiva->valor_terminacion_anticipada3,
+						'valor_terminacion_anticipada4' => $unidad_productiva->valor_terminacion_anticipada4,
+						'valor_terminacion_anticipada5' => $unidad_productiva->valor_terminacion_anticipada5);
+
+
+
+for ($i=1; $i <= 5 ; $i++) {
+	if (!$arrendatarios['nombre_arrendatario'.$i]) {break;}
+	$hoja->mergeCells("A{$fila}:C{$fila}");
+	$hoja->mergeCells("D{$fila}:E{$fila}");
+	$hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($bordes);
+	$hoja->setCellValue("A{$fila}", $arrendatarios['nombre_arrendatario'.$i]);
+	$hoja->setCellValue("D{$fila}", $arrendatarios['objeto_contrato'.$i]);
+	$hoja->setCellValue("F{$fila}", $arrendatarios['fecha_suscripcion'.$i]);
+	$hoja->setCellValue("G{$fila}", $arrendatarios['fecha_terminacion'.$i]);
+	$hoja->setCellValue("H{$fila}", $arrendatarios['valor_canon_mensual'.$i]);
+	$hoja->setCellValue("I{$fila}", $arrendatarios['valor_terminacion_anticipada'.$i]);
+	$fila++;
+}
+
+$fila--;
+$hoja->getStyle("A{$fila_aux}:I{$fila}")->applyFromArray($borde_negrita_externo);
+$fila++;
+
+$hoja->mergeCells("A{$fila}:I{$fila}");
+array_push($filas_estrechas, $fila);
+$fila++;
+
+
+$fila_aux = $fila;
+$hoja->mergeCells("A{$fila}:I{$fila}");
+$hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($relleno_gris);
+$hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($negrita);
+$hoja->getStyle("A{$fila_aux}:I{$fila}")->applyFromArray($bordes);
+$hoja->setCellValue("A{$fila}", '4. APORTE DE DOCUMENTOS');
+$fila++;
+
+$hoja->mergeCells("A{$fila}:I{$fila}");
+$hoja->getRowDimension($fila)->setRowHeight(35);
+$fila++;
+
+$fila--;
+$hoja->getStyle("A{$fila_aux}:I{$fila}")->applyFromArray($borde_negrita_externo);
+$fila++;
+
+$hoja->mergeCells("A{$fila}:I{$fila}");
+array_push($filas_estrechas, $fila);
+$fila++;
+
+$fila_aux = $fila;
+$hoja->mergeCells("A{$fila}:C{$fila}");
+$hoja->mergeCells("D{$fila}:F{$fila}");
+$hoja->mergeCells("G{$fila}:I{$fila}");
+$hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($relleno_gris);
+$hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($bordes);
+$hoja->setCellValue("A{$fila}", 'Fecha de levantamiento de la información');
+$hoja->setCellValue("D{$fila}", 'El profesional social certifica que en la fecha se levantó la información contenida en el presente documento');
+$hoja->setDinamicSizeRow('El titular de la actividad certifica que en la fecha atendió personalmente la entrevista, y verificó la contenida en el presente documento', $fila, 'G:I');
+$fila++;
+
+$hoja->mergeCells("A{$fila}:C{$fila}");
+$hoja->mergeCells("D{$fila}:F{$fila}");
+$hoja->mergeCells("G{$fila}:I{$fila}");
+$hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($bordes);
+$hoja->getRowDimension($fila)->setRowHeight(40);
+$hoja->getStyle("A{$fila_aux}:I{$fila}")->applyFromArray($borde_negrita_externo);
 
 // Asignación de las filas estrechas
 foreach ($filas_estrechas as $f) {
