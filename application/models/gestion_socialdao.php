@@ -14,6 +14,17 @@ class Gestion_socialDAO extends CI_Model
         }
 	}
 
+	function actualizar_diagnostico($ficha, $datos, $tipo=null, $id=null){
+		if ($tipo) {
+			$this->db->where($tipo, $id);
+		}
+		$this->db->where('ficha_predial', $ficha);
+		if($this->db->update('tbl_diagnostico_social', $datos)){
+			//Retorna verdadero
+			return true;
+		}
+	}
+
 	function actualizar_usr($id, $datos){
 		$this->db->where('id', $id);
 		if($this->db->update('tbl_unidades_sociales_residentes', $datos)){
@@ -36,11 +47,27 @@ class Gestion_socialDAO extends CI_Model
 	 	return $this->db->get('tbl_ficha_social')->row();
 	}
 
+	function cargar_diagnostico($ficha_predial, $tipo=null, $id=null){
+		$this->db->select('*');
+		if ($tipo) {
+			$this->db->where($tipo, $id);
+		}
+		$this->db->where('ficha_predial', $ficha_predial);
+		return $this->db->get('tbl_diagnostico_social')->row();
+	}
+
 	function cargar_valores_ficha($id_lista){
 		$this->db->select('*');
 		$this->db->where('id_lista_social', $id_lista);
 		$this->db->order_by('nombre');
 	 	return $this->db->get('tbl_valores_social')->result();
+	}
+
+	function cargar_valor_ficha($id)
+	{
+		$this->db->select('*');
+		$this->db->where('id', $id);
+	 	return $this->db->get('tbl_valores_social')->row();
 	}
 
 	function cargar_valores_ficha_social($ficha, $id_unidad_social){
@@ -58,6 +85,12 @@ class Gestion_socialDAO extends CI_Model
 
 	function insertar_ficha($datos){
 		if($this->db->insert('tbl_ficha_social', $datos)){
+			return true;
+		}
+	}
+
+	function insertar_diagnostico($datos){
+		if($this->db->insert('tbl_diagnostico_social', $datos)){
 			return true;
 		}
 	}
