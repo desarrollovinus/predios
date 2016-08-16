@@ -21,7 +21,7 @@ $objPHPExcel->getDefaultStyle()->getAlignment()->setVertical(PHPExcel_Style_Alig
 
 //Se establece la configuracion de la pagina
 // $objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE); //Orientacion horizontal
-$hoja->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_LEGAL); //Tamano oficio
+$hoja->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_LETTER); //Tamano carta
 $hoja->getPageSetup()->setScale(90);
 
 //Se indica el rango de filas que se van a repetir en el momento de imprimir. (Encabezado del reporte)
@@ -32,9 +32,9 @@ $hoja->setTitle("Unidad social productiva");
 
 //Se establecen las margenes
 $hoja->getPageMargins()->setTop(0.10); //Arriba
-$hoja->getPageMargins()->setRight(0.70); //Derecha
-$hoja->getPageMargins()->setLeft(0.80); //Izquierda
-$hoja->getPageMargins()->setBottom(0,90); //Abajo
+$hoja->getPageMargins()->setRight(0); //Derecha
+$hoja->getPageMargins()->setLeft(0.7); //Izquierda
+$hoja->getPageMargins()->setBottom(0.3); //Abajo
 
 //Centrar página
 $hoja->getPageSetup()->setHorizontalCentered();
@@ -87,6 +87,12 @@ $borde_negrita_externo = array(
 			'color' => array('argb' => '000000'),
 		),
 	),
+);
+
+$texto_izquierda = array(
+    'alignment' => array(
+        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+    )
 );
 
  // variable para guardar valor tamaño de una fila estrecha y el numero de la fila
@@ -291,7 +297,6 @@ $fila++;
 
 $hoja->mergeCells("A{$fila}:I{$fila}");
 $hoja->setCellValue("A{$fila}", '¿Cuenta con los siguientes documentos para el desarrollo de la actividad?');
-$hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($bordes);
 $fila++;
 
 $valores_f = array();
@@ -300,11 +305,27 @@ foreach ($valores_fichas as $valor_ficha) {
 	array_push($valores_f, $valor_ficha->id_valor_social);
 }
 
+$col1 = 'A';
+$col2 = 'C';
+$contador = 1;
+
 foreach ($this->Gestion_socialDAO->cargar_valores_ficha(10) as $valor10) {
-	$hoja->mergeCells("A{$fila}:C{$fila}");
-	$hoja->setCellValue("A{$fila}", (in_array($valor10->id, $valores_f)) ? 	'_X_ '.$valor10->nombre : '___ '.$valor10->nombre );
-	$fila++;
+	$hoja->mergeCells("{$col1}{$fila}:{$col2}{$fila}");
+    $hoja->getStyle("{$col1}{$fila}:{$col2}{$fila}")->applyFromArray($texto_izquierda);
+	$hoja->setCellValue("{$col1}{$fila}", (in_array($valor10->id, $valores_f)) ? 	'_X_ '.$valor10->nombre : '___ '.$valor10->nombre );
+
+    if ($contador % 3 == 0) {
+        for ($i=0; $i < 3; $i++) {
+            $col1++;
+            $col2++;
+        }
+        $fila -= 3;
+    }
+    $contador++;
+    $fila++;
 }
+
+$fila += 3;
 
 $hoja->mergeCells("A{$fila}:G{$fila}");
 $hoja->mergeCells("H{$fila}:I{$fila}");
@@ -459,9 +480,9 @@ $fila++;
 
 $hoja->mergeCells("A{$fila}:C{$fila}");
 $hoja->mergeCells("D{$fila}:F{$fila}");
-$hoja->mergeCells("G{$fila}:I{$fila}");
+$hoja->mergeCells("G{$fila}:H{$fila}");
 $hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($bordes);
-$hoja->getRowDimension($fila)->setRowHeight(40);
+$hoja->getRowDimension($fila)->setRowHeight(60);
 $hoja->getStyle("A{$fila_aux}:I{$fila}")->applyFromArray($borde_negrita_externo);
 
 // Asignación de las filas estrechas
