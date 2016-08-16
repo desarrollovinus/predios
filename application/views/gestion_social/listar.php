@@ -25,12 +25,11 @@
 						<a onclick="javascript:editar('<?php echo $ficha->id_predio; ?>', '<?php echo $ficha->ficha_predial; ?>')" style="cursor: pointer">
 							<img src="<?php echo base_url(); ?>img/edit.png" title="Editar información">
 						</a>
-
-						<?php echo anchor("informes_controller/ficha_social_general/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización general"'); ?>
-						<?php echo anchor("archivos_controller/ver_fotos?ficha=".$ficha->ficha_predial."&tipo=2", '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"'); ?>
 						<a onclick="javascript:archivos_social('<?php echo $ficha->ficha_predial; ?>')" style="cursor: pointer">
 							<img src="<?php echo base_url(); ?>img/archivos.png" title="Subir archivos">
 						</a>
+						<?php echo anchor("archivos_controller/ver_fotos?ficha=".$ficha->ficha_predial."&tipo=2", '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"'); ?>
+						<?php echo anchor("informes_controller/ficha_social_general/".str_replace(' ', '_', $ficha->ficha_predial), '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización general"'); ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>
