@@ -54,9 +54,9 @@ a, a:visited {
 }
 #logo{
 	/*background:url(../img/logo.jpg) no-repeat;*/
-	background:url(../img/logo.png) no-repeat;
-	width:310px;
-	height:100px;
+	/*background:url(../img/logo_vinus_horizontal.png) no-repeat;*/
+	/*width:310px;*/
+	/*height:10px;*/
 	float:left;
 	margin-left:25px;
 	margin-top:10px;
