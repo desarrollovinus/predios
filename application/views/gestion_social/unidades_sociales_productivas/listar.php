@@ -25,14 +25,14 @@
 				<td align="right"><?= $usp->fotos; ?></td>
 				<td align="right"><?= $usp->archivos; ?></td>
 				<td>
-					<?php echo anchor("informes_controller/ficha_social_usp/".str_replace(' ', '_', $usp->id), '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización unidad social productiva"'); ?>
 					<a onclick="javascript:editar('<?= $usp->id; ?>', '<?= $usp->ficha_predial; ?>')" style="cursor: pointer">
 						<img src="<?= base_url(); ?>img/edit.png" title="Editar unidad social productiva">
 					</a>
-					<?php echo anchor("archivos_controller/ver_fotos?ficha=".$usp->ficha_predial."&tipo=4&id=".$usp->id, '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"'); ?>
 					<a onclick="javascript:archivos_social('<?= $usp->ficha_predial; ?>', '<?= $usp->id ?>')" style="cursor: pointer">
 						<img src="<?= base_url(); ?>img/archivos.png" title="Subir archivos">
 					</a>
+					<?php echo anchor("archivos_controller/ver_fotos?ficha=".$usp->ficha_predial."&tipo=4&id=".$usp->id, '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"'); ?>
+					<?php echo anchor("informes_controller/ficha_social_usp/".str_replace(' ', '_', $usp->id), '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización unidad social productiva"'); ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>

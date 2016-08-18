@@ -28,11 +28,11 @@
 					<a onclick="javascript:editar('<?php echo $usr->id; ?>')" style="cursor: pointer">
 						<img src="<?php echo base_url(); ?>img/edit.png" title="Editar información">
 					</a>
-					<?php echo anchor("informes_controller/ficha_social_usr/". $usr->id, '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización general unidades residentes"'); ?>
-					<?php echo anchor("archivos_controller/ver_fotos?ficha=".$usr->ficha_predial."&tipo=3&id=".$usr->id, '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"'); ?>
 					<a onclick="javascript:archivos_social('<?= $usr->ficha_predial; ?>', '<?= $usr->id ?>')" style="cursor: pointer">
 						<img src="<?= base_url(); ?>img/archivos.png" title="Subir archivos">
 					</a>
+					<?php echo anchor("archivos_controller/ver_fotos?ficha=".$usr->ficha_predial."&tipo=3&id=".$usr->id, '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"'); ?>
+					<?php echo anchor("informes_controller/ficha_social_usr/". $usr->id, '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización general unidades residentes"'); ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>
