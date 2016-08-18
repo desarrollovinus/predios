@@ -218,7 +218,18 @@ $hoja->getStyle("A6:N6")->applyFromArray($bordes);
 $hoja->setCellValue('A6', 'Proyecto:');
 $hoja->setCellValue('C6', 'Vias del Nus');
 $hoja->setCellValue('F6', 'Ficha predial:');
-$hoja->setCellValue('H6', $ficha);
+
+$unidad = explode('-', $ficha); // Se divide la ficha para sacar unidad y número
+
+if (count($unidad) > 2) {
+	// Se pone en vez de F o M, Área
+	$nombre_ficha = "$unidad[0]-$unidad[1] Área $unidad[3]";
+} else {
+	// Ficha normal
+	$nombre_ficha = $ficha;
+} // if
+
+$hoja->setCellValue('H6', $nombre_ficha);
 $hoja->setCellValue('J6', 'Tramo:');
 $hoja->setCellValue('K6', $predio->tramo);
 
@@ -573,7 +584,7 @@ $objPHPExcel->getActiveSheet()->getStyle("A1:N{$fila}")->applyFromArray($borde_n
 //Se modifican los encabezados del HTTP para indicar que se envia un archivo de Excel.
 header('Cache-Control: max-age=0');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment; filename="'.$ficha.' - Caracterización general".xlsx"');
+header('Content-Disposition: attachment; filename="'.$nombre_ficha.' - Caracterización general".xlsx"');
 
 //Se genera el excel
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');

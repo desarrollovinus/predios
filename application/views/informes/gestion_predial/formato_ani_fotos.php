@@ -21,8 +21,19 @@ class PDF extends FPDF{
 	    $this->MultiCell(85,9, utf8_decode('PROYECTO CONCESIÓN VÍAS DEL NUS VINUS'),1,'C');
 	    $this->setX(52);
 	    $this->MultiCell(85,9, utf8_decode('REGISTRO FOTOGRÁFICO'),1,'C');
+
+	    $ficha = explode('-', $GLOBALS['ficha']);
+
+	    if (count($ficha) > 2) {
+			// Se pone en vez de F o M, Área
+			$nombre_ficha = "$ficha[0]-$ficha[1] Área $ficha[3]";
+		} else {
+			// Ficha normal
+			$nombre_ficha = $GLOBALS['ficha'];
+		} // if
+
 	    $this->setX(52);
-	    $this->MultiCell(85,9, utf8_decode('PREDIO '.$GLOBALS['ficha']),1,'C');
+	    $this->MultiCell(85,9, utf8_decode("PREDIO $nombre_ficha"),1,'C');
 
 	    // Logo Vinus
 	    $this->setXY(137,10);

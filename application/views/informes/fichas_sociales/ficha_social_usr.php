@@ -151,7 +151,19 @@ $hoja->mergeCells("K{$fila}:N{$fila}");
 $hoja->setCellValue("A{$fila}", "Proyecto:");
 $hoja->setCellValue("C{$fila}", "Vias del Nus");
 $hoja->setCellValue("F{$fila}", "Ficha predial:");
-$hoja->setCellValue("H{$fila}", $unidad_residente->ficha_predial);
+
+$unidad = explode('-', $unidad_residente->ficha_predial); // Se divide la ficha para sacar unidad y número
+
+if (count($unidad) > 2) {
+	// Se pone en vez de F o M, Área
+	$nombre_ficha = "$unidad[0]-$unidad[1] Área $unidad[3]";
+} else {
+	// Ficha normal
+	$nombre_ficha = $unidad_residente->ficha_predial;
+} // if
+
+
+$hoja->setCellValue("H{$fila}", $nombre_ficha);
 $hoja->setCellValue("J{$fila}", "Tramo:");
 $hoja->setCellValue("K{$fila}", $predio->tramo);
 $fila++;
@@ -448,7 +460,7 @@ foreach ($hoja->getMergeCells() as $cells) {
 
 header('Cache-Control: max-age=0');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment; filename="'.$unidad_residente->ficha_predial.' - Unidad social residente".xlsx"');
+header('Content-Disposition: attachment; filename="'.$unidad_residente->ficha_predial.' - Unidad Social Residente".xlsx"');
 
 //Se genera el excel
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
