@@ -119,7 +119,7 @@ if(count($fotos) > 0) {
 			$pdf->Ln();
 		}
 
-		if($cont % 6 == 0){
+		if($cont % 6 == 0 && count($fotos) < $cont){
 			$pdf->AddPage();
 		}
 
