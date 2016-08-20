@@ -33,6 +33,7 @@
 					</a>
 					<?php echo anchor("archivos_controller/ver_fotos?ficha=".$usr->ficha_predial."&tipo=3&id=".$usr->id, '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"'); ?>
 					<?php echo anchor("informes_controller/ficha_social_usr/". $usr->id, '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización general unidades residentes"'); ?>
+					<?php echo anchor("informes_controller/ficha_social_registro_fotos/".$usr->ficha_predial.'/3/'.$usr->id, '<img src="'.base_url().'img/pdf.png"', 'title="Generar registro fotográfico"'); ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>

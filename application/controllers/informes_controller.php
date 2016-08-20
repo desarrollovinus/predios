@@ -464,6 +464,17 @@ class Informes_controller extends CI_Controller
         $this->load->view('informes/fichas_sociales/ficha_social_usp', $this->data);
     }
 
+	function ficha_social_registro_fotos() {
+		$this->load->model(array('accionesDAO', 'InformesDAO'));
+		$ficha = $this->uri->segment(3);
+		$tipo = $this->uri->segment(4);
+		$id = $this->uri->segment(5);
+		$this->data['directorio'] = $this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos;
+		$this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($ficha);
+		$this->data['fotos'] = $this->accionesDAO->consultar_archivo($ficha, $tipo, 2, $id);
+		$this->load->view('informes/fichas_sociales/ficha_social_fotos', $this->data);
+	}
+
 	function gestion_predial_fotos(){
 		$ficha = $this->uri->segment(3);
 		$this->load->model('accionesDAO');
