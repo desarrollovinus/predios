@@ -730,8 +730,8 @@ $objPHPExcel->getActiveSheet()->setCellValue("R{$fila}", 'm2');
 // Contenido
 $objPHPExcel->getActiveSheet()->setCellValue("Q{$fila_area_total}", $predio->area_total_catastral);
 
-
 // Estilos
+$objPHPExcel->getActiveSheet()->getStyle("Q{$fila_area_total}")->getNumberFormat()->setFormatCode('#,##0.000');
 $objPHPExcel->getActiveSheet()->getStyle("Q{$fila}")->applyFromArray($borde_puntos_externo);
 $objPHPExcel->getActiveSheet()->getStyle("B{$fila}")->applyFromArray($negrita);
 
@@ -764,6 +764,7 @@ $objPHPExcel->getActiveSheet()->setCellValue("Q{$fila_area_requerida}", $predio-
 // Estilos
 $objPHPExcel->getActiveSheet()->getStyle("Q{$fila}")->applyFromArray($borde_puntos_externo);
 $objPHPExcel->getActiveSheet()->getStyle("B{$fila_M2}:J{$fila}")->applyFromArray($borde_puntos_externo);
+$objPHPExcel->getActiveSheet()->getStyle("Q{$fila_area_requerida}")->getNumberFormat()->setFormatCode('#,##0.000');
 
 // Aumento de fila
 $fila++;
@@ -785,11 +786,12 @@ $objPHPExcel->getActiveSheet()->setCellValue("M{$fila}", 'ÁREA REMANENTE');
 $objPHPExcel->getActiveSheet()->setCellValue("R{$fila}", 'm2');
 
 // Contenido
-$objPHPExcel->getActiveSheet()->setCellValue("Q{$fila_area_remanente}", $predio->area_residual);
+$objPHPExcel->getActiveSheet()->setCellValue("Q{$fila_area_remanente}", number_format($predio->area_residual, 3));
 
 // Estilos
 $objPHPExcel->getActiveSheet()->getStyle("Q{$fila}")->applyFromArray($borde_puntos_externo);
 $objPHPExcel->getActiveSheet()->getStyle("B{$fila}:G{$fila}")->applyFromArray($negrita);
+$objPHPExcel->getActiveSheet()->getStyle("Q{$fila_area_remanente}")->getNumberFormat()->setFormatCode('#,##0.000');
 
 // Aumento de fila
 $fila++;
@@ -814,6 +816,7 @@ $objPHPExcel->getActiveSheet()->setCellValue("Q{$fila_area_sobrante}", "=Q{$fila
 
 // Estilos
 $objPHPExcel->getActiveSheet()->getStyle("Q{$fila}")->applyFromArray($borde_puntos_externo);
+$objPHPExcel->getActiveSheet()->getStyle("Q{$fila_area_sobrante}")->getNumberFormat()->setFormatCode('#,##0.000');
 
 // Aumento de fila
 $fila++;
@@ -840,7 +843,7 @@ $objPHPExcel->getActiveSheet()->getStyle("M{$fila_M2}:M{$fila}")->applyFromArray
 $objPHPExcel->getActiveSheet()->getStyle("T{$fila_observaciones}:AD{$fila}")->applyFromArray($borde_puntos_externo);
 $objPHPExcel->getActiveSheet()->getStyle("B{$fila_elaboro}:E{$fila}")->applyFromArray($borde_puntos_externo);
 $objPHPExcel->getActiveSheet()->getStyle("G{$fila_elaboro}:J{$fila}")->applyFromArray($borde_puntos_externo);
-$objPHPExcel->getActiveSheet()->getStyle("Q{$fila_M2}:Q{$fila}")->getNumberFormat()->setFormatCode("#,##0");
+$objPHPExcel->getActiveSheet()->getStyle("Q{$fila}")->getNumberFormat()->setFormatCode('#,##0.000');
 
 // Datos
 $objPHPExcel->getActiveSheet()->setCellValue("Q{$fila}", "=Q{$fila_area_requerida}+Q{$fila_area_remanente}");
