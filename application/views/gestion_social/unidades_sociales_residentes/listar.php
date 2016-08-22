@@ -1,5 +1,11 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/demo_table_jui.css" type="text/css" />
-
+<img src="<?= base_url(); ?>img/edit.png" title="Actualizar" >: Actualizar Ficha
+<img src="<?= base_url(); ?>img/archivos.png" title="Subir archivos" >: Subir Archivos
+<img src="<?= base_url(); ?>img/camara.png" title="Subir fotos" >: Subir Fotos
+<img src="<?= base_url(); ?>img/excel.png" title="Generar formato caracterización general" >: Caracterización unidad social residente
+<img src="<?= base_url(); ?>img/pdf.png" title="Generar registro fotográfico" >: Registro fotográfico
+<img src="<?= base_url(); ?>img/pagos2.png" title="Diagnóstico socioecónomico" >: Diagnóstico socioecónomico
+<br><br>
 <input type="button" onclick="javascript:crear()" value="Nuevo">
 <br>
 

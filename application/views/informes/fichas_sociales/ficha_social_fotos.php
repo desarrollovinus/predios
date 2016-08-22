@@ -52,7 +52,7 @@ class PDF extends FPDF{
 }//Fin PDF
 
 // Creación del objeto de la clase heredada
-$pdf = new PDF('P','mm','Letter');
+$pdf = new PDF('P','mm','Legal');
 
 //Anadir pagina
 $pdf->AliasNbPages();
@@ -159,4 +159,4 @@ $pdf->Multicell(68, 20, '', 1, 'C');
 $pdf->setXY($pdf->GetX() + 118, $pdf->GetY() - 20);
 $pdf->Multicell(67, 20, '', 1, 'C');
 
-$pdf->Output($predio->ficha_predial.'.pdf', 'D');
+$pdf->Output($predio->ficha_predial.'.pdf', 'I');
