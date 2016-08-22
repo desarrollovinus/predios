@@ -67,7 +67,7 @@ $pdf->setXY(15, $pdf->GetY() + 15);
 
 // Datos generales
 $pdf->SetFont('Arial', 'B', 8);
-$pdf->Cell(180, 5, utf8_decode('1. DATOS GENERALES'), 1, 0, 'C');
+$pdf->Cell(191, 5, utf8_decode('1. DATOS GENERALES'), 1, 0, 'C');
 
 
 $pdf->setXY(16, $pdf->GetY() + 10);
@@ -85,7 +85,12 @@ $pdf->Cell(55, 1, utf8_decode('Dirección:  '.$predio->direccion), 0, 0, 'L');
 $pdf->setXY(16, $pdf->GetY() + 7);
 
 $pdf->Cell(45, 1, utf8_decode('Unidad social No.  1'), 0, 0, 'L');
-$pdf->Cell(55, 1, utf8_decode('Relación con el inmueble:  '.'MORADOR'), 0, 0, 'L');
+
+if ($tipo == 3 && isset($relacion_inmueble)) {
+	$pdf->Cell(55, 1, utf8_decode('Relación con el inmueble:  '.$relacion_inmueble), 0, 0, 'L');
+} else if($tipo == 4 && isset($relacion_inmueble)) {
+	$pdf->Cell(55, 1, utf8_decode('Relación con el inmueble:  '.$relacion_inmueble->nombre), 0, 0, 'L');
+}
 
 $pdf->setXY(15, $pdf->GetY() + 10);
 
@@ -111,7 +116,7 @@ foreach ($fotos as $foto) {
 
 	$pdf->SetFont('Arial','',9);
 	$pdf->SetX($x);
-	$pdf->Cell(80, 1, utf8_decode("   Registro No. $cont"), 0, 1, 'C');
+	$pdf->Cell(95, 1, utf8_decode("   Registro No. $cont"), 0, 1, 'C');
 	$pdf->SetX($x);
 	$pdf->Cell(95, 55, $pdf->Image(base_url().$directorio.'/'.$foto->archivo, $pdf->GetX()+3, $pdf->GetY()+3, null, 50),0,1,'C');
 
