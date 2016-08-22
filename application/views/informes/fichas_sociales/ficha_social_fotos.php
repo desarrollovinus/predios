@@ -52,7 +52,7 @@ class PDF extends FPDF{
 }//Fin PDF
 
 // Creación del objeto de la clase heredada
-$pdf = new PDF('P','mm','Letter');
+$pdf = new PDF('P','mm','Legal');
 
 //Anadir pagina
 $pdf->AliasNbPages();
@@ -67,7 +67,7 @@ $pdf->setXY(15, $pdf->GetY() + 15);
 
 // Datos generales
 $pdf->SetFont('Arial', 'B', 8);
-$pdf->Cell(180, 5, utf8_decode('1. DATOS GENERALES'), 1, 0, 'C');
+$pdf->Cell(191, 5, utf8_decode('1. DATOS GENERALES'), 1, 0, 'C');
 
 
 $pdf->setXY(16, $pdf->GetY() + 10);
@@ -85,7 +85,12 @@ $pdf->Cell(55, 1, utf8_decode('Dirección:  '.$predio->direccion), 0, 0, 'L');
 $pdf->setXY(16, $pdf->GetY() + 7);
 
 $pdf->Cell(45, 1, utf8_decode('Unidad social No.  1'), 0, 0, 'L');
-$pdf->Cell(55, 1, utf8_decode('Relación con el inmueble:  '.'MORADOR'), 0, 0, 'L');
+
+if ($tipo == 3 && isset($relacion_inmueble)) {
+	$pdf->Cell(55, 1, utf8_decode('Relación con el inmueble:  '.$relacion_inmueble), 0, 0, 'L');
+} else if($tipo == 4 && isset($relacion_inmueble)) {
+	$pdf->Cell(55, 1, utf8_decode('Relación con el inmueble:  '.$relacion_inmueble->nombre), 0, 0, 'L');
+}
 
 $pdf->setXY(15, $pdf->GetY() + 10);
 
@@ -98,20 +103,21 @@ foreach ($fotos as $foto) {
 	$descripcion =(isset($foto->descripcion)) ? utf8_decode($foto->descripcion) : $descripcion = "";
 
 	if ($cont % 2 != 0) {
-		$pdf->setY($pdf->GetY() + 6);
+		$pdf->setY($pdf->GetY() + 36);
 		$x = $pdf->GetX();
 		$y = $pdf->GetY();
 		$pdf->Ln();
 	} else {
-		$pdf->setXY(110, $pdf->GetY() - 61);
+		$pdf->setXY(115, $pdf->GetY() - 61);
 		$x = $pdf->GetX();
 		$y = $pdf->GetY();
 	}
 
+	if ($cont == 1) { $pdf->setY($pdf->GetY() - 30); }
 
 	$pdf->SetFont('Arial','',9);
 	$pdf->SetX($x);
-	$pdf->Cell(80, 1, utf8_decode("   Registro No. $cont"), 0, 1, 'C');
+	$pdf->Cell(95, 1, utf8_decode("   Registro No. $cont"), 0, 1, 'C');
 	$pdf->SetX($x);
 	$pdf->Cell(95, 55, $pdf->Image(base_url().$directorio.'/'.$foto->archivo, $pdf->GetX()+3, $pdf->GetY()+3, null, 50),0,1,'C');
 
@@ -138,7 +144,7 @@ foreach ($fotos as $foto) {
 
 	$cont++;
 }
-$pdf->setXY(15, 220);
+$pdf->setXY(15, 290);
 $pdf->Multicell(50, 5, utf8_decode("Fecha de levantamiento de la información:"), 1, 'L');
 $pdf->setXY(65, $pdf->GetY() - 10);
 $pdf->Multicell(135, 5, utf8_decode("El profesional Social certifica que en la fecha levantó la información contenida en el presente documento:"), 1, 'L');

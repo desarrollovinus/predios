@@ -1,6 +1,6 @@
 <?php
 //Zona horaria
-error_reporting(-1);
+// error_reporting(-1);
 date_default_timezone_set('America/Bogota');
 
 //Se carga la librer&iacute;a de PDF y la libreria de impresion rapida
@@ -465,13 +465,23 @@ class Informes_controller extends CI_Controller
     }
 
 	function ficha_social_registro_fotos() {
-		$this->load->model(array('accionesDAO', 'InformesDAO'));
+		$this->load->model(array('accionesDAO', 'InformesDAO', 'Gestion_socialDAO'));
 		$ficha = $this->uri->segment(3);
 		$tipo = $this->uri->segment(4);
 		$id = $this->uri->segment(5);
+
+		if ($tipo == 3) {
+			$usr = $this->Gestion_socialDAO->cargar_unidad_social_residente($id);
+			$this->data['relacion_inmueble'] = $usr->relacion_inmueble;
+		} else if($tipo == 4) {
+			$usp = $this->Gestion_socialDAO->cargar_unidad_social_productiva($id);
+			$this->data['relacion_inmueble'] = $this->Gestion_socialDAO->cargar_valor_ficha($usp->relacion_inmueble);
+		}
+
 		$this->data['directorio'] = $this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos;
 		$this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($ficha);
 		$this->data['fotos'] = $this->accionesDAO->consultar_archivo($ficha, $tipo, 2, $id);
+		$this->data['tipo'] = $tipo;
 		$this->load->view('informes/fichas_sociales/ficha_social_fotos', $this->data);
 	}
 
