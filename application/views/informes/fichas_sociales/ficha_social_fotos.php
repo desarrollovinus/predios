@@ -103,16 +103,17 @@ foreach ($fotos as $foto) {
 	$descripcion =(isset($foto->descripcion)) ? utf8_decode($foto->descripcion) : $descripcion = "";
 
 	if ($cont % 2 != 0) {
-		$pdf->setY($pdf->GetY() + 6);
+		$pdf->setY($pdf->GetY() + 36);
 		$x = $pdf->GetX();
 		$y = $pdf->GetY();
 		$pdf->Ln();
 	} else {
-		$pdf->setXY(110, $pdf->GetY() - 61);
+		$pdf->setXY(115, $pdf->GetY() - 61);
 		$x = $pdf->GetX();
 		$y = $pdf->GetY();
 	}
 
+	if ($cont == 1) { $pdf->setY($pdf->GetY() - 30); }
 
 	$pdf->SetFont('Arial','',9);
 	$pdf->SetX($x);
@@ -143,7 +144,7 @@ foreach ($fotos as $foto) {
 
 	$cont++;
 }
-$pdf->setXY(15, 220);
+$pdf->setXY(15, 290);
 $pdf->Multicell(50, 5, utf8_decode("Fecha de levantamiento de la información:"), 1, 'L');
 $pdf->setXY(65, $pdf->GetY() - 10);
 $pdf->Multicell(135, 5, utf8_decode("El profesional Social certifica que en la fecha levantó la información contenida en el presente documento:"), 1, 'L');
@@ -159,4 +160,4 @@ $pdf->Multicell(68, 20, '', 1, 'C');
 $pdf->setXY($pdf->GetX() + 118, $pdf->GetY() - 20);
 $pdf->Multicell(67, 20, '', 1, 'C');
 
-$pdf->Output($predio->ficha_predial.'.pdf', 'I');
+$pdf->Output($predio->ficha_predial.'.pdf', 'D');
