@@ -33,6 +33,7 @@
 					</a>
 					<?php echo anchor("archivos_controller/ver_fotos?ficha=".$usp->ficha_predial."&tipo=4&id=".$usp->id, '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"'); ?>
 					<?php echo anchor("informes_controller/ficha_social_usp/".str_replace(' ', '_', $usp->id), '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización unidad social productiva"'); ?>
+					<?php echo anchor("informes_controller/ficha_social_registro_fotos/".$usp->ficha_predial.'/4/'.$usp->id, '<img src="'.base_url().'img/pdf.png"', 'title="Generar registro fotográfico"'); ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>

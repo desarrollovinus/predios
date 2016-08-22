@@ -63,7 +63,7 @@ class PDF extends FPDF{
 	    //Se define la fuente del footer
 	    $this->SetFont('Arial','',8);
 	    // Número de página
-	    $this->Cell(0,10, utf8_decode('Sistema de Pestión Predial - Página ').$this->PageNo().' de {nb}',0,0,'R');
+	    $this->Cell(0,10, utf8_decode('Sistema de Gestión Predial - Página ').$this->PageNo().' de {nb}',0,0,'R');
 	}
 }//Fin PDF
 
@@ -130,7 +130,7 @@ if(count($fotos) > 0) {
 			$pdf->Ln();
 		}
 
-		if($cont % 6 == 0){
+		if($cont % 6 == 0 && count($fotos) < $cont){
 			$pdf->AddPage();
 		}
 
