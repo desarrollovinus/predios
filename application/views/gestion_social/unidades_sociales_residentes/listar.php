@@ -18,7 +18,7 @@
 			<th>Integrantes</th>
 			<th>Fotos</th>
 			<th>Archivos</th>
-			<th width="20%">Opciones</th>
+			<th width="25%">Opciones</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -40,6 +40,7 @@
 					<?php echo anchor("archivos_controller/ver_fotos?ficha=".$usr->ficha_predial."&tipo=3&id=".$usr->id, '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"'); ?>
 					<?php echo anchor("informes_controller/ficha_social_usr/". $usr->id, '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización general unidades residentes"'); ?>
 					<?php echo anchor("informes_controller/ficha_social_registro_fotos/".$usr->ficha_predial.'/3/'.$usr->id, '<img src="'.base_url().'img/pdf.png"', 'title="Generar registro fotográfico"'); ?>
+					<?php echo anchor("informes_controller/diagnostico_socioeconomico/".$usr->ficha_predial.'/3/'.$usr->id, '<img src="'.base_url().'img/pagos2.png"', 'title="Generar diagnóstico socioeconómico"'); ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>
