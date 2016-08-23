@@ -1,5 +1,11 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/demo_table_jui.css" type="text/css" />
-
+<img src="<?= base_url(); ?>img/edit.png" title="Actualizar" >: Actualizar Ficha
+<img src="<?= base_url(); ?>img/archivos.png" title="Subir archivos" >: Subir Archivos
+<img src="<?= base_url(); ?>img/camara.png" title="Subir fotos" >: Subir Fotos
+<img src="<?= base_url(); ?>img/excel.png" title="Generar formato caracterización general" >: Caracterización unidad social residente
+<img src="<?= base_url(); ?>img/pdf.png" title="Generar registro fotográfico" >: Registro fotográfico
+<img src="<?= base_url(); ?>img/pagos2.png" title="Diagnóstico socioecónomico" >: Diagnóstico socioecónomico
+<br><br>
 <input type="button" onclick="javascript:crear()" value="Nuevo">
 <br>
 
@@ -12,7 +18,7 @@
 			<th>Integrantes</th>
 			<th>Fotos</th>
 			<th>Archivos</th>
-			<th width="20%">Opciones</th>
+			<th width="25%">Opciones</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -34,6 +40,7 @@
 					<?php echo anchor("archivos_controller/ver_fotos?ficha=".$usr->ficha_predial."&tipo=3&id=".$usr->id, '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"'); ?>
 					<?php echo anchor("informes_controller/ficha_social_usr/". $usr->id, '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización general unidades residentes"'); ?>
 					<?php echo anchor("informes_controller/ficha_social_registro_fotos/".$usr->ficha_predial.'/3/'.$usr->id, '<img src="'.base_url().'img/pdf.png"', 'title="Generar registro fotográfico"'); ?>
+					<?php echo anchor("informes_controller/diagnostico_socioeconomico/".$usr->ficha_predial.'/3/'.$usr->id, '<img src="'.base_url().'img/pagos2.png"', 'title="Generar diagnóstico socioeconómico"'); ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>
