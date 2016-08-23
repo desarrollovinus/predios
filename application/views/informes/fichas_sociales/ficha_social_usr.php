@@ -439,7 +439,7 @@ foreach ($filas_estrechas as $f) {
 	$hoja->getRowDimension($f)->setRowHeight(5.7);
 }
 
-//sin bordes
+// alineacion a la izquierda
 foreach ($izquierda as $f) {
 	$hoja->getStyle("A{$f}:N{$f}")->applyFromArray($izquierda_align);
 }

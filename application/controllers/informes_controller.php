@@ -457,12 +457,15 @@ class Informes_controller extends CI_Controller
 	}
 
     function ficha_social_usp() {
-        $this->load->model(array('Gestion_socialDAO', 'InformesDAO'));
-        $this->data['id'] = $this->uri->segment(3);
+        $this->load->model(array('Gestion_socialDAO', 'InformesDAO', 'accionesDAO'));
+		$id = $this->uri->segment(3);
+		$this->data["id"] = $id;
         $this->data['unidad_productiva'] = $this->Gestion_socialDAO->cargar_unidad_social_productiva($this->data["id"]);
+		$ficha = $this->data["unidad_productiva"]->ficha_predial;
         $this->data['relacion_inmueble'] = $this->Gestion_socialDAO->cargar_valor_ficha($this->data["unidad_productiva"]->relacion_inmueble);
-        $this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($this->data["unidad_productiva"]->ficha_predial);
-		$this->data['valores_fichas'] = $this->Gestion_socialDAO->cargar_valores_ficha_social($this->data["unidad_productiva"]->ficha_predial, $this->uri->segment(3));
+        $this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($ficha);
+		$this->data['valores_fichas'] = $this->Gestion_socialDAO->cargar_valores_ficha_social($ficha, $id);
+		$this->data['archivos'] = $this->accionesDAO->consultar_archivo($ficha, 4, 1, $id);
         $this->load->view('informes/fichas_sociales/ficha_social_usp', $this->data);
     }
 
