@@ -124,7 +124,7 @@ foreach ($fotos as $foto) {
 
 	$pdf->setXY(15, $pdf->GetY() + 4);
 	$pdf->SetX($x + 3);
-	$pdf->MultiCell(80, 3, utf8_decode("Descripción: $descripcion"), 0, 'L');
+	$pdf->MultiCell(80, 4, utf8_decode("Descripción: $descripcion"), 0, 'L');
 	$pdf->SetX($x);
 
 	$pdf->setXY(15, $pdf->GetY() + 4);
@@ -161,4 +161,4 @@ $pdf->Multicell(68, 20, '', 1, 'C');
 $pdf->setXY($pdf->GetX() + 118, $pdf->GetY() - 20);
 $pdf->Multicell(67, 20, '', 1, 'C');
 
-$pdf->Output($predio->ficha_predial.'.pdf', 'I');
+$pdf->Output($predio->ficha_predial.'.pdf', 'D');
