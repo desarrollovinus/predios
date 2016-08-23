@@ -120,7 +120,7 @@ $pdf->Cell(135, 10, utf8_decode(''), 1, 0, 'L');
 $pdf->setXY(67, $y);
 $pdf->MultiCell(118, 5, utf8_decode($diagnostico->apoyo_restablecimiento), 0, 'L');
 $pdf->setXY(185, $y + 5);
-$pdf->Cell(195, 5, number_format((float)$diagnostico->apoyo_restablecimiento_valor), 0, 'L');
+$pdf->Cell(195, 5, utf8_decode($diagnostico->apoyo_restablecimiento_valor), 0, 'L');
 $y += 10;
 
 $pdf->setXY(17, $y);
@@ -132,7 +132,7 @@ $pdf->Cell(135, 10, utf8_decode(''), 1, 0, 'L');
 $pdf->setXY(67, $y);
 $pdf->MultiCell(118, 5, utf8_decode($diagnostico->apoyo_moradores), 0, 'L');
 $pdf->setXY(185, $y + 5);
-$pdf->Cell(195, 5, number_format((float)($diagnostico->apoyo_moradores_valor)), 0, 'L');
+$pdf->Cell(195, 5, utf8_decode(($diagnostico->apoyo_moradores_valor)), 0, 'L');
 $y += 10;
 
 $pdf->setXY(17, $y);
@@ -144,7 +144,7 @@ $pdf->Cell(135, 10, utf8_decode(''), 1, 0, 'L');
 $pdf->setXY(67, $y);
 $pdf->MultiCell(118, 5, utf8_decode($diagnostico->apoyo_tramites), 0, 'L');
 $pdf->setXY(185, $y + 5);
-$pdf->Cell(195, 5, number_format((float)($diagnostico->apoyo_tramites_valor)), 0, 'L');
+$pdf->Cell(195, 5, utf8_decode(($diagnostico->apoyo_tramites_valor)), 0, 'L');
 $y += 10;
 
 $pdf->setXY(17, $y);
@@ -156,7 +156,7 @@ $pdf->Cell(135, 10, utf8_decode(''), 1, 0, 'L');
 $pdf->setXY(67, $y);
 $pdf->MultiCell(118, 5, utf8_decode($diagnostico->apoyo_movilizacion), 0, 'L');
 $pdf->setXY(185, $y + 5);
-$pdf->Cell(195, 5, number_format((float)($diagnostico->apoyo_movilizacion_valor)), 0, 'L');
+$pdf->Cell(195, 5, utf8_decode(($diagnostico->apoyo_movilizacion_valor)), 0, 'L');
 $y += 10;
 
 $pdf->setXY(17, $y);
@@ -168,7 +168,7 @@ $pdf->Cell(135, 10, utf8_decode(''), 1, 0, 'L');
 $pdf->setXY(67, $y);
 $pdf->MultiCell(118, 5, utf8_decode($diagnostico->restablecimiento_servicios), 0, 'L');
 $pdf->setXY(185, $y + 5);
-$pdf->Cell(195, 5, number_format((float)($diagnostico->restablecimiento_servicios_valor)), 0, 'L');
+$pdf->Cell(195, 5, utf8_decode(($diagnostico->restablecimiento_servicios_valor)), 0, 'L');
 $y += 10;
 
 $pdf->setXY(17, $y);
@@ -180,7 +180,7 @@ $pdf->Cell(135, 10, utf8_decode(''), 1, 0, 'L');
 $pdf->setXY(67, $y);
 $pdf->MultiCell(118, 5, utf8_decode($diagnostico->restablecimiento_economico), 0, 'L');
 $pdf->setXY(185, $y + 5);
-$pdf->Cell(195, 5, number_format((float)($diagnostico->restablecimiento_economico_valor)), 0, 'L');
+$pdf->Cell(195, 5, utf8_decode(($diagnostico->restablecimiento_economico_valor)), 0, 'L');
 $y += 10;
 
 $pdf->setXY(17, $y);
@@ -192,7 +192,7 @@ $pdf->Cell(135, 10, utf8_decode(''), 1, 0, 'L');
 $pdf->setXY(67, $y);
 $pdf->MultiCell(118, 5, utf8_decode($diagnostico->apoyo_arrendadores), 0, 'L');
 $pdf->setXY(185, $y + 5);
-$pdf->Cell(195, 5, number_format((float)($diagnostico->apoyo_arrendadores_valor)), 0, 'L');
+$pdf->Cell(195, 5, utf8_decode(($diagnostico->apoyo_arrendadores_valor)), 0, 'L');
 $y += 10;
 
 $pdf->SetFont('Arial', 'B', 8);
@@ -212,7 +212,7 @@ $total = (float)$diagnostico->apoyo_restablecimiento_valor +
 		 (float)$diagnostico->restablecimiento_economico_valor +
 		 (float)$diagnostico->apoyo_arrendadores_valor;
 
-$pdf->MultiCell(30, 5, utf8_decode('$ '. number_format((float)$total)), 0, 'L');
+$pdf->MultiCell(30, 5, '$ '. number_format((float)$total), 0, 'L');
 
 $pdf->setY(204);
 $pdf->MultiCell(191, 98, utf8_decode(''), 1, 'C');
