@@ -14,7 +14,7 @@
 			<th>Unidades productivas</th>
 			<th>Fotos</th>
 			<th>Archivos</th>
-			<th width="20%">Opciones</th>
+			<th width="25%">Opciones</th>
 		</tr>
 		<tbody>
 			<?php foreach ($fichas as $ficha): ?>
@@ -35,6 +35,7 @@
 						<?php echo anchor("archivos_controller/ver_fotos?ficha=".$ficha->ficha_predial."&tipo=2", '<img src="'.base_url().'img/camara.png"', 'title="Subir fotos"'); ?>
 						<?php echo anchor("informes_controller/ficha_social_general/".$ficha->ficha_predial.'/2', '<img src="'.base_url().'img/excel.png"', 'title="Generar formato de caracterización general"'); ?>
 						<?php echo anchor("informes_controller/ficha_social_registro_fotos/".$ficha->ficha_predial.'/2', '<img src="'.base_url().'img/pdf.png"', 'title="Generar registro fotográfico"'); ?>
+						<?php echo anchor("informes_controller/diagnostico_socioeconomico/".$ficha->ficha_predial.'/2', '<img src="'.base_url().'img/pagos2.png"', 'title="Generar diagnóstico socioeconómico"'); ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>

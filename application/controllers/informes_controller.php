@@ -485,6 +485,28 @@ class Informes_controller extends CI_Controller
 		$this->load->view('informes/fichas_sociales/ficha_social_fotos', $this->data);
 	}
 
+	function diagnostico_socioeconomico() {
+		$this->load->model(array('InformesDAO', 'Gestion_socialDAO'));
+		$ficha = $this->uri->segment(3);
+		$tipo = $this->uri->segment(4);
+		$id = $this->uri->segment(5);
+		$this->data['diagnostico'] = $this->Gestion_socialDAO->cargar_diagnostico($ficha);
+
+		if ($tipo == 3) {
+			$usr = $this->Gestion_socialDAO->cargar_unidad_social_residente($id);
+			$this->data['relacion_inmueble'] = $usr->relacion_inmueble;
+			$this->data['diagnostico'] = $this->Gestion_socialDAO->cargar_diagnostico($ficha, 'id_usr', $id);
+		} else if($tipo == 4) {
+			$usp = $this->Gestion_socialDAO->cargar_unidad_social_productiva($id);
+			$this->data['relacion_inmueble'] = $this->Gestion_socialDAO->cargar_valor_ficha($usp->relacion_inmueble);
+			$this->data['diagnostico'] = $this->Gestion_socialDAO->cargar_diagnostico($ficha, 'id_usp', $id);
+		}
+
+		$this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($ficha);
+		$this->data['tipo'] = $tipo;
+		$this->load->view('informes/fichas_sociales/diagnostico_socioeconomico', $this->data);
+	}
+
 	function gestion_predial_fotos(){
 		$ficha = $this->uri->segment(3);
 		$this->load->model('accionesDAO');
