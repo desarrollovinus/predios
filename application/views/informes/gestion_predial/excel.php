@@ -184,9 +184,19 @@ foreach ($predios as $predio) {
 
 	//Contenido
 	$objPHPExcel->getActiveSheet()->setCellValue('A'.$fila, $numero++);
+
 	$unidad = explode('-', $predio->ficha_predial); // Se divide la ficha para sacar unidad y número
+
+	if (count($unidad) > 2) {
+		// Se pone en vez de F o M, Área
+		$nombre_ficha = "$unidad[0]-$unidad[1] Área $unidad[3]";
+	} else {
+		// Ficha normal
+		$nombre_ficha = $predio->ficha_predial;
+	} // if
+	
 	$objPHPExcel->getActiveSheet()->setCellValue('B'.$fila, $unidad['0']);
-	$objPHPExcel->getActiveSheet()->setCellValue('C'.$fila, $predio->numero);
+	$objPHPExcel->getActiveSheet()->setCellValue('C'.$fila, $nombre_ficha);
 	$objPHPExcel->getActiveSheet()->setCellValue('D'.$fila, $predio->tramo);
 	$objPHPExcel->getActiveSheet()->setCellValue('E'.$fila, $kms_inicial."+".$ms_inicial);
 	$objPHPExcel->getActiveSheet()->setCellValue('F'.$fila, $kms_final."+".$ms_final);
