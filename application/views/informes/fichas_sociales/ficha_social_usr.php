@@ -392,11 +392,12 @@ $hoja->mergeCells("A{$fila}:N{$fila}");
 $hoja->getStyle("A{$fila}:N{$fila}")->applyFromArray($relleno_gris);
 $hoja->setCellValue("A{$fila}", "3. APORTE DE DOCUMENTOS");
 $fila++;
+$fila_aporte = $fila;
 
 $izquierda = array();
 foreach ($archivos as $archivo) {
 	$hoja->mergeCells("A{$fila}:N{$fila}");
-	$hoja->setCellValue("A{$fila}", '- '.$archivo->descripcion);
+	$hoja->setCellValue("A{$fila}", $archivo->descripcion);
 	array_push($izquierda, $fila);
 	$fila++;
 }
@@ -442,6 +443,10 @@ foreach ($filas_estrechas as $f) {
 // alineacion a la izquierda
 foreach ($izquierda as $f) {
 	$hoja->getStyle("A{$f}:N{$f}")->applyFromArray($izquierda_align);
+}
+
+if (count($archivos) == 0) {
+	$hoja->getRowDimension($fila_aporte)->setRowHeight(40);
 }
 
 // cambia los signos de interrogacion por ñ siempre y cuando solo exista el signo de cierre solamente

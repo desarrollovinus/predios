@@ -455,17 +455,19 @@ $hoja->getStyle("A{$fila}:I{$fila}")->applyFromArray($negrita);
 $hoja->getStyle("A{$fila_aux}:I{$fila}")->applyFromArray($bordes);
 $hoja->setCellValue("A{$fila}", '4. APORTE DE DOCUMENTOS');
 $fila++;
+$fila_aporte = $fila;
 
 $izquierda = array();
 foreach ($archivos as $archivo) {
 	$hoja->mergeCells("A{$fila}:I{$fila}");
 	$hoja->setCellValue("A{$fila}", "");
-	$hoja->setCellValue("A{$fila}", '- '.$archivo->descripcion);
+	$hoja->setCellValue("A{$fila}", $archivo->descripcion);
 	array_push($izquierda, $fila);
 	$fila++;
 }
 
-$fila--;
+if (count($archivos) > 0) { $fila--; }
+
 $hoja->getStyle("A{$fila_aux}:I{$fila}")->applyFromArray($borde_negrita_externo);
 $fila++;
 
@@ -499,6 +501,11 @@ foreach ($filas_estrechas as $f) {
 // alineacion a la izquierda
 foreach ($izquierda as $f) {
 	$hoja->getStyle("A{$f}:N{$f}")->applyFromArray($izquierda_align);
+}
+
+if (count($archivos) == 0) {
+	$hoja->getRowDimension($fila_aporte)->setRowHeight(40);
+	$hoja->getStyle("A{$fila_aporte}:I{$fila_aporte}")->applyFromArray($negrita);
 }
 
 header('Cache-Control: max-age=0');
