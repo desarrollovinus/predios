@@ -188,7 +188,18 @@ $hoja->getStyle("G{$fila}:I{$fila}")->applyFromArray($bordes_externos);
 $hoja->setCellValue("A{$fila}", 'Proyecto');
 $hoja->setCellValue("B{$fila}", 'Vías del Nus');
 $hoja->setCellValue("D{$fila}", 'Ficha predial');
-$hoja->setCellValue("E{$fila}", $predio->ficha_predial);
+
+$unidad = explode('-', $unidad_productiva->ficha_predial); // Se divide la ficha para sacar unidad y número
+
+if (count($unidad) > 2) {
+	// Se pone en vez de F o M, Área
+	$nombre_ficha = "$unidad[0]-$unidad[1] Área $unidad[3]";
+} else {
+	// Ficha normal
+	$nombre_ficha = $unidad_productiva->ficha_predial;
+} // if
+
+$hoja->setCellValue("E{$fila}", $nombre_ficha);
 $hoja->setCellValue("G{$fila}", 'Tramo');
 $hoja->setDinamicSizeRow($predio->tramo, $fila, 'H:I');
 $fila++;
@@ -503,7 +514,7 @@ foreach ($izquierda as $f) {
 
 header('Cache-Control: max-age=0');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment; filename="'.$unidad_productiva->ficha_predial.' - Unidad social residente".xlsx"');
+header('Content-Disposition: attachment; filename="'.$unidad_productiva->ficha_predial.' - Unidad Social Productiva".xlsx"');
 
 //Se genera el excel
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');

@@ -54,6 +54,7 @@ $negrita = array( 'font' => array( 'bold' => true ) ); // Negrita
 $tamanio8 = array ( 'font' => array( 'size' => 8 ) );// Tamaño de fuente 8
 $tamanio9 = array ( 'font' => array( 'size' => 9 ) );// Tamaño de fuente 9
 $tamanio11 = array ( 'font' => array( 'size' => 11 ) );// Tamaño de fuente 11
+$tamanio13 = array ( 'font' => array( 'size' => 13 ) );// Tamaño de fuente 14
 $tamanio14 = array ( 'font' => array( 'size' => 14 ) );// Tamaño de fuente 14
 $rojo = array( 'font' => array ( 'color' => array( 'argb' => 'FF0F0F' ) ) );
 $arial = array( 'font' => array( 'name' => 'Arial' ) ); // Arial
@@ -216,8 +217,6 @@ $objPHPExcel->getActiveSheet()->mergeCells('F26:I26');
 $objPHPExcel->getActiveSheet()->mergeCells('F28:I28');
 $objPHPExcel->getActiveSheet()->mergeCells('F30:I30');
 
-
-
 /**
  * Aplicacion de los estilos
  */
@@ -320,7 +319,7 @@ $objPHPExcel->getActiveSheet()->getStyle("A35:AD35")->applyFromArray($tamanio9);
 $objPHPExcel->getActiveSheet()->getStyle("B36:J36")->applyFromArray($centrado);
 $objPHPExcel->getActiveSheet()->getStyle("B36:J36")->applyFromArray($negrita);
 $objPHPExcel->getActiveSheet()->getStyle("T5")->applyFromArray($centrado);
-$objPHPExcel->getActiveSheet()->getStyle("S8")->applyFromArray($tamanio14);
+$objPHPExcel->getActiveSheet()->getStyle("S8")->applyFromArray($tamanio13);
 $objPHPExcel->getActiveSheet()->getStyle("Z5")->applyFromArray($centrado);
 $objPHPExcel->getActiveSheet()->getStyle("AC12")->getNumberFormat()->setFormatCode("#,##0");
 $objPHPExcel->getActiveSheet()->getStyle("F24:I30")->applyFromArray($centrado);
@@ -405,6 +404,14 @@ $objPHPExcel->getActiveSheet()->setCellValue('F30', 'USO DE VÍA');
 // Datos
 $unidad = explode('-', $ficha); // Se divide la ficha para sacar unidad y número
 
+if (count($unidad) > 2) {
+	// Se pone en vez de F o M, Área
+	$nombre_ficha = "$unidad[0]-$unidad[1] Área $unidad[3]";
+} else {
+	// Ficha normal
+	$nombre_ficha = $ficha;
+} // if
+
 // Para el abscisado inicial
 $ms_inicial = substr($predio->abscisa_inicial, -3);
 $kms_inicial = substr($predio->abscisa_inicial, 0, strlen($predio->abscisa_inicial) - 3);
@@ -431,8 +438,10 @@ if ($predio->numero_propietarios > 1) {
 	$propietarios_adicionales = "";
 }
 
+
 $objPHPExcel->getActiveSheet()->setCellValue('T5', $unidad['0']);
-$objPHPExcel->getActiveSheet()->setCellValue('S8', $ficha);
+$objPHPExcel->getActiveSheet()->setCellValue('S8', $nombre_ficha);
+// $objPHPExcel->getActiveSheet()->setCellValue('S8', $ficha);
 $objPHPExcel->getActiveSheet()->setCellValue('Z5', $predio->tramo);
 $objPHPExcel->getActiveSheet()->setCellValue('Z12', $predio->margen_inicial);
 $objPHPExcel->getActiveSheet()->setCellValue('Z13', $predio->margen_final);

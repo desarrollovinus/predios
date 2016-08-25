@@ -154,10 +154,20 @@ foreach ($unidades_funcionales as $unidad) {
 		/*
 		 * Definicion de la anchura de las columnas
 		 */
-		$hoja->getColumnDimension($columna)->setWidth(14);
+		$hoja->getColumnDimension($columna)->setWidth(16);
+
+		$ficha = explode('-', $predio->ficha_predial); // Se divide la ficha para sacar unidad y número
+
+		if (count($ficha) > 2) {
+			// Se pone en vez de F o M, Área
+			$nombre_ficha = "$ficha[0]-$ficha[1] Área $ficha[3]";
+		} else {
+			// Ficha normal
+			$nombre_ficha = $predio->ficha_predial;
+		} // if
 
 		// Número de predio
-		$hoja->setCellValue($columna.$fila, $predio->ficha_predial);
+		$hoja->setCellValue($columna.$fila, $nombre_ficha);
 		
 		// Aumento de fila
 		$fila++;
