@@ -16,16 +16,16 @@
     }
 
     .content-button a {
-        color: black;
-        border: 0.3em solid #ccc;
         font-size: 1.2em;
         padding: 10px 20px;
-        background: #fff;
         border-radius: 5px;
         display: inline-block;
-        margin-top: 20px;
+        margin-top: 30px;
     }
 </style>
+
+<h1 align='center'>Seleccione una o varias unidades funcionales para visualizar en el mapa</h1>
+
 <div class='wrap'>
     <div class="input-content">
         <?= form_label('UF1', 'UF1')?>
@@ -52,9 +52,11 @@
         <?= form_checkbox('UF5', '5')?>
     </div>
 
-    <div class='content-button '>
-        <a href="#" id="kml">Generar kml</a>
-    </div>
+    <center>
+        <div class='content-button'>
+            <a class='ui-button ui-widget ui-state-default ui-corner-all' href="#" id="kml">Generar Mapa</a>
+        </div>
+    <center>
 </div>
 
 <div id="error"></div>
