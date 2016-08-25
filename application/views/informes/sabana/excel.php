@@ -77,7 +77,7 @@ $bordes = array(
  * Definicion de la anchura de las columnas
  */
 $columna = "A";
-$objPHPExcel->getActiveSheet()->getColumnDimension($columna)->setWidth(8); $columna++;
+$objPHPExcel->getActiveSheet()->getColumnDimension($columna)->setWidth(14); $columna++;
 $objPHPExcel->getActiveSheet()->getColumnDimension($columna)->setWidth(10); $columna++;
 $objPHPExcel->getActiveSheet()->getColumnDimension($columna)->setWidth(20); $columna++;
 $objPHPExcel->getActiveSheet()->getColumnDimension($columna)->setWidth(25); $columna++;
@@ -576,8 +576,18 @@ foreach ($predios as $predio) {
 		$disponibilidad_derecha = $color_naranja;
 	} // if
 
+	$ficha = explode('-', $predio->ficha_predial); // Se divide la ficha para sacar unidad y número
+
+	if (count($ficha) > 2) {
+		// Se pone en vez de F o M, Área
+		$nombre_ficha = "$ficha[0]-$ficha[1] Área $ficha[3]";
+	} else {
+		// Ficha normal
+		$nombre_ficha = $predio->ficha_predial;
+	} // if
+
 	// Contenido
-	$objPHPExcel->getActiveSheet()->setCellValue("A$fila", $predio->ficha_predial);
+	$objPHPExcel->getActiveSheet()->setCellValue("A$fila", $nombre_ficha);
 	$objPHPExcel->getActiveSheet()->setCellValue("B$fila", $predio->numero);
 	$objPHPExcel->getActiveSheet()->setCellValue("C$fila", $predio->tramo);
 	$objPHPExcel->getActiveSheet()->setCellValue("D$fila", $predio->nombre_propietario);
