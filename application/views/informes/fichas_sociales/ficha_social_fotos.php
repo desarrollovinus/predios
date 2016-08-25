@@ -103,32 +103,33 @@ foreach ($fotos as $foto) {
 	$descripcion =(isset($foto->descripcion)) ? utf8_decode($foto->descripcion) : $descripcion = "";
 
 	if ($cont % 2 != 0) {
-		$pdf->setY($pdf->GetY() + 36);
+		$pdf->setY($pdf->GetY() + 15);
 		$x = $pdf->GetX();
 		$y = $pdf->GetY();
 		$pdf->Ln();
 	} else {
-		$pdf->setXY(115, $pdf->GetY() - 61);
+		$pdf->setXY(115, $nextY);
 		$x = $pdf->GetX();
 		$y = $pdf->GetY();
 	}
 
-	if ($cont == 1) { $pdf->setY($pdf->GetY() - 30); }
+	if ($cont == 1) { $pdf->setY($pdf->GetY() - 15); }
 
 	$pdf->SetFont('Arial','',9);
 	$pdf->SetX($x);
-	$pdf->Cell(95, 1, utf8_decode("   Registro No. $cont"), 0, 1, 'C');
+	$nextY = $pdf->GetY();
+	$pdf->Cell(95, 1, utf8_decode("Registro No. $cont"), 0, 1, 'C');
 	$pdf->SetX($x);
 	$pdf->Cell(95, 55, $pdf->Image(base_url().$directorio.'/'.$foto->archivo, $pdf->GetX()+3, $pdf->GetY()+3, null, 50),0,1,'C');
 
 	$pdf->setXY(15, $pdf->GetY() + 4);
-	$pdf->SetX($x);
-	$pdf->Cell(80, 3, utf8_decode("   Descripción: $descripcion"), 0, 0, 'L');
+	$pdf->SetX($x + 3);
+	$pdf->MultiCell(80, 4, utf8_decode("Descripción: $descripcion"), 0, 'L');
 	$pdf->SetX($x);
 
 	$pdf->setXY(15, $pdf->GetY() + 4);
-	$pdf->SetX($x);
-	$pdf->Cell(80, 3, utf8_decode("   Fecha: $fecha"), 0, 0, 'L');
+	$pdf->SetX($x + 3);
+	$pdf->Cell(80, 3, utf8_decode("Fecha: $fecha"), 0, 0, 'L');
 	$pdf->SetX($x);
 
 	$pdf->setXY(15, $pdf->GetY() - 4);

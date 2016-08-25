@@ -42,6 +42,7 @@ $hoja->getPageSetup()->setHorizontalCentered();
 /*******************************************************
 *********************** Estilos ***********************
 *******************************************************/
+$izquierda_align = array( 'alignment' => array( 'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT ) ); // Alineación centrada
 $centrado = array( 'alignment' => array( 'horizontal' => PHPExcel_Style_Alignment::VERTICAL_CENTER ) ); // Alineación centrada
 $negrita = array( 'font' => array( 'bold' => true ) ); // negrita
 
@@ -466,9 +467,14 @@ $hoja->getStyle("A{$fila_aux}:I{$fila}")->applyFromArray($bordes);
 $hoja->setCellValue("A{$fila}", '4. APORTE DE DOCUMENTOS');
 $fila++;
 
-$hoja->mergeCells("A{$fila}:I{$fila}");
-$hoja->getRowDimension($fila)->setRowHeight(35);
-$fila++;
+$izquierda = array();
+foreach ($archivos as $archivo) {
+	$hoja->mergeCells("A{$fila}:I{$fila}");
+	$hoja->setCellValue("A{$fila}", "");
+	$hoja->setCellValue("A{$fila}", '- '.$archivo->descripcion);
+	array_push($izquierda, $fila);
+	$fila++;
+}
 
 $fila--;
 $hoja->getStyle("A{$fila_aux}:I{$fila}")->applyFromArray($borde_negrita_externo);
@@ -499,6 +505,11 @@ $hoja->getStyle("A{$fila_aux}:I{$fila}")->applyFromArray($borde_negrita_externo)
 // Asignación de las filas estrechas
 foreach ($filas_estrechas as $f) {
 	$hoja->getRowDimension($f)->setRowHeight(5.7);
+}
+
+// alineacion a la izquierda
+foreach ($izquierda as $f) {
+	$hoja->getStyle("A{$f}:N{$f}")->applyFromArray($izquierda_align);
 }
 
 header('Cache-Control: max-age=0');
