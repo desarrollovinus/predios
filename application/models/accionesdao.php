@@ -188,6 +188,14 @@ class AccionesDAO extends CI_Model {
         return $this->db->delete('tbl_coordenadas');
 	}
 
+	function consultar_ficha_por_unidad_funcional($unidad) {
+		// retorna todas las fichas por unidad funcional de la tabla tbl_coordenadas
+		$this->db->select("ficha_predial");
+		$this->db->group_by('ficha_predial');
+		$this->db->like('ficha_predial', 'UF'.$unidad);
+		return $this->db->get('tbl_coordenadas')->result();
+	}
+
 }
 /* End of file accionesdao.php */
 /* Location: ./site_predios/application/models/accionesdao.php */

@@ -1,5 +1,5 @@
 <?php
-// error_reporting(-1);
+error_reporting(-1);
 
 require('site_predios/libraries/proj4php/vendor/autoload.php');
 
@@ -398,6 +398,7 @@ class Archivos_controller extends CI_Controller
 		$this->load->view('actualizar/vertices', $this->data);
 	}
 
+	// genera un kml por predio
 	function generar_kml() {
 		$this->load->model(array("accionesDAO", "InformesDAO"));
 		$this->data["ficha"] = $this->uri->segment(3);
@@ -435,6 +436,62 @@ class Archivos_controller extends CI_Controller
 		$this->data["coordenadas"] = $corGeo;
 		$this->data["area"] = $area;
 		$this->load->view('plantillas/kml-plantilla', $this->data);
+	}
+
+	// genera un kml con 1 o mas unidades funcionales
+	function generar_kml_unidades_funcionales()
+	{
+		$this->load->model(array("accionesDAO", "InformesDAO"));
+		$unidades_funcionales = $this->uri->segment(3);
+		// esta linea separa los numeros de las unidades funcionales
+		$unidades_funcionales = preg_split("/[\s.]+/", $unidades_funcionales);
+		$unidades_list = array();
+		// unidades funcionales
+		foreach ($unidades_funcionales as $unidad) {
+			$unidad_funcional = $this->accionesDAO->consultar_ficha_por_unidad_funcional($unidad);
+			$unidad_list = array();
+			//unidad funcional
+			foreach ($unidad_funcional as $predio) {
+				$predio_list = array();
+				$corMagna = $this->accionesDAO->consultar_coordenadas($predio->ficha_predial);
+				$predio_info = $this->InformesDAO->obtener_informe_gestion_predial_ani($predio->ficha_predial);
+				$corGeo = array();
+				$proj4 = new Proj4php();
+				$projMagna = new Proj('EPSG:3116', $proj4);
+				$projWGS84 = new Proj('EPSG:4326', $proj4);
+				$xSum = 0;
+				$ySum = 0;
+				// predio
+				foreach ($corMagna as $coordenada) {
+					if ($coordenada->x != NULL) {
+						$pointSrc = new Point($coordenada->x, $coordenada->y, $projMagna);
+						$pointDest = $proj4->transform($projWGS84, $pointSrc);
+						$corXY = explode(" ", $pointDest->toShortString());
+						$corXY = array("punto"=>$coordenada->punto, "x"=> $corXY[0], "y"=>$corXY[1]);
+						array_push($corGeo, $corXY);
+						$xSum += (float)$coordenada->x;
+						$ySum += (float)$coordenada->y;
+					}
+				}
+				//se calcula el punto medio del predio
+				$puntos = (float)explode(" ", $coordenada->punto)[0];
+				$pointSrc = new Point($xSum/$puntos, $ySum/$puntos, $projMagna);
+				$pointDest = $proj4->transform($projWGS84, $pointSrc);
+				$corXY = explode(" ", $pointDest->toShortString());
+
+				$area = array(
+					'x' => $corXY[0],
+					'y' => $corXY[1],
+				);
+				array_push($predio_list, $predio_info);
+				array_push($predio_list, $corGeo);
+				array_push($predio_list, $area);
+				array_push($unidad_list, $predio_list);
+			}
+			array_push($unidades_list, $unidad_list);
+		}
+		$this->data["unidades_funcionales"] = $unidades_list;
+		$this->load->view('plantillas/kml-unidades-funcionales', $this->data);
 	}
 
 	function convencion_predio() {
