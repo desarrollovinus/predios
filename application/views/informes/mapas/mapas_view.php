@@ -1,20 +1,61 @@
+<style media="screen">
+    .wrap {
+    width: 100%;
+    display: table;
+    }
+    .wrap-center {
+    width: 700px;
+    margin: 0 auto;
+    }
+    .input-content {
+    display: inline-block;
+    width: 19.5%;
+    }
+    .content-button {
+    text-align: center;
+    }
 
-<?= form_label('UF1', 'UF1')?>
-<?= form_checkbox('UF1', '1')?>
+    .content-button a {
+        color: black;
+        border: 0.3em solid #ccc;
+        font-size: 1.2em;
+        padding: 10px 20px;
+        background: #fff;
+        border-radius: 5px;
+        display: inline-block;
+        margin-top: 20px;
+    }
+</style>
+<div class='wrap'>
+    <div class="input-content">
+        <?= form_label('UF1', 'UF1')?>
+        <?= form_checkbox('UF1', '1')?>
+    </div>
 
-<?= form_label('UF2', 'UF2')?>
-<?= form_checkbox('UF2', '2')?>
+    <div class="input-content">
+        <?= form_label('UF2', 'UF2')?>
+        <?= form_checkbox('UF2', '2')?>
+    </div>
 
-<?= form_label('UF3', 'UF3')?>
-<?= form_checkbox('UF3', '3')?>
+    <div class="input-content">
+        <?= form_label('UF3', 'UF3')?>
+        <?= form_checkbox('UF3', '3')?>
+    </div>
 
-<?= form_label('UF4', 'UF4')?>
-<?= form_checkbox('UF4', '4')?>
+    <div class="input-content">
+        <?= form_label('UF4', 'UF4')?>
+        <?= form_checkbox('UF4', '4')?>
+    </div>
 
-<?= form_label('UF5', 'UF5')?>
-<?= form_checkbox('UF5', '5')?>
+    <div class="input-content">
+        <?= form_label('UF5', 'UF5')?>
+        <?= form_checkbox('UF5', '5')?>
+    </div>
 
-<a href="#" id="kml">Generar kml</a>
+    <div class='content-button '>
+        <a href="#" id="kml">Generar kml</a>
+    </div>
+</div>
 
 <div id="error"></div>
 
