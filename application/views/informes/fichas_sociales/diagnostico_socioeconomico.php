@@ -92,9 +92,25 @@ if ($tipo == 3 && isset($relacion_inmueble)) {
 }
 
 if (empty($diagnostico)) {
-	$pdf->Output($predio->ficha_predial.'.pdf', 'D');
-	exit;
+	$diagnostico = (object) array(
+						'observaciones' => '',
+						'apoyo_restablecimiento' => '',
+						'apoyo_restablecimiento_valor' => '',
+						'apoyo_moradores' => '',
+						'apoyo_moradores_valor' => '',
+						'apoyo_tramites' => '',
+						'apoyo_tramites_valor' => '',
+						'apoyo_movilizacion' => '',
+						'apoyo_movilizacion_valor' => '',
+						'restablecimiento_servicios' => '',
+						'restablecimiento_servicios_valor' =>  '',
+						'restablecimiento_economico' => '',
+						'restablecimiento_economico_valor' => '',
+						'apoyo_arrendadores' => '',
+						'apoyo_arrendadores_valor' => ''
+					);
 }
+
 
 $pdf->setXY(15, $pdf->GetY() - 19);
 $pdf->MultiCell(191, 25, utf8_decode(''), 1, 'C');
