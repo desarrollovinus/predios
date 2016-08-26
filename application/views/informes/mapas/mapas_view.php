@@ -64,7 +64,7 @@
 <script type="text/javascript">
 $("input:checkbox").click(() => {
     var checks = $( "input:checked" );
-    var url = "<?= site_url('archivos_controller/generar_kml_unidades_funcionales')?>";
+    var url = "<?= site_url('archivos_controller/generar_kml')?>";
     url += '/';
     for (let i = 0; i < checks.length; i++) {
         if (i === 0) {
