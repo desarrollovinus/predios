@@ -361,4 +361,7 @@
         	location.href= "gestion_social_controller";
 		}); // Click
 	});
+	$('#form input[name=salir]').click(function(){
+		window.location.href = window.location.href;
+	});
 </script>
