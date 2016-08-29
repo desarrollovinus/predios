@@ -215,16 +215,18 @@ foreach ($gravamenes as $item) {
 $seccion1->addText(utf8_decode("5. SEGREGACIONES DEL INMUEBLE"), 'titulo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
 
-if ($identificacion->segreg_titu[0] == "?") {
-  $segregacion_titulo = explode("?", substr(utf8_decode(utf8_decode($identificacion->segreg_titu)), 1));
-  foreach ($segregacion_titulo as $item) {
-    if ($item == null) { break; }
-    $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
-    $seccion1->addTextBreak();
+if (!empty($identificacion->segreg_titu)) {
+    if ($identificacion->segreg_titu[0] == "?") {
+      $segregacion_titulo = explode("?", substr(utf8_decode(utf8_decode($identificacion->segreg_titu)), 1));
+      foreach ($segregacion_titulo as $item) {
+        if ($item == null) { break; }
+        $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
+        $seccion1->addTextBreak();
+      }
+    } else {
+      $seccion1->addText(utf8_decode(utf8_decode($identificacion->segreg_titu)), 'parrafo2', $alineacion_justificada);
+      $seccion1->addTextBreak();
   }
-} else {
-  $seccion1->addText(utf8_decode(utf8_decode($identificacion->segreg_titu)), 'parrafo2', $alineacion_justificada);
-  $seccion1->addTextBreak();
 }
 
 $seccion1->addText(utf8_decode("6. OBSERVACIONES DEL INMUEBLE"), 'titulo2', $alineacion_izquierda);
