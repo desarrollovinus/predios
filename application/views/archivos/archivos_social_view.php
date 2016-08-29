@@ -110,17 +110,13 @@
 	}
 
 	$('#form input[name=volver]').click(function(){
-		history.back();
+		window.location.href = window.location.href;
 	});
 
 	$(document).ready(function(){
 		$('#tabla').dataTable({
 			"bJQueryUI": true,
 			"sPaginationType": "full_numbers"
-		});
-
-		$('#form input[name=volver]').click(function(){
-			history.back();
 		});
 
 		$('#form input[name^=fecha]').datepicker();

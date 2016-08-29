@@ -91,6 +91,11 @@ if ($tipo == 3 && isset($relacion_inmueble)) {
 	$pdf->Cell(55, 1, utf8_decode('Relación con el inmueble:  '.$relacion_inmueble->nombre), 0, 0, 'L');
 }
 
+if (empty($diagnostico)) {
+	$pdf->Output($predio->ficha_predial.'.pdf', 'D');
+	exit;
+}
+
 $pdf->setXY(15, $pdf->GetY() - 19);
 $pdf->MultiCell(191, 25, utf8_decode(''), 1, 'C');
 
