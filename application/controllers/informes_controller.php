@@ -551,6 +551,8 @@ class Informes_controller extends CI_Controller
 	}
 
 	function mapas(){
+		$this->load->model('PrediosDAO');
+		$this->data['unidades_funcionales'] = $this->PrediosDAO->obtener_unidades_funcionales();
 		$this->data['contenido_principal'] = 'informes/mapas/mapas_view';
 		$this->data['titulo_pagina'] = "Generación de mapas";
 		$this->load->view('includes/template', $this->data);

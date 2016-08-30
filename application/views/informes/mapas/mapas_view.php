@@ -27,30 +27,13 @@
 <h1 align='center'>Seleccione una o varias unidades funcionales para visualizar en el mapa</h1>
 
 <div class='wrap'>
-    <div class="input-content">
-        <?= form_label('UF1', 'UF1')?>
-        <?= form_checkbox('UF1', '1')?>
-    </div>
 
-    <div class="input-content">
-        <?= form_label('UF2', 'UF2')?>
-        <?= form_checkbox('UF2', '2')?>
-    </div>
-
-    <div class="input-content">
-        <?= form_label('UF3', 'UF3')?>
-        <?= form_checkbox('UF3', '3')?>
-    </div>
-
-    <div class="input-content">
-        <?= form_label('UF4', 'UF4')?>
-        <?= form_checkbox('UF4', '4')?>
-    </div>
-
-    <div class="input-content">
-        <?= form_label('UF5', 'UF5')?>
-        <?= form_checkbox('UF5', '5')?>
-    </div>
+    <?php foreach ($unidades_funcionales as $unidad): ?>
+        <div class="input-content">
+            <?= form_label($unidad->Nombre, $unidad->Nombre)?>
+            <?= form_checkbox($unidad->Nombre, substr($unidad->Nombre, strpos($unidad->Nombre, 'F') + 1 ))?>
+        </div>
+    <?php endforeach; ?>
 
     <center>
         <div class='content-button'>
