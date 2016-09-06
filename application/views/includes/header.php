@@ -24,6 +24,7 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>js/ui/jquery.ui.resizable.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>js/ui/jquery.effects.core.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.bgiframe-2.1.2.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>js/funciones.js"></script>
 <script type="text/javascript">
 	$(document).ready(function () { 
 		//esta sentencia es para darle el estilo a los botones jquery.ui 
