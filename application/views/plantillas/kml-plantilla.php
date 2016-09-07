@@ -210,34 +210,9 @@
                     </outerBoundaryIs>
                 </Polygon>
             </Placemark>
-
-            <!-- Punto de área -->
-            <Placemark>
-                <name>Área requerida: <?php echo $predioArray[0]->area_requerida; ?> m2 </name>
-                <styleUrl>#msn_placemark_circle0</styleUrl>
-                <Point>
-                    <coordinates><?php echo $predioArray[2]["x"].",".$predioArray[2]["y"].",0 "; ?></coordinates>
-                </Point>
-            </Placemark>
-
-            <!-- Vertices -->
-            <Folder>
-                <name>Vértices</name>
-                <visibility>0</visibility>
-                <?php foreach ($predioArray[1] as $punto): ?>
-                    <Placemark>
-                    <visibility>0</visibility>
-                    <name><?php echo $punto["punto"]; ?></name>
-                    <styleUrl>#msn_placemark_circle</styleUrl>
-                    <Point>
-                        <coordinates><?php echo $punto["x"].",".$punto["y"].","."0 "; ?></coordinates>
-                    </Point>
-                    </Placemark>
-                <?php endforeach; ?>
-            </Folder>
-        </Folder>
+        </Folder> <!-- Fin carpeta predio -->
         <?php endforeach; ?>
-    </Folder>
+    </Folder> <!-- Fin carpata Unidad funcional  -->
 <?php endforeach; ?>
 
 </Document>
