@@ -1,4 +1,5 @@
 <?php
+// error_reporting(-1);
 /**
  * Clase encargada de controlar las actualizaciones de las fichas prediales
  * @author Freddy Alexander Vivas Reyes
@@ -29,8 +30,12 @@ class Actualizar_controller extends CI_Controller {
 			//se redirige al controlador principal
 			redirect('');
 		}
+
 		//se establece la vista que tiene el contenido del menu
 		$this->data['menu'] = 'actualizar/menu';
+
+		// Carga de modelos
+		$this->load->model(array('ProcesosDAO', 'TramosDAO', 'ContratistasDAO', 'PrediosDAO', 'PropietariosDAO'));
 	}
 	/**
 	 * Pagina principal del modulo
@@ -47,10 +52,22 @@ class Actualizar_controller extends CI_Controller {
 		$this->load->view('includes/template', $this->data);
 	}
 
+	function cultivos(){
+		//se carga el modelo que gestiona las consultas del modulo de Predios y del modulo de Contratistas
+		// $this->load->model(array('PrediosDAO', 'ContratistasDAO', 'AccionesDAO'));
+
+		$this->data['titulo_pagina'] = 			'Cultivos de ficha ';
+		$this->data['contenido_principal'] = 	'actualizar/cultivos/index_view';
+		$this->data['menu'] = 'actualizar/menu_ficha';
+		//se carga la vista y se envia el array asociativo
+		$this->load->view('includes/template', $this->data);
+	
+	}
+
 	/**
 	 * Muestra la informaci�n de la ficha seleccionada
 	 */
-	function ficha()
+	function ficha_()
 	{
 		//se cargan los permisos
 		$permisos = $this->session->userdata('permisos');
@@ -76,7 +93,9 @@ class Actualizar_controller extends CI_Controller {
 			$this->data['linderos'] = 				$this->PrediosDAO->obtener_linderos($this->data['predio']->ficha_predial);
 			$this->data['propietarios'] = 			$this->PropietariosDAO->obtener_propietarios($this->data['predio']->ficha_predial);
 			$this->data['titulos_adquisicion'] = 	$this->PrediosDAO->obtener_titulos_adquisicion();
-			$this->data['titulo_pagina'] = 			'Actualizar - '.$this->data['predio']->ficha_predial;
+			$this->data['titulo_pagina'] = 			'Actualizar ficha '.$this->data['predio']->ficha_predial;
+			//se establece la vista que tiene el contenido del menu
+			$this->data['menu'] = 'actualizar/menu_ficha';
 			$this->data['contenido_principal'] = 	'actualizar/actualizar_view';
 			//se carga la vista y se envian los datos
 			$this->load->view('includes/template', $this->data);
@@ -87,6 +106,81 @@ class Actualizar_controller extends CI_Controller {
 			redirect('actualizar_controller');
 		}
 	}
+
+	function ficha(){
+		//se cargan los permisos
+		$permisos = $this->session->userdata('permisos');
+		if( ! isset($permisos['Fichas']['Actualizar']) ) {
+			$this->session->set_flashdata('error', 'Usted no cuenta con permisos para actualizar el m&oacute;dulo de Gesti&oacute;n de Fichas Prediales.');
+			redirect('');
+		}
+
+		//se obtiene el segmento de la uri correspondiente a la id del predio
+		$id_predio = $this->uri->segment(3);
+		if( $id_predio )
+		{
+			//se carga el modelo ProcesosDAO
+			$this->data['predio'] = $this->PrediosDAO->obtener_predio($id_predio);
+			$this->data['menu'] = 'actualizar/menu_ficha';
+			$this->data['contenido_principal'] = 	'actualizar/index';
+			//se carga la vista y se envian los datos
+			$this->load->view('includes/template', $this->data);
+
+
+
+
+
+
+
+
+		}
+		else
+		{
+			//si no se selecciono una ficha predial se retorna al index
+			redirect('actualizar_controller');
+		}
+	}
+
+	function cargar_interfaz(){
+		//Se valida que la peticion venga mediante ajax y no mediante el navegador
+        if($this->input->is_ajax_request()){
+            // Dependiendo del tipo
+            switch ($this->input->post('tipo')) {
+                // Gestión de ficha predial
+                case 'ficha_gestion':
+                //     // Se toman valores que vienen por post
+                //     $this->data['id_equipo'] = $this->input->post('id_equipo');
+
+                    // Se carga la vista
+                    $this->load->view('actualizar/gestion', $this->data);
+                break; // Gestión de ficha predial
+                // Cultivos de ficha predial
+                case 'ficha_cultivos':
+                	// Se toman valores que vienen por post
+                    $this->data['ficha'] = $this->input->post('ficha');
+
+                    // Se carga la vista
+                    $this->load->view('actualizar/cultivos/index', $this->data);
+                break; // Cultivos de ficha predial
+
+                // Listado de cultivos de ficha predial
+                case 'ficha_cultivos_lista':
+					//se carga el modelo ProcesosDAO
+					$this->data['predio'] = $this->PrediosDAO->obtener_predio($id_predio);
+
+                	// Se toman valores que vienen por post
+                    $this->data['ficha'] = $this->input->post('ficha');
+
+                    // Se carga la vista
+                    $this->load->view('actualizar/cultivos/listar', $this->data);
+                break; // Listado de cultivos de ficha predial
+            } // suiche
+        }else{
+            //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+            redirect('');
+        }
+    } // cargar_interfaz
+
 	/**
 	 * Esta funcion retorna las fichas asociadas a un contratista via JSON
 	 */
