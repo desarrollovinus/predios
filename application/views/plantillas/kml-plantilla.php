@@ -155,6 +155,16 @@
  </Folder>
 <!--Unidad funcional  -->
 <?php foreach ($unidades_funcionales as $unidad): ?>
+    <?php if (count($unidad) == 0): ?>
+        </Document>
+        </kml>
+        <?php
+            header('Cache-Control: max-age=0');
+            header('Content-Type: text/xml');
+            header("Content-Disposition: attachment; filename=".$nombre_archivo.".kml");
+            exit;
+         ?>
+    <?php endif; ?>
     <Folder>
         <name><?= substr($unidad[0][0]->ficha_predial, 0, 3)?></name>
     <!--Predio  -->
