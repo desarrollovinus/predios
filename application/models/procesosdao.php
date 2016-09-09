@@ -15,7 +15,7 @@ class ProcesosDAO extends CI_Model
 	function obtener_estados_proceso()
 	{
 		//se ordena el Record Set por la id del estado del proceso
-		$this->db->order_by('estado');
+		// $this->db->order_by('estado');
 		$resultado = $this->db->get('tbl_estados_proceso')->result();
 
 		#accion de auditoria
