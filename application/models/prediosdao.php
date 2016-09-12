@@ -433,7 +433,7 @@ class PrediosDAO extends CI_Model
 		return $this->db->query($sql)->result();
 	}
 
-	function obtener_predios_semafoto($tramo)
+	function obtener_predios_semaforo($tramo)
 	{
 		$sql=
 		"SELECT
@@ -461,7 +461,7 @@ class PrediosDAO extends CI_Model
 
 
 		return $this->db->query($sql)->result();
-	}
+	} // obtener_predios_semaforo
 
 	function obtener_cultivos($ficha_predial)
 	{
@@ -498,6 +498,7 @@ class PrediosDAO extends CI_Model
 		$this->db->select('*');
 		$this->db->from('tbl_identificacion');
 		$this->db->join('tbl_estados_proceso', 'tbl_identificacion.estado_pro = tbl_estados_proceso.estado');
+		$this->db->order_by('id');
 		$this->db->group_by('estado_pro');
 		return $this->db->get()->result();
 	} // obtener_procesos_actuales
