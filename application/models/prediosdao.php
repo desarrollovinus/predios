@@ -498,6 +498,7 @@ class PrediosDAO extends CI_Model
 		$this->db->select('*');
 		$this->db->from('tbl_identificacion');
 		$this->db->join('tbl_estados_proceso', 'tbl_identificacion.estado_pro = tbl_estados_proceso.estado');
+		$this->db->order_by('id');
 		$this->db->group_by('estado_pro');
 		return $this->db->get()->result();
 	} // obtener_procesos_actuales
