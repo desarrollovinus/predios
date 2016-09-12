@@ -433,7 +433,7 @@ class PrediosDAO extends CI_Model
 		return $this->db->query($sql)->result();
 	}
 
-	function obtener_predios_semafoto($tramo)
+	function obtener_predios_semaforo($tramo)
 	{
 		$sql=
 		"SELECT
@@ -461,7 +461,7 @@ class PrediosDAO extends CI_Model
 
 
 		return $this->db->query($sql)->result();
-	}
+	} // obtener_predios_semaforo
 
 	function obtener_cultivos($ficha_predial)
 	{
