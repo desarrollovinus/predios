@@ -402,6 +402,7 @@ class Archivos_controller extends CI_Controller
 	function generar_kml()
 	{
 		$this->load->model(array("accionesDAO", "InformesDAO"));
+		$this->convencion_predio();
 		$unidades_funcionales = $this->uri->segment(3);
 		$unidades_list = array();
 
@@ -446,9 +447,6 @@ class Archivos_controller extends CI_Controller
 			array_push($unidad_list, $predio_list);
 
 			array_push($unidades_list, $unidad_list);
-			// echo "<pre>";
-			// var_dump($unidades_list);
-			// exit;
 			$this->data["unidades_funcionales"] = $unidades_list;
 			$this->load->view('plantillas/kml-plantilla', $this->data);
 			return 1;
@@ -499,7 +497,9 @@ class Archivos_controller extends CI_Controller
 				array_push($predio_list, $area);
 				array_push($unidad_list, $predio_list);
 			}
-			array_push($unidades_list, $unidad_list);
+			if (!empty($unidad_list)) {
+				array_push($unidades_list, $unidad_list);
+			}
 		}
 		$this->data["unidades_funcionales"] = $unidades_list;
 		$this->load->view('plantillas/kml-plantilla', $this->data);
@@ -507,9 +507,67 @@ class Archivos_controller extends CI_Controller
 
 	function convencion_predio() {
 		$this->load->model(array("PrediosDAO"));
-		$this->data["estados_via"] = $this->PrediosDAO->obtener_estados_via_actuales();
-		$this->data["estados_proceso"] = $this->PrediosDAO->obtener_procesos_actuales();
-		$this->load->view('plantillas/tabla-convenciones', $this->data);
+		$vias = $this->PrediosDAO->obtener_estados_via_actuales();
+		$procesos = $this->PrediosDAO->obtener_procesos_actuales();
+
+		$width = 215;
+		$height = 400;
+
+		// Se crea la imagen
+		$im = imagecreatetruecolor($width, $height);
+		// colores
+		$black = imagecolorallocate($im, 0, 0, 0);
+		$white = imagecolorallocate($im, 255, 255, 255);
+
+		// fondo de la imagen
+		imagefill($im, 0, 0, $white);
+		// Titulo
+		$titulo = 'Convenciones';
+		// Fuente
+		$font = 'site_predios/fonts/arial.ttf';
+		$bold = 'site_predios/fonts/arial_bold.ttf';
+
+		// Titulo
+		$posX = $width - $width * 0.77;
+		$posY = 20;
+		// Escribe titulo
+		imagettftext($im, 13, 0, $posX, $posY, $black, $bold, $titulo);
+		// linea separadora
+		imagefilledrectangle($im, 0, $posY + 10, $width, $posY + 10, $black);
+
+		// Estado de las vias
+		$posX = $width - $width * 0.73;
+		$posY = $height - $height * 0.87;
+		imagettftext($im, 9, 0, $posX , $posY, $black, $bold, 'Estado de las vias');
+		$posX = $width - $width * 0.8;
+		$posY = $height - $height * 0.8;
+		foreach ($vias as $via) {
+			$color = imagecolorallocate($im, hexdec(substr($via->color, 0, 2)), hexdec(substr($via->color, 2, 2)), hexdec(substr($via->color, 4, 2)));
+			imagefilledrectangle($im, $posX - 50, $posY - 5, $posX - 20, $posY - 3, $color);
+			imagettftext($im, 7, 0, $posX , $posY, $black, $font, $via->nombre);
+			$posY += 15;
+		}
+		imagefilledrectangle($im, 0, $posY, $width, $posY, $black);
+
+		// Estado del proceso
+		$posX = $width - $width * 0.78;
+		$posY = $posY + 20;
+		imagettftext($im, 9, 0, $posX - 10 , $posY, $black, $bold, 'Estado de los procesos');
+		// Linea separadora
+		$posX = $width - $width * 0.8;
+		$posY = $posY + 30;
+
+		foreach ($procesos as $proceso) {
+			$color = imagecolorallocate($im, hexdec(substr($proceso->color, 0, 2)), hexdec(substr($proceso->color, 2, 2)), hexdec(substr($proceso->color, 4, 2)));
+			imagefilledrectangle($im, $posX - 50, $posY - 10, $posX - 20, $posY, $color);
+			imagettftext($im, 7, 0, $posX - 10 , $posY, $black, $font, $proceso->estado);
+			$posY += 15;
+		}
+
+		// Se guarda la imagen
+		imagepng($im, 'img/convenciones.png');
+		// se elimina el buffer
+		imagedestroy($im);
 	}
 
 	// ver archivos del area social

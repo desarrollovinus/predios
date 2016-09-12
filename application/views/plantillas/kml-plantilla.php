@@ -147,24 +147,14 @@
         <Icon>
             <href><?php echo base_url()."img/convenciones.png"; ?></href>
         </Icon>
-        <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
-        <screenXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+        <overlayXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+        <screenXY x="0" y="0" xunits="fraction" yunits="fraction"/>
         <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
         <size x="0" y="0" xunits="fraction" yunits="fraction"/>
     </ScreenOverlay>
  </Folder>
 <!--Unidad funcional  -->
 <?php foreach ($unidades_funcionales as $unidad): ?>
-    <?php if (count($unidad) == 0): ?>
-        </Document>
-        </kml>
-        <?php
-            header('Cache-Control: max-age=0');
-            header('Content-Type: text/xml');
-            header("Content-Disposition: attachment; filename=".$nombre_archivo.".kml");
-            exit;
-         ?>
-    <?php endif; ?>
     <Folder>
         <name><?= substr($unidad[0][0]->ficha_predial, 0, 3)?></name>
     <!--Predio  -->
