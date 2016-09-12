@@ -225,7 +225,6 @@ class InformesDAO extends CI_Model
 		return $this->db->query($sql)->result();
 	}
 
->>>>>>> Stashed changes
 	function obtener_informe_gestion_predial_ani($ficha) {
 		// Si existe una ficha específica
 		if ($ficha != null) {
@@ -236,6 +235,11 @@ class InformesDAO extends CI_Model
 
 		$query =
 		"SELECT
+			substring(tbl_predio.ficha_predial, 1, 3) unidad_funcional,
+			-- substring(tbl_predio.ficha_predial, 5, 2) predio,
+			-- substring(tbl_predio.ficha_predial, 8, 1) abreviatura,
+			-- CASE substring(tbl_predio.ficha_predial, 8, 1) WHEN 'F' THEN 'Área' WHEN 'M' THEN 'Mejora' END tipo_ficha,
+			substring(tbl_predio.ficha_predial, 10, 2) numero_faja,
 			tbl_predio.ficha_predial,
 			d.numero,
 			d.tramo,
