@@ -61,7 +61,7 @@ class Actualizar_controller extends CI_Controller {
 		$this->data['menu'] = 'actualizar/menu_ficha';
 		//se carga la vista y se envia el array asociativo
 		$this->load->view('includes/template', $this->data);
-	
+
 	}
 
 	/**
@@ -710,6 +710,18 @@ class Actualizar_controller extends CI_Controller {
 			//se envia la respuesta viaJSON
 			echo json_encode(array('respuesta' => 'error', 'mensaje' => 'Ocurri&oacute; un error al actualizar la informaci&oacute;n del propietario.'));
 		}
+	}
+
+	function insertar_cultivo() {
+		 $this->PrediosDAO->insertar_cultivos_especies($this->input->post('ficha'), $this->input->post('datos'));
+	}
+
+	function eliminar_cultivo() {
+		 $this->PrediosDAO->eliminar_cultivos_especies($this->input->post('id'));
+	}
+
+	function editar_cultivo() {
+		$this->PrediosDAO->editar_cultivo_especies($this->input->post('id'), $this->input->post('datos'));
 	}
 }
 /* End of file actualizar_controller.php */
