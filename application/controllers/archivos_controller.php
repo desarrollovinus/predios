@@ -104,7 +104,7 @@ class Archivos_controller extends CI_Controller
 				//se lee archivo por archivo
 				while(($file = readdir($directorio)) !== FALSE)
 				{
-					if($file != '.' && $file != '..' && $file != 'fotos')
+					if(strpos($file, '.') !== false && $file != '.' && $file != '..')
 					{
 						//se guardan los nombres en el array
 						array_push($nombres, $file);
@@ -116,6 +116,7 @@ class Archivos_controller extends CI_Controller
 				//se carga la libreria que permite establecer el browser con el que se abrio la pagina
 				$this->load->library('user_agent');
 				//se establecen las variables que van a la vista
+				$this->data['ficha'] = $ficha;
 				$this->data['es_ie'] = $this->agent->is_browser('Internet Explorer');
 				$this->data['archivos'] = $nombres;
 				$this->data['directorio'] = $this->ruta_archivos.$ficha;
@@ -127,6 +128,17 @@ class Archivos_controller extends CI_Controller
 			}
 		}
 	}
+
+	function eliminar_archivo() {
+		unlink($this->input->post('directorio').'/'.$this->input->post('archivo'));
+		$auditoria = array(
+			'fecha_hora' => date('Y-m-d H:i:s', time()),
+			'id_usuario' => $this->session->userdata('id_usuario'),
+			'descripcion' => 'Se Elimina el archivo '.$this->input->post('archivo').' de la ficha '.$this->input->post('ficha')
+		);
+		$this->db->insert('auditoria', $auditoria);
+	}
+
 	/**
 	 * Metodo encargado de ofrecer una vista desde los controladores de actualizaciones de fichas prediales y actas
 	 */

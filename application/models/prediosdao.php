@@ -71,6 +71,33 @@ class PrediosDAO extends CI_Model
 	}
 
 	/**
+	 * Elimina un cultivo de un predio.
+	 *
+	 * @access	public
+	 * @param	string	id del cultivo.
+	 */
+	function eliminar_cultivos_especies($id)
+	{
+		//se elimina el cultivo
+		$this->db->delete('tbl_cultivos_especies', array('id_cultivo_especie' => $id));
+	}
+
+	/**
+	 * Actualizar un cultivo de un predio.
+	 *
+	 * @access	public
+	 * @param	string	id del cultivo.
+	 */
+	function editar_cultivo_especies($id, $datos)
+	{
+		//se edita el cultivo
+		$this->db->set($datos);
+		$this->db->where('id_cultivo_especie', $id);
+		$this->db->update('tbl_cultivos_especies');
+	}
+
+
+	/**
 	 * Inserta la identificaci&oacute;n de un predio bas&aacute;ndose en un array.
 	 *
 	 * @access	public
@@ -466,6 +493,7 @@ class PrediosDAO extends CI_Model
 	function obtener_cultivos($ficha_predial)
 	{
 		$this->db->where('ficha_predial', $ficha_predial);
+		$this->db->order_by('cantidad', 'desc');
 		$resultado = $this->db->get('tbl_cultivos_especies')->result();
 
 		return $resultado;
@@ -629,24 +657,6 @@ class PrediosDAO extends CI_Model
 			'fecha_hora' => date('Y-m-d H:i:s', time()),
 			'id_usuario' => $this->session->userdata('id_usuario'),
 			'descripcion' => 'Se actualiza las construcciones del predio: '.$ficha_predial
-		);
-		$this->db->insert('auditoria', $auditoria);
-		#fin accion de auditoria
-	}
-
-	function actualizar_cultivos_especies($ficha_predial, $numero, $cultivos_especies)
-	{
-		$this->db->where('ficha_predial', $ficha_predial);
-		$this->db->where('numero', $numero);
-		//el array asociativo pasado por parametro debe tener sus indices nombrados
-		//de la misma forma en que aparecen las columnas de la tabla
-		$this->db->update('tbl_cultivos_especies', $cultivos_especies);
-
-		#accion de auditoria
-		$auditoria = array(
-			'fecha_hora' => date('Y-m-d H:i:s', time()),
-			'id_usuario' => $this->session->userdata('id_usuario'),
-			'descripcion' => 'Se actualiza los cultivos y especies del predio: '.$ficha_predial
 		);
 		$this->db->insert('auditoria', $auditoria);
 		#fin accion de auditoria

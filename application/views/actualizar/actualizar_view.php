@@ -1,4 +1,5 @@
 <script src="<?php echo base_url(); ?>js/ajaxupload.2.0.min.js"></script>
+<link rel="stylesheet" href="<?php echo base_url(); ?>css/demo_table_jui.css" type="text/css" />
 <?php $permisos = $this->session->userdata('permisos'); ?>
 <ul id="navigation">
 	<?php if(isset($permisos['Bit&aacute;cora']['Consultar'])) { ?><li><a href='#' rel="bitacora" title="Bit&aacute;cora"><img src="<?php echo base_url('img/bitacora.png'); ?>"></a></li><?php } ?>
@@ -627,29 +628,6 @@
 				</table>
 			<?php echo form_fieldset_close(); ?>
 
-			<!-- INVENTARIO DE CULTIVOS Y ESPECIES -->
-			<?php echo form_fieldset('<b>INVENTARIO DE CULTIVOS Y ESPECIES</b>'); ?>
-				<table style="text-align:left" width="100%">
-					<tbody>
-						<tr>
-							<td align="center"><b>DESCRIPCI&Oacute;N</b></td>
-							<td align="center"><b>CANT.</b></td>
-							<td align="center"><b>DENS.</b></td>
-							<td align="center"><b>UN.</b></td>
-						</tr>
-						<!-- Se lista la información de los cultivos -->
-						<?php foreach ($this->PrediosDAO->obtener_cultivos($predio->ficha_predial) as $cultivo) { ?>
-							<tr>
-								<td><?php echo $cultivo->numero; ?>. <?php echo form_input('cultivo_descr'.$cultivo->numero, utf8_decode($cultivo->descripcion));?></td>
-								<td><?php echo form_input('cultivo_cant'.$cultivo->numero, utf8_decode($cultivo->cantidad));?></td>
-								<td><?php echo form_input('cultivo_dens'.$cultivo->numero, utf8_decode($cultivo->densidad));?></td>
-								<td><?php echo form_input('cultivo_un'.$cultivo->numero, utf8_decode($cultivo->unidad));?></td>
-							</tr>
-						<?php } ?>
-					</tbody>
-				</table>
-			<?php echo form_fieldset_close(); ?>
-
 			<!-- DESCRIPCIÓN DE LAS CONSTRUCCIONES -->
 			<?php echo form_fieldset('<b>DESCRIPCI&OacuteN DE LAS CONSTRUCCIONES</b>'); ?>
 				<table style="text-align:left" width="100%">
@@ -909,6 +887,7 @@
 	//este script se ejecuta una vez se haya cargado el documento completamente (cuando el documento este ready)
 	$(document).ready(function()
 	{
+		$( "#form input[type=submit], #form input[type=button]").button();
 		$("#vertices").load("<?php echo site_url('archivos_controller/cargar_vertices'); ?>", {"ficha_predial": $('#form input[name=ficha]').val()});
 		$('#navigation a').stop().animate({'marginLeft':'85px'},1000);
 
