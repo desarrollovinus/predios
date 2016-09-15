@@ -627,29 +627,6 @@
 				</table>
 			<?php echo form_fieldset_close(); ?>
 
-			<!-- INVENTARIO DE CULTIVOS Y ESPECIES -->
-			<?php echo form_fieldset('<b>INVENTARIO DE CULTIVOS Y ESPECIES</b>'); ?>
-				<table style="text-align:left" width="100%">
-					<tbody>
-						<tr>
-							<td align="center"><b>DESCRIPCI&Oacute;N</b></td>
-							<td align="center"><b>CANT.</b></td>
-							<td align="center"><b>DENS.</b></td>
-							<td align="center"><b>UN.</b></td>
-						</tr>
-						<!-- Se lista la información de los cultivos -->
-						<?php foreach ($this->PrediosDAO->obtener_cultivos($predio->ficha_predial) as $cultivo) { ?>
-							<tr>
-								<td><?php echo $cultivo->numero; ?>. <?php echo form_input('cultivo_descr'.$cultivo->numero, utf8_decode($cultivo->descripcion));?></td>
-								<td><?php echo form_input('cultivo_cant'.$cultivo->numero, utf8_decode($cultivo->cantidad));?></td>
-								<td><?php echo form_input('cultivo_dens'.$cultivo->numero, utf8_decode($cultivo->densidad));?></td>
-								<td><?php echo form_input('cultivo_un'.$cultivo->numero, utf8_decode($cultivo->unidad));?></td>
-							</tr>
-						<?php } ?>
-					</tbody>
-				</table>
-			<?php echo form_fieldset_close(); ?>
-
 			<!-- DESCRIPCIÓN DE LAS CONSTRUCCIONES -->
 			<?php echo form_fieldset('<b>DESCRIPCI&OacuteN DE LAS CONSTRUCCIONES</b>'); ?>
 				<table style="text-align:left" width="100%">

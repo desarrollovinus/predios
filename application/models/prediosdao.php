@@ -662,24 +662,6 @@ class PrediosDAO extends CI_Model
 		#fin accion de auditoria
 	}
 
-	function actualizar_cultivos_especies($ficha_predial, $numero, $cultivos_especies)
-	{
-		$this->db->where('ficha_predial', $ficha_predial);
-		$this->db->where('numero', $numero);
-		//el array asociativo pasado por parametro debe tener sus indices nombrados
-		//de la misma forma en que aparecen las columnas de la tabla
-		$this->db->update('tbl_cultivos_especies', $cultivos_especies);
-
-		#accion de auditoria
-		$auditoria = array(
-			'fecha_hora' => date('Y-m-d H:i:s', time()),
-			'id_usuario' => $this->session->userdata('id_usuario'),
-			'descripcion' => 'Se actualiza los cultivos y especies del predio: '.$ficha_predial
-		);
-		$this->db->insert('auditoria', $auditoria);
-		#fin accion de auditoria
-	}
-
 	function actualizar_identificacion($ficha_predial, $identificacion)
 	{
 		$this->db->where('ficha_predial', $ficha_predial);

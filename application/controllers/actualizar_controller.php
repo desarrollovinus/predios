@@ -67,7 +67,7 @@ class Actualizar_controller extends CI_Controller {
 	/**
 	 * Muestra la informaci�n de la ficha seleccionada
 	 */
-	function ficha_()
+	function ficha()
 	{
 		//se cargan los permisos
 		$permisos = $this->session->userdata('permisos');
@@ -82,21 +82,12 @@ class Actualizar_controller extends CI_Controller {
 			//se carga el modelo ProcesosDAO
 			$this->load->model(array('ProcesosDAO', 'TramosDAO', 'ContratistasDAO', 'PrediosDAO', 'PropietariosDAO'));
 			//se asignan los valores que se van a enviar a la vista
-			$this->data['funciones_predios_obra'] =	$this->PrediosDAO->obtener_funciones_predios_obra();
-			$this->data['estados_via'] =			$this->PrediosDAO->obtener_estados_via();
-			$this->data['estados'] = 				$this->ProcesosDAO->obtener_estados_proceso();
-			$this->data['tramos'] = 				$this->TramosDAO->obtener_tramos();
-			$this->data['contratistas'] = 			$this->ContratistasDAO->obtener_contratistas();
-			$this->data['predio'] = 				$this->PrediosDAO->obtener_predio($id_predio);
-			$this->data['identificacion'] = 		$this->PrediosDAO->obtener_identificacion($this->data['predio']->ficha_predial);
-			$this->data['descripcion'] = 			$this->PrediosDAO->obtener_descripcion($this->data['predio']->ficha_predial);
-			$this->data['linderos'] = 				$this->PrediosDAO->obtener_linderos($this->data['predio']->ficha_predial);
-			$this->data['propietarios'] = 			$this->PropietariosDAO->obtener_propietarios($this->data['predio']->ficha_predial);
-			$this->data['titulos_adquisicion'] = 	$this->PrediosDAO->obtener_titulos_adquisicion();
 			$this->data['titulo_pagina'] = 			'Actualizar ficha '.$this->data['predio']->ficha_predial;
 			//se establece la vista que tiene el contenido del menu
+			$this->data['id_predio'] = $id_predio;
+			$this->data['predio'] =	$this->PrediosDAO->obtener_predio($id_predio);
 			$this->data['menu'] = 'actualizar/menu_ficha';
-			$this->data['contenido_principal'] = 	'actualizar/actualizar_view';
+			$this->data['contenido_principal'] = 	'actualizar/index';
 			//se carga la vista y se envian los datos
 			$this->load->view('includes/template', $this->data);
 		}
@@ -107,7 +98,7 @@ class Actualizar_controller extends CI_Controller {
 		}
 	}
 
-	function ficha(){
+	function ficha_(){
 		//se cargan los permisos
 		$permisos = $this->session->userdata('permisos');
 		if( ! isset($permisos['Fichas']['Actualizar']) ) {
@@ -125,14 +116,6 @@ class Actualizar_controller extends CI_Controller {
 			$this->data['contenido_principal'] = 	'actualizar/index';
 			//se carga la vista y se envian los datos
 			$this->load->view('includes/template', $this->data);
-
-
-
-
-
-
-
-
 		}
 		else
 		{
@@ -150,9 +133,34 @@ class Actualizar_controller extends CI_Controller {
                 case 'ficha_gestion':
                 //     // Se toman valores que vienen por post
                 //     $this->data['id_equipo'] = $this->input->post('id_equipo');
+				//se obtiene el segmento de la uri correspondiente a la id del predio
+				$id_predio = $this->input->post('id');
+
+				if( $id_predio )
+				{
+					//se carga el modelo ProcesosDAO
+					$this->load->model(array('ProcesosDAO', 'TramosDAO', 'ContratistasDAO', 'PrediosDAO', 'PropietariosDAO'));
+					//se asignan los valores que se van a enviar a la vista
+					$this->data['funciones_predios_obra'] =	$this->PrediosDAO->obtener_funciones_predios_obra();
+					$this->data['estados_via'] =			$this->PrediosDAO->obtener_estados_via();
+					$this->data['estados'] = 				$this->ProcesosDAO->obtener_estados_proceso();
+					$this->data['tramos'] = 				$this->TramosDAO->obtener_tramos();
+					$this->data['contratistas'] = 			$this->ContratistasDAO->obtener_contratistas();
+					$this->data['predio'] = 				$this->PrediosDAO->obtener_predio($id_predio);
+					$this->data['identificacion'] = 		$this->PrediosDAO->obtener_identificacion($this->data['predio']->ficha_predial);
+					$this->data['descripcion'] = 			$this->PrediosDAO->obtener_descripcion($this->data['predio']->ficha_predial);
+					$this->data['linderos'] = 				$this->PrediosDAO->obtener_linderos($this->data['predio']->ficha_predial);
+					$this->data['propietarios'] = 			$this->PropietariosDAO->obtener_propietarios($this->data['predio']->ficha_predial);
+					$this->data['titulos_adquisicion'] = 	$this->PrediosDAO->obtener_titulos_adquisicion();
+					$this->data['titulo_pagina'] = 			'Actualizar ficha '.$this->data['predio']->ficha_predial;
+				} else
+				{
+					//si no se selecciono una ficha predial se retorna al index
+					redirect('actualizar_controller');
+				}
 
                     // Se carga la vista
-                    $this->load->view('actualizar/gestion', $this->data);
+					$this->load->view('actualizar/actualizar_view', $this->data);
                 break; // Gestión de ficha predial
                 // Cultivos de ficha predial
                 case 'ficha_cultivos':
@@ -385,18 +393,6 @@ class Actualizar_controller extends CI_Controller {
 
 		// Recorrido para recolectar datos y guardarlos
 		for ($i = 1; $i <= 5; $i++) {
-			// Datos de inventario de cultivos y especies
-    		$cultivos_especies = array(
-    			'ficha_predial' => $ficha_predial,
-    			'numero' => $i,
-    			'descripcion' => utf8_encode($this->input->post('cultivo_descr'.$i)),
-    			'cantidad' => utf8_encode($this->input->post('cultivo_cant'.$i)),
-    			'densidad' => utf8_encode($this->input->post('cultivo_dens'.$i)),
-    			'unidad' => utf8_encode($this->input->post('cultivo_un'.$i))
-			);
-
-			// Se actualiza los cultivos y especies
-			$this->PrediosDAO->actualizar_cultivos_especies($ficha_predial, $i, $cultivos_especies);
 
 			// Datos de las construcciones
 			$construcciones = array(

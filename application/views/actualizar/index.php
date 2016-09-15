@@ -15,15 +15,15 @@
             break; // Cultivos y especies
         } // suiche
     } // cargar
-	
+
 	/**
 	 * Función de gestión del formulario
-	 * @return void 
+	 * @return void
 	 */
 	function gestionar()
 	{
 		// Se carga la interfaz
-		cargar_interfaz("cont_general", "<?php echo site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "ficha_gestion", "ficha": "<?php echo $predio->ficha_predial; ?>"});
+		cargar_interfaz("cont_general", "<?php echo site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "ficha_gestion", "id": "<?= $id_predio; ?>"});
 	} // gestionar
 
 	/**

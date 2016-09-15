@@ -19,7 +19,7 @@
         <?php $cont = 1 ?>
 		<?php foreach ($cultivos as $cultivo): ?>
             <tr>
-                <td><?= $cont ?></td>
+                <td align="right"><?= $cont ?></td>
                 <td><?= $cultivo->descripcion ?></td>
                 <td align='right'><?= floatval($cultivo->cantidad) ?></td>
                 <td><?= $cultivo->densidad ?></td>
