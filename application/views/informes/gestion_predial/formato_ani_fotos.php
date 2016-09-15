@@ -22,18 +22,8 @@ class PDF extends FPDF{
 	    $this->setX(52);
 	    $this->MultiCell(85,9, utf8_decode('REGISTRO FOTOGRÁFICO'),1,'C');
 
-	    $ficha = explode('-', $GLOBALS['ficha']);
-
-	    if (count($ficha) > 2) {
-			// Se pone en vez de F o M, Área
-			$nombre_ficha = "$ficha[0]-$ficha[1] Área $ficha[3]";
-		} else {
-			// Ficha normal
-			$nombre_ficha = $GLOBALS['ficha'];
-		} // if
-
 	    $this->setX(52);
-	    $this->MultiCell(85,9, utf8_decode("PREDIO $nombre_ficha"),1,'C');
+	    $this->MultiCell(85,9, utf8_decode("PREDIO ".substr($GLOBALS['ficha'], 0, 6)),1,'C');
 
 	    // Logo Vinus
 	    $this->setXY(137,10);
@@ -149,5 +139,4 @@ if(count($fotos) > 0) {
 
 
 // Se imprime el reporte
-// $pdf->Output($ficha.'.pdf', 'I');
-$pdf->Output($ficha.'.pdf', 'D');
+$pdf->Output(substr($ficha, 0, 6).'.pdf', 'D');
