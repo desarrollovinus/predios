@@ -25,7 +25,7 @@
                 <td><?= $cultivo->densidad ?></td>
                 <td><?= $cultivo->unidad ?></td>
                 <td width="8%">
-                    <a id="editar" onclick="javascript:editar(this)" style="cursor: pointer">
+                    <a onclick="javascript:editar(this)" style="cursor: pointer">
                         <img src="<?php echo base_url(); ?>img/edit.png" title="Editar cultivos">
                     </a>
                     <a onclick="javascript:eliminar_mensaje('<?= $cultivo->id_cultivo_especie ?>')" style="cursor: pointer">
@@ -102,7 +102,7 @@ $('#volver').click(() => {
     location.reload();
 });
 
-$('#nuevo, #editar').click(() => {
+$('#nuevo').click(() => {
     $( "#dialog-form" ).dialog({
         modal: true,
         height:310,
@@ -197,6 +197,13 @@ function editar(fila) {
     $("input[name=densidad]").val(fila[3].innerHTML);
     $("input[name=unidad]").val(fila[4].innerHTML);
     $("input[name=id_cultivo]").val(fila[6].innerHTML);
+    $("#error").empty();
+
+    $( "#dialog-form" ).dialog({
+        modal: true,
+        height:310,
+        width:760,
+    });
     $("#error").empty();
 }
 
