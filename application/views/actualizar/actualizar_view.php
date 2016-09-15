@@ -1,4 +1,5 @@
 <script src="<?php echo base_url(); ?>js/ajaxupload.2.0.min.js"></script>
+<link rel="stylesheet" href="<?php echo base_url(); ?>css/demo_table_jui.css" type="text/css" />
 <?php $permisos = $this->session->userdata('permisos'); ?>
 <ul id="navigation">
 	<?php if(isset($permisos['Bit&aacute;cora']['Consultar'])) { ?><li><a href='#' rel="bitacora" title="Bit&aacute;cora"><img src="<?php echo base_url('img/bitacora.png'); ?>"></a></li><?php } ?>
@@ -886,6 +887,7 @@
 	//este script se ejecuta una vez se haya cargado el documento completamente (cuando el documento este ready)
 	$(document).ready(function()
 	{
+		$( "#form input[type=submit], #form input[type=button]").button();
 		$("#vertices").load("<?php echo site_url('archivos_controller/cargar_vertices'); ?>", {"ficha_predial": $('#form input[name=ficha]').val()});
 		$('#navigation a').stop().animate({'marginLeft':'85px'},1000);
 

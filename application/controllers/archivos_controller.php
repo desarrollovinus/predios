@@ -104,7 +104,7 @@ class Archivos_controller extends CI_Controller
 				//se lee archivo por archivo
 				while(($file = readdir($directorio)) !== FALSE)
 				{
-					if($file != '.' && $file != '..' && $file != 'fotos')
+					if(strpos($file, '.') !== false && $file != '.' && $file != '..')
 					{
 						//se guardan los nombres en el array
 						array_push($nombres, $file);

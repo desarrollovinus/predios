@@ -70,7 +70,7 @@
 	<?php echo form_fieldset_close(); ?>
 
 </div>
-<div id="dialog-confirm" title="Eliminar archivo">
+<div id="dialog-confirm" title="Eliminar archivo" hidden>
 	¿Esta seguro(a) de realizar esta acción?
 </div>
 <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.dataTables.min.js"></script>
