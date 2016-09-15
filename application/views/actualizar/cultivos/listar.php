@@ -41,18 +41,42 @@
 
 <div id="dialog-form" title="Nuevo cultivo" hidden>
     <div id="error"></div>
+
     <?= form_label('Descripción', 'descripcion') ?>
     <?php $data = array('name'=>'descripcion', 'value'=>'', 'style'=>'height:35%') ?>
     <?= form_textarea($data) ?>
-    <?= form_label('Cantidad', 'cantidad') ?>
-    <?php $data = array('name'=>'cantidad', 'value'=>'') ?>
-    <?= form_input($data) ?>
-    <?= form_label('Densidad', 'densidad') ?>
-    <?php $data = array('name'=>'densidad', 'value'=>'') ?>
-    <?= form_input($data) ?>
-    <?= form_label('Unidad', 'unidad') ?>
-    <?php $data = array('name'=>'unidad', 'value'=>'') ?>
-    <?= form_input($data) ?>
+    <table>
+        <thead>
+            <tr>
+                <td>
+                    <?= form_label('Cantidad', 'cantidad') ?>
+                </td>
+                <td>
+                    <?= form_label('Densidad', 'densidad') ?>
+                </td>
+                <td>
+                    <?= form_label('Unidad', 'unidad') ?>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <?php $data = array('name'=>'cantidad', 'value'=>'') ?>
+                    <?= form_input($data) ?>
+                </td>
+                <td>
+                    <?php $data = array('name'=>'densidad', 'value'=>'') ?>
+                    <?= form_input($data) ?>
+                </td>
+                <td>
+                    <?php $data = array('name'=>'unidad', 'value'=>'') ?>
+                    <?= form_input($data) ?>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
     <input type="button" name="id_cultivo" value="" hidden>
     <input type="button" value="Cancelar" id="cancelar-nuevo" style="float:right;" class="ui-button ui-widget ui-state-default ui-corner-all">
     <input type="button" value="Guardar" id="guardar-nuevo" style="float:right;" class="ui-button ui-widget ui-state-default ui-corner-all">
@@ -81,8 +105,8 @@ $('#volver').click(() => {
 $('#nuevo, #editar').click(() => {
     $( "#dialog-form" ).dialog({
         modal: true,
-        height:300,
-        width:700,
+        height:310,
+        width:760,
     });
 
     document.getElementsByClassName("ui-dialog-titlebar-close")[0].addEventListener("click", () => {
@@ -105,7 +129,7 @@ $('#guardar-nuevo').click(() => {
         "densidad": densidad.val(),
         "unidad": unidad.val()
     };
-    if (datos.descripcion === '' || datos.cantidad === '' || datos.unidad === '') {
+    if (datos.descripcion.trim() === '' || datos.cantidad.trim() === '' || datos.unidad.trim() === '') {
         // Mensaje de advertencia
         $("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>Llene los campos obligatorios</p></div>');
         return false;
@@ -130,7 +154,7 @@ $('#guardar-nuevo').click(() => {
             }//Error
         });//Ajax
     } else {
-        if (datos.descripcion === '' || datos.cantidad === '' || datos.unidad === '') {
+        if (datos.descripcion.trim() === '' || datos.cantidad.trim() === '' || datos.unidad.trim() === '') {
             // Mensaje de advertencia
             $("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>Llene los campos obligatorios</p></div>');
             return false;
