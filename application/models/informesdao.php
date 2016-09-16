@@ -195,6 +195,36 @@ class InformesDAO extends CI_Model
 		return $this->db->query($query)->result();
 	}
 
+	function obtener_predios_agrupados($unidad_funcional = NULL){
+		($unidad_funcional) ? $unidad = "WHERE p.ficha_predial LIKE '{$unidad_funcional}%'" : $unidad = "" ;
+		$sql =
+		"SELECT
+			p.ficha_predial
+		FROM
+			tbl_predio AS p
+		$unidad
+		GROUP BY
+			substring(p.ficha_predial, 1, 6)
+		ORDER BY
+			p.ficha_predial ASC";
+
+		return $this->db->query($sql)->result();
+	}
+
+	function obtener_predios_ficha($predio){
+		$sql =
+		"SELECT
+			p.ficha_predial
+		FROM
+			tbl_predio AS p
+		WHERE
+			p.ficha_predial LIKE '{$predio}%'
+		ORDER BY
+			p.ficha_predial ASC";
+
+		return $this->db->query($sql)->result();
+	}
+
 	function obtener_informe_gestion_predial_ani($ficha) {
 		// Si existe una ficha específica
 		if ($ficha != null) {
@@ -205,6 +235,11 @@ class InformesDAO extends CI_Model
 
 		$query =
 		"SELECT
+			substring(tbl_predio.ficha_predial, 1, 3) unidad_funcional,
+			-- substring(tbl_predio.ficha_predial, 5, 2) predio,
+			-- substring(tbl_predio.ficha_predial, 8, 1) abreviatura,
+			-- CASE substring(tbl_predio.ficha_predial, 8, 1) WHEN 'F' THEN 'Área' WHEN 'M' THEN 'Mejora' END tipo_ficha,
+			substring(tbl_predio.ficha_predial, 10, 2) numero_faja,
 			tbl_predio.ficha_predial,
 			d.numero,
 			d.tramo,

@@ -26,7 +26,7 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.bgiframe-2.1.2.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>js/funciones.js"></script>
 <script type="text/javascript">
-	$(document).ready(function () { 
+	$(document).ready(function () {
 		//esta sentencia es para darle el estilo a los botones jquery.ui 
 	    $( "#form input[type=submit], #form input[type=button]").button();
 

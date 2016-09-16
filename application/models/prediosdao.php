@@ -52,10 +52,9 @@ class PrediosDAO extends CI_Model
 	 * Inserta los datos de cultivos y especies de un predio.
 	 *
 	 * @access	public
-	 * @param	string	la ficha predial.
 	 * @param	string	la descripci&oacute;n de los cultivos y especies del predio.
 	 */
-	function insertar_cultivos_especies($ficha_predial, $datos)
+	function insertar_cultivos_especies($datos)
 	{
 		//se inserta en la tabla
 		$this->db->insert('tbl_cultivos_especies', $datos);
@@ -64,7 +63,7 @@ class PrediosDAO extends CI_Model
 		$auditoria = array(
 			'fecha_hora' => date('Y-m-d H:i:s', time()),
 			'id_usuario' => $this->session->userdata('id_usuario'),
-			'descripcion' => 'Se insertan los cultivos y especies del predio '.$ficha_predial
+			'descripcion' => 'Se insertan los cultivos y especies del predio '.$datos["ficha_predial"]
 		);
 		$this->db->insert('auditoria', $auditoria);
 		#fin accion de auditoria
@@ -93,7 +92,13 @@ class PrediosDAO extends CI_Model
 		//se edita el cultivo
 		$this->db->set($datos);
 		$this->db->where('id_cultivo_especie', $id);
-		$this->db->update('tbl_cultivos_especies');
+		
+		// Si actualiza
+		if ($this->db->update('tbl_cultivos_especies')) {
+		 	return true;
+		}else{
+			return false;
+		} // if
 	}
 
 
@@ -460,7 +465,7 @@ class PrediosDAO extends CI_Model
 		return $this->db->query($sql)->result();
 	}
 
-	function obtener_predios_semafoto($tramo)
+	function obtener_predios_semaforo($tramo)
 	{
 		$sql=
 		"SELECT
@@ -488,7 +493,7 @@ class PrediosDAO extends CI_Model
 
 
 		return $this->db->query($sql)->result();
-	}
+	} // obtener_predios_semaforo
 
 	function obtener_cultivos($ficha_predial)
 	{
@@ -497,6 +502,13 @@ class PrediosDAO extends CI_Model
 		$resultado = $this->db->get('tbl_cultivos_especies')->result();
 
 		return $resultado;
+	}
+
+	function obtener_cultivo($id)
+	{
+		$this->db->where('id_cultivo_especie', $id);
+		return $this->db->get('tbl_cultivos_especies')->row();
+		
 	}
 
 	function obtener_construcciones($ficha_predial, $tipo)
