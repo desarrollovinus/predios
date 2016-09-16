@@ -10,6 +10,10 @@
         switch(tipo) {
             // Cultivos y especies
             case "cultivos":
+            	// Se pone activo en el menú la opción de cultivos
+            	$("ul>li").removeClass('current');
+            	$("#menu_cultivos").addClass('current');
+
             	// Se carga la interfaz
 				cargar_interfaz("cont_general", "<?php echo site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "ficha_cultivos", "ficha": "<?php echo $predio->ficha_predial; ?>"});
             break; // Cultivos y especies

@@ -1,8 +1,8 @@
 <?php $permisos = $this->session->userdata('permisos'); ?>
 
 <ul>
-	<li class="current"><a href="<?php // echo site_url('actualizar_controller'); ?>">GENERAL</a></li>
-	<li style="cursor:pointer"><a onClick="javascript:cargar('cultivos')">CULTIVOS Y ESPECIES</a></li>
+	<li id="menu_general" class="current"><a href="">GENERAL</a></li>
+	<li id="menu_cultivos" style="cursor:pointer"><a onClick="javascript:cargar('cultivos')">CULTIVOS Y ESPECIES</a></li>
 </ul>
 
 
