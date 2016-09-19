@@ -12,15 +12,15 @@ if ($id > 0) {
 <div id="dialog-form" title="Gestión de construcciones" hidden>
     <div id="error"></div>
 
-    <?= form_label('Descripción', 'descripcion') ?>
+    <?= form_label('Descripción*', 'descripcion') ?>
     <?php $data = array('name'=>'descripcion', 'value'=> $construccion->descripcion, 'style'=>'height:35%') ?>
     <?= form_textarea($data);
      ?>
     <table>
         <thead>
             <tr>
-                <td><?= form_label('Cantidad', 'cantidad') ?></td>
-                <td><?= form_label('Unidad', 'unidad') ?></td>
+                <td><?= form_label('Cantidad*', 'cantidad') ?></td>
+                <td><?= form_label('Unidad*', 'unidad') ?></td>
             </tr>
         </thead>
         <tbody>
