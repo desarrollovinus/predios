@@ -15,7 +15,7 @@
 
 <script type="text/javascript">
 	/**
-	 * Función que crea un registro 
+	 * Función que crea un registro
 	 */
     function crear()
     {
@@ -24,7 +24,7 @@
     } // crear
 
     /**
-	 * Función que actualiza un registro 
+	 * Función que actualiza un registro
 	 */
     function editar(id)
     {
@@ -54,7 +54,7 @@
 
 			                //se destruye el elemento dialog
 			                // $( "#dialog:ui-dialog" ).dialog( "destroy" );
-			                
+
 			                //se cierra el elemento flotante
 			                cerrar_modal();
 			            },
@@ -68,17 +68,21 @@
 
 	        // Confirmación
 		    case "confirmacion":
+            var datos = {
+                "ficha_predial": "<?= $ficha ?>",
+                "id": id
+            };
 		        // Se elimina el registro
-            	ajax("<?php echo site_url('actualizar_controller/eliminar_cultivo'); ?>", {"id": id}, "html");
+                ajax("<?php echo site_url('actualizar_controller/eliminar'); ?>", {"tipo": "cultivo", "datos": datos}, "html");
 
             	// Se listan los cultivos
-            	listar()
+            	listar();
 	        break; // Confirmación
 		} // Suiche
 	} // eliminar
 
 	/**
-	 * Función que guarda o actualiza el registro del cultivo 
+	 * Función que guarda o actualiza el registro del cultivo
 	 */
 	function guardar()
 	{
@@ -145,7 +149,7 @@
 
 	function volver()
 	{
-		// Se devuelve a la página general de edición del predio 
+		// Se devuelve a la página general de edición del predio
 		location.reload();
 	} // volver
 
