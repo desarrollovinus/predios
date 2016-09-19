@@ -100,6 +100,30 @@ class Actualizar_controller extends CI_Controller {
         } // if
     } // crear
 
+	/**
+	 * Eliminación de registros en base de datos
+	 */
+	function eliminar(){
+		//Se valida que la peticion venga mediante ajax y no mediante el navegador
+		if($this->input->is_ajax_request()){
+			// Se reciben los datos por POST
+			$datos = $this->input->post('datos');
+			$tipo = $this->input->post('tipo');
+
+			// Dependiendo del tipo
+			switch ($tipo) {
+				// Cultivo
+				case 'cultivo':
+					// Se crea el registro
+					echo $this->PrediosDAO->eliminar_cultivos_especies($datos);
+				break; // Cultivo
+			} // Switch tipo
+		}else{
+			//Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+			redirect('');
+		} // if
+	} // eliminar
+
 	function cultivos(){
 		//se carga el modelo que gestiona las consultas del modulo de Predios y del modulo de Contratistas
 		// $this->load->model(array('PrediosDAO', 'ContratistasDAO', 'AccionesDAO'));
@@ -206,7 +230,7 @@ class Actualizar_controller extends CI_Controller {
                     // Se carga la vista
 					$this->load->view('actualizar/actualizar_view', $this->data);
                 break; // Gestión de ficha predial
-                
+
                 // Cultivos de ficha predial
                 case 'ficha_cultivos':
                 	// Se toman valores que vienen por post

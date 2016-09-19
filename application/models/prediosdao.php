@@ -75,10 +75,21 @@ class PrediosDAO extends CI_Model
 	 * @access	public
 	 * @param	string	id del cultivo.
 	 */
-	function eliminar_cultivos_especies($id)
+	function eliminar_cultivos_especies($datos)
 	{
 		//se elimina el cultivo
-		$this->db->delete('tbl_cultivos_especies', array('id_cultivo_especie' => $id));
+		if($this->db->delete('tbl_cultivos_especies', array('id_cultivo_especie' => $datos["id"]))) {
+			#accion de auditoria
+			$auditoria = array(
+				'fecha_hora' => date('Y-m-d H:i:s', time()),
+				'id_usuario' => $this->session->userdata('id_usuario'),
+				'descripcion' => 'Se elimina cultivo u especie del predio '.$datos["ficha_predial"]
+			);
+			$this->db->insert('auditoria', $auditoria);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -92,9 +103,16 @@ class PrediosDAO extends CI_Model
 		//se edita el cultivo
 		$this->db->set($datos);
 		$this->db->where('id_cultivo_especie', $id);
-		
+
 		// Si actualiza
 		if ($this->db->update('tbl_cultivos_especies')) {
+			#accion de auditoria
+			$auditoria = array(
+				'fecha_hora' => date('Y-m-d H:i:s', time()),
+				'id_usuario' => $this->session->userdata('id_usuario'),
+				'descripcion' => 'Se actualiza cultivo u especie del predio '.$datos["ficha_predial"]
+			);
+			$this->db->insert('auditoria', $auditoria);
 		 	return true;
 		}else{
 			return false;
@@ -508,7 +526,7 @@ class PrediosDAO extends CI_Model
 	{
 		$this->db->where('id_cultivo_especie', $id);
 		return $this->db->get('tbl_cultivos_especies')->row();
-		
+
 	}
 
 	function obtener_construcciones($ficha_predial, $tipo)
