@@ -5,7 +5,7 @@
 	/**
      * Carga por Ajax la interfaz seleccionada
      */
-    function cargar(tipo){
+    function cargar(tipo, subcategoria){
         // Dependiendo del tipo
         switch(tipo) {
             // Cultivos y especies
@@ -15,8 +15,19 @@
             	$("#menu_cultivos").addClass('current');
 
             	// Se carga la interfaz
-				cargar_interfaz("cont_general", "<?php echo site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "ficha_cultivos", "ficha": "<?php echo $predio->ficha_predial; ?>"});
+				cargar_interfaz("cont_general", "<?= site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "ficha_cultivos", "ficha": "<?= $predio->ficha_predial; ?>"});
             break; // Cultivos y especies
+			case "construcciones":
+				// Se pone activo en el menú la opción de construcciones deendiendo de la subcategoria
+				$("ul>li").removeClass('current');
+				if (subcategoria === 1) {
+					$("#menu_construcciones").addClass('current');
+				} else {
+					$("#menu_construcciones_anexas").addClass('current');
+				}
+				// Se carga la interfaz
+				cargar_interfaz("cont_general", "<?= site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "ficha_construcciones", "subcategoria": subcategoria, "ficha": "<?= $predio->ficha_predial; ?>"});
+			break; // Cultivos y especies
         } // suiche
     } // cargar
 

@@ -27,46 +27,72 @@ class PrediosDAO extends CI_Model
 	}
 
 	/**
-	 * Inserta los datos de construcciones de un predio.
+	 * Inserta una nueva construccion.
 	 *
 	 * @access	public
-	 * @param	string	la ficha predial.
-	 * @param	string	la descripci&oacute;n de las construcciones de un predio
+	 * @param	array	datos de la construccion.
 	 */
-	function insertar_construcciones($ficha_predial, $datos)
+	function insertar_construccion($datos)
 	{
 		//se inserta en la tabla
-		$this->db->insert('tbl_construcciones', $datos);
+		if($this->db->insert('tbl_construcciones', $datos)) {
+			#accion de auditoria
+			$auditoria = array(
+				'fecha_hora' => date('Y-m-d H:i:s', time()),
+				'id_usuario' => $this->session->userdata('id_usuario'),
+				'descripcion' => 'Se insertan nueva construccion en la ficha '.$datos["ficha_predial"]
+			);
+			$this->db->insert('auditoria', $auditoria);
+			#fin accion de auditoria
+			return true;
+		} else {
+			return false;
+		}
+	} // fin insertar construccion
 
-		#accion de auditoria
-		$auditoria = array(
-			'fecha_hora' => date('Y-m-d H:i:s', time()),
-			'id_usuario' => $this->session->userdata('id_usuario'),
-			'descripcion' => 'Se insertan la descripción de construcciones del predio '.$ficha_predial
-		);
-		$this->db->insert('auditoria', $auditoria);
-		#fin accion de auditoria
+	/**
+	 * Edita un cultivo de un predio.
+	 *
+	 * @access	public
+	 * @param	string	id del cultivo.
+	 * @param	array 	informacion del cultivo.
+	 */
+	function editar_construccion($id, $datos) {
+		$this->db->where('id_construccion', $id);
+		if($this->db->update('tbl_construcciones', $datos)) {
+			$auditoria = array(
+				'fecha_hora' => date('Y-m-d H:i:s', time()),
+				'id_usuario' => $this->session->userdata('id_usuario'),
+				'descripcion' => 'Se actualiza construccion del predio '.$datos["ficha_predial"]
+			);
+			$this->db->insert('auditoria', $auditoria);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
-	 * Inserta los datos de cultivos y especies de un predio.
+	 * Elimina un cultivo de un predio.
 	 *
 	 * @access	public
-	 * @param	string	la descripci&oacute;n de los cultivos y especies del predio.
+	 * @param	array	id y ficha_predial de la construccion.
 	 */
-	function insertar_cultivos_especies($datos)
+	function eliminar_construccion($datos)
 	{
-		//se inserta en la tabla
-		$this->db->insert('tbl_cultivos_especies', $datos);
-
-		#accion de auditoria
-		$auditoria = array(
-			'fecha_hora' => date('Y-m-d H:i:s', time()),
-			'id_usuario' => $this->session->userdata('id_usuario'),
-			'descripcion' => 'Se insertan los cultivos y especies del predio '.$datos["ficha_predial"]
-		);
-		$this->db->insert('auditoria', $auditoria);
-		#fin accion de auditoria
+		//se elimina el cultivo
+		if($this->db->delete('tbl_construcciones', array('id_construccion' => $datos["id"]))) {
+			#accion de auditoria
+			$auditoria = array(
+				'fecha_hora' => date('Y-m-d H:i:s', time()),
+				'id_usuario' => $this->session->userdata('id_usuario'),
+				'descripcion' => 'Se elimina construccion del predio '.$datos["ficha_predial"]
+			);
+			$this->db->insert('auditoria', $auditoria);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -529,14 +555,20 @@ class PrediosDAO extends CI_Model
 
 	}
 
+	function obtener_construccion($id) {
+		$this->db->where('id_construccion', $id);
+		return $this->db->get('tbl_construcciones')->row();
+
+	}
+
 	function obtener_construcciones($ficha_predial, $tipo)
 	{
 		$this->db->where('ficha_predial', $ficha_predial);
 		$this->db->where('id_tipo', $tipo);
-		$resultado = $this->db->get('tbl_construcciones')->result();
-
-		return $resultado;
+		$this->db->order_by('cantidad', 'desc');
+		return $this->db->get('tbl_construcciones')->result();
 	}
+
 
 	function obtener_estados_via()
 	{
@@ -671,25 +703,6 @@ class PrediosDAO extends CI_Model
 	{
 		$this->db->order_by('nombre');
 		return $this->db->get('tbl_titulos_adquisicion')->result();
-	}
-
-	function actualizar_construcciones($ficha_predial, $tipo, $numero, $construcciones)
-	{
-		$this->db->where('ficha_predial', $ficha_predial);
-		$this->db->where('id_tipo', $tipo);
-		$this->db->where('numero', $numero);
-		//el array asociativo pasado por parametro debe tener sus indices nombrados
-		//de la misma forma en que aparecen las columnas de la tabla
-		$this->db->update('tbl_construcciones', $construcciones);
-
-		#accion de auditoria
-		$auditoria = array(
-			'fecha_hora' => date('Y-m-d H:i:s', time()),
-			'id_usuario' => $this->session->userdata('id_usuario'),
-			'descripcion' => 'Se actualiza las construcciones del predio: '.$ficha_predial
-		);
-		$this->db->insert('auditoria', $auditoria);
-		#fin accion de auditoria
 	}
 
 	function actualizar_identificacion($ficha_predial, $identificacion)
