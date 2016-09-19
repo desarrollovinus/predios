@@ -1,4 +1,6 @@
-<h4 style="display: inline-block;">Cultivos u especies del predio <?php echo $ficha; ?></h4>
+<h4 style="display: inline-block;">
+    Construcciones <?php if($subcategoria == 2) {echo "anexas"; } ?> del predio <?= $ficha; ?>
+</h4>
 <p style="float: right;">
     <input type="button" value="Nuevo" onClick="crear()" class="ui-button ui-widget ui-state-default ui-corner-all">
     <input type="button" value="Volver" onClick="javascript:volver()" class="ui-button ui-widget ui-state-default ui-corner-all">
@@ -10,7 +12,7 @@
 </div>
 
 <!-- Contenedor de cultivos -->
-<div id="cont_cultivos"></div>
+<div id="cont_construcciones"></div>
 <div id="cont_modal"></div>
 
 <script type="text/javascript">
@@ -20,7 +22,7 @@
     function crear()
     {
 		// Carga de interfaz
-		cargar_interfaz("cont_modal", "<?php echo site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "ficha_cultivos_gestion", "ficha": "<?php echo $ficha; ?>", "id": 0});
+		cargar_interfaz("cont_modal", "<?= site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "ficha_construcciones_gestion", "ficha": "<?= $ficha; ?>", "id": 0});
     } // crear
 
     /**
@@ -29,7 +31,7 @@
     function editar(id)
     {
     	// Carga de interfaz
-		cargar_interfaz("cont_modal", "<?php echo site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "ficha_cultivos_gestion", "ficha": "<?php echo $ficha; ?>", "id": id});
+		cargar_interfaz("cont_modal", "<?= site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "ficha_construcciones_gestion", "ficha": "<?= $ficha; ?>", "id": id});
     } // editar
 
 	/**
@@ -73,7 +75,7 @@
                 "id": id
             };
 		        // Se elimina el registro
-                ajax("<?php echo site_url('actualizar_controller/eliminar'); ?>", {"tipo": "cultivo", "datos": datos}, "html");
+                ajax("<?php echo site_url('actualizar_controller/eliminar'); ?>", {"tipo": "construccion", "datos": datos}, "html");
 
             	// Se listan los cultivos
             	listar();
@@ -116,8 +118,8 @@
 	    var datos = {
 	        "ficha_predial": "<?= $ficha ?>",
 	        "descripcion": descripcion.val(),
+            "id_tipo": "<?= $subcategoria ?>",
 	        "cantidad": cantidad.val(),
-	        "densidad": densidad.val(),
 	        "unidad": unidad.val()
 	    };
 	    // imprimir(datos);
@@ -125,10 +127,10 @@
 	    // Si es edición
 	    if (id) {
     		// Se actualiza el registro
-            ajax("<?php echo site_url('actualizar_controller/actualizar'); ?>", {"tipo": "cultivo", "datos": datos, "id": id}, "html");
+            ajax("<?php echo site_url('actualizar_controller/actualizar'); ?>", {"tipo": "construccion", "datos": datos, "id": id}, "html");
 	    } else {
     		// Se crea el registro
-            ajax("<?php echo site_url('actualizar_controller/crear'); ?>", {"tipo": "cultivo", "datos": datos}, "html");
+            ajax("<?php echo site_url('actualizar_controller/crear'); ?>", {"tipo": "construccion", "datos": datos}, "html");
 	    } // if
 
 	    // Se listan los cultivos
@@ -144,7 +146,7 @@
 	function listar()
 	{
 		// Carga de interfaz
-		cargar_interfaz("cont_cultivos", "<?php echo site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "ficha_cultivos_lista", "ficha": "<?php echo $ficha; ?>"});
+		cargar_interfaz("cont_construcciones", "<?php echo site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "ficha_construcciones_lista", "ficha": "<?= $ficha; ?>", "subcategoria": "<?= $subcategoria ?>"});
 	} // listar
 
 	function volver()

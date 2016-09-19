@@ -69,6 +69,11 @@ class Actualizar_controller extends CI_Controller {
                     //Se ejecuta el modelo que actualiza los datos
                     echo $this->PrediosDAO->editar_cultivo_especies($this->input->post('id'), $datos);
                 break; // Cultivos
+				// Construccion
+				case 'construccion':
+                    //Se ejecuta el modelo que actualiza los datos
+                    echo $this->PrediosDAO->editar_construccion($this->input->post('id'), $datos);
+                break; // Construccion
             } // switch
         }else{
             //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
@@ -93,12 +98,47 @@ class Actualizar_controller extends CI_Controller {
                     // Se crea el registro
                     echo $this->PrediosDAO->insertar_cultivos_especies($datos);
                 break; // Cultivo
+				// Construccion
+                case 'construccion':
+                    // Se crea el registro
+                    echo $this->PrediosDAO->insertar_construccion($datos);
+                break; // Construccion
             } // Switch tipo
         }else{
             //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
             redirect('');
         } // if
     } // crear
+
+	/**
+	 * Eliminación de registros en base de datos
+	 */
+	function eliminar(){
+		//Se valida que la peticion venga mediante ajax y no mediante el navegador
+		if($this->input->is_ajax_request()){
+			// Se reciben los datos por POST
+			$datos = $this->input->post('datos');
+			$tipo = $this->input->post('tipo');
+
+			// Dependiendo del tipo
+			switch ($tipo) {
+				// Cultivo
+				case 'cultivo':
+					// Se elimina el registro
+					echo $this->PrediosDAO->eliminar_cultivos_especies($datos);
+				break; // Cultivo
+				// Construccion
+				case 'construccion':
+					// Se elimina el registro
+					echo $this->PrediosDAO->eliminar_construccion($datos);
+				break; // Construccion
+
+			} // Switch tipo
+		}else{
+			//Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+			redirect('');
+		} // if
+	} // eliminar
 
 	function cultivos(){
 		//se carga el modelo que gestiona las consultas del modulo de Predios y del modulo de Contratistas
@@ -206,7 +246,7 @@ class Actualizar_controller extends CI_Controller {
                     // Se carga la vista
 					$this->load->view('actualizar/actualizar_view', $this->data);
                 break; // Gestión de ficha predial
-                
+
                 // Cultivos de ficha predial
                 case 'ficha_cultivos':
                 	// Se toman valores que vienen por post
@@ -239,6 +279,32 @@ class Actualizar_controller extends CI_Controller {
                     // Se carga la vista
                     $this->load->view('actualizar/cultivos/listar', $this->data);
                 break; // Listado de cultivos de ficha predial
+
+				// Gestión de construcciones de ficha predial
+				case 'ficha_construcciones_gestion':
+					// Se toman valores que vienen por post
+					$this->data['subcategoria'] = $this->input->post('subcategoria');
+					$this->data['id'] = $this->input->post('id');
+					// Se carga la vista
+					$this->load->view('actualizar/construcciones/gestion', $this->data);
+				break; // Gestión de cultivos de ficha predial
+
+				// Construcciones de ficha predial
+				case 'ficha_construcciones':
+					// Se toman valores que vienen por post
+					$this->data['ficha'] = $this->input->post('ficha');
+					$this->data['subcategoria'] = $this->input->post('subcategoria');
+					// Se carga la vista
+					$this->load->view('actualizar/construcciones/index', $this->data);
+				break; // Construcciones de ficha predial
+				// Listado de construcciones de ficha predial
+				case 'ficha_construcciones_lista':
+					// Se toman valores que vienen por post
+					$this->data['ficha'] = $this->input->post('ficha');
+					$this->data['subcategoria'] = $this->input->post('subcategoria');
+					// Se carga la vista
+					$this->load->view('actualizar/construcciones/listar', $this->data);
+				break; // Listado de construcciones de ficha predial
             } // suiche
         }else{
             //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
@@ -447,36 +513,6 @@ class Actualizar_controller extends CI_Controller {
 
 		// Se actualizan los linderos
 		$this->PrediosDAO->actualizar_predio_requerido($ficha_predial, $linderos);
-
-		// Recorrido para recolectar datos y guardarlos
-		for ($i = 1; $i <= 5; $i++) {
-
-			// Datos de las construcciones
-			$construcciones = array(
-				'ficha_predial' => $ficha_predial,
-    			'numero' => $i,
-    			'item' => utf8_encode($this->input->post('const_item'.$i)),
-    			'descripcion' => utf8_encode($this->input->post('const_desc'.$i)),
-    			'cantidad' => utf8_encode($this->input->post('const_cant'.$i)),
-    			'unidad' => utf8_encode($this->input->post('const_un'.$i))
-			);
-
-			// Se actualiza los cultivos y especies
-			$this->PrediosDAO->actualizar_construcciones($ficha_predial, '1', $i, $construcciones);
-
-			// Datos de las construcciones anexas
-			$construcciones_anexas = array(
-				'ficha_predial' => $ficha_predial,
-    			'numero' => $i,
-    			'item' => utf8_encode($this->input->post('const_an_item'.$i)),
-    			'descripcion' => utf8_encode($this->input->post('const_an_desc'.$i)),
-    			'cantidad' => utf8_encode($this->input->post('const_an_cant'.$i)),
-    			'unidad' => utf8_encode($this->input->post('const_an_un'.$i))
-			);
-
-			// Se actualiza los cultivos y especies
-			$this->PrediosDAO->actualizar_construcciones($ficha_predial, '2', $i, $construcciones_anexas);
-		}
 
 		//se procede a insertar los propietarios
 		//se obtiene el numero de propietarios que se han agregado en el formulario

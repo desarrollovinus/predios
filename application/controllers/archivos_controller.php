@@ -553,22 +553,35 @@ class Archivos_controller extends CI_Controller
 		imagettftext($im, 9, 0, $posX , $posY, $black, $bold, 'Estado de las vias');
 		$posX = $width - $width * 0.8;
 		$posY = $height - $height * 0.8;
+
+		// Estado de las vias sin estado
+		imagefilledrectangle($im, $posX - 50, $posY - 6, $posX - 19, $posY - 2, $black);
+		imagefilledrectangle($im, $posX - 50, $posY - 5, $posX - 20, $posY - 3, $white);
+		imagettftext($im, 7, 0, $posX , $posY, $black, $font, 'Sin estado');
+		$posY += 15;
+		// lista estado de las vias
 		foreach ($vias as $via) {
 			$color = imagecolorallocate($im, hexdec(substr($via->color, 0, 2)), hexdec(substr($via->color, 2, 2)), hexdec(substr($via->color, 4, 2)));
 			imagefilledrectangle($im, $posX - 50, $posY - 5, $posX - 20, $posY - 3, $color);
 			imagettftext($im, 7, 0, $posX , $posY, $black, $font, $via->nombre);
 			$posY += 15;
 		}
+		// Linea separadora
 		imagefilledrectangle($im, 0, $posY, $width, $posY, $black);
 
 		// Estado del proceso
 		$posX = $width - $width * 0.78;
 		$posY = $posY + 20;
 		imagettftext($im, 9, 0, $posX - 10 , $posY, $black, $bold, 'Estado de los procesos');
-		// Linea separadora
 		$posX = $width - $width * 0.8;
 		$posY = $posY + 30;
 
+		// Estado del proceso sin estado
+		imagefilledrectangle($im, $posX - 50, $posY - 10, $posX - 20, $posY, $black);
+		imagefilledrectangle($im, $posX - 50, $posY - 9, $posX - 21, $posY - 1, $white);
+		imagettftext($im, 7, 0, $posX - 10 , $posY, $black, $font, 'Sin estado');
+		$posY += 17;
+		// lista de estados proceso
 		foreach ($procesos as $proceso) {
 			$color = imagecolorallocate($im, hexdec(substr($proceso->color, 0, 2)), hexdec(substr($proceso->color, 2, 2)), hexdec(substr($proceso->color, 4, 2)));
 			imagefilledrectangle($im, $posX - 50, $posY - 10, $posX - 20, $posY, $color);
