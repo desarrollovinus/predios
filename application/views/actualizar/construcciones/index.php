@@ -116,7 +116,7 @@
 	    var datos = {
 	        "ficha_predial": "<?= $ficha ?>",
 	        "descripcion": descripcion.val(),
-            "id_tipo": 1,
+            "id_tipo": "<?= $subcategoria ?>",
 	        "cantidad": cantidad.val(),
 	        "unidad": unidad.val()
 	    };
@@ -144,7 +144,7 @@
 	function listar()
 	{
 		// Carga de interfaz
-		cargar_interfaz("cont_construcciones", "<?php echo site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "ficha_construcciones_lista", "ficha": "<?php echo $ficha; ?>"});
+		cargar_interfaz("cont_construcciones", "<?php echo site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "ficha_construcciones_lista", "ficha": "<?= $ficha; ?>", "subcategoria": "<?= $subcategoria ?>"});
 	} // listar
 
 	function volver()

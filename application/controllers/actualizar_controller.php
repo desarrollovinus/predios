@@ -283,6 +283,7 @@ class Actualizar_controller extends CI_Controller {
 				// Gestión de construcciones de ficha predial
 				case 'ficha_construcciones_gestion':
 					// Se toman valores que vienen por post
+					$this->data['subcategoria'] = $this->input->post('subcategoria');
 					$this->data['id'] = $this->input->post('id');
 					// Se carga la vista
 					$this->load->view('actualizar/construcciones/gestion', $this->data);
@@ -292,7 +293,7 @@ class Actualizar_controller extends CI_Controller {
 				case 'ficha_construcciones':
 					// Se toman valores que vienen por post
 					$this->data['ficha'] = $this->input->post('ficha');
-
+					$this->data['subcategoria'] = $this->input->post('subcategoria');
 					// Se carga la vista
 					$this->load->view('actualizar/construcciones/index', $this->data);
 				break; // Construcciones de ficha predial
@@ -300,7 +301,7 @@ class Actualizar_controller extends CI_Controller {
 				case 'ficha_construcciones_lista':
 					// Se toman valores que vienen por post
 					$this->data['ficha'] = $this->input->post('ficha');
-
+					$this->data['subcategoria'] = $this->input->post('subcategoria');
 					// Se carga la vista
 					$this->load->view('actualizar/construcciones/listar', $this->data);
 				break; // Listado de construcciones de ficha predial
@@ -512,36 +513,6 @@ class Actualizar_controller extends CI_Controller {
 
 		// Se actualizan los linderos
 		$this->PrediosDAO->actualizar_predio_requerido($ficha_predial, $linderos);
-
-		// Recorrido para recolectar datos y guardarlos
-		for ($i = 1; $i <= 5; $i++) {
-
-			// Datos de las construcciones
-			$construcciones = array(
-				'ficha_predial' => $ficha_predial,
-    			'numero' => $i,
-    			'item' => utf8_encode($this->input->post('const_item'.$i)),
-    			'descripcion' => utf8_encode($this->input->post('const_desc'.$i)),
-    			'cantidad' => utf8_encode($this->input->post('const_cant'.$i)),
-    			'unidad' => utf8_encode($this->input->post('const_un'.$i))
-			);
-
-			// Se actualiza los cultivos y especies
-			$this->PrediosDAO->actualizar_construcciones($ficha_predial, '1', $i, $construcciones);
-
-			// Datos de las construcciones anexas
-			$construcciones_anexas = array(
-				'ficha_predial' => $ficha_predial,
-    			'numero' => $i,
-    			'item' => utf8_encode($this->input->post('const_an_item'.$i)),
-    			'descripcion' => utf8_encode($this->input->post('const_an_desc'.$i)),
-    			'cantidad' => utf8_encode($this->input->post('const_an_cant'.$i)),
-    			'unidad' => utf8_encode($this->input->post('const_an_un'.$i))
-			);
-
-			// Se actualiza los cultivos y especies
-			$this->PrediosDAO->actualizar_construcciones($ficha_predial, '2', $i, $construcciones_anexas);
-		}
 
 		//se procede a insertar los propietarios
 		//se obtiene el numero de propietarios que se han agregado en el formulario

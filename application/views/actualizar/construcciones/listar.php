@@ -14,7 +14,7 @@
     </thead>
     <tbody>
         <?php $cont = 1 ?>
-        <?php foreach ($this->PrediosDAO->obtener_construcciones($ficha, 1) as $construccion): ?>
+        <?php foreach ($this->PrediosDAO->obtener_construcciones($ficha, $subcategoria) as $construccion): ?>
             <tr>
                 <td align="right"><?= $cont ?></td>
                 <td><?= $construccion->descripcion ?></td>

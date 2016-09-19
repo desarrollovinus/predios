@@ -628,28 +628,6 @@
 				</table>
 			<?php echo form_fieldset_close(); ?>
 
-			<!-- DESCRIPCIÓN DE LAS CONSTRUCCIONES ANEXAS -->
-			<?php echo form_fieldset('<b>DESCRIPCI&Oacute;N DE LAS CONSTRUCCIONES ANEXAS</b>'); ?>
-				<table style="text-align:left" width="100%">
-					<tbody>
-						<tr>
-							<td align="center"><b>&Iacute;TEM.</b></td>
-							<td align="center"><b>DESCRIPCI&Oacute;N</b></td>
-							<td align="center"><b>CANT.</b></td>
-							<td align="center"><b>UN.</b></td>
-						</tr>
-						<!-- Se lista la información de las construcciones anexas -->
-						<?php foreach ($this->PrediosDAO->obtener_construcciones($predio->ficha_predial, '2') as $construccion) { ?>
-							<tr>
-								<td><?php echo $construccion->numero; ?>. <?php //echo form_input('const_an_item'.$construccion->numero, utf8_decode($construccion->item));?></td>
-								<td><?php echo form_input('const_an_desc'.$construccion->numero, utf8_decode($construccion->descripcion));?></td>
-								<td><?php echo form_input('const_an_cant'.$construccion->numero, utf8_decode($construccion->cantidad));?></td>
-								<td><?php echo form_input('const_an_un'.$construccion->numero, utf8_decode($construccion->unidad));?></td>
-							</tr>
-						<?php } ?>
-					</tbody>
-				</table>
-
 				<!-- CHECKS -->
 				<table style="text-align:left" width="100%">
 					<tr>
@@ -678,7 +656,6 @@
 						<td>De acuerdo al estudio de t&iacute;tulos, la franja que estipula el decreto 2770 debe adquirirse?</td>
 					</tr>
 				</table>
-			<?php echo form_fieldset_close(); ?>
 		</div>
 
 		<!-- seccion 8 -->
