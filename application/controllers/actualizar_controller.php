@@ -96,7 +96,7 @@ class Actualizar_controller extends CI_Controller {
                 // Cultivo
                 case 'cultivo':
                     // Se crea el registro
-                    echo $this->PrediosDAO->insertar_cultivos_especies($datos);
+                    echo $this->PrediosDAO->insertar_cultivo_especie($datos);
                 break; // Cultivo
 				// Construccion
                 case 'construccion':
