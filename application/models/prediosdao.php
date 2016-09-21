@@ -51,11 +51,11 @@ class PrediosDAO extends CI_Model
 	} // fin insertar construccion
 
 	/**
-	 * Edita un cultivo de un predio.
+	 * Edita una construccion de un predio
 	 *
 	 * @access	public
-	 * @param	string	id del cultivo.
-	 * @param	array 	informacion del cultivo.
+	 * @param	string	id de la construccion.
+	 * @param	array 	informacion de la construccion.
 	 */
 	function editar_construccion($id, $datos) {
 		$this->db->where('id_construccion', $id);
@@ -73,7 +73,7 @@ class PrediosDAO extends CI_Model
 	}
 
 	/**
-	 * Elimina un cultivo de un predio.
+	 * Elimina una construccion de un predio
 	 *
 	 * @access	public
 	 * @param	array	id y ficha_predial de la construccion.
@@ -95,6 +95,29 @@ class PrediosDAO extends CI_Model
 		}
 	}
 
+	/**
+	 * Crea un cultivo en determinado predio
+	 *
+	 * @access	public
+	 * @param	array	datos del cultivo
+	 */
+	function insertar_cultivo_especie($datos)
+	{
+		//se inserta en la tabla
+
+		if($this->db->insert('tbl_cultivos_especies', $datos)) {
+			#accion de auditoria
+			$auditoria = array(
+				'fecha_hora' => date('Y-m-d H:i:s', time()),
+				'id_usuario' => $this->session->userdata('id_usuario'),
+				'descripcion' => 'Se crea un nuevo cultivo en el predio '.$datos["ficha_predial"]
+			);
+			$this->db->insert('auditoria', $auditoria);
+			return true;
+		} else {
+			return false;
+		}
+	}
 	/**
 	 * Elimina un cultivo de un predio.
 	 *
