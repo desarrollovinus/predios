@@ -140,12 +140,17 @@ class Archivos_controller extends CI_Controller
 	}
 
 	function superar_archivo() {
-		$archivo_viejo = $this->input->post('directorio').'/'.$this->input->post('archivo');
+		$archivo = $this->input->post('archivo');
+		$directorio = $this->input->post('directorio');
+		$archivo_viejo = $directorio.'/'.$archivo;
+		$extension = substr($archivo, -4);
+		$archivo = substr($archivo, 0, strpos($archivo, $extension));
 
+		// si el archivo contiene la palabra superado
 		if (strpos($archivo_viejo, 'SUPERADO') !== false) {
-			$archivo_nuevo = $this->input->post('directorio').'/'.substr($this->input->post('archivo'), 17);
+			$archivo_nuevo = $directorio.'/'.substr($archivo, 0,  strpos($archivo, 'SUPERADO') -2).$extension;
 		} else {
-			$archivo_nuevo = $this->input->post('directorio').'/'.date("d-m-y").' SUPERADO '.$this->input->post('archivo');
+			$archivo_nuevo = $directorio.'/'.$archivo.' (SUPERADO '.date("d-m-y").')'.$extension;
 		}
 		rename($archivo_viejo, $archivo_nuevo);
 	}
