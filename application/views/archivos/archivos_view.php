@@ -62,7 +62,7 @@
 									<img src="<?php echo base_url(); ?>img/delete.png" title="Eliminar archivo">
 								</a>
 							<?php endif; ?>
-							<?php if (isset($permisos['Archivos y Fotos']['Editar superado'])): ?>
+							<?php if (isset($permisos['Archivos y Fotos']['Superar'])): ?>
 								<a onclick="javascript:superado_mensaje('<?= $archivo ?>')" style="cursor: pointer">
 									<img src="<?php echo base_url(); ?>img/icono_superado.png" title="Eliminar archivo">
 								</a>
