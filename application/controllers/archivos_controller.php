@@ -139,6 +139,21 @@ class Archivos_controller extends CI_Controller
 		$this->db->insert('auditoria', $auditoria);
 	}
 
+	function superar_archivo() {
+		$archivo = $this->input->post('archivo');
+		$directorio = $this->input->post('directorio');
+		$archivo_viejo = $directorio.'/'.$archivo;
+		$extension = substr($archivo, -4);
+		$archivo = substr($archivo, 0, strpos($archivo, $extension));
+
+		// si el archivo contiene la palabra superado
+		if (strpos($archivo_viejo, 'SUPERADO') !== false) {
+			$archivo_nuevo = $directorio.'/'.substr($archivo, 0,  strpos($archivo, 'SUPERADO') -2).$extension;
+		} else {
+			$archivo_nuevo = $directorio.'/'.$archivo.' (SUPERADO '.date("d-m-y").')'.$extension;
+		}
+		rename($archivo_viejo, $archivo_nuevo);
+	}
 	/**
 	 * Metodo encargado de ofrecer una vista desde los controladores de actualizaciones de fichas prediales y actas
 	 */

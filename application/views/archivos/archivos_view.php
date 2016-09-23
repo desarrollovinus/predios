@@ -47,22 +47,29 @@
 		<thead>
 			<tr>
 				<th>Nombre de archivo</th>
-				<th width="10%"></th>
+				<th width="13%"></th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php foreach ($archivos as $archivo): ?>
-				<tr>
-					<td><?php echo $archivo; ?></td>
-					<td>
-						<?php echo anchor_popup(base_url().$directorio."/".$archivo, '<img border="0" title="Ver" src="'.base_url().'img/search.png">', "'DESCRIPCION','resizable=no,location=no,menubar=no, scrollbars=yes,status=no,toolbar=no,fullscreen=no,d ependent=no,width=800,height=564,left=100,top=100' ))");?>
-						<?php if (isset($permisos['Archivos y Fotos']['Eliminar'])): ?>
-							<a onclick="javascript:eliminar_mensaje('<?= $archivo ?>')" style="cursor: pointer">
-								<img src="<?php echo base_url(); ?>img/delete.png" title="Eliminar archivo">
-							</a>
-						<?php endif; ?>
-					</td>
-				</tr>
+				<?php if (strpos($archivo, 'SUPERADO') === false || isset($permisos['Archivos y Fotos']['Ver superados'])): ?>
+					<tr>
+						<td><?= $archivo; ?></td>
+						<td>
+							<?php echo anchor_popup(base_url().$directorio."/".$archivo, '<img border="0" title="Ver" src="'.base_url().'img/search.png">', "'DESCRIPCION','resizable=no,location=no,menubar=no, scrollbars=yes,status=no,toolbar=no,fullscreen=no,d ependent=no,width=800,height=564,left=100,top=100' ))");?>
+							<?php if (isset($permisos['Archivos y Fotos']['Eliminar'])): ?>
+								<a onclick="javascript:eliminar_mensaje('<?= $archivo ?>')" style="cursor: pointer">
+									<img src="<?php echo base_url(); ?>img/delete.png" title="Eliminar archivo">
+								</a>
+							<?php endif; ?>
+							<?php if (isset($permisos['Archivos y Fotos']['Superar'])): ?>
+								<a onclick="javascript:superado_mensaje('<?= $archivo ?>')" style="cursor: pointer">
+									<img src="<?php echo base_url(); ?>img/icono_superado.png" title="Eliminar archivo">
+								</a>
+							<?php endif; ?>
+						</td>
+					</tr>
+				<?php endif; ?>
 			<?php endforeach; ?>
 		</tbody>
 	</table>
@@ -70,7 +77,7 @@
 	<?php echo form_fieldset_close(); ?>
 
 </div>
-<div id="dialog-confirm" title="Eliminar archivo" hidden>
+<div id="dialog-confirm" hidden>
 	¿Esta seguro(a) de realizar esta acción?
 </div>
 <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.dataTables.min.js"></script>
@@ -157,7 +164,6 @@
 	}
 
 	function eliminar_mensaje(archivo) {
-
 	    $( "#dialog-confirm" ).dialog({
 	        resizable: false,
 	        height:200,
@@ -179,5 +185,53 @@
 	            }
 	        }
 	    });
+		document.getElementsByClassName('ui-dialog-title')[0].innerHTML = 'Eliminar archivo';
+	}
+
+	function superado_archivo(archivo) {
+		$.ajax({
+			url: "<?php echo site_url('archivos_controller/superar_archivo'); ?>",
+			data: {"archivo": archivo, "directorio": "<?= $directorio ?>", "ficha": "<?=  $ficha ?>"},
+			type: "POST",
+			dataType: "html",
+			async: false,
+			success: function(respuesta){
+				//Si la respuesta no es error
+				if(respuesta){
+					//Se almacena la respuesta como variable de éxito
+					console.log(respuesta);
+				}
+			},//Success
+			error: function(respuesta){
+				//Variable de exito será mensaje de error de ajax
+				console.log(respuesta);
+			}//Error
+		});//Ajax
+		location.reload();
+	}
+
+	function superado_mensaje(archivo) {
+		$( "#dialog-confirm" ).dialog({
+			resizable: false,
+			height:200,
+			width:420,
+			modal: true,
+			buttons: {
+				Si: function() {
+					superado_archivo(archivo);
+					//se destruye el elemento dialog
+					$( "#dialog:ui-dialog" ).dialog( "destroy" );
+					//se remueve el div con id="dialog-confirm" del documento html
+					$('#dialog-confirm').remove();
+					//se cierra el elemento flotante
+					$( this ).dialog( "close" );
+				},
+				No: function() {
+					//se cierra el elemento flotante
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+		document.getElementsByClassName('ui-dialog-title')[0].innerHTML = 'Superar archivo';
 	}
 </script>
