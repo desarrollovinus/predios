@@ -64,7 +64,7 @@
 							<?php endif; ?>
 							<?php if (isset($permisos['Archivos y Fotos']['Superar'])): ?>
 								<a onclick="javascript:superado_mensaje('<?= $archivo ?>')" style="cursor: pointer">
-									<img src="<?php echo base_url(); ?>img/icono_superado.png" title="Eliminar archivo">
+									<img src="<?php echo base_url(); ?>img/icono_superado.png" title="Superar / Quitar superado">
 								</a>
 							<?php endif; ?>
 						</td>
@@ -78,7 +78,6 @@
 
 </div>
 <div id="dialog-confirm" hidden>
-	¿Esta seguro(a) de realizar esta acción?
 </div>
 <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
@@ -186,6 +185,7 @@
 	        }
 	    });
 		document.getElementsByClassName('ui-dialog-title')[0].innerHTML = 'Eliminar archivo';
+		document.getElementById('dialog-confirm').innerHTML = '¿Esta seguro(a) de eliminar?';
 	}
 
 	function superado_archivo(archivo) {
@@ -232,6 +232,7 @@
 				}
 			}
 		});
-		document.getElementsByClassName('ui-dialog-title')[0].innerHTML = 'Superar archivo';
+		document.getElementsByClassName('ui-dialog-title')[0].innerHTML = 'Superar / Quitar superado';
+		document.getElementById('dialog-confirm').innerHTML = '¿Esta seguro(a) de Superar / Quitar superado?';
 	}
 </script>
