@@ -17,6 +17,7 @@
             	// Se carga la interfaz
 				cargar_interfaz("cont_general", "<?= site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "ficha_cultivos", "ficha": "<?= $predio->ficha_predial; ?>"});
             break; // Cultivos y especies
+			// Construcciones
 			case "construcciones":
 				// Se pone activo en el menú la opción de construcciones deendiendo de la subcategoria
 				$("ul>li").removeClass('current');
@@ -27,6 +28,14 @@
 				}
 				// Se carga la interfaz
 				cargar_interfaz("cont_general", "<?= site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "ficha_construcciones", "subcategoria": subcategoria, "ficha": "<?= $predio->ficha_predial; ?>"});
+			break; // Construcciones
+			// Propietarios
+			case "propietarios":
+				// Se pone activo en el menú la opción de cultivos
+				$("ul>li").removeClass('current');
+				$("#menu_propietarios").addClass('current');
+				// Se carga la interfaz
+					cargar_interfaz("cont_general", "<?= site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "propietarios", "ficha": "<?= $predio->ficha_predial; ?>"});
 			break; // Cultivos y especies
         } // suiche
     } // cargar

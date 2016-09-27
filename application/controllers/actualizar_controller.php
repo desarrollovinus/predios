@@ -61,19 +61,28 @@ class Actualizar_controller extends CI_Controller {
             // Se reciben los datos por POST
             $datos = $this->input->post('datos');
             $tipo = $this->input->post('tipo');
+			$id = $this->input->post('id');
 
             // Dependiendo del tipo
             switch ($tipo) {
                 // Cultivos
                 case 'cultivo':
                     //Se ejecuta el modelo que actualiza los datos
-                    echo $this->PrediosDAO->editar_cultivo_especies($this->input->post('id'), $datos);
+                    echo $this->PrediosDAO->editar_cultivo_especies($id, $datos);
                 break; // Cultivos
 				// Construccion
 				case 'construccion':
                     //Se ejecuta el modelo que actualiza los datos
-                    echo $this->PrediosDAO->editar_construccion($this->input->post('id'), $datos);
+                    echo $this->PrediosDAO->editar_construccion($id, $datos);
                 break; // Construccion
+				case 'propietario':
+					//Se ejecuta el modelo que actualiza los datos
+					$datos2 = array('participacion' => $datos['participacion']);
+					echo $this->PropietariosDAO->actualizar_relacion_propietario($id, $datos2, $datos['ficha_predial']);
+					unset($datos['ficha_predial']);
+					unset($datos['participacion']);
+					echo $this->PropietariosDAO->actualizar_propietario($id, $datos);
+				break; // Construccion
             } // switch
         }else{
             //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
@@ -103,6 +112,17 @@ class Actualizar_controller extends CI_Controller {
                     // Se crea el registro
                     echo $this->PrediosDAO->insertar_construccion($datos);
                 break; // Construccion
+				// Propietario relacion
+				case 'propietario_relacion':
+					// Se crea el registro
+					echo $this->PropietariosDAO->insertar_relacion_predio($datos['id_propietario'], $datos['ficha_predial'], $datos['participacion']);
+				break; // Propietario relacion
+				// propietario
+				case 'propietario':
+					// Se crea el registro
+					echo $this->PropietariosDAO->insertar_propietario($datos);
+				break; // Propietario
+
             } // Switch tipo
         }else{
             //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
@@ -305,6 +325,40 @@ class Actualizar_controller extends CI_Controller {
 					// Se carga la vista
 					$this->load->view('actualizar/construcciones/listar', $this->data);
 				break; // Listado de construcciones de ficha predial
+				// Propietarios de ficha predial
+                case 'propietarios':
+                	// Se toman valores que vienen por post
+                    $this->data['ficha'] = $this->input->post('ficha');
+
+                    // Se carga la vista
+                    $this->load->view('actualizar/propietarios/index', $this->data);
+                break; // Propietarios de ficha predial
+
+                // Gestión de propietarios de ficha predial
+                case 'propietarios_gestion':
+					// Se toman valores que vienen por post
+                    $this->data['id'] = $this->input->post('id');
+					$this->data['ficha'] = $this->input->post('ficha');
+    				// Se carga la vista
+                    $this->load->view('actualizar/propietarios/gestion', $this->data);
+                break; // Gestión de propietarios de ficha predial
+
+                // Listado de propietarios de ficha predial
+                case 'propietarios_lista':
+                	// Se toman valores que vienen por post
+                    $this->data['ficha'] = $this->input->post('ficha');
+
+                    // Se carga la vista
+                    $this->load->view('actualizar/propietarios/listar', $this->data);
+                break; // Listado de cultivos de ficha predial
+				// regresa un propietario
+				case 'propietario_buscar':
+					// Se toman valores que vienen por post
+					$this->data['ficha'] = $this->input->post('ficha');
+					$this->data['documento'] = $this->input->post('documento');
+					// Se carga la vista
+					$this->load->view('actualizar/propietarios/buscar', $this->data);
+				break; // Listado de cultivos de ficha predial
             } // suiche
         }else{
             //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
