@@ -107,7 +107,7 @@ class PropietariosDAO extends CI_Model
 
 		return $resultado;
 	}
-	
+
 	function eliminar_relacion_propietario($ficha_predial, $id_propietario)
 	{
 		$this->db->where('ficha_predial', $ficha_predial);
@@ -129,13 +129,38 @@ class PropietariosDAO extends CI_Model
 		return $resultado;
 	}
 
+	function actualizar_relacion_propietario($id, $datos, $ficha)
+	{
+		$this->db->where('ficha_predial', $ficha);
+		$this->db->where('id_propietario', $id);
+
+		if($this->db->update('tbl_relacion', $datos)) {
+			$auditoria = array(
+				'fecha_hora' => date('Y-m-d H:i:s', time()),
+				'id_usuario' => $this->session->userdata('id_usuario'),
+				'descripcion' => 'Se actualiza relacion propietario del predio '.$ficha
+			);
+			$this->db->insert('auditoria', $auditoria);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function existe_relacion($id, $ficha)
+	{
+		$this->db->where('ficha_predial', $ficha);
+		$this->db->where('id_propietario', $id);
+		return $this->db->get('tbl_relacion')->row();
+	}
+
 	function eliminar_relaciones_predio($ficha_predial)
 	{
 		// Se borran todas las relaciones del predio
 		$this->db->where('ficha_predial', $ficha_predial);
 		return $this->db->delete('tbl_relacion');
 	}
-	
+
 	function obtener_todos_los_propietarios()
 	{
 		$this->db->order_by('nombre, id_propietario');
@@ -152,7 +177,7 @@ class PropietariosDAO extends CI_Model
 
 		return $resultado;
 	}
-	
+
 	function obtener_propietario($id_propietario)
 	{
 		$this->db->where('id_propietario', $id_propietario);
@@ -169,7 +194,7 @@ class PropietariosDAO extends CI_Model
 
 		return $resultado;
 	}
-	
+
 	function obtener_relaciones($id_propietario)
 	{
 		$this->db->select('tbl_predio.id_predio');
@@ -193,13 +218,13 @@ class PropietariosDAO extends CI_Model
 
 		return $resultado;
 	}
-	
-	
-	
+
+
+
 	function obtener_primer_propietario($ficha_predial) {
 		$this->db->where('ficha_predial', $ficha_predial);
 		$relacion = $this->db->get('tbl_relacion')->row();
-		
+
 		if($relacion) {
 			$this->db->where('id_propietario', $relacion->id_propietario);
 			$resultado = $this->db->get('tbl_propietario')->row();
@@ -215,7 +240,7 @@ class PropietariosDAO extends CI_Model
 
 			return $resultado;
 		}
-		
+
 		return FALSE;
 	}
 }
