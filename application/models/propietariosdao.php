@@ -77,6 +77,7 @@ class PropietariosDAO extends CI_Model
 		$this->db->from('tbl_propietario');
 		$this->db->join('tbl_relacion', 'tbl_propietario.id_propietario=tbl_relacion.id_propietario');
 		$this->db->where('tbl_relacion.ficha_predial',$ficha_predial);
+		$this->db->order_by('tbl_relacion.participacion', 'desc');
 		$resultado = $this->db->get()->result();
 
 		#accion de auditoria

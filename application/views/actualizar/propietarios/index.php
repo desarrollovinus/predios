@@ -14,7 +14,9 @@
 <div id="cont_propietarios"></div>
 <div id="cont_modal"></div>
 <div id="cont_agregar" hidden>
-    <input type="text" name="documento_buscar">
+    <?= form_label('Numero de documento', 'documento_buscar') ?>
+    <?php $data = array('name'=>'documento_buscar') ?>
+    <?= form_input($data) ?>
     <input type="button" name="buscar" value="Buscar" onClick="buscar()" class="ui-button ui-widget ui-state-default ui-corner-all">
     <div id="resultado_busqueda"></div>
 </div>
@@ -89,7 +91,8 @@
 	    datos_obligatorios = new Array(
 			tipo_documento.val(),
 			documento.val(),
-			nombre.val()
+			nombre.val(),
+            participacion.val()
 	    );
 	    // imprimir(datos_obligatorios);
 

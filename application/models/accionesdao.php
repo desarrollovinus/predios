@@ -190,10 +190,13 @@ class AccionesDAO extends CI_Model {
 
 	function consultar_ficha_por_unidad_funcional($unidad) {
 		// retorna todas las fichas por unidad funcional de la tabla tbl_coordenadas
-		$this->db->select("ficha_predial");
-		$this->db->group_by('ficha_predial');
-		$this->db->like('ficha_predial', 'UF'.$unidad);
-		return $this->db->get('tbl_coordenadas')->result();
+		$this->db->select("tbl_coordenadas.ficha_predial");
+		$this->db->from('tbl_coordenadas');
+		$this->db->join('tbl_predio', 'tbl_coordenadas.ficha_predial=tbl_predio.ficha_predial');
+		$this->db->where('tbl_predio.requerido', 1);
+		$this->db->group_by('tbl_coordenadas.ficha_predial');
+		$this->db->like('tbl_coordenadas.ficha_predial', 'UF'.$unidad);
+		return $this->db->get()->result();
 	}
 
 }
