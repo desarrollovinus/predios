@@ -53,6 +53,34 @@ class Actualizar_controller extends CI_Controller {
 	}
 
 	/**
+	 * Consulta de registros en base de datos
+	 */
+	function cargar() {
+
+		//Se valida que la peticion venga mediante ajax y no mediante el navegador
+		if ($this->input->is_ajax_request()) {
+			// Se reciben los datos por POST
+			$datos = $this->input->post('datos');
+			$tipo = $this->input->post('tipo');
+			$id = $this->input->post('id');
+			// Dependiendo del tipo
+			switch ($tipo) {
+				// Total de participacion de propietarios por predio
+				case 'propietarios_total_participacion':
+					$participacion = $this->PropietariosDAO->verificar_participacion($datos);
+					echo $participacion->participacion;
+				break; // Total de participacion de propietarios por predio
+				// participacion de un propietario
+				case 'propietario_participacion':
+				$participacion = $this->PropietariosDAO->existe_relacion($id, $datos['ficha_predial']);
+					echo $participacion->participacion;
+				break; // participacion de un propietario
+
+			} // suiche
+		} // if
+	} // cargar
+
+	/**
      * Actualización de registros en base de datos
      */
     function actualizar(){
@@ -120,7 +148,15 @@ class Actualizar_controller extends CI_Controller {
 				// propietario
 				case 'propietario':
 					// Se crea el registro
-					echo $this->PropietariosDAO->insertar_propietario($datos);
+					//Se ejecuta el modelo que actualiza los datos
+					$participacion = $datos['participacion'];
+					$ficha_predial = $datos['ficha_predial'];
+					unset($datos['ficha_predial']);
+					unset($datos['participacion']);
+					$this->PropietariosDAO->insertar_propietario($datos);
+					$id = mysql_insert_id();
+					// se crea la relacion del nuevo propietario
+					$this->PropietariosDAO->insertar_relacion_predio($id, $ficha_predial, $participacion);
 				break; // Propietario
 
             } // Switch tipo
@@ -152,7 +188,11 @@ class Actualizar_controller extends CI_Controller {
 					// Se elimina el registro
 					echo $this->PrediosDAO->eliminar_construccion($datos);
 				break; // Construccion
-
+				// Construccion
+				case 'propietario_relacion':
+					// Se elimina el registro
+					echo $this->PropietariosDAO->eliminar_relacion_propietario($datos['ficha_predial'], $datos['id']);
+				break; // Construccion
 			} // Switch tipo
 		}else{
 			//Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
@@ -352,13 +392,14 @@ class Actualizar_controller extends CI_Controller {
                     $this->load->view('actualizar/propietarios/listar', $this->data);
                 break; // Listado de cultivos de ficha predial
 				// regresa un propietario
+				// Buscar propietario
 				case 'propietario_buscar':
 					// Se toman valores que vienen por post
 					$this->data['ficha'] = $this->input->post('ficha');
 					$this->data['documento'] = $this->input->post('documento');
 					// Se carga la vista
 					$this->load->view('actualizar/propietarios/buscar', $this->data);
-				break; // Listado de cultivos de ficha predial
+				break; // Buscar propietaro
             } // suiche
         }else{
             //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio

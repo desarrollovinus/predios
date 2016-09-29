@@ -14,9 +14,9 @@ if ($id > 0) {
     <table>
         <thead>
             <tr>
-                <td><?= form_label('Tipo de documento', 'tipo_documento') ?></td>
-                <td><?= form_label('Documento', 'documento') ?></td>
-                <td><?= form_label('Nombre', 'nombre') ?></td>
+                <td><?= form_label('Tipo de documento*', 'tipo_documento') ?></td>
+                <td><?= form_label('Documento*', 'documento') ?></td>
+                <td><?= form_label('Nombre*', 'nombre') ?></td>
             </tr>
         </thead>
         <tbody>
@@ -54,7 +54,7 @@ if ($id > 0) {
                 </td>
             </tr>
             <tr>
-                <td><?= form_label('Participación', 'participacion')?></td>
+                <td><?= form_label('Participación*', 'participacion')?></td>
             </tr>
             <tr>
                 <td>

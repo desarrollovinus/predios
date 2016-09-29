@@ -82,3 +82,14 @@ function validar_campos_vacios(campos)
     //Se resetea la variable contadora
     validacion = 0;
 }//validar_campos_vacios
+
+
+function validar_campos_numericos(campos) {
+    var validacion = 0;
+    for (var i = 0; i < campos.length; i++) {
+        if (parseFloat($.trim(campos[i])) != $.trim(campos[i])) {
+            return false;
+        }
+    }
+    return true;
+}

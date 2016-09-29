@@ -36,6 +36,12 @@ class PropietariosDAO extends CI_Model
 		return FALSE;
 	}
 
+	function verificar_participacion($datos) {
+		$this->db->select('SUM(participacion) AS participacion');
+		$this->db->where('ficha_predial', $datos['ficha_predial']);
+		return $this->db->get('tbl_relacion')->row();
+	}
+
 	/**
 	 * Determina si un propietario ya existe en la base de datos.
 	 *
