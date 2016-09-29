@@ -66,7 +66,7 @@
             listar();
             cerrar_modal();
         } else {
-            $("#error_participacion").html('<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>la participacion excede el limite</p></div>');
+            $("#error_participacion").html('<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>La participación de los propietarios supera el porcentaje total. El porcentaje no debe ser mayor a 100%</p></div>');
         }
     }
 
@@ -80,7 +80,7 @@
         var validacion_numerico = validar_campos_numericos(datos_numericos);
 
         if (!validacion_numerico) {
-            $("#error_participacion").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>Cedula no numerica</p></div>');
+            $("#error_participacion").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>El número de documento no puede llevar letras o caracteres especiales</p></div>');
             return false;
         }
 
@@ -148,10 +148,16 @@
         //Si no supera la validacíón
         if (!validacion_numerico) {
             // Mensaje de advertencia
-            $("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>Cedula o participacion no son numéricos</p></div>');
+            $("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>El número de documento y la participación no pueden llevar letras o caracteres especiales</p></div>');
             return false;
         } // if
 
+        // Verifica que la participacion a ingresar sea mayor a 0 y menor o igual a 100
+        if (!(participacion.val() > 0 && participacion.val() <= 100) ) {
+            // Mensaje de advertencia
+            $("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>la participación debe ser mayor a 0% y menor o igual a 100%</p></div>');
+            return false;
+        } // if
 
 	    // Arreglo de datos a guardar
 	    var datos = {
@@ -175,7 +181,7 @@
             verificacion = verificar_participacion(participacionDB, datos.participacion - participacion_actual);
 
             if (!verificacion) {
-                $("#error").html('<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>la participacion excede el limite</p></div>');
+                $("#error").html('<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>La participación de los propietarios supera el porcentaje total. El porcentaje no debe ser mayor a 100%</p></div>');
                 return false;
             }
     		// Se actualiza el registro
@@ -185,13 +191,13 @@
             // verifica que el propietario no exista
             var existe_propietario = ajax("<?= site_url('actualizar_controller/cargar'); ?>", {"tipo": "propietario", "datos": datos}, "html");
             if (existe_propietario) {
-                $("#error").html('<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>propietario existente</p></div>');
+                $("#error").html('<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>Este propietario ya existe en la base de datos</p></div>');
                 return false;
             }
 
             verificacion = verificar_participacion(participacionDB, datos.participacion);
             if (!verificacion) {
-                $("#error").html('<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>la participacion excede el limite</p></div>');
+                $("#error").html('<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>La participación de los propietarios supera el porcentaje total. El porcentaje no debe ser mayor a 100%</p></div>');
                 return false;
             }
     		// Se crea el registro

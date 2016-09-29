@@ -74,7 +74,7 @@ if ($id > 0) {
         // Se abre el modal
         $( "#dialog-form" ).dialog({
             modal: true,
-            height:310,
+            height:420,
             width:760,
         });
     });
