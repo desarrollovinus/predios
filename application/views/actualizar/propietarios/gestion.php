@@ -22,8 +22,7 @@ if ($id > 0) {
         <tbody>
             <tr>
                 <td>
-                    <?php $data = array('name'=>'tipo_documento', 'value'=> $propietario->tipo_documento) ?>
-                    <?= form_input($data) ?>
+                    <?= form_dropdown('tipo_documento', array(' ' => ' ', 'Cedula' => 'CC','Nit' => 'Nit'), $propietario->tipo_documento, 'style="width:100%;"') ?>
                 </td>
                 <td>
                     <?php $data = array('name'=>'documento', 'value'=> $propietario->documento) ?>

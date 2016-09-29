@@ -66,6 +66,10 @@ class Actualizar_controller extends CI_Controller {
 			// Dependiendo del tipo
 			switch ($tipo) {
 				// Total de participacion de propietarios por predio
+				case 'propietario':
+					echo $this->PropietariosDAO->existe_propietario($datos['documento'])->documento;
+				break; // Total de participacion de propietarios por predio
+				// Total de participacion de propietarios por predio
 				case 'propietarios_total_participacion':
 					$participacion = $this->PropietariosDAO->verificar_participacion($datos);
 					echo $participacion->participacion;

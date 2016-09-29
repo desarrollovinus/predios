@@ -113,7 +113,7 @@
 	{
 		// Declaración de variables
 		var id = $("#id_propietario").val();
-	    var tipo_documento = $("input[name=tipo_documento]");
+	    var tipo_documento = $("select[name=tipo_documento]");
 	    var documento = $("input[name=documento]");
 	    var nombre = $("input[name=nombre]");
 	    var telefono = $("input[name=telefono]");
@@ -182,14 +182,20 @@
             ajax("<?= site_url('actualizar_controller/actualizar'); ?>", {"tipo": "propietario", "datos": datos, "id": id}, "html");
 
 	    } else {
-            verificacion = verificar_participacion(participacionDB, datos.participacion);
+            // verifica que el propietario no exista
+            var existe_propietario = ajax("<?= site_url('actualizar_controller/cargar'); ?>", {"tipo": "propietario", "datos": datos}, "html");
+            if (existe_propietario) {
+                $("#error").html('<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>propietario existente</p></div>');
+                return false;
+            }
 
+            verificacion = verificar_participacion(participacionDB, datos.participacion);
             if (!verificacion) {
                 $("#error").html('<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>la participacion excede el limite</p></div>');
                 return false;
             }
     		// Se crea el registro
-            console.log(ajax("<?php echo site_url('actualizar_controller/crear'); ?>", {"tipo": "propietario", "datos": datos}, "html"));
+            ajax("<?php echo site_url('actualizar_controller/crear'); ?>", {"tipo": "propietario", "datos": datos}, "html");
 	    } // if
 
 	    // Se listan los cultivos
