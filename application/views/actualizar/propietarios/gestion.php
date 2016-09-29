@@ -14,16 +14,15 @@ if ($id > 0) {
     <table>
         <thead>
             <tr>
-                <td><?= form_label('Tipo de documento', 'tipo_documento') ?></td>
-                <td><?= form_label('Documento', 'documento') ?></td>
-                <td><?= form_label('Nombre', 'nombre') ?></td>
+                <td><?= form_label('Tipo de documento*', 'tipo_documento') ?></td>
+                <td><?= form_label('Documento*', 'documento') ?></td>
+                <td><?= form_label('Nombre*', 'nombre') ?></td>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>
-                    <?php $data = array('name'=>'tipo_documento', 'value'=> $propietario->tipo_documento) ?>
-                    <?= form_input($data) ?>
+                    <?= form_dropdown('tipo_documento', array(' ' => ' ', 'Cedula' => 'CC','Nit' => 'Nit'), $propietario->tipo_documento, 'style="width:100%;"') ?>
                 </td>
                 <td>
                     <?php $data = array('name'=>'documento', 'value'=> $propietario->documento) ?>
@@ -54,7 +53,7 @@ if ($id > 0) {
                 </td>
             </tr>
             <tr>
-                <td><?= form_label('Participación', 'participacion')?></td>
+                <td><?= form_label('Participación*', 'participacion')?></td>
             </tr>
             <tr>
                 <td>

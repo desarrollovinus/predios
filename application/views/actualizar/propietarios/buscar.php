@@ -27,6 +27,7 @@ $relacion = $this->PropietariosDAO->existe_relacion($propietario->id_propietario
                 <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;">
                 </span>
                 El propietario no se encuentra registrado
+                <input type="button" value="Nuevo" onClick="crear()" class="ui-button ui-widget ui-state-default ui-corner-all">
             </p>
         </div>
     <?php endif; ?>

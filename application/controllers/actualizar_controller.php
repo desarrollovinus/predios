@@ -53,6 +53,38 @@ class Actualizar_controller extends CI_Controller {
 	}
 
 	/**
+	 * Consulta de registros en base de datos
+	 */
+	function cargar() {
+
+		//Se valida que la peticion venga mediante ajax y no mediante el navegador
+		if ($this->input->is_ajax_request()) {
+			// Se reciben los datos por POST
+			$datos = $this->input->post('datos');
+			$tipo = $this->input->post('tipo');
+			$id = $this->input->post('id');
+			// Dependiendo del tipo
+			switch ($tipo) {
+				// Total de participacion de propietarios por predio
+				case 'propietario':
+					echo $this->PropietariosDAO->existe_propietario($datos['documento'])->documento;
+				break; // Total de participacion de propietarios por predio
+				// Total de participacion de propietarios por predio
+				case 'propietarios_total_participacion':
+					$participacion = $this->PropietariosDAO->verificar_participacion($datos);
+					echo $participacion->participacion;
+				break; // Total de participacion de propietarios por predio
+				// participacion de un propietario
+				case 'propietario_participacion':
+				$participacion = $this->PropietariosDAO->existe_relacion($id, $datos['ficha_predial']);
+					echo $participacion->participacion;
+				break; // participacion de un propietario
+
+			} // suiche
+		} // if
+	} // cargar
+
+	/**
      * Actualización de registros en base de datos
      */
     function actualizar(){
@@ -120,7 +152,15 @@ class Actualizar_controller extends CI_Controller {
 				// propietario
 				case 'propietario':
 					// Se crea el registro
-					echo $this->PropietariosDAO->insertar_propietario($datos);
+					//Se ejecuta el modelo que actualiza los datos
+					$participacion = $datos['participacion'];
+					$ficha_predial = $datos['ficha_predial'];
+					unset($datos['ficha_predial']);
+					unset($datos['participacion']);
+					$this->PropietariosDAO->insertar_propietario($datos);
+					$id = mysql_insert_id();
+					// se crea la relacion del nuevo propietario
+					$this->PropietariosDAO->insertar_relacion_predio($id, $ficha_predial, $participacion);
 				break; // Propietario
 
             } // Switch tipo
@@ -152,7 +192,11 @@ class Actualizar_controller extends CI_Controller {
 					// Se elimina el registro
 					echo $this->PrediosDAO->eliminar_construccion($datos);
 				break; // Construccion
-
+				// Construccion
+				case 'propietario_relacion':
+					// Se elimina el registro
+					echo $this->PropietariosDAO->eliminar_relacion_propietario($datos['ficha_predial'], $datos['id']);
+				break; // Construccion
 			} // Switch tipo
 		}else{
 			//Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
@@ -352,13 +396,14 @@ class Actualizar_controller extends CI_Controller {
                     $this->load->view('actualizar/propietarios/listar', $this->data);
                 break; // Listado de cultivos de ficha predial
 				// regresa un propietario
+				// Buscar propietario
 				case 'propietario_buscar':
 					// Se toman valores que vienen por post
 					$this->data['ficha'] = $this->input->post('ficha');
 					$this->data['documento'] = $this->input->post('documento');
 					// Se carga la vista
 					$this->load->view('actualizar/propietarios/buscar', $this->data);
-				break; // Listado de cultivos de ficha predial
+				break; // Buscar propietaro
             } // suiche
         }else{
             //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
@@ -567,178 +612,6 @@ class Actualizar_controller extends CI_Controller {
 
 		// Se actualizan los linderos
 		$this->PrediosDAO->actualizar_predio_requerido($ficha_predial, $linderos);
-
-		//se procede a insertar los propietarios
-		//se obtiene el numero de propietarios que se han agregado en el formulario
-		$numero_propietarios = utf8_encode($this->input->post('propietarios_hidden'));
-
-		//pueden haber propietarios que hayan sido eliminados del formulario
-		//se va revisar uno por uno todos los que hayan sido agregados
-		//teniendo como criterio de insercion que el documento del propietario no este vacio
-		//se deja la validacion de este campo del lado cliente
-
-		//se carga el modelo que gestiona la informacion de todos los propietarios
-		$this->load->model('PropietariosDAO');
-
-		// Se elimina	las relaciones a ese predio, para volverlas a configurar
-		$this->PropietariosDAO->eliminar_relaciones_predio($ficha_predial);
-
-		// Se recorren los propietarios
-		for ($i = 1; $i <= $numero_propietarios; $i++)
-		{
-			//variable del formulario que me indica si el propietario ya hab�a sido agregado anteriormente
-			$id_propietario = utf8_encode($this->input->post("id_propietario$i"));
-
-			if($id_propietario){
-				// echo "El propietario {$i} ({$this->input->post("documento_propietario$i")}) ya está asociado al predio. \n";
-
-				//se verifica que el documento haya sido ingresado
-				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
-
-				//se eliminan puntos, comas y espacios en blanco
-				$documento_propietario = str_replace('.', '', $documento_propietario);
-				$documento_propietario = str_replace(',', '', $documento_propietario);
-				$documento_propietario = str_replace(' ', '', $documento_propietario);
-
-				//se prepara el array que contiene la informacion del propietario
-				$info_propietario = array(
-					'tipo_documento' => utf8_encode($this->input->post("tipo_documento$i")),
-					'direccion' => 		$this->input->post("direccion_propietario$i"),
-					'email' => 		$this->input->post("email_propietario$i"),
-					'nombre' => 		utf8_encode($this->input->post("propietario$i")),
-					'documento' => 		$documento_propietario,
-					'telefono' => 		$this->input->post("telefono$i")
-				);
-
-				// //se actualiza el propietario
-				$this->PropietariosDAO->actualizar_propietario($id_propietario, $info_propietario);
-			//si no se habia agregado anteriormente, se agrega
-			} else {
-				// echo "El propietario {$i} ({$this->input->post("documento_propietario$i")}) se va a asociar al predio. \n";
-
-				//se verifica que el documento haya sido ingresado
-				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
-				if($documento_propietario){
-					// echo "verificando cédula... \n";
-
-					//se eliminan puntos, comas y espacios en blanco
-					$documento_propietario = str_replace('.', '', $documento_propietario);
-					$documento_propietario = str_replace(',', '', $documento_propietario);
-					$documento_propietario = str_replace(' ', '', $documento_propietario);
-
-					//se busca si el propietario ya existe en la base de datos
-					//si no existe se inserta
-					$propietario = $this->PropietariosDAO->existe_propietario($documento_propietario);
-
-					if(!$propietario){
-						// echo "El propietario no existe en la base de datos. Creando... \n";
-
-						$info_propietario = array(
-							'tipo_documento' => utf8_encode($this->input->post("tipo_documento$i")),
-							'direccion' => 		$this->input->post("direccion_propietario$i"),
-							'email' => 		$this->input->post("email_propietario$i"),
-							'nombre' => 		utf8_encode($this->input->post("propietario$i")),
-							'documento' => 		$documento_propietario,
-							'telefono' => 		$this->input->post("telefono$i")
-						);
-
-						//se inserta el propietario
-						$this->PropietariosDAO->insertar_propietario($info_propietario);
-
-						//se recupera para insertar la relacion con el predio
-						$propietario = $this->PropietariosDAO->existe_propietario($documento_propietario);
-					} // if propietario
-
-					// Se asigna el id del propietario
-					$id_propietario = $propietario->id_propietario;
-				} // if documento propietario
-			} // if id_propietario
-
-			// echo "Propietario {$id_propietario}\n";
-
-			//se inserta la relacion del propietario con el predio
-			$this->PropietariosDAO->insertar_relacion_predio($id_propietario, $ficha_predial, $this->input->post("participacion$i"));
-		} // for numero_propietarios
-
-
-
-
-
-
-
-
-
-		/*for ($i = 1; $i <= $numero_propietarios; $i++)
-		{
-			//variable del formulario que me indica si el propietario ya hab�a sido agregado anteriormente
-			$id_propietario = utf8_encode($this->input->post("id_propietario$i"));
-			if($id_propietario)
-			{
-				//se obtiene el documento del propietario
-				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
-
-				//se eliminan puntos, comas y espacios en blanco
-				$documento_propietario = str_replace('.', '', $documento_propietario);
-				$documento_propietario = str_replace(',', '', $documento_propietario);
-				$documento_propietario = str_replace(' ', '', $documento_propietario);
-
-				//se prepara el array que contiene la informacion del propietario
-				$info_propietario = array(
-					'tipo_documento' => utf8_encode($this->input->post("tipo_documento$i")),
-					'nombre' => 		utf8_encode($this->input->post("propietario$i")),
-					'documento' => 		$documento_propietario,
-					'telefono' => 		$this->input->post("telefono$i")
-				);
-
-				//se actualiza el propietario
-				$this->PropietariosDAO->actualizar_propietario($id_propietario, $info_propietario);
-				$this->PropietariosDAO->insertar_relacion_predio($id_propietario, $ficha_predial, utf8_encode($this->input->post("participacion$i")));
-			}
-			//si no se habia agregado anteriormente, se agrega
-			else
-			{
-				//se verifica que el documento haya sido ingresado
-				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
-				if($documento_propietario)
-				{
-					//se eliminan puntos, comas y espacios en blanco
-					$documento_propietario = str_replace('.', '', $documento_propietario);
-					$documento_propietario = str_replace(',', '', $documento_propietario);
-					$documento_propietario = str_replace(' ', '', $documento_propietario);
-
-					//se busca si el propietario ya existe en la base de datos
-					//si no existe se inserta
-					$propietario = $this->PropietariosDAO->existe_propietario($documento_propietario);
-					if($propietario == FALSE)
-					{
-						//se prepara la informacion que se va a guardar del propietario
-						if(trim($this->input->post("telefono$i")) != '')
-						{
-							$info_propietario = array(
-								'tipo_documento' => utf8_encode($this->input->post("tipo_documento$i")),
-								'nombre' => 		utf8_encode($this->input->post("propietario$i")),
-								'documento' => 		$documento_propietario,
-								'telefono' => 		number_format(utf8_encode($this->input->post("telefono$i")), 0, "", "-")//esta tambien se hace por compatibilidad
-							);
-						}
-						else {
-							$info_propietario = array(
-								'tipo_documento' => utf8_encode($this->input->post("tipo_documento$i")),
-								'nombre' => 		utf8_encode($this->input->post("propietario$i")),
-								'documento' => 		$documento_propietario
-							);
-						}
-						//se inserta el propietario
-						$this->PropietariosDAO->insertar_propietario($info_propietario);
-						//se recupera para insertar la relacion con el predio
-						$propietario = $this->PropietariosDAO->existe_propietario(number_format($documento_propietario, 0));
-					}
-
-					//se inserta la relacion del propietario con el predio
-					$this->PropietariosDAO->insertar_relacion_predio($propietario->id_propietario, $ficha_predial, utf8_encode($this->input->post("participacion$i")));				}
-			}
-		}
-		echo "correcto";*/
 		echo "correcto";
 	}
 

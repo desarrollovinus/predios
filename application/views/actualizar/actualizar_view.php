@@ -313,68 +313,6 @@
 			<?php echo form_fieldset_close(); ?>
 		</div>
 
-		<!-- seccion 3 -->
-		<h3><a href="#seccion3">PROPIETARIOS</a></h3>
-		<div>
-			<?php $id = 0;?>
-			<?php foreach ($propietarios as $propietario): ?>
-				<?php $id++; ?>
-				<?php echo form_fieldset("<b>Identificaci&oacute;n del propietario $id</b>", "id='$id'"); ?>
-					<table style="text-align:left">
-						<tbody>
-							<tr>
-								<td width="20%"><?php echo form_label('Tipo documento', "tipo_documento$id"); ?></td>
-								<td width="30%"><?php echo form_dropdown("tipo_documento$id", array(' ' => ' ', 'Cedula' => 'CC','Nit' => 'Nit'), utf8_decode($propietario->tipo_documento)); ?></td>
-								<td width="20%"><?php echo form_label('Propietario', "propietario$id"); ?></td>
-								<td width="30%"><?php echo form_input("propietario$id", utf8_decode($propietario->nombre), 'readonly'); ?></td>
-							</tr>
-							<tr>
-								<td width="20%"><?php echo form_label('Documento', "documento_propietario$id"); ?></td>
-								<td width="30%"><?php echo form_input("documento_propietario$id", utf8_decode($propietario->documento), 'readonly'); ?></td>
-								<td width="20%"><?php echo form_label('Tel&eacute;fono', "telefono$id"); ?></td>
-								<td width="30%"><?php echo form_input("telefono$id", utf8_decode($propietario->telefono), 'readonly'); ?></td>
-							</tr>
-							<tr>
-							<tr>
-								<td width="20%"><?php echo form_label('Dirección', "direccion_propietario$id"); ?></td>
-								<td width="30%"><?php echo form_input("direccion_propietario$id", utf8_decode($propietario->direccion)); ?></td>
-								<td width="20%"><?php echo form_label('Correo electrónico', "email_propietario$id"); ?></td>
-								<td width="30%"><?php echo form_input("email_propietario$id", utf8_decode($propietario->email)); ?></td>
-							</tr>
-							<tr>
-								<td width="20%"><?php echo form_label('Participaci&oacute;n', "participacion$id"); ?></td>
-								<td width="30%"><?php echo form_input("participacion$id", utf8_decode($propietario->participacion)); ?>%</td>
-								<td>
-									<?php
-										$boton_eliminar = array(
-											'type' => 'button',
-											'name' => "boton_eliminar$id",
-											'id' => "boton_eliminar$id",
-											'value' => 'Eliminar propietario'
-										);
-										echo form_input($boton_eliminar);
-									?>
-								</td>
-								<td><?php echo form_hidden("id_propietario$id", $propietario->id_propietario); ?></td>
-							</tr>
-						</tbody>
-					</table>
-				<?php echo form_fieldset_close(); ?>
-			<?php endforeach;?>
-			<input type="hidden" name="propietarios_hidden" id="propietarios_hidden" value="<?php echo $id; ?>" />
-			<?php echo form_label('No. de propietarios:', 'agregar')?>
-			<?php echo form_input('agregar'); ?>
-			<?php
-				$boton_agregar = array(
-					'type' => 'button',
-					'name' => 'boton_agregar',
-					'id' => 'boton_agregar',
-					'value' => 'Agregar'
-				);
-				echo form_input($boton_agregar);
-			?>
-		</div>
-
 		<!-- seccion 5 -->
 		<h3><a href="#seccion5">ESTUDIO DE T&Iacute;TULOS</a></h3>
 		<div>

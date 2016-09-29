@@ -28,9 +28,12 @@
                 <td><?= $propietario->direccion ?></td>
                 <td><?= $propietario->email ?></td>
                 <td align='right'><?= $propietario->participacion ?>%</td>
-                <td width="4%">
+                <td width="8%">
                     <a onclick="javascript:editar(<?= $propietario->id_propietario; ?>)" style="cursor: pointer">
-                        <img src="<?php echo base_url(); ?>img/edit.png" title="Editar cultivos">
+                        <img src="<?= base_url(); ?>img/edit.png" title="Editar propietarios">
+                    </a>
+                    <a onClick="javascript:eliminar('mensaje', '<?= $propietario->id_propietario; ?>')" style="cursor: pointer">
+                        <img src="<?= base_url(); ?>img/delete.png" title="Eliminar propietario">
                     </a>
                 </td>
                 <?php $cont++; ?>
