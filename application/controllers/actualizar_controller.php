@@ -1,5 +1,5 @@
 <?php
-// error_reporting(-1);
+error_reporting(-1);
 /**
  * Clase encargada de controlar las actualizaciones de las fichas prediales
  * @author Freddy Alexander Vivas Reyes
