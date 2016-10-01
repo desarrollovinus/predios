@@ -187,22 +187,22 @@
 			<table style="text-align:'left'">
 				<tbody>
 					<tr>
-						<td width="20%"><?php echo form_label('Uso Edificaci&oacute;n','uso_edificacion'); ?></td>
-						<td width="30%"><?php echo form_input('uso_edificacion', utf8_decode($descripcion->uso_edificacion));?></td>
-						<td width="20%"><?php echo form_label('Estado','estado'); ?></td>
-						<td width="30%"><?php echo form_input('estado', utf8_decode($descripcion->estado_pre)) ;?></td>
+						<td width="20%"><?= form_label('Uso Edificaci&oacute;n','uso_edificacion'); ?></td>
+						<td width="30%"><?= form_dropdown('uso_edificacion', array(' ' => ' ', 'HABITACIONAL' => 'HABITACIONAL','AGROPECUARIA' => 'AGROPECUARIA', 'AGRICOLA' => 'AGRICOLA','INSTITUCIONAL' => 'INSTITUCIONAL','CULTURAL' => 'CULTURAL'), utf8_decode($descripcion->uso_edificacion));?></td>
+						<td width="20%"><?= form_label('Estado','estado'); ?></td>
+						<td width="30%"><?= form_dropdown('estado', array(' ' => ' ', 'ACTIVO' => 'ACTIVO','INACTIVO' => 'INACTIVO') ,utf8_decode($descripcion->estado_pre)) ;?></td>
 					</tr>
 					<tr>
-						<td width="20%"><?php echo form_label('Uso de Terreno','uso_terreno'); ?></td>
-						<td width="30%"><?php echo form_input('uso_terreno', utf8_decode($descripcion->uso_terreno));?></td>
-						<td width="20%"><?php echo form_label('Tipo de Tenencia','tipo_tenencia'); ?></td>
-						<td width="30%"><?php echo form_input('tipo_tenencia', utf8_decode($descripcion->tipo_tenencia)); ?></td>
+						<td width="20%"><?= form_label('Uso de Terreno','uso_terreno'); ?></td>
+						<td width="30%"><?= form_dropdown('uso_terreno', array(' ' => ' ', 'RURAL' => 'RURAL','URBANO' => 'URBANO') ,utf8_decode($descripcion->uso_terreno));?></td>
+						<td width="20%"><?= form_label('Tipo de Tenencia','tipo_tenencia'); ?></td>
+						<td width="30%"><?= form_dropdown('tipo_tenencia', array(' ' => ' ', 'TRADICIÓN' => 'TRADICIÓN','POSESIÓN' => 'POSESIÓN', 'MEJORATARIO' => 'MEJORATARIO') ,utf8_decode($descripcion->tipo_tenencia)); ?></td>
 					</tr>
 					<tr>
-						<td width="20%"><?php echo form_label('Topografia','topografia'); ?></td>
-						<td width="30%"><?php echo form_input('topografia', utf8_decode($descripcion->topografia));?></td>
-						<td width="20%"><?php echo form_label('Via de Acceso','via_acceso'); ?></td>
-						<td width="30%"><?php echo form_input('via_acceso', utf8_decode($descripcion->via_acceso)); ?></td>
+						<td width="20%"><?= form_label('Topografia','topografia'); ?></td>
+						<td width="30%"><?= form_dropdown('topografia', array(' ' => ' ', 'PLANA' => 'PLANA','PRENDIENTE' => 'PRENDIENTE' ,'ONDULADO' => 'ONDULADO','ESCARPADA' => 'ESCARPADA','FUERTEMENTE PENDIENTE' => 'FUERTEMENTE PENDIENTE'), utf8_decode($descripcion->topografia));?></td>
+						<td width="20%"><?= form_label('Via de Acceso','via_acceso'); ?></td>
+						<td width="30%"><?= form_dropdown('via_acceso', array(' ' => ' ', 'CARRETEABLE' => 'CARRETEABLE','CAMINO' => 'CAMINO', 'VÍA PRINCIPAL' => 'VÍA PRINCIPAL'), utf8_decode($descripcion->via_acceso)); ?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?php echo form_label('Servicios P&uacute;blicos','servicios_publicos'); ?></td>
@@ -223,6 +223,8 @@
 						<td width="30%"><?php echo form_dropdown('margen_final', array(' ' => ' ', 'DERECHA' => 'DERECHA','IZQUIERDA' => 'IZQUIERDA'), utf8_decode($descripcion->margen_final)); ?></td>
 					</tr>
 					<tr>
+						<td width="20%"><?= form_label('Se requiere la longitud Efectiva','requiere_longitud_efectiva'); ?></td>
+						<td width="30%"><?= form_dropdown('requiere_longitud_efectiva', array(' ' => ' ', '1' => 'SI','0' => 'NO'), utf8_decode($descripcion->requiere_longitud_efectiva)); ?></td>
 						<td width="20%"><?php echo form_label('Estado del Proceso','estado_proceso'); ?></td>
 						<?php
 							$estado_proceso = array(' ' => ' ');
