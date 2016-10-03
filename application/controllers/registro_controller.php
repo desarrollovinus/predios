@@ -231,6 +231,7 @@ class Registro_controller extends CI_Controller
 			// se inserta los linderos
 			$this->PrediosDAO->insertar_linderos($ficha_predial, $linderos);
 
+			$this->PrediosDAO->insertar_predio($ficha_predial, utf8_encode($fecha_hora), utf8_encode($this->session->userdata('id_usuario'))); 
 			echo "correcto";
 		}
 	}
