@@ -1,6 +1,64 @@
 <script src="<?php echo base_url(); ?>js/ajaxupload.2.0.min.js"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/demo_table_jui.css" type="text/css" />
-<?php $permisos = $this->session->userdata('permisos'); ?>
+
+<?php
+$permisos = $this->session->userdata('permisos');
+
+// Arreglos de listas desplegables
+$topografia = array(
+	' ' => ' ',
+	'ESCARPADA' => 'ESCARPADA',
+	'FUERTEMENTE PENDIENTE' => 'FUERTEMENTE PENDIENTE',
+	'FUERTEMENTE QUEBRADA' => 'FUERTEMENTE QUEBRADA',
+	'MIXTA' => 'MIXTA',
+	'ONDULADO' => 'ONDULADO',
+	'PENDIENTE' => 'PENDIENTE',
+	'PLANO' => 'PLANO',
+	'QUEBRADA' => 'QUEBRADA'
+);
+
+$vias_acceso = array(
+	' ' => ' ',
+	'CAMINO' => 'CAMINO',
+	'CARRETEABLE' => 'CARRETEABLE',
+	'VEHICULAR' => 'VEHICULAR',
+	'VIA PRINCIPAL' => 'VÍA PRINCIPAL',
+	'TRADICION' => 'TRADICIÓN'
+);
+
+$tipo_tenencia = array(
+	' ' => ' ',
+	'MEJORATARIO' => 'MEJORATARIO',
+	'POSESION' => 'POSESION',
+	'RURAL' => 'RURAL',
+	'TRADICIONAL' => 'TRADICIONAL'
+);
+
+$uso_terreno = array(
+	' ' => ' ',
+	'INSTITUCIONAL' => 'INSTITUCIONAL',
+	'RURAL' => 'RURAL',
+	'URBANO' => 'URBANO'
+);
+
+$uso_edificacion = array(
+	' ' => ' ',
+	'AGROPECUARIO' => 'AGROPECUARIO',
+	'BIEN DE DOMINIO PUBLICO' => 'BIEN DE DOMINIO PUBLICO',
+	'CULTURAL' => 'CULTURAL',
+	'EDUCATIVO' => 'EDUCATIVO',
+	'HABITACIONAL' => 'HABITACIONAL',
+	'LOTE NO URBANIZABLE' => 'LOTE NO URBANIZABLE',
+	'LOTE RURAL' => 'LOTE RURAL',
+	'LOTE URBANIZADO NO CONSTRUIDO' => 'LOTE URBANIZADO NO CONSTRUIDO',
+	'PARCELA HABITACIONAL' => 'PARCELA HABITACIONAL',
+	'PARCELA RECREACIONAL' => 'PARCELA RECREACIONAL',
+	'PECUARIO' => 'PECUARIO '
+);
+
+?>
+
+
 <ul id="navigation">
 	<?php if(isset($permisos['Bit&aacute;cora']['Consultar'])) { ?><li><a href='#' rel="bitacora" title="Bit&aacute;cora"><img src="<?php echo base_url('img/bitacora.png'); ?>"></a></li><?php } ?>
 	<?php if(isset($permisos['Archivos y Fotos']['Consultar'])) { ?><li><a href='#' rel="archivos" title="Ver Archivos"><img src="<?php echo base_url('img/archivos.png'); ?>"></a></li><?php } ?>
@@ -188,21 +246,21 @@
 				<tbody>
 					<tr>
 						<td width="20%"><?= form_label('Uso Edificaci&oacute;n','uso_edificacion'); ?></td>
-						<td width="30%"><?= form_dropdown('uso_edificacion', array(' ' => ' ', 'HABITACIONAL' => 'HABITACIONAL','AGROPECUARIA' => 'AGROPECUARIA', 'AGRICOLA' => 'AGRICOLA','INSTITUCIONAL' => 'INSTITUCIONAL','CULTURAL' => 'CULTURAL'), utf8_decode($descripcion->uso_edificacion));?></td>
+						<td width="30%"><?= form_dropdown('uso_edificacion', $uso_edificacion, utf8_decode($descripcion->uso_edificacion));?></td>
 						<td width="20%"><?= form_label('Estado','estado'); ?></td>
 						<td width="30%"><?= form_dropdown('estado', array(' ' => ' ', 'ACTIVO' => 'ACTIVO','INACTIVO' => 'INACTIVO') ,utf8_decode($descripcion->estado_pre)) ;?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?= form_label('Uso de Terreno','uso_terreno'); ?></td>
-						<td width="30%"><?= form_dropdown('uso_terreno', array(' ' => ' ', 'RURAL' => 'RURAL','URBANO' => 'URBANO') ,utf8_decode($descripcion->uso_terreno));?></td>
+						<td width="30%"><?= form_dropdown('uso_terreno',$uso_terreno, utf8_decode($descripcion->uso_terreno));?></td>
 						<td width="20%"><?= form_label('Tipo de Tenencia','tipo_tenencia'); ?></td>
-						<td width="30%"><?= form_dropdown('tipo_tenencia', array(' ' => ' ', 'TRADICIÓN' => 'TRADICIÓN','POSESIÓN' => 'POSESIÓN', 'MEJORATARIO' => 'MEJORATARIO') ,utf8_decode($descripcion->tipo_tenencia)); ?></td>
+						<td width="30%"><?= form_dropdown('tipo_tenencia', $tipo_tenencia, utf8_decode($descripcion->tipo_tenencia)); ?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?= form_label('Topografia','topografia'); ?></td>
-						<td width="30%"><?= form_dropdown('topografia', array(' ' => ' ', 'PLANA' => 'PLANA','PRENDIENTE' => 'PRENDIENTE' ,'ONDULADO' => 'ONDULADO','ESCARPADA' => 'ESCARPADA','FUERTEMENTE PENDIENTE' => 'FUERTEMENTE PENDIENTE'), utf8_decode($descripcion->topografia));?></td>
+						<td width="30%"><?= form_dropdown('topografia', $topografia, utf8_decode($descripcion->topografia));?></td>
 						<td width="20%"><?= form_label('Via de Acceso','via_acceso'); ?></td>
-						<td width="30%"><?= form_dropdown('via_acceso', array(' ' => ' ', 'CARRETEABLE' => 'CARRETEABLE','CAMINO' => 'CAMINO', 'VÍA PRINCIPAL' => 'VÍA PRINCIPAL'), utf8_decode($descripcion->via_acceso)); ?></td>
+						<td width="30%"><?= form_dropdown('via_acceso', $vias_acceso, utf8_decode($descripcion->via_acceso)); ?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?php echo form_label('Servicios P&uacute;blicos','servicios_publicos'); ?></td>
