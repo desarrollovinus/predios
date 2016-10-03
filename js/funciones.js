@@ -2,7 +2,7 @@ function ajax(url, datos, tipo_respuesta){
     //Variable de exito
     var exito;
 
-    // Esta es la petición ajax que llevará 
+    // Esta es la petición ajax que llevará
     // a la interfaz los datos pedidos
     $.ajax({
         url: url,
@@ -35,7 +35,7 @@ function ajax(url, datos, tipo_respuesta){
  * @param  {string} contenedor Nombre del contenedor donde se va a cargar
  * @param  {string} url        Url que va a cargar
  * @param  {array} datos      Datos a cargar
- * @return {void}            
+ * @return {void}
  */
 function cargar_interfaz(contenedor, url, datos)
 {
@@ -45,6 +45,7 @@ function cargar_interfaz(contenedor, url, datos)
 
 function cerrar_modal()
 {
+    $('.ui-dialog').remove();
     $('#dialog-form').remove();
     $("#dialog-form").dialog("close");
     $("#dialog-confirm").dialog("close");
@@ -81,3 +82,14 @@ function validar_campos_vacios(campos)
     //Se resetea la variable contadora
     validacion = 0;
 }//validar_campos_vacios
+
+
+function validar_campos_numericos(campos) {
+    var validacion = 0;
+    for (var i = 0; i < campos.length; i++) {
+        if (parseFloat($.trim(campos[i])) != $.trim(campos[i])) {
+            return false;
+        }
+    }
+    return true;
+}

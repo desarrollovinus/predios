@@ -187,22 +187,22 @@
 			<table style="text-align:'left'">
 				<tbody>
 					<tr>
-						<td width="20%"><?php echo form_label('Uso Edificaci&oacute;n','uso_edificacion'); ?></td>
-						<td width="30%"><?php echo form_input('uso_edificacion', utf8_decode($descripcion->uso_edificacion));?></td>
-						<td width="20%"><?php echo form_label('Estado','estado'); ?></td>
-						<td width="30%"><?php echo form_input('estado', utf8_decode($descripcion->estado_pre)) ;?></td>
+						<td width="20%"><?= form_label('Uso Edificaci&oacute;n','uso_edificacion'); ?></td>
+						<td width="30%"><?= form_dropdown('uso_edificacion', array(' ' => ' ', 'HABITACIONAL' => 'HABITACIONAL','AGROPECUARIA' => 'AGROPECUARIA', 'AGRICOLA' => 'AGRICOLA','INSTITUCIONAL' => 'INSTITUCIONAL','CULTURAL' => 'CULTURAL'), utf8_decode($descripcion->uso_edificacion));?></td>
+						<td width="20%"><?= form_label('Estado','estado'); ?></td>
+						<td width="30%"><?= form_dropdown('estado', array(' ' => ' ', 'ACTIVO' => 'ACTIVO','INACTIVO' => 'INACTIVO') ,utf8_decode($descripcion->estado_pre)) ;?></td>
 					</tr>
 					<tr>
-						<td width="20%"><?php echo form_label('Uso de Terreno','uso_terreno'); ?></td>
-						<td width="30%"><?php echo form_input('uso_terreno', utf8_decode($descripcion->uso_terreno));?></td>
-						<td width="20%"><?php echo form_label('Tipo de Tenencia','tipo_tenencia'); ?></td>
-						<td width="30%"><?php echo form_input('tipo_tenencia', utf8_decode($descripcion->tipo_tenencia)); ?></td>
+						<td width="20%"><?= form_label('Uso de Terreno','uso_terreno'); ?></td>
+						<td width="30%"><?= form_dropdown('uso_terreno', array(' ' => ' ', 'RURAL' => 'RURAL','URBANO' => 'URBANO') ,utf8_decode($descripcion->uso_terreno));?></td>
+						<td width="20%"><?= form_label('Tipo de Tenencia','tipo_tenencia'); ?></td>
+						<td width="30%"><?= form_dropdown('tipo_tenencia', array(' ' => ' ', 'TRADICIÓN' => 'TRADICIÓN','POSESIÓN' => 'POSESIÓN', 'MEJORATARIO' => 'MEJORATARIO') ,utf8_decode($descripcion->tipo_tenencia)); ?></td>
 					</tr>
 					<tr>
-						<td width="20%"><?php echo form_label('Topografia','topografia'); ?></td>
-						<td width="30%"><?php echo form_input('topografia', utf8_decode($descripcion->topografia));?></td>
-						<td width="20%"><?php echo form_label('Via de Acceso','via_acceso'); ?></td>
-						<td width="30%"><?php echo form_input('via_acceso', utf8_decode($descripcion->via_acceso)); ?></td>
+						<td width="20%"><?= form_label('Topografia','topografia'); ?></td>
+						<td width="30%"><?= form_dropdown('topografia', array(' ' => ' ', 'PLANA' => 'PLANA','PRENDIENTE' => 'PRENDIENTE' ,'ONDULADO' => 'ONDULADO','ESCARPADA' => 'ESCARPADA','FUERTEMENTE PENDIENTE' => 'FUERTEMENTE PENDIENTE'), utf8_decode($descripcion->topografia));?></td>
+						<td width="20%"><?= form_label('Via de Acceso','via_acceso'); ?></td>
+						<td width="30%"><?= form_dropdown('via_acceso', array(' ' => ' ', 'CARRETEABLE' => 'CARRETEABLE','CAMINO' => 'CAMINO', 'VÍA PRINCIPAL' => 'VÍA PRINCIPAL'), utf8_decode($descripcion->via_acceso)); ?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?php echo form_label('Servicios P&uacute;blicos','servicios_publicos'); ?></td>
@@ -223,6 +223,8 @@
 						<td width="30%"><?php echo form_dropdown('margen_final', array(' ' => ' ', 'DERECHA' => 'DERECHA','IZQUIERDA' => 'IZQUIERDA'), utf8_decode($descripcion->margen_final)); ?></td>
 					</tr>
 					<tr>
+						<td width="20%"><?= form_label('Se requiere la longitud Efectiva','requiere_longitud_efectiva'); ?></td>
+						<td width="30%"><?= form_dropdown('requiere_longitud_efectiva', array(' ' => ' ', '1' => 'SI','0' => 'NO'), utf8_decode($descripcion->requiere_longitud_efectiva)); ?></td>
 						<td width="20%"><?php echo form_label('Estado del Proceso','estado_proceso'); ?></td>
 						<?php
 							$estado_proceso = array(' ' => ' ');
@@ -311,68 +313,6 @@
 				</tbody>
 			</table>
 			<?php echo form_fieldset_close(); ?>
-		</div>
-
-		<!-- seccion 3 -->
-		<h3><a href="#seccion3">PROPIETARIOS</a></h3>
-		<div>
-			<?php $id = 0;?>
-			<?php foreach ($propietarios as $propietario): ?>
-				<?php $id++; ?>
-				<?php echo form_fieldset("<b>Identificaci&oacute;n del propietario $id</b>", "id='$id'"); ?>
-					<table style="text-align:left">
-						<tbody>
-							<tr>
-								<td width="20%"><?php echo form_label('Tipo documento', "tipo_documento$id"); ?></td>
-								<td width="30%"><?php echo form_dropdown("tipo_documento$id", array(' ' => ' ', 'Cedula' => 'CC','Nit' => 'Nit'), utf8_decode($propietario->tipo_documento)); ?></td>
-								<td width="20%"><?php echo form_label('Propietario', "propietario$id"); ?></td>
-								<td width="30%"><?php echo form_input("propietario$id", utf8_decode($propietario->nombre), 'readonly'); ?></td>
-							</tr>
-							<tr>
-								<td width="20%"><?php echo form_label('Documento', "documento_propietario$id"); ?></td>
-								<td width="30%"><?php echo form_input("documento_propietario$id", utf8_decode($propietario->documento), 'readonly'); ?></td>
-								<td width="20%"><?php echo form_label('Tel&eacute;fono', "telefono$id"); ?></td>
-								<td width="30%"><?php echo form_input("telefono$id", utf8_decode($propietario->telefono), 'readonly'); ?></td>
-							</tr>
-							<tr>
-							<tr>
-								<td width="20%"><?php echo form_label('Dirección', "direccion_propietario$id"); ?></td>
-								<td width="30%"><?php echo form_input("direccion_propietario$id", utf8_decode($propietario->direccion)); ?></td>
-								<td width="20%"><?php echo form_label('Correo electrónico', "email_propietario$id"); ?></td>
-								<td width="30%"><?php echo form_input("email_propietario$id", utf8_decode($propietario->email)); ?></td>
-							</tr>
-							<tr>
-								<td width="20%"><?php echo form_label('Participaci&oacute;n', "participacion$id"); ?></td>
-								<td width="30%"><?php echo form_input("participacion$id", utf8_decode($propietario->participacion)); ?>%</td>
-								<td>
-									<?php
-										$boton_eliminar = array(
-											'type' => 'button',
-											'name' => "boton_eliminar$id",
-											'id' => "boton_eliminar$id",
-											'value' => 'Eliminar propietario'
-										);
-										echo form_input($boton_eliminar);
-									?>
-								</td>
-								<td><?php echo form_hidden("id_propietario$id", $propietario->id_propietario); ?></td>
-							</tr>
-						</tbody>
-					</table>
-				<?php echo form_fieldset_close(); ?>
-			<?php endforeach;?>
-			<input type="hidden" name="propietarios_hidden" id="propietarios_hidden" value="<?php echo $id; ?>" />
-			<?php echo form_label('No. de propietarios:', 'agregar')?>
-			<?php echo form_input('agregar'); ?>
-			<?php
-				$boton_agregar = array(
-					'type' => 'button',
-					'name' => 'boton_agregar',
-					'id' => 'boton_agregar',
-					'value' => 'Agregar'
-				);
-				echo form_input($boton_agregar);
-			?>
 		</div>
 
 		<!-- seccion 5 -->

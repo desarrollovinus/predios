@@ -857,6 +857,43 @@ class PrediosDAO extends CI_Model
 		";
 		return $this->db->query($query)->row();
 	}
+
+
+
+	// recibe la ficha y devuelve un entero con la cantidad de fotos del predio
+	function fotos_cantidad($ficha) {
+		$this->db->select('COUNT(id) AS fotos_cantidad');
+		$this->db->where('ficha_predial', $ficha);
+		$this->db->where('tipo', 1);
+		$this->db->where('categoria', 2);
+	 	return $this->db->get('tbl_archivos')->row();
+	}
+
+	// recibe la ficha y devuelve un entero con la cantidad de archivos del predio
+	function archivos_cantidad($ficha) {
+		$ruta_archivos = "files/";
+		//se inicializa la cantidad de archivos
+		$archivos = 0;
+
+		if( ! is_dir($ruta_archivos.$ficha) )
+		{
+			@mkdir($ruta_archivos.$ficha, 0777);
+		}
+
+		//se abre el directorio
+		if($directorio = opendir($ruta_archivos.$ficha))
+		{
+
+			while(($file = readdir($directorio)) !== FALSE)
+			{
+				if($file != '.' && $file != '..' && $file != 'fotos')
+				{
+					$archivos += 1;
+				}
+			}
+		}
+		return $archivos;
+	}
 }
 /* End of file prediosdao.php */
 /* Location: ./site_predios/application/models/prediosdao.php */
