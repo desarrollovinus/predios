@@ -77,7 +77,7 @@ class Gestion_social_controller extends CI_Controller {
 	}
 
 	function cargar_fichas(){
-		$this->data['fichas'] = $this->PrediosDAO->obtener_fichas();
+		$this->data['fichas'] = $this->PrediosDAO->obtener_fichas(1);
 
         // Se carga la vista
         $this->load->view('gestion_social/listar', $this->data);
