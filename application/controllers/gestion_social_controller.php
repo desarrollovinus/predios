@@ -48,6 +48,14 @@ class Gestion_social_controller extends CI_Controller {
     	echo $this->Gestion_socialDAO->actualizar_ficha($this->input->post('ficha'), $this->input->post('datos'));
 	}
 
+	function actualizar_diagnostico(){
+		if ($this->input->post('tipo') == null) {
+			echo $this->Gestion_socialDAO->actualizar_diagnostico($this->input->post('ficha'), $this->input->post('datos'));
+		} else {
+			echo $this->Gestion_socialDAO->actualizar_diagnostico($this->input->post('ficha'), $this->input->post('datos'), $this->input->post('tipo'), $this->input->post('id'));
+		}
+	}
+
 	function actualizar_usp(){
     	echo $this->Gestion_socialDAO->actualizar_usp($this->input->post('id'), $this->input->post('datos'));
 	}
@@ -58,6 +66,14 @@ class Gestion_social_controller extends CI_Controller {
 
 	function cargar_ficha(){
 		echo count($this->Gestion_socialDAO->cargar_ficha($this->input->post('ficha')));
+	}
+
+	function cargar_diagnostico(){
+		if ($this->input->post('tipo') == null) {
+			echo count($this->Gestion_socialDAO->cargar_diagnostico($this->input->post('ficha')));
+		} else {
+			echo count($this->Gestion_socialDAO->cargar_diagnostico($this->input->post('ficha'), $this->input->post('tipo'), $this->input->post('id')));
+		}
 	}
 
 	function cargar_fichas(){
@@ -93,13 +109,31 @@ class Gestion_social_controller extends CI_Controller {
         $this->load->view('gestion_social/unidades_sociales_productivas/listar', $this->data);
 	}
 
+	function diagnostico_social()
+	{
+		$ficha = $this->input->get('ficha');
+		$tipo = $this->input->get('tipo');
+		$id = $this->input->get('id');
+		$this->data['ficha'] = $ficha;
+
+		if (isset($tipo)) {
+			$this->data['tipo'] = $tipo;
+			$this->data['id'] = $id;
+			$this->data['diagnostico'] = $this->Gestion_socialDAO->cargar_diagnostico($ficha, $tipo, $id);
+		} else {
+			$this->data['diagnostico'] = $this->Gestion_socialDAO->cargar_diagnostico($ficha);
+		}
+
+		$this->data['contenido_principal'] = 'gestion_social/diagnostico_socioeconomico_view';
+		$this->load->view('archivos/vista_auxiliar', $this->data);
+	}
+
 	function ficha(){
 		// // Se recibe por post la variable que define si es un registro nuevo o editado
-    $this->data["ficha"] = $this->uri->segment(4);
+    	$this->data["ficha"] = $this->uri->segment(4);
 		$this->data['predio'] = $this->PrediosDAO->obtener_predio($this->uri->segment(3));
 		$this->data['ficha_social'] = $this->Gestion_socialDAO->cargar_ficha($this->uri->segment(4));
 		$this->data['valores_fichas'] = $this->Gestion_socialDAO->cargar_valores_ficha_social($this->uri->segment(4), 0);
-
 		// $this->data['fichas'] = $this->PrediosDAO->obtener_fichas();
 
         // Se carga la vista
@@ -108,7 +142,6 @@ class Gestion_social_controller extends CI_Controller {
 
 	function ficha_social_residente(){
 		$this->data['id'] = $this->uri->segment(3);
-
 		if ($this->uri->segment(3) != "0") {
 			$this->data['usr'] = $this->Gestion_socialDAO->cargar_unidad_social_residente($this->uri->segment(3));
 		} else {
@@ -136,6 +169,10 @@ class Gestion_social_controller extends CI_Controller {
 
 	function insertar_ficha(){
 		echo $this->Gestion_socialDAO->insertar_ficha($this->input->post('datos'));
+	}
+
+	function insertar_diagnostico(){
+		echo $this->Gestion_socialDAO->insertar_diagnostico($this->input->post('datos'));
 	}
 
 	function insertar_usp(){

@@ -1,4 +1,5 @@
 <?php
+// error_reporting(-1);
 /**
  * Clase encargada de controlar las actualizaciones de las fichas prediales
  * @author Freddy Alexander Vivas Reyes
@@ -29,8 +30,12 @@ class Actualizar_controller extends CI_Controller {
 			//se redirige al controlador principal
 			redirect('');
 		}
+
 		//se establece la vista que tiene el contenido del menu
 		$this->data['menu'] = 'actualizar/menu';
+
+		// Carga de modelos
+		$this->load->model(array('ProcesosDAO', 'TramosDAO', 'ContratistasDAO', 'PrediosDAO', 'PropietariosDAO'));
 	}
 	/**
 	 * Pagina principal del modulo
@@ -45,6 +50,170 @@ class Actualizar_controller extends CI_Controller {
 		$this->data['contenido_principal'] = 	'actualizar/index_view';
 		//se carga la vista y se envia el array asociativo
 		$this->load->view('includes/template', $this->data);
+	}
+
+	/**
+	 * Consulta de registros en base de datos
+	 */
+	function cargar() {
+
+		//Se valida que la peticion venga mediante ajax y no mediante el navegador
+		if ($this->input->is_ajax_request()) {
+			// Se reciben los datos por POST
+			$datos = $this->input->post('datos');
+			$tipo = $this->input->post('tipo');
+			$id = $this->input->post('id');
+			// Dependiendo del tipo
+			switch ($tipo) {
+				// Total de participacion de propietarios por predio
+				case 'propietario':
+					echo $this->PropietariosDAO->existe_propietario($datos['documento'])->documento;
+				break; // Total de participacion de propietarios por predio
+				// Total de participacion de propietarios por predio
+				case 'propietarios_total_participacion':
+					$participacion = $this->PropietariosDAO->verificar_participacion($datos);
+					echo $participacion->participacion;
+				break; // Total de participacion de propietarios por predio
+				// participacion de un propietario
+				case 'propietario_participacion':
+				$participacion = $this->PropietariosDAO->existe_relacion($id, $datos['ficha_predial']);
+					echo $participacion->participacion;
+				break; // participacion de un propietario
+
+			} // suiche
+		} // if
+	} // cargar
+
+	/**
+     * Actualización de registros en base de datos
+     */
+    function actualizar(){
+        //Se valida que la peticion venga mediante ajax y no mediante el navegador
+        if($this->input->is_ajax_request()){
+            // Se reciben los datos por POST
+            $datos = $this->input->post('datos');
+            $tipo = $this->input->post('tipo');
+			$id = $this->input->post('id');
+
+            // Dependiendo del tipo
+            switch ($tipo) {
+                // Cultivos
+                case 'cultivo':
+                    //Se ejecuta el modelo que actualiza los datos
+                    echo $this->PrediosDAO->editar_cultivo_especies($id, $datos);
+                break; // Cultivos
+				// Construccion
+				case 'construccion':
+                    //Se ejecuta el modelo que actualiza los datos
+                    echo $this->PrediosDAO->editar_construccion($id, $datos);
+                break; // Construccion
+				case 'propietario':
+					//Se ejecuta el modelo que actualiza los datos
+					$datos2 = array('participacion' => $datos['participacion']);
+					echo $this->PropietariosDAO->actualizar_relacion_propietario($id, $datos2, $datos['ficha_predial']);
+					unset($datos['ficha_predial']);
+					unset($datos['participacion']);
+					echo $this->PropietariosDAO->actualizar_propietario($id, $datos);
+				break; // Construccion
+            } // switch
+        }else{
+            //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+            redirect('');
+        } // if
+    } // actualizar
+
+    /**
+     * Creación de registros en base de datos
+     */
+    function crear(){
+        //Se valida que la peticion venga mediante ajax y no mediante el navegador
+        if($this->input->is_ajax_request()){
+            // Se reciben los datos por POST
+            $datos = $this->input->post('datos');
+            $tipo = $this->input->post('tipo');
+
+            // Dependiendo del tipo
+            switch ($tipo) {
+                // Cultivo
+                case 'cultivo':
+                    // Se crea el registro
+                    echo $this->PrediosDAO->insertar_cultivo_especie($datos);
+                break; // Cultivo
+				// Construccion
+                case 'construccion':
+                    // Se crea el registro
+                    echo $this->PrediosDAO->insertar_construccion($datos);
+                break; // Construccion
+				// Propietario relacion
+				case 'propietario_relacion':
+					// Se crea el registro
+					echo $this->PropietariosDAO->insertar_relacion_predio($datos['id_propietario'], $datos['ficha_predial'], $datos['participacion']);
+				break; // Propietario relacion
+				// propietario
+				case 'propietario':
+					// Se crea el registro
+					//Se ejecuta el modelo que actualiza los datos
+					$participacion = $datos['participacion'];
+					$ficha_predial = $datos['ficha_predial'];
+					unset($datos['ficha_predial']);
+					unset($datos['participacion']);
+					$this->PropietariosDAO->insertar_propietario($datos);
+					$id = mysql_insert_id();
+					// se crea la relacion del nuevo propietario
+					$this->PropietariosDAO->insertar_relacion_predio($id, $ficha_predial, $participacion);
+				break; // Propietario
+
+            } // Switch tipo
+        }else{
+            //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+            redirect('');
+        } // if
+    } // crear
+
+	/**
+	 * Eliminación de registros en base de datos
+	 */
+	function eliminar(){
+		//Se valida que la peticion venga mediante ajax y no mediante el navegador
+		if($this->input->is_ajax_request()){
+			// Se reciben los datos por POST
+			$datos = $this->input->post('datos');
+			$tipo = $this->input->post('tipo');
+
+			// Dependiendo del tipo
+			switch ($tipo) {
+				// Cultivo
+				case 'cultivo':
+					// Se elimina el registro
+					echo $this->PrediosDAO->eliminar_cultivos_especies($datos);
+				break; // Cultivo
+				// Construccion
+				case 'construccion':
+					// Se elimina el registro
+					echo $this->PrediosDAO->eliminar_construccion($datos);
+				break; // Construccion
+				// Construccion
+				case 'propietario_relacion':
+					// Se elimina el registro
+					echo $this->PropietariosDAO->eliminar_relacion_propietario($datos['ficha_predial'], $datos['id']);
+				break; // Construccion
+			} // Switch tipo
+		}else{
+			//Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+			redirect('');
+		} // if
+	} // eliminar
+
+	function cultivos(){
+		//se carga el modelo que gestiona las consultas del modulo de Predios y del modulo de Contratistas
+		// $this->load->model(array('PrediosDAO', 'ContratistasDAO', 'AccionesDAO'));
+
+		$this->data['titulo_pagina'] = 			'Cultivos de ficha ';
+		$this->data['contenido_principal'] = 	'actualizar/cultivos/index_view';
+		$this->data['menu'] = 'actualizar/menu_ficha';
+		//se carga la vista y se envia el array asociativo
+		$this->load->view('includes/template', $this->data);
+
 	}
 
 	/**
@@ -65,19 +234,12 @@ class Actualizar_controller extends CI_Controller {
 			//se carga el modelo ProcesosDAO
 			$this->load->model(array('ProcesosDAO', 'TramosDAO', 'ContratistasDAO', 'PrediosDAO', 'PropietariosDAO'));
 			//se asignan los valores que se van a enviar a la vista
-			$this->data['funciones_predios_obra'] =	$this->PrediosDAO->obtener_funciones_predios_obra();
-			$this->data['estados_via'] =			$this->PrediosDAO->obtener_estados_via();
-			$this->data['estados'] = 				$this->ProcesosDAO->obtener_estados_proceso();
-			$this->data['tramos'] = 				$this->TramosDAO->obtener_tramos();
-			$this->data['contratistas'] = 			$this->ContratistasDAO->obtener_contratistas();
-			$this->data['predio'] = 				$this->PrediosDAO->obtener_predio($id_predio);
-			$this->data['identificacion'] = 		$this->PrediosDAO->obtener_identificacion($this->data['predio']->ficha_predial);
-			$this->data['descripcion'] = 			$this->PrediosDAO->obtener_descripcion($this->data['predio']->ficha_predial);
-			$this->data['linderos'] = 				$this->PrediosDAO->obtener_linderos($this->data['predio']->ficha_predial);
-			$this->data['propietarios'] = 			$this->PropietariosDAO->obtener_propietarios($this->data['predio']->ficha_predial);
-			$this->data['titulos_adquisicion'] = 	$this->PrediosDAO->obtener_titulos_adquisicion();
-			$this->data['titulo_pagina'] = 			'Actualizar - '.$this->data['predio']->ficha_predial;
-			$this->data['contenido_principal'] = 	'actualizar/actualizar_view';
+			//se establece la vista que tiene el contenido del menu
+			$this->data['id_predio'] = $id_predio;
+			$this->data['predio'] =	$this->PrediosDAO->obtener_predio($id_predio);
+			$this->data['titulo_pagina'] = 			'Actualizar ficha '.$this->data['predio']->ficha_predial;
+			$this->data['menu'] = 'actualizar/menu_ficha';
+			$this->data['contenido_principal'] = 	'actualizar/index';
 			//se carga la vista y se envian los datos
 			$this->load->view('includes/template', $this->data);
 		}
@@ -87,6 +249,168 @@ class Actualizar_controller extends CI_Controller {
 			redirect('actualizar_controller');
 		}
 	}
+
+	function ficha_(){
+		//se cargan los permisos
+		$permisos = $this->session->userdata('permisos');
+		if( ! isset($permisos['Fichas']['Actualizar']) ) {
+			$this->session->set_flashdata('error', 'Usted no cuenta con permisos para actualizar el m&oacute;dulo de Gesti&oacute;n de Fichas Prediales.');
+			redirect('');
+		}
+
+		//se obtiene el segmento de la uri correspondiente a la id del predio
+		$id_predio = $this->uri->segment(3);
+		if( $id_predio )
+		{
+			//se carga el modelo ProcesosDAO
+			$this->data['predio'] = $this->PrediosDAO->obtener_predio($id_predio);
+			$this->data['menu'] = 'actualizar/menu_ficha';
+			$this->data['contenido_principal'] = 	'actualizar/index';
+			//se carga la vista y se envian los datos
+			$this->load->view('includes/template', $this->data);
+		}
+		else
+		{
+			//si no se selecciono una ficha predial se retorna al index
+			redirect('actualizar_controller');
+		}
+	}
+
+	function cargar_interfaz(){
+		//Se valida que la peticion venga mediante ajax y no mediante el navegador
+        if($this->input->is_ajax_request()){
+            // Dependiendo del tipo
+            switch ($this->input->post('tipo')) {
+                // Gestión de ficha predial
+                case 'ficha_gestion':
+					//se obtiene el segmento de la uri correspondiente a la id del predio
+					$id_predio = $this->input->post('id');
+
+					if( $id_predio )
+					{
+						//se asignan los valores que se van a enviar a la vista
+						$this->data['funciones_predios_obra'] =	$this->PrediosDAO->obtener_funciones_predios_obra();
+						$this->data['estados_via'] =			$this->PrediosDAO->obtener_estados_via();
+						$this->data['estados'] = 				$this->ProcesosDAO->obtener_estados_proceso();
+						$this->data['tramos'] = 				$this->TramosDAO->obtener_tramos();
+						$this->data['contratistas'] = 			$this->ContratistasDAO->obtener_contratistas();
+						$this->data['predio'] = 				$this->PrediosDAO->obtener_predio($id_predio);
+						$this->data['identificacion'] = 		$this->PrediosDAO->obtener_identificacion($this->data['predio']->ficha_predial);
+						$this->data['descripcion'] = 			$this->PrediosDAO->obtener_descripcion($this->data['predio']->ficha_predial);
+						$this->data['linderos'] = 				$this->PrediosDAO->obtener_linderos($this->data['predio']->ficha_predial);
+						$this->data['propietarios'] = 			$this->PropietariosDAO->obtener_propietarios($this->data['predio']->ficha_predial);
+						$this->data['titulos_adquisicion'] = 	$this->PrediosDAO->obtener_titulos_adquisicion();
+						$this->data['titulo_pagina'] = 			'Actualizar ficha '.$this->data['predio']->ficha_predial;
+					} else
+					{
+						//si no se selecciono una ficha predial se retorna al index
+						redirect('actualizar_controller');
+					}
+
+                    // Se carga la vista
+					$this->load->view('actualizar/actualizar_view', $this->data);
+                break; // Gestión de ficha predial
+
+                // Cultivos de ficha predial
+                case 'ficha_cultivos':
+                	// Se toman valores que vienen por post
+                    $this->data['ficha'] = $this->input->post('ficha');
+
+                    // Se carga la vista
+                    $this->load->view('actualizar/cultivos/index', $this->data);
+                break; // Cultivos de ficha predial
+
+                // Gestión de cultivos de ficha predial
+                case 'ficha_cultivos_gestion':
+					// Se toman valores que vienen por post
+                    $this->data['id'] = $this->input->post('id');
+
+     //            	// Se toman valores que vienen por post
+     //                $this->data['ficha'] = $this->input->post('ficha');
+
+     //                // Se carga la vista
+                    $this->load->view('actualizar/cultivos/gestion', $this->data);
+                break; // Gestión de cultivos de ficha predial
+
+                // Listado de cultivos de ficha predial
+                case 'ficha_cultivos_lista':
+					//se carga el modelo ProcesosDAO
+					// $this->data['predio'] = $this->PrediosDAO->obtener_predio($id_predio);
+
+                	// Se toman valores que vienen por post
+                    $this->data['ficha'] = $this->input->post('ficha');
+
+                    // Se carga la vista
+                    $this->load->view('actualizar/cultivos/listar', $this->data);
+                break; // Listado de cultivos de ficha predial
+
+				// Gestión de construcciones de ficha predial
+				case 'ficha_construcciones_gestion':
+					// Se toman valores que vienen por post
+					$this->data['subcategoria'] = $this->input->post('subcategoria');
+					$this->data['id'] = $this->input->post('id');
+					// Se carga la vista
+					$this->load->view('actualizar/construcciones/gestion', $this->data);
+				break; // Gestión de cultivos de ficha predial
+
+				// Construcciones de ficha predial
+				case 'ficha_construcciones':
+					// Se toman valores que vienen por post
+					$this->data['ficha'] = $this->input->post('ficha');
+					$this->data['subcategoria'] = $this->input->post('subcategoria');
+					// Se carga la vista
+					$this->load->view('actualizar/construcciones/index', $this->data);
+				break; // Construcciones de ficha predial
+				// Listado de construcciones de ficha predial
+				case 'ficha_construcciones_lista':
+					// Se toman valores que vienen por post
+					$this->data['ficha'] = $this->input->post('ficha');
+					$this->data['subcategoria'] = $this->input->post('subcategoria');
+					// Se carga la vista
+					$this->load->view('actualizar/construcciones/listar', $this->data);
+				break; // Listado de construcciones de ficha predial
+				// Propietarios de ficha predial
+                case 'propietarios':
+                	// Se toman valores que vienen por post
+                    $this->data['ficha'] = $this->input->post('ficha');
+
+                    // Se carga la vista
+                    $this->load->view('actualizar/propietarios/index', $this->data);
+                break; // Propietarios de ficha predial
+
+                // Gestión de propietarios de ficha predial
+                case 'propietarios_gestion':
+					// Se toman valores que vienen por post
+                    $this->data['id'] = $this->input->post('id');
+					$this->data['ficha'] = $this->input->post('ficha');
+    				// Se carga la vista
+                    $this->load->view('actualizar/propietarios/gestion', $this->data);
+                break; // Gestión de propietarios de ficha predial
+
+                // Listado de propietarios de ficha predial
+                case 'propietarios_lista':
+                	// Se toman valores que vienen por post
+                    $this->data['ficha'] = $this->input->post('ficha');
+
+                    // Se carga la vista
+                    $this->load->view('actualizar/propietarios/listar', $this->data);
+                break; // Listado de cultivos de ficha predial
+				// regresa un propietario
+				// Buscar propietario
+				case 'propietario_buscar':
+					// Se toman valores que vienen por post
+					$this->data['ficha'] = $this->input->post('ficha');
+					$this->data['documento'] = $this->input->post('documento');
+					// Se carga la vista
+					$this->load->view('actualizar/propietarios/buscar', $this->data);
+				break; // Buscar propietaro
+            } // suiche
+        }else{
+            //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+            redirect('');
+        }
+    } // cargar_interfaz
+
 	/**
 	 * Esta funcion retorna las fichas asociadas a un contratista via JSON
 	 */
@@ -288,220 +612,6 @@ class Actualizar_controller extends CI_Controller {
 
 		// Se actualizan los linderos
 		$this->PrediosDAO->actualizar_predio_requerido($ficha_predial, $linderos);
-
-		// Recorrido para recolectar datos y guardarlos
-		for ($i = 1; $i <= 5; $i++) {
-			// Datos de inventario de cultivos y especies
-    		$cultivos_especies = array(
-    			'ficha_predial' => $ficha_predial,
-    			'numero' => $i,
-    			'descripcion' => utf8_encode($this->input->post('cultivo_descr'.$i)),
-    			'cantidad' => utf8_encode($this->input->post('cultivo_cant'.$i)),
-    			'densidad' => utf8_encode($this->input->post('cultivo_dens'.$i)),
-    			'unidad' => utf8_encode($this->input->post('cultivo_un'.$i))
-			);
-
-			// Se actualiza los cultivos y especies
-			$this->PrediosDAO->actualizar_cultivos_especies($ficha_predial, $i, $cultivos_especies);
-
-			// Datos de las construcciones
-			$construcciones = array(
-				'ficha_predial' => $ficha_predial,
-    			'numero' => $i,
-    			'item' => utf8_encode($this->input->post('const_item'.$i)),
-    			'descripcion' => utf8_encode($this->input->post('const_desc'.$i)),
-    			'cantidad' => utf8_encode($this->input->post('const_cant'.$i)),
-    			'unidad' => utf8_encode($this->input->post('const_un'.$i))
-			);
-
-			// Se actualiza los cultivos y especies
-			$this->PrediosDAO->actualizar_construcciones($ficha_predial, '1', $i, $construcciones);
-
-			// Datos de las construcciones anexas
-			$construcciones_anexas = array(
-				'ficha_predial' => $ficha_predial,
-    			'numero' => $i,
-    			'item' => utf8_encode($this->input->post('const_an_item'.$i)),
-    			'descripcion' => utf8_encode($this->input->post('const_an_desc'.$i)),
-    			'cantidad' => utf8_encode($this->input->post('const_an_cant'.$i)),
-    			'unidad' => utf8_encode($this->input->post('const_an_un'.$i))
-			);
-
-			// Se actualiza los cultivos y especies
-			$this->PrediosDAO->actualizar_construcciones($ficha_predial, '2', $i, $construcciones_anexas);
-		}
-
-		//se procede a insertar los propietarios
-		//se obtiene el numero de propietarios que se han agregado en el formulario
-		$numero_propietarios = utf8_encode($this->input->post('propietarios_hidden'));
-
-		//pueden haber propietarios que hayan sido eliminados del formulario
-		//se va revisar uno por uno todos los que hayan sido agregados
-		//teniendo como criterio de insercion que el documento del propietario no este vacio
-		//se deja la validacion de este campo del lado cliente
-
-		//se carga el modelo que gestiona la informacion de todos los propietarios
-		$this->load->model('PropietariosDAO');
-
-		// Se elimina	las relaciones a ese predio, para volverlas a configurar
-		$this->PropietariosDAO->eliminar_relaciones_predio($ficha_predial);
-
-		// Se recorren los propietarios
-		for ($i = 1; $i <= $numero_propietarios; $i++)
-		{
-			//variable del formulario que me indica si el propietario ya hab�a sido agregado anteriormente
-			$id_propietario = utf8_encode($this->input->post("id_propietario$i"));
-
-			if($id_propietario){
-				// echo "El propietario {$i} ({$this->input->post("documento_propietario$i")}) ya está asociado al predio. \n";
-
-				//se verifica que el documento haya sido ingresado
-				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
-
-				//se eliminan puntos, comas y espacios en blanco
-				$documento_propietario = str_replace('.', '', $documento_propietario);
-				$documento_propietario = str_replace(',', '', $documento_propietario);
-				$documento_propietario = str_replace(' ', '', $documento_propietario);
-
-				//se prepara el array que contiene la informacion del propietario
-				$info_propietario = array(
-					'tipo_documento' => utf8_encode($this->input->post("tipo_documento$i")),
-					'direccion' => 		$this->input->post("direccion_propietario$i"),
-					'email' => 		$this->input->post("email_propietario$i"),
-					'nombre' => 		utf8_encode($this->input->post("propietario$i")),
-					'documento' => 		$documento_propietario,
-					'telefono' => 		$this->input->post("telefono$i")
-				);
-
-				// //se actualiza el propietario
-				$this->PropietariosDAO->actualizar_propietario($id_propietario, $info_propietario);
-			//si no se habia agregado anteriormente, se agrega
-			} else {
-				// echo "El propietario {$i} ({$this->input->post("documento_propietario$i")}) se va a asociar al predio. \n";
-
-				//se verifica que el documento haya sido ingresado
-				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
-				if($documento_propietario){
-					// echo "verificando cédula... \n";
-
-					//se eliminan puntos, comas y espacios en blanco
-					$documento_propietario = str_replace('.', '', $documento_propietario);
-					$documento_propietario = str_replace(',', '', $documento_propietario);
-					$documento_propietario = str_replace(' ', '', $documento_propietario);
-
-					//se busca si el propietario ya existe en la base de datos
-					//si no existe se inserta
-					$propietario = $this->PropietariosDAO->existe_propietario($documento_propietario);
-
-					if(!$propietario){
-						// echo "El propietario no existe en la base de datos. Creando... \n";
-
-						$info_propietario = array(
-							'tipo_documento' => utf8_encode($this->input->post("tipo_documento$i")),
-							'direccion' => 		$this->input->post("direccion_propietario$i"),
-							'email' => 		$this->input->post("email_propietario$i"),
-							'nombre' => 		utf8_encode($this->input->post("propietario$i")),
-							'documento' => 		$documento_propietario,
-							'telefono' => 		$this->input->post("telefono$i")
-						);
-
-						//se inserta el propietario
-						$this->PropietariosDAO->insertar_propietario($info_propietario);
-
-						//se recupera para insertar la relacion con el predio
-						$propietario = $this->PropietariosDAO->existe_propietario($documento_propietario);
-					} // if propietario
-
-					// Se asigna el id del propietario
-					$id_propietario = $propietario->id_propietario;
-				} // if documento propietario
-			} // if id_propietario
-
-			// echo "Propietario {$id_propietario}\n";
-
-			//se inserta la relacion del propietario con el predio
-			$this->PropietariosDAO->insertar_relacion_predio($id_propietario, $ficha_predial, $this->input->post("participacion$i"));
-		} // for numero_propietarios
-
-
-
-
-
-
-
-
-
-		/*for ($i = 1; $i <= $numero_propietarios; $i++)
-		{
-			//variable del formulario que me indica si el propietario ya hab�a sido agregado anteriormente
-			$id_propietario = utf8_encode($this->input->post("id_propietario$i"));
-			if($id_propietario)
-			{
-				//se obtiene el documento del propietario
-				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
-
-				//se eliminan puntos, comas y espacios en blanco
-				$documento_propietario = str_replace('.', '', $documento_propietario);
-				$documento_propietario = str_replace(',', '', $documento_propietario);
-				$documento_propietario = str_replace(' ', '', $documento_propietario);
-
-				//se prepara el array que contiene la informacion del propietario
-				$info_propietario = array(
-					'tipo_documento' => utf8_encode($this->input->post("tipo_documento$i")),
-					'nombre' => 		utf8_encode($this->input->post("propietario$i")),
-					'documento' => 		$documento_propietario,
-					'telefono' => 		$this->input->post("telefono$i")
-				);
-
-				//se actualiza el propietario
-				$this->PropietariosDAO->actualizar_propietario($id_propietario, $info_propietario);
-				$this->PropietariosDAO->insertar_relacion_predio($id_propietario, $ficha_predial, utf8_encode($this->input->post("participacion$i")));
-			}
-			//si no se habia agregado anteriormente, se agrega
-			else
-			{
-				//se verifica que el documento haya sido ingresado
-				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
-				if($documento_propietario)
-				{
-					//se eliminan puntos, comas y espacios en blanco
-					$documento_propietario = str_replace('.', '', $documento_propietario);
-					$documento_propietario = str_replace(',', '', $documento_propietario);
-					$documento_propietario = str_replace(' ', '', $documento_propietario);
-
-					//se busca si el propietario ya existe en la base de datos
-					//si no existe se inserta
-					$propietario = $this->PropietariosDAO->existe_propietario($documento_propietario);
-					if($propietario == FALSE)
-					{
-						//se prepara la informacion que se va a guardar del propietario
-						if(trim($this->input->post("telefono$i")) != '')
-						{
-							$info_propietario = array(
-								'tipo_documento' => utf8_encode($this->input->post("tipo_documento$i")),
-								'nombre' => 		utf8_encode($this->input->post("propietario$i")),
-								'documento' => 		$documento_propietario,
-								'telefono' => 		number_format(utf8_encode($this->input->post("telefono$i")), 0, "", "-")//esta tambien se hace por compatibilidad
-							);
-						}
-						else {
-							$info_propietario = array(
-								'tipo_documento' => utf8_encode($this->input->post("tipo_documento$i")),
-								'nombre' => 		utf8_encode($this->input->post("propietario$i")),
-								'documento' => 		$documento_propietario
-							);
-						}
-						//se inserta el propietario
-						$this->PropietariosDAO->insertar_propietario($info_propietario);
-						//se recupera para insertar la relacion con el predio
-						$propietario = $this->PropietariosDAO->existe_propietario(number_format($documento_propietario, 0));
-					}
-
-					//se inserta la relacion del propietario con el predio
-					$this->PropietariosDAO->insertar_relacion_predio($propietario->id_propietario, $ficha_predial, utf8_encode($this->input->post("participacion$i")));				}
-			}
-		}
-		echo "correcto";*/
 		echo "correcto";
 	}
 
@@ -616,6 +726,18 @@ class Actualizar_controller extends CI_Controller {
 			//se envia la respuesta viaJSON
 			echo json_encode(array('respuesta' => 'error', 'mensaje' => 'Ocurri&oacute; un error al actualizar la informaci&oacute;n del propietario.'));
 		}
+	}
+
+	function insertar_cultivo() {
+		 $this->PrediosDAO->insertar_cultivos_especies($this->input->post('ficha'), $this->input->post('datos'));
+	}
+
+	function eliminar_cultivo() {
+		 $this->PrediosDAO->eliminar_cultivos_especies($this->input->post('id'));
+	}
+
+	function editar_cultivo() {
+		$this->PrediosDAO->editar_cultivo_especies($this->input->post('id'), $this->input->post('datos'));
 	}
 }
 /* End of file actualizar_controller.php */

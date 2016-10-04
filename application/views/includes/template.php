@@ -24,7 +24,7 @@
 						</tbody>
 					</table>
 				</div>
-				<div id="logo"></div>
+				<img src="http://sicc.vinus.com.co/img/logos/logo_vinus_horizontal.png" width="200px" id="logo">
 			</div>
 			<div class="clear"></div>
 			<?php if($this->uri->segment(1) != "sesion_controller") { ?>

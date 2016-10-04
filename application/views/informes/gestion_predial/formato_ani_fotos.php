@@ -21,8 +21,9 @@ class PDF extends FPDF{
 	    $this->MultiCell(85,9, utf8_decode('PROYECTO CONCESIÓN VÍAS DEL NUS VINUS'),1,'C');
 	    $this->setX(52);
 	    $this->MultiCell(85,9, utf8_decode('REGISTRO FOTOGRÁFICO'),1,'C');
+
 	    $this->setX(52);
-	    $this->MultiCell(85,9, utf8_decode('PREDIO '.$GLOBALS['ficha']),1,'C');
+	    $this->MultiCell(85,9, utf8_decode("PREDIO ".substr($GLOBALS['ficha'], 0, 6)),1,'C');
 
 	    // Logo Vinus
 	    $this->setXY(137,10);
@@ -52,7 +53,7 @@ class PDF extends FPDF{
 	    //Se define la fuente del footer
 	    $this->SetFont('Arial','',8);
 	    // Número de página
-	    $this->Cell(0,10, utf8_decode('Sistema de Pestión Predial - Página ').$this->PageNo().' de {nb}',0,0,'R');
+	    $this->Cell(0,10, utf8_decode('Sistema de Gestión Predial - Página ').$this->PageNo().' de {nb}',0,0,'R');
 	}
 }//Fin PDF
 
@@ -119,7 +120,7 @@ if(count($fotos) > 0) {
 			$pdf->Ln();
 		}
 
-		if($cont % 6 == 0){
+		if($cont % 6 == 0 && count($fotos) > $cont){
 			$pdf->AddPage();
 		}
 
@@ -138,5 +139,4 @@ if(count($fotos) > 0) {
 
 
 // Se imprime el reporte
-// $pdf->Output($ficha.'.pdf', 'I');
-$pdf->Output($ficha.'.pdf', 'D');
+$pdf->Output(substr($ficha, 0, 6).'.pdf', 'D');

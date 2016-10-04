@@ -106,7 +106,10 @@ $abscisa_final = explode(".", $descripcion->abscisa_final / 1000);
 $abscisa_final = "K".$abscisa_final[0]. "+". $descripcion->abscisa_final % 1000;
 $table->addCell(10000, $styleCell)->addText(utf8_decode("VÍAS DEL NUS"), 'parrafo2', $alineacion_centrada);
 $table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($descripcion->tramo)), 'parrafo2', $alineacion_centrada);
-$table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($predio->ficha_predial)), 'parrafo2', $alineacion_centrada);
+
+$ficha = explode('-', $predio->ficha_predial);
+
+$table->addCell(10000, $styleCell)->addText("$ficha[0]-$ficha[1]", 'parrafo2', $alineacion_centrada);
 $table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($abscisa_inicial)), 'parrafo2', $alineacion_centrada);
 $table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($abscisa_final)), 'parrafo2', $alineacion_centrada);
 $seccion1->addTextBreak();
@@ -212,16 +215,18 @@ foreach ($gravamenes as $item) {
 $seccion1->addText(utf8_decode("5. SEGREGACIONES DEL INMUEBLE"), 'titulo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
 
-if ($identificacion->segreg_titu[0] == "?") {
-  $segregacion_titulo = explode("?", substr(utf8_decode(utf8_decode($identificacion->segreg_titu)), 1));
-  foreach ($segregacion_titulo as $item) {
-    if ($item == null) { break; }
-    $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
-    $seccion1->addTextBreak();
+if (!empty($identificacion->segreg_titu)) {
+    if ($identificacion->segreg_titu[0] == "?") {
+      $segregacion_titulo = explode("?", substr(utf8_decode(utf8_decode($identificacion->segreg_titu)), 1));
+      foreach ($segregacion_titulo as $item) {
+        if ($item == null) { break; }
+        $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
+        $seccion1->addTextBreak();
+      }
+    } else {
+      $seccion1->addText(utf8_decode(utf8_decode($identificacion->segreg_titu)), 'parrafo2', $alineacion_justificada);
+      $seccion1->addTextBreak();
   }
-} else {
-  $seccion1->addText(utf8_decode(utf8_decode($identificacion->segreg_titu)), 'parrafo2', $alineacion_justificada);
-  $seccion1->addTextBreak();
 }
 
 $seccion1->addText(utf8_decode("6. OBSERVACIONES DEL INMUEBLE"), 'titulo2', $alineacion_izquierda);

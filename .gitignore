@@ -29,3 +29,5 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-workspace
 *.sublime-project
 *.jshintrc
+#------------- imagen de convenciones para kml ---------
+img/convenciones.png

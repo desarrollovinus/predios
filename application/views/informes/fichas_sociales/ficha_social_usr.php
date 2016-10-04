@@ -42,6 +42,7 @@ $hoja->getPageSetup()->setHorizontalCentered();
  *********************** Estilos ***********************
  *******************************************************/
  $centrado = array( 'alignment' => array( 'horizontal' => PHPExcel_Style_Alignment::VERTICAL_CENTER ) ); // Alineación centrada
+ $izquierda_align = array( 'alignment' => array( 'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT ) ); // Alineación centrada
  $negrita = array( 'font' => array( 'bold' => true ) ); // negrita
 
  $bordes = array(
@@ -151,7 +152,19 @@ $hoja->mergeCells("K{$fila}:N{$fila}");
 $hoja->setCellValue("A{$fila}", "Proyecto:");
 $hoja->setCellValue("C{$fila}", "Vias del Nus");
 $hoja->setCellValue("F{$fila}", "Ficha predial:");
-$hoja->setCellValue("H{$fila}", $unidad_residente->ficha_predial);
+
+$unidad = explode('-', $unidad_residente->ficha_predial); // Se divide la ficha para sacar unidad y número
+
+if (count($unidad) > 2) {
+	// Se pone en vez de F o M, Área
+	$nombre_ficha = "$unidad[0]-$unidad[1] Área $unidad[3]";
+} else {
+	// Ficha normal
+	$nombre_ficha = $unidad_residente->ficha_predial;
+} // if
+
+
+$hoja->setCellValue("H{$fila}", $nombre_ficha);
 $hoja->setCellValue("J{$fila}", "Tramo:");
 $hoja->setCellValue("K{$fila}", $predio->tramo);
 $fila++;
@@ -174,7 +187,7 @@ $hoja->mergeCells("D{$fila}:E{$fila}");
 $hoja->mergeCells("F{$fila}:I{$fila}");
 $hoja->mergeCells("J{$fila}:N{$fila}");
 $hoja->setCellValue("A{$fila}", "Unidad social nro:");
-$hoja->setCellValue("D{$fila}", "{nro}");
+$hoja->setCellValue("D{$fila}", "1");
 $hoja->setCellValue("F{$fila}", "Relacion con el inmueble");
 $hoja->setCellValue("J{$fila}", $unidad_residente->relacion_inmueble);
 $fila++;
@@ -391,11 +404,15 @@ $hoja->mergeCells("A{$fila}:N{$fila}");
 $hoja->getStyle("A{$fila}:N{$fila}")->applyFromArray($relleno_gris);
 $hoja->setCellValue("A{$fila}", "3. APORTE DE DOCUMENTOS");
 $fila++;
+$fila_aporte = $fila;
 
-$hoja->mergeCells("A{$fila}:N{$fila}");
-//pendiente
-$hoja->setCellValue("A{$fila}", "");
-$fila++;
+$izquierda = array();
+foreach ($archivos as $archivo) {
+	$hoja->mergeCells("A{$fila}:N{$fila}");
+	$hoja->setCellValue("A{$fila}", $archivo->descripcion);
+	array_push($izquierda, $fila);
+	$fila++;
+}
 
 array_push($filas_estrechas, $fila);
 $hoja->mergeCells("A{$fila}:N{$fila}");
@@ -435,6 +452,15 @@ foreach ($filas_estrechas as $f) {
 	$hoja->getRowDimension($f)->setRowHeight(5.7);
 }
 
+// alineacion a la izquierda
+foreach ($izquierda as $f) {
+	$hoja->getStyle("A{$f}:N{$f}")->applyFromArray($izquierda_align);
+}
+
+if (count($archivos) == 0) {
+	$hoja->getRowDimension($fila_aporte)->setRowHeight(40);
+}
+
 // cambia los signos de interrogacion por ñ siempre y cuando solo exista el signo de cierre solamente
 foreach ($hoja->getMergeCells() as $cells) {
 	preg_match_all('!\d+!', $cells, $rows);
@@ -448,8 +474,8 @@ foreach ($hoja->getMergeCells() as $cells) {
 
 header('Cache-Control: max-age=0');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment; filename="'.$unidad_residente->ficha_predial.' - Unidad social residente".xlsx"');
+header('Content-Disposition: attachment; filename="'.$unidad_residente->ficha_predial.' - Unidad Social Residente".xlsx"');
 
-//Se genera el excel
+// Se genera el excel
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->save('php://output');

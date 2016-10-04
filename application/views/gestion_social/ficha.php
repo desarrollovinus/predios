@@ -155,9 +155,7 @@
 
 		<!-- seccion 2 -->
 		<h3><a href="#seccion2">DIAGN&Oacute;STICO SOCIOECON&Oacute;MICO</a></h3>
-		<div>
-
-
+		<div id="diagnostico">
 
 		</div>
 
@@ -195,6 +193,12 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		// llamado a la vista diagnostico socioeconomico
+		var ficha = $("input[name=ficha]");
+		var datos = {ficha: ficha.val()};
+		$.get("<?php echo site_url('gestion_social_controller/diagnostico_social'); ?>", datos, function(vista){
+			$("#diagnostico").html(vista);
+		});
 		//este script unido con jquery es el encargado de dar el estilo css a las secciones del formulario dinamicamente
 		$( "#accordion" ).accordion
 		({
@@ -223,7 +227,6 @@
 			$('#form input[name=boton_hidden]').val($(this).attr('id'));
 
 			// Recolección de datos
-        	var ficha = $("input[name=ficha]");
         	var fecha_levantamiento = $("input[name=fecha_levantamiento]");
         	var requerimiento_terreno = $("select[name=requerimiento_terreno]");
         	var requerimiento_edificaciones = $("select[name=requerimiento_edificaciones]");
@@ -262,7 +265,7 @@
         		"edificaciones_unidades_productivas_descripcion": edificaciones_unidades_productivas_descripcion.val(),
         		"otros_usos": otros_usos.val(),
         		"observaciones": observaciones.val()
-        	}
+        	};
         	// console.log(ficha.val());
         	// console.log(datos);
 
@@ -357,5 +360,8 @@
 
         	location.href= "gestion_social_controller";
 		}); // Click
+	});
+	$('#form input[name=salir]').click(function(){
+		window.location.href = window.location.href;
 	});
 </script>

@@ -1,5 +1,5 @@
 <?php
-// error_reporting(-1);
+error_reporting(-1);
 
 require('site_predios/libraries/proj4php/vendor/autoload.php');
 
@@ -104,7 +104,7 @@ class Archivos_controller extends CI_Controller
 				//se lee archivo por archivo
 				while(($file = readdir($directorio)) !== FALSE)
 				{
-					if($file != '.' && $file != '..' && $file != 'fotos')
+					if(strpos($file, '.') !== false && $file != '.' && $file != '..')
 					{
 						//se guardan los nombres en el array
 						array_push($nombres, $file);
@@ -116,6 +116,7 @@ class Archivos_controller extends CI_Controller
 				//se carga la libreria que permite establecer el browser con el que se abrio la pagina
 				$this->load->library('user_agent');
 				//se establecen las variables que van a la vista
+				$this->data['ficha'] = $ficha;
 				$this->data['es_ie'] = $this->agent->is_browser('Internet Explorer');
 				$this->data['archivos'] = $nombres;
 				$this->data['directorio'] = $this->ruta_archivos.$ficha;
@@ -126,6 +127,32 @@ class Archivos_controller extends CI_Controller
 				$this->load->view('includes/template',$this->data);
 			}
 		}
+	}
+
+	function eliminar_archivo() {
+		unlink($this->input->post('directorio').'/'.$this->input->post('archivo'));
+		$auditoria = array(
+			'fecha_hora' => date('Y-m-d H:i:s', time()),
+			'id_usuario' => $this->session->userdata('id_usuario'),
+			'descripcion' => 'Se Elimina el archivo '.$this->input->post('archivo').' de la ficha '.$this->input->post('ficha')
+		);
+		$this->db->insert('auditoria', $auditoria);
+	}
+
+	function superar_archivo() {
+		$archivo = $this->input->post('archivo');
+		$directorio = $this->input->post('directorio');
+		$archivo_viejo = $directorio.'/'.$archivo;
+		$extension = substr($archivo, (strlen($archivo) - strrpos($archivo, '.', -1)) * - 1);
+		$archivo = substr($archivo, 0, strpos($archivo, $extension));
+
+		// si el archivo contiene la palabra superado
+		if (strpos($archivo_viejo, 'SUPERADO') !== false) {
+			$archivo_nuevo = $directorio.'/'.substr($archivo, 0,  strpos($archivo, 'SUPERADO') -2).$extension;
+		} else {
+			$archivo_nuevo = $directorio.'/'.$archivo.' (SUPERADO '.date("d-m-y").')'.$extension;
+		}
+		rename($archivo_viejo, $archivo_nuevo);
 	}
 	/**
 	 * Metodo encargado de ofrecer una vista desde los controladores de actualizaciones de fichas prediales y actas
@@ -398,50 +425,189 @@ class Archivos_controller extends CI_Controller
 		$this->load->view('actualizar/vertices', $this->data);
 	}
 
-	function generar_kml() {
+	// genera un kml con 1 o mas unidades funcionales y por predio
+	function generar_kml()
+	{
 		$this->load->model(array("accionesDAO", "InformesDAO"));
-		$this->data["ficha"] = $this->uri->segment(3);
-		$this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($this->data["ficha"]);
-		$corMagna = $this->accionesDAO->consultar_coordenadas($this->data["ficha"]);
-		$corGeo = array();
-		$proj4 = new Proj4php();
-		$projMagna = new Proj('EPSG:3116', $proj4);
-		$projWGS84 = new Proj('EPSG:4326', $proj4);
-		$xSum = 0;
-		$ySum = 0;
-		//conversion de magna a WGS84
-		foreach ($corMagna as $coordenada) {
-			if ($coordenada->x != NULL) {
-				$pointSrc = new Point($coordenada->x, $coordenada->y, $projMagna);
+		$this->convencion_predio();
+		$unidades_funcionales = $this->uri->segment(3);
+		$unidades_list = array();
+
+		if (strpos($unidades_funcionales, 'F') == true) {
+			$ficha = $unidades_funcionales;
+			$this->data['nombre_archivo'] = $ficha;
+			$unidad_list = array();
+			$predio_list = array();
+			$corGeo = array();
+			$corMagna = $this->accionesDAO->consultar_coordenadas($ficha);
+			$predio_info = $this->InformesDAO->obtener_informe_gestion_predial_ani($ficha);
+			$proj4 = new Proj4php();
+			$projMagna = new Proj('EPSG:3116', $proj4);
+			$projWGS84 = new Proj('EPSG:4326', $proj4);
+			$xSum = 0;
+			$ySum = 0;
+			// predio
+			foreach ($corMagna as $coordenada) {
+				if ($coordenada->x != NULL) {
+					$pointSrc = new Point($coordenada->x, $coordenada->y, $projMagna);
+					$pointDest = $proj4->transform($projWGS84, $pointSrc);
+					$corXY = explode(" ", $pointDest->toShortString());
+					$corXY = array("punto"=>$coordenada->punto, "x"=> $corXY[0], "y"=>$corXY[1]);
+					array_push($corGeo, $corXY);
+					$xSum += (float)$coordenada->x;
+					$ySum += (float)$coordenada->y;
+				}
+			}
+			$puntos = (float)explode(" ", $coordenada->punto)[0];
+			$pointSrc = new Point($xSum/$puntos, $ySum/$puntos, $projMagna);
+			$pointDest = $proj4->transform($projWGS84, $pointSrc);
+			$corXY = explode(" ", $pointDest->toShortString());
+
+			$area = array(
+				'x' => $corXY[0],
+				'y' => $corXY[1],
+			);
+			array_push($predio_list, $predio_info);
+			array_push($predio_list, $corGeo);
+			array_push($predio_list, $area);
+
+			array_push($unidad_list, $predio_list);
+
+			array_push($unidades_list, $unidad_list);
+			$this->data["unidades_funcionales"] = $unidades_list;
+			$this->load->view('plantillas/kml-plantilla', $this->data);
+			return 1;
+		}
+		// esta linea separa los numeros de las unidades funcionales
+		$unidades_funcionales = preg_split("/[\s.]+/", $unidades_funcionales);
+		$this->data['nombre_archivo'] = 'Mapa ';
+		// unidades funcionales
+		foreach ($unidades_funcionales as $unidad) {
+			$this->data['nombre_archivo'] .= 'UF'.$unidad.'-';
+			$unidad_funcional = $this->accionesDAO->consultar_ficha_por_unidad_funcional($unidad);
+			$unidad_list = array();
+			//unidad funcional
+			foreach ($unidad_funcional as $predio) {
+				$predio_list = array();
+				$corMagna = $this->accionesDAO->consultar_coordenadas($predio->ficha_predial);
+				$predio_info = $this->InformesDAO->obtener_informe_gestion_predial_ani($predio->ficha_predial);
+				$corGeo = array();
+				$proj4 = new Proj4php();
+				$projMagna = new Proj('EPSG:3116', $proj4);
+				$projWGS84 = new Proj('EPSG:4326', $proj4);
+				$xSum = 0;
+				$ySum = 0;
+				// predio
+				foreach ($corMagna as $coordenada) {
+					if ($coordenada->x != NULL) {
+						$pointSrc = new Point($coordenada->x, $coordenada->y, $projMagna);
+						$pointDest = $proj4->transform($projWGS84, $pointSrc);
+						$corXY = explode(" ", $pointDest->toShortString());
+						$corXY = array("punto"=>$coordenada->punto, "x"=> $corXY[0], "y"=>$corXY[1]);
+						array_push($corGeo, $corXY);
+						$xSum += (float)$coordenada->x;
+						$ySum += (float)$coordenada->y;
+					}
+				}
+				//se calcula el punto medio del predio
+				$puntos = (float)explode(" ", $coordenada->punto)[0];
+				$pointSrc = new Point($xSum/$puntos, $ySum/$puntos, $projMagna);
 				$pointDest = $proj4->transform($projWGS84, $pointSrc);
 				$corXY = explode(" ", $pointDest->toShortString());
-				$corXY = array("punto"=>$coordenada->punto, "x"=> $corXY[0], "y"=>$corXY[1]);
-				array_push($corGeo, $corXY);
-				$xSum += (float)$coordenada->x;
-				$ySum += (float)$coordenada->y;
+
+				$area = array(
+					'x' => $corXY[0],
+					'y' => $corXY[1],
+				);
+				array_push($predio_list, $predio_info);
+				array_push($predio_list, $corGeo);
+				array_push($predio_list, $area);
+				array_push($unidad_list, $predio_list);
+			}
+			if (!empty($unidad_list)) {
+				array_push($unidades_list, $unidad_list);
 			}
 		}
-		//se calcula el punto medio del predio
-		$puntos = (float)explode(" ", $coordenada->punto)[0];
-		$pointSrc = new Point($xSum/$puntos, $ySum/$puntos, $projMagna);
-		$pointDest = $proj4->transform($projWGS84, $pointSrc);
-		$corXY = explode(" ", $pointDest->toShortString());
-
-		$area = array(
-			'x' => $corXY[0],
-			'y' => $corXY[1],
-		);
-
-		$this->data["coordenadas"] = $corGeo;
-		$this->data["area"] = $area;
+		$this->data["unidades_funcionales"] = $unidades_list;
 		$this->load->view('plantillas/kml-plantilla', $this->data);
 	}
 
 	function convencion_predio() {
 		$this->load->model(array("PrediosDAO"));
-		$this->data["estados_via"] = $this->PrediosDAO->obtener_estados_via_actuales();
-		$this->data["estados_proceso"] = $this->PrediosDAO->obtener_procesos_actuales();
-		$this->load->view('plantillas/tabla-convenciones', $this->data);
+		$vias = $this->PrediosDAO->obtener_estados_via_actuales();
+		$procesos = $this->PrediosDAO->obtener_procesos_actuales();
+
+		$width = 215;
+		$height = 400;
+
+		// Se crea la imagen
+		$im = imagecreatetruecolor($width, $height);
+		// colores
+		$black = imagecolorallocate($im, 0, 0, 0);
+		$white = imagecolorallocate($im, 255, 255, 255);
+
+		// fondo de la imagen
+		imagefill($im, 0, 0, $white);
+		// Titulo
+		$titulo = 'Convenciones';
+		// Fuente
+		$font = 'site_predios/fonts/arial.ttf';
+		$bold = 'site_predios/fonts/arial_bold.ttf';
+
+		// Titulo
+		$posX = $width - $width * 0.77;
+		$posY = 20;
+		// Escribe titulo
+		imagettftext($im, 13, 0, $posX, $posY, $black, $bold, $titulo);
+		// linea separadora
+		imagefilledrectangle($im, 0, $posY + 10, $width, $posY + 10, $black);
+
+		// Estado de las vias
+		$posX = $width - $width * 0.73;
+		$posY = $height - $height * 0.87;
+		imagettftext($im, 9, 0, $posX , $posY, $black, $bold, 'Estado de las vias');
+		$posX = $width - $width * 0.8;
+		$posY = $height - $height * 0.8;
+
+		// Estado de las vias sin estado
+		imagefilledrectangle($im, $posX - 50, $posY - 6, $posX - 19, $posY - 2, $black);
+		imagefilledrectangle($im, $posX - 50, $posY - 5, $posX - 20, $posY - 3, $white);
+		imagettftext($im, 7, 0, $posX , $posY, $black, $font, 'Sin estado');
+		$posY += 15;
+		// lista estado de las vias
+		foreach ($vias as $via) {
+			$color = imagecolorallocate($im, hexdec(substr($via->color, 0, 2)), hexdec(substr($via->color, 2, 2)), hexdec(substr($via->color, 4, 2)));
+			imagefilledrectangle($im, $posX - 50, $posY - 5, $posX - 20, $posY - 3, $color);
+			imagettftext($im, 7, 0, $posX , $posY, $black, $font, $via->nombre);
+			$posY += 15;
+		}
+		// Linea separadora
+		imagefilledrectangle($im, 0, $posY, $width, $posY, $black);
+
+		// Estado del proceso
+		$posX = $width - $width * 0.78;
+		$posY = $posY + 20;
+		imagettftext($im, 9, 0, $posX - 10 , $posY, $black, $bold, 'Estado de los procesos');
+		$posX = $width - $width * 0.8;
+		$posY = $posY + 30;
+
+		// Estado del proceso sin estado
+		imagefilledrectangle($im, $posX - 50, $posY - 10, $posX - 20, $posY, $black);
+		imagefilledrectangle($im, $posX - 50, $posY - 9, $posX - 21, $posY - 1, $white);
+		imagettftext($im, 7, 0, $posX - 10 , $posY, $black, $font, 'Sin estado');
+		$posY += 17;
+		// lista de estados proceso
+		foreach ($procesos as $proceso) {
+			$color = imagecolorallocate($im, hexdec(substr($proceso->color, 0, 2)), hexdec(substr($proceso->color, 2, 2)), hexdec(substr($proceso->color, 4, 2)));
+			imagefilledrectangle($im, $posX - 50, $posY - 10, $posX - 20, $posY, $color);
+			imagettftext($im, 7, 0, $posX - 10 , $posY, $black, $font, $proceso->estado);
+			$posY += 15;
+		}
+
+		// Se guarda la imagen
+		imagepng($im, 'img/convenciones.png');
+		// se elimina el buffer
+		imagedestroy($im);
 	}
 
 	// ver archivos del area social

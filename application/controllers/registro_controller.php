@@ -8,20 +8,20 @@ class Registro_controller extends CI_Controller
 {
 	/**
 	 * Este array almacena los DTO's (Data Transfer Object) que se envian a las vistas
-	 * y que son producto de las consultas que realizan los DAO's (Data Access Object) 
+	 * y que son producto de las consultas que realizan los DAO's (Data Access Object)
 	 * a la base de datos, adem&aacute;s de enviar variables encargadas de construir la vista.
-	 * 
+	 *
 	 * @access	public
 	 */
 	var $data = array();
-	
+
 	/**
 	 * Funci&oacute;n constructora de la clase Inicio_controller. Esta funci&oacute;n se encarga de verificar que se haya
 	 * iniciado sesi&oacute;n, si no se ha iniciado sesi&oacute;n inmediatamente redirecciona hacia Sesion_controller.
-	 * 
-	 * Se hereda el mismo constructor de la clase Controller para evitar sobreescribirlo y de esa manera 
+	 *
+	 * Se hereda el mismo constructor de la clase Controller para evitar sobreescribirlo y de esa manera
 	 * conservar el funcionamiento de controlador.
-	 * 
+	 *
 	 * @access	public
 	 */
 	function __construct()
@@ -43,10 +43,10 @@ class Registro_controller extends CI_Controller
 		$this->data['ultimas_fichas'] = $this->PrediosDAO->obtener_predios_menu();
 		$this->data['menu'] = 'registro/menu';
 	}
-	
+
 	/**
 	 * Muestra la vista que se encarga de registrar los datos de un predio nuevo.
-	 * 
+	 *
 	 * @access	public
 	 */
 	function index()
@@ -72,10 +72,10 @@ class Registro_controller extends CI_Controller
 		//se carga el template
 		$this->load->view('includes/template', $this->data);
 	}
-	
+
 	/**
 	 * Esta funci&oacute;n se encarga de guardar la informaci&oacute;n del predio nuevo.
-	 * 
+	 *
 	 * @access	public
 	 */
 	function registrar_predio()
@@ -90,7 +90,7 @@ class Registro_controller extends CI_Controller
 			//Si existe se emite el mensaje de error
 			echo "La ficha predial $ficha_predial ya existe.";
 		}
-		//si no existe se procede a guardar toda la informacion		
+		//si no existe se procede a guardar toda la informacion
 		else
 		{
 			//se obtiene la hora en que se registra el predio
@@ -158,10 +158,10 @@ class Registro_controller extends CI_Controller
 				'ob_titu' => utf8_encode($this->input->post('observaciones_estudio_titulos')),
 				'conc_titu' => utf8_encode($this->input->post('concepto'))
 			);
-			
+
 			//se inserta la identificacion del predio
 			$this->PrediosDAO->insertar_identificacion($identificacion);
-			
+
 			//se prepara la descripcion
 			$descripcion = array(
 				'ficha_predial' => $ficha_predial,
@@ -190,10 +190,10 @@ class Registro_controller extends CI_Controller
 				'disponibilidad_derecha' => utf8_encode($this->input->post('disponibilidad_derecha')),
 				'fecha_remision_insumos' => utf8_encode($this->input->post('fecha_remision_insumos'))
 			);
-			
+
 			//se inserta la descripcion del predio
 			$this->PrediosDAO->insertar_descripcion($descripcion);
-			
+
 			//se insertan los linderos del predio
 			// $this->PrediosDAO->insertar_linderos($ficha_predial, utf8_encode($this->input->post('linderos_predio_requerido')));
 
@@ -231,124 +231,7 @@ class Registro_controller extends CI_Controller
 			// se inserta los linderos
 			$this->PrediosDAO->insertar_linderos($ficha_predial, $linderos);
 
-			// Recorrido para recolectar datos y guardarlos
-			for ($i = 1; $i <= 5; $i++) {
-				// Datos de inventario de cultivos y especies
-	    		$cultivos_especies = array(
-	    			'ficha_predial' => $ficha_predial,
-	    			'numero' => $i,
-	    			'descripcion' => utf8_encode($this->input->post('cultivo_descr'.$i)),
-	    			'cantidad' => utf8_encode($this->input->post('cultivo_cant'.$i)),
-	    			'densidad' => utf8_encode($this->input->post('cultivo_dens'.$i)),
-	    			'unidad' => utf8_encode($this->input->post('cultivo_un'.$i))
-    			);
-
-    			// Se inserta los cultivos y especies
-				$this->PrediosDAO->insertar_cultivos_especies($ficha_predial, $cultivos_especies);
-
-				// Datos de las construcciones
-				$construcciones = array(
-					'ficha_predial' => $ficha_predial,
-	    			'numero' => $i,
-	    			'id_tipo' => '1',
-	    			'item' => utf8_encode($this->input->post('const_item'.$i)),
-	    			'descripcion' => utf8_encode($this->input->post('const_desc'.$i)),
-	    			'cantidad' => utf8_encode($this->input->post('const_cant'.$i)),
-	    			'unidad' => utf8_encode($this->input->post('const_un'.$i))
-				);
-
-				// Se inserta los datos de construcciones
-				$this->PrediosDAO->insertar_construcciones($ficha_predial, $construcciones);
-
-				//Datos de las construcciones anexas
-				$construcciones_anexas = array(
-					'ficha_predial' => $ficha_predial,
-	    			'numero' => $i,
-	    			'id_tipo' => '2',
-	    			'item' => utf8_encode($this->input->post('const_an_item'.$i)),
-	    			'descripcion' => utf8_encode($this->input->post('const_an_desc'.$i)),
-	    			'cantidad' => utf8_encode($this->input->post('const_an_cant'.$i)),
-	    			'unidad' => utf8_encode($this->input->post('const_an_un'.$i))
-				);
-
-				// Se inserta los datos de construcciones anexas
-				$this->PrediosDAO->insertar_construcciones($ficha_predial, $construcciones_anexas);
-			}
-
-			// Datos de los checkbox
-			// $checks = array(
-				
-			// );
-
-			// Se insertan los checks
-			// $this->PrediosDAO->insertar_checks($ficha_predial, $construcciones_anexas);
-
-			//se inserta el predio
-			$this->PrediosDAO->insertar_predio($ficha_predial, utf8_encode($fecha_hora), utf8_encode($this->session->userdata('id_usuario')));
-
-			//se procede a insertar los propietarios			
-			//se obtiene el numero de propietarios que se han agregado en el formulario
-			$numero_propietarios = utf8_encode($this->input->post('propietarios_hidden'));
-			
-			//pueden haber propietarios que hayan sido eliminados del formulario
-			//se va revisar uno por uno todos los que hayan sido agregados
-			//teniendo como criterio de insercion que el documento del propietario no este vacio
-			//se deja la validacion de este campo del lado cliente
-			
-			//se carga el modelo que gestiona la informacion de todos los propietarios
-			$this->load->model('PropietariosDAO');
-			for ($i = 1; $i <= $numero_propietarios; $i++) 
-			{
-				//se verifica que el documento haya sido ingresado			
-				$documento_propietario = utf8_encode($this->input->post("documento_propietario$i"));
-				if($documento_propietario)
-				{
-					//se eliminan puntos, comas y espacios en blanco
-					$documento_propietario = str_replace('.', '', $documento_propietario);
-					$documento_propietario = str_replace(',', '', $documento_propietario);
-					$documento_propietario = str_replace(' ', '', $documento_propietario);
-					
-					//se busca si el propietario ya existe en la base de datos
-					//si no existe se inserta
-					$propietario = $this->PropietariosDAO->existe_propietario($documento_propietario);
-					if($propietario == FALSE)
-					{
-						//se prepara la informacion que se va a guardar del propietario
-						if(trim($this->input->post("telefono$i")) != '')
-						{
-							$info_propietario = array(
-								'tipo_documento' => utf8_encode($this->input->post("tipo_documento$i")),
-								'nombre' => 		utf8_encode($this->input->post("propietario$i")),
-								'documento' => 		$documento_propietario,
-								'telefono' => 		number_format(utf8_encode($this->input->post("telefono$i")), 0, "", "-"), //esta tambien se hace por compatibilidad
-								'direccion' => 		$this->input->post("direccion_propietario$i"),
-								'email' => 		$this->input->post("email_propietario$i")
-							);
-						}
-						else {
-							$info_propietario = array(
-								'tipo_documento' => utf8_encode($this->input->post("tipo_documento$i")),
-								'nombre' => 		utf8_encode($this->input->post("propietario$i")),
-								'documento' => 		$documento_propietario,
-								'direccion' => 		$this->input->post("direccion_propietario$i"),
-								'email' => 		$this->input->post("email_propietario$i")
-							);
-						}
-						//se inserta el propietario
-						$this->PropietariosDAO->insertar_propietario($info_propietario);
-						//se recupera para obtener su id
-						$propietario = $this->PropietariosDAO->existe_propietario($documento_propietario);
-						//se inserta la relacion del propietario con el predio
-						$this->PropietariosDAO->insertar_relacion_predio($propietario->id_propietario, $ficha_predial, utf8_encode($this->input->post("participacion$i")));
-					}
-					else 
-					{
-						//se inserta la relacion del propietario con el predio
-						$this->PropietariosDAO->insertar_relacion_predio($propietario->id_propietario, $ficha_predial, utf8_encode($this->input->post("participacion$i")));
-					}
-					
-				}
-			}
+			$this->PrediosDAO->insertar_predio($ficha_predial, utf8_encode($fecha_hora), utf8_encode($this->session->userdata('id_usuario'))); 
 			echo "correcto";
 		}
 	}

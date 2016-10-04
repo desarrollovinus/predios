@@ -42,7 +42,7 @@
 				<!-- Datos de la foto -->
 				<strong>Foto <?php echo $cont; ?></strong><br>
 				<strong>Fecha: </strong><?php if(isset($foto->fecha)){ echo $foto->fecha; } ?><br>
-				<strong>Desripción: </strong><?php if(isset($foto->fecha)){ echo $foto->descripcion; } ?><br>
+				<strong>Descripción: </strong><?php if(isset($foto->fecha)){ echo $foto->descripcion; } ?><br>
 				<input onChange="javascript:actualizar_foto(this.value, '<?php echo $foto->archivo; ?>')" type="range" name="orden" value='<?php echo ($foto->orden) ? $foto->orden: $max; ?>' min="1" max='<?php echo $max?>'>
 			</div>
 		<?php

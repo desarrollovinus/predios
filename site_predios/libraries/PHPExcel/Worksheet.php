@@ -1263,27 +1263,97 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 	 */
 	public function setDinamicSizeRow($content='', $fila, $columns='A:A')
 	{
+		// Se divide el string en un array para obtener las columnas unitariamente
 		$nCol = explode(":", $columns);
+		// limite de la columna, es la cantidad de caracteres que caben en una linea con todas sus columnas combinadas
+		// se inicializa en 1 en caso de que no exista contenido y evitar error al dividir
 		$limitCol = 1;
+		// se obtiene la primer columna, esta variable se usara para asignar el contenido
 		$columna = $nCol[0];
 
+		// se guarda un duplicado del contenido original en la variable contenido
 		$contenido = $content;
+		// Se calcula el espacio que ocupa un caracter dependiendo si esta todo en mayusculas o no
 		$content == strtoupper($content) ? $charSpace = 1.0: $charSpace = 0.9 ;
 
+		// se recorre por columnas y se calcula la cantidad de caracteres columna a columna
+		// para obtener el aproximado de la cantidad de caracteres que ocupa cada una
 		while ($nCol[0] != $nCol[1]) {
 			$maxSpace = $this->getColumnDimension($nCol[0])->getWidth() / $charSpace;
+			// se acumula la cantidad de caracteres que caben en una linea
 			$limitCol += $maxSpace;
+			// se incrementa a la siguiente columna
 			$nCol[0]++;
 		}
 
+		// se divide el contenido cada que encuentra un salto de linea
+		$contenido_array = explode("\n", $content);
+		// cantidad de saltos de linea en el contenido
+		$saltos = 0;
+		foreach ($contenido_array as $con) {
+			// si el contenido del elemento es 2 o menos se considera salto de linea
+			if (strlen($con) < 2) {
+				// incrementa la cantidad de saltos
+				$saltos += 1;
+			}
+		}
+		// por cada salto de linea se reserva espacio para este
+		// se multiplica el numero de saltos de linea con el aproximado que ocupa una columna
+		$saltos = $saltos * $limitCol;
 		$content = strlen($content) + 8;
-		$newSize = ceil($content / $limitCol) * 13;
+		// el numero 13 es el tamaño aproximado que ocupa una fila
+		$newSize = ceil(($content + $saltos) / $limitCol) * 13;
+		// se obtiene el tamaño de la fila actual
 		$oldSize = $this->getRowDimension($fila)->getRowHeight();
+		// se verifica que el tamaño nuevo no sea menor para no afectar otras columnas con la misma funcion
 		if ($oldSize < $newSize) {
 			$this->getRowDimension($fila)->setRowHeight($newSize);
 		}
+		// se asigna el contenido en la fila y la columna establecida
 		$this->setCellValue("{$columna}{$fila}", trim($contenido));
+	}
 
+	public function getSizeDinamicRow($content='', $columns='A:A') {
+		// Se divide el string en un array para obtener las columnas unitariamente
+		$nCol = explode(":", $columns);
+		// limite de la columna, es la cantidad de caracteres que caben en una linea con todas sus columnas combinadas
+		// se inicializa en 1 en caso de que no exista contenido y evitar error al dividir
+		$limitCol = 1;
+		// se obtiene la primer columna, esta variable se usara para asignar el contenido
+		$columna = $nCol[0];
+
+		// se guarda un duplicado del contenido original en la variable contenido
+		$contenido = $content;
+		// Se calcula el espacio que ocupa un caracter dependiendo si esta todo en mayusculas o no
+		$content == strtoupper($content) ? $charSpace = 1.0: $charSpace = 0.9 ;
+
+		// se recorre por columnas y se calcula la cantidad de caracteres columna a columna
+		// para obtener el aproximado de la cantidad de caracteres que ocupa cada una
+		while ($nCol[0] != $nCol[1]) {
+			$maxSpace = $this->getColumnDimension($nCol[0])->getWidth() / $charSpace;
+			// se acumula la cantidad de caracteres que caben en una linea
+			$limitCol += $maxSpace;
+			// se incrementa a la siguiente columna
+			$nCol[0]++;
+		}
+
+		// se divide el contenido cada que encuentra un salto de linea
+		$contenido_array = explode("\n", $content);
+		// cantidad de saltos de linea en el contenido
+		$saltos = 0;
+		foreach ($contenido_array as $con) {
+			// si el contenido del elemento es 2 o menos se considera salto de linea
+			if (strlen($con) < 2) {
+				// incrementa la cantidad de saltos
+				$saltos += 1;
+			}
+		}
+		// por cada salto de linea se reserva espacio para este
+		// se multiplica el numero de saltos de linea con el aproximado que ocupa una columna
+		$saltos = $saltos * $limitCol;
+		$content = strlen($content) + 8;
+		// el numero 13 es el tamaño aproximado que ocupa una fila
+		return ceil(($content + $saltos) / $limitCol) * 13;
 	}
 
 	/**

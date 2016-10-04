@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
 <Document>
-<name><?php echo $ficha ?></name>
-<LookAt>
-    <longitude><?php echo $area["x"]; ?></longitude>
-    <latitude><?php echo $area["y"]; ?></latitude>
-    <altitude><?php echo $predio->area_requerida * 0.05; ?></altitude>
-    <heading>3.234624111048396e-012</heading>
-    <tilt>0</tilt>
-    <range>0</range>
-    <gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
-</LookAt>
-<!-- Estilos  -->
 <Style id="sn_ylw-pushpin">
 <IconStyle>
     <scale>1.1</scale>
@@ -158,100 +147,79 @@
         <Icon>
             <href><?php echo base_url()."img/convenciones.png"; ?></href>
         </Icon>
-        <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
-        <screenXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+        <overlayXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+        <screenXY x="0" y="0" xunits="fraction" yunits="fraction"/>
         <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
         <size x="0" y="0" xunits="fraction" yunits="fraction"/>
     </ScreenOverlay>
  </Folder>
+<!--Unidad funcional  -->
+<?php foreach ($unidades_funcionales as $unidad): ?>
+    <Folder>
+        <name><?= substr($unidad[0][0]->ficha_predial, 0, 3)?></name>
+    <!--Predio  -->
+    <?php foreach ($unidad as $predioArray): ?>
+        <Folder>
+            <name><?= $predioArray[0]->ficha_predial; ?></name>
+        <!--Info del predio  -->
+            <Placemark>
+                <name><?php echo $predioArray[0]->ficha_predial; ?></name>
+                <Style>
+                    <!-- Color de la linea  -->
+                    <LineStyle>
+                        <color><?php echo ($predioArray[0]->color_via) ? "ff".$predioArray[0]->color_via: "ffffffff" ; ?></color>
+                        <width>6</width>
+                    </LineStyle>
+                    <!-- Color interior del poligono  -->
+                    <PolyStyle>
+                        <color><?php  echo($predioArray[0]->color_proceso) ? "7f".$predioArray[0]->color_proceso: "ffffffff" ; ?></color>
+                        <fill>1</fill>
+                    </PolyStyle>
+                </Style>
+                <!-- Tabla de datos  -->
+                <ExtendedData>
+                    <SchemaData schemaUrl="">
+                        <SimpleData name="Tramo"><?php echo $predioArray[0]->tramo; ?></SimpleData>
+                        <SimpleData name="Municipio"><?php echo $predioArray[0]->municipio; ?></SimpleData>
+                        <SimpleData name="Abscisa inicial"><?php echo $predioArray[0]->abscisa_inicial; ?></SimpleData>
+                        <SimpleData name="Abscisa final"><?php echo $predioArray[0]->abscisa_final; ?></SimpleData>
+                        <SimpleData name="Propietario"><?php echo $predioArray[0]->nombre_propietario; ?></SimpleData>
+                        <SimpleData name="Area requerida"><?php echo $predioArray[0]->area_requerida; ?></SimpleData>
+                        <SimpleData name="Cédula catastral"><?php echo $predioArray[0]->no_catastral; ?></SimpleData>
+                        <SimpleData name="Estado de la vía"><?php echo $predioArray[0]->estado_via; ?></SimpleData>
+                        <SimpleData name="Estado del proceso"><?php echo $predioArray[0]->estado_pro; ?></SimpleData>
+                    </SchemaData>
+                </ExtendedData>
+                <!-- visibilidad de la tabla de datos al iniciar el google earth 1:visible kml- 0: no visible  -->
+                <gx:balloonVisibility>0</gx:balloonVisibility>
 
-<Placemark>
-    <name>Predio <?php echo $ficha; ?></name>
-    <Style>
-        <!-- Color de la linea  -->
-        <LineStyle>
-            <color><?php echo ($predio->color_via) ? "ff".$predio->color_via: "ffffffff" ; ?></color>
-            <width>6</width>
-        </LineStyle>
-        <!-- Color interior del poligono  -->
-        <PolyStyle>
-            <color><?php echo ($predio->color_proceso) ? "7f".$predio->color_proceso: "ffffffff" ; ?></color>
-            <fill>1</fill>
-        </PolyStyle>
-    </Style>
-    <!-- Tabla de datos  -->
-    <ExtendedData>
-        <SchemaData schemaUrl="">
-            <SimpleData name="Tramo"><?php echo $predio->tramo; ?></SimpleData>
-            <SimpleData name="Municipio"><?php echo $predio->municipio; ?></SimpleData>
-            <SimpleData name="Abscisa inicial"><?php echo $predio->abscisa_inicial; ?></SimpleData>
-            <SimpleData name="Abscisa final"><?php echo $predio->abscisa_final; ?></SimpleData>
-            <SimpleData name="Propietario"><?php echo $predio->nombre_propietario; ?></SimpleData>
-            <SimpleData name="Area requerida"><?php echo $predio->area_requerida; ?></SimpleData>
-            <SimpleData name="Cédula catastral"><?php echo $predio->no_catastral; ?></SimpleData>
-            <SimpleData name="Estado de la vía"><?php echo $predio->estado_via; ?></SimpleData>
-            <SimpleData name="Estado del proceso"><?php echo $predio->estado_pro; ?></SimpleData>
-        </SchemaData>
-    </ExtendedData>
-    <!-- visibilidad de la tabla de datos al iniciar el google earth 1:visible kml- 0: no visible  -->
-    <gx:balloonVisibility>0</gx:balloonVisibility>
-
-    <Polygon>
-        <outerBoundaryIs>
-            <LinearRing>
-                <coordinates>
-                    <?php
-                    $cont = 1;
-                    $max = count($coordenadas);
-                    foreach ($coordenadas as $punto){
-                        echo $punto["x"].",".$punto["y"].",0 ";
-                        if($cont == $max) {echo $coordenadas[0]["x"].",".$coordenadas[0]["y"].",0 ";}
-                        $cont++;
-                    }?>
-                </coordinates>
-            </LinearRing>
-        </outerBoundaryIs>
-        <LookAt>
-            <longitude><?php echo $area["x"]; ?></longitude>
-            <latitude><?php echo $area["y"]; ?></latitude>
-            <altitude><?php echo $predio->area_requerida*0.1; ?></altitude>
-            <heading>0</heading>
-            <tilt>0</tilt>
-            <range>0</range>
-            <gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
-        </LookAt>
-    </Polygon>
-</Placemark>
-
-<!-- Punto de área -->
-<Placemark>
-    <name>Área requerida: <?php echo $predio->area_requerida; ?> m2 </name>
-    <styleUrl>#msn_placemark_circle0</styleUrl>
-    <Point>
-        <coordinates><?php echo $area["x"].",".$area["y"].",0 "; ?></coordinates>
-    </Point>
-</Placemark>
-
-<!-- Vertices -->
-<Folder>
-    <name>Vértices</name>
-    <visibility>0</visibility>
-<?php foreach ($coordenadas as $punto): ?>
-    <Placemark>
-    <visibility>0</visibility>
-    <name><?php echo $punto["punto"]; ?></name>
-    <styleUrl>#msn_placemark_circle</styleUrl>
-    <Point>
-        <coordinates><?php echo $punto["x"].",".$punto["y"].","."0 "; ?></coordinates>
-    </Point>
-    </Placemark>
+                <Polygon>
+                    <outerBoundaryIs>
+                        <LinearRing>
+                            <coordinates>
+                                <?php
+                                $cont = 1;
+                                $max = count($predioArray[1]);
+                                foreach ($predioArray[1] as $punto){
+                                    echo $punto["x"].",".$punto["y"].",0 ";
+                                    if($cont == $max) {echo $predioArray[1][0]['x'].",".$predioArray[1][0]['y'].",0 ";}
+                                    $cont++;
+                                }?>
+                            </coordinates>
+                        </LinearRing>
+                    </outerBoundaryIs>
+                </Polygon>
+            </Placemark>
+        </Folder> <!-- Fin carpeta predio -->
+        <?php endforeach; ?>
+    </Folder> <!-- Fin carpata Unidad funcional  -->
 <?php endforeach; ?>
-</Folder>
+
 </Document>
 </kml>
 
 <?php
 header('Cache-Control: max-age=0');
 header('Content-Type: text/xml');
-header("Content-Disposition: attachment; filename="."{$ficha}.kml");
+header("Content-Disposition: attachment; filename=".$nombre_archivo.".kml");
   ?>

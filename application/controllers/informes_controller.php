@@ -447,11 +447,69 @@ class Informes_controller extends CI_Controller
 	}
 
 	function ficha_social_usr(){
-		$this->load->model(array('Gestion_socialDAO'));
-
-		$this->data["id"] = $this->uri->segment(3);
+		$this->load->model(array('Gestion_socialDAO', 'accionesDAO'));
+		$id = $this->uri->segment(3);
+		$this->data["id"] = $id;
 		$this->data['unidad_residente'] = $this->Gestion_socialDAO->cargar_unidad_social_residente($this->data["id"]);
+		$ficha = $this->data['unidad_residente']->ficha_predial;
+		$this->data['archivos'] = $this->accionesDAO->consultar_archivo($ficha, 3, 1, $id);
 		$this->load->view('informes/fichas_sociales/ficha_social_usr', $this->data);
+	}
+
+    function ficha_social_usp() {
+        $this->load->model(array('Gestion_socialDAO', 'InformesDAO', 'accionesDAO'));
+		$id = $this->uri->segment(3);
+		$this->data["id"] = $id;
+        $this->data['unidad_productiva'] = $this->Gestion_socialDAO->cargar_unidad_social_productiva($this->data["id"]);
+		$ficha = $this->data["unidad_productiva"]->ficha_predial;
+        $this->data['relacion_inmueble'] = $this->Gestion_socialDAO->cargar_valor_ficha($this->data["unidad_productiva"]->relacion_inmueble);
+        $this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($ficha);
+		$this->data['valores_fichas'] = $this->Gestion_socialDAO->cargar_valores_ficha_social($ficha, $id);
+		$this->data['archivos'] = $this->accionesDAO->consultar_archivo($ficha, 4, 1, $id);
+        $this->load->view('informes/fichas_sociales/ficha_social_usp', $this->data);
+    }
+
+	function ficha_social_registro_fotos() {
+		$this->load->model(array('accionesDAO', 'InformesDAO', 'Gestion_socialDAO'));
+		$ficha = $this->uri->segment(3);
+		$tipo = $this->uri->segment(4);
+		$id = $this->uri->segment(5);
+
+		if ($tipo == 3) {
+			$usr = $this->Gestion_socialDAO->cargar_unidad_social_residente($id);
+			$this->data['relacion_inmueble'] = $usr->relacion_inmueble;
+		} else if($tipo == 4) {
+			$usp = $this->Gestion_socialDAO->cargar_unidad_social_productiva($id);
+			$this->data['relacion_inmueble'] = $this->Gestion_socialDAO->cargar_valor_ficha($usp->relacion_inmueble);
+		}
+
+		$this->data['directorio'] = $this->ruta_archivos.$ficha.'/'.$this->nombre_carpeta_fotos;
+		$this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($ficha);
+		$this->data['fotos'] = $this->accionesDAO->consultar_archivo($ficha, $tipo, 2, $id);
+		$this->data['tipo'] = $tipo;
+		$this->load->view('informes/fichas_sociales/ficha_social_fotos', $this->data);
+	}
+
+	function diagnostico_socioeconomico() {
+		$this->load->model(array('InformesDAO', 'Gestion_socialDAO'));
+		$ficha = $this->uri->segment(3);
+		$tipo = $this->uri->segment(4);
+		$id = $this->uri->segment(5);
+		$this->data['diagnostico'] = $this->Gestion_socialDAO->cargar_diagnostico($ficha);
+
+		if ($tipo == 3) {
+			$usr = $this->Gestion_socialDAO->cargar_unidad_social_residente($id);
+			$this->data['relacion_inmueble'] = $usr->relacion_inmueble;
+			$this->data['diagnostico'] = $this->Gestion_socialDAO->cargar_diagnostico($ficha, 'id_usr', $id);
+		} else if($tipo == 4) {
+			$usp = $this->Gestion_socialDAO->cargar_unidad_social_productiva($id);
+			$this->data['relacion_inmueble'] = $this->Gestion_socialDAO->cargar_valor_ficha($usp->relacion_inmueble);
+			$this->data['diagnostico'] = $this->Gestion_socialDAO->cargar_diagnostico($ficha, 'id_usp', $id);
+		}
+
+		$this->data['predio'] = $this->InformesDAO->obtener_informe_gestion_predial_ani($ficha);
+		$this->data['tipo'] = $tipo;
+		$this->load->view('informes/fichas_sociales/diagnostico_socioeconomico', $this->data);
 	}
 
 	function gestion_predial_fotos(){
@@ -490,6 +548,14 @@ class Informes_controller extends CI_Controller
 
 	function caracterizacion_general(){
 		$this->load->view('informes/ficha_social/caracterizacion_general_excel');
+	}
+
+	function mapas(){
+		$this->load->model('PrediosDAO');
+		$this->data['unidades_funcionales'] = $this->PrediosDAO->obtener_unidades_funcionales();
+		$this->data['contenido_principal'] = 'informes/mapas/mapas_view';
+		$this->data['titulo_pagina'] = "Generación de mapas";
+		$this->load->view('includes/template', $this->data);
 	}
 }
 

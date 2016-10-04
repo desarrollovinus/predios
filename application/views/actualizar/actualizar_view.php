@@ -1,5 +1,64 @@
 <script src="<?php echo base_url(); ?>js/ajaxupload.2.0.min.js"></script>
-<?php $permisos = $this->session->userdata('permisos'); ?>
+<link rel="stylesheet" href="<?php echo base_url(); ?>css/demo_table_jui.css" type="text/css" />
+
+<?php
+$permisos = $this->session->userdata('permisos');
+
+// Arreglos de listas desplegables
+$topografia = array(
+	' ' => ' ',
+	'ESCARPADA' => 'ESCARPADA',
+	'FUERTEMENTE PENDIENTE' => 'FUERTEMENTE PENDIENTE',
+	'FUERTEMENTE QUEBRADA' => 'FUERTEMENTE QUEBRADA',
+	'MIXTA' => 'MIXTA',
+	'ONDULADO' => 'ONDULADO',
+	'PENDIENTE' => 'PENDIENTE',
+	'PLANO' => 'PLANO',
+	'QUEBRADA' => 'QUEBRADA'
+);
+
+$vias_acceso = array(
+	' ' => ' ',
+	'CAMINO' => 'CAMINO',
+	'CARRETEABLE' => 'CARRETEABLE',
+	'VEHICULAR' => 'VEHICULAR',
+	'VIA PRINCIPAL' => 'VÍA PRINCIPAL',
+	'TRADICION' => 'TRADICIÓN'
+);
+
+$tipo_tenencia = array(
+	' ' => ' ',
+	'MEJORATARIO' => 'MEJORATARIO',
+	'POSESION' => 'POSESION',
+	'RURAL' => 'RURAL',
+	'TRADICIONAL' => 'TRADICIONAL'
+);
+
+$uso_terreno = array(
+	' ' => ' ',
+	'INSTITUCIONAL' => 'INSTITUCIONAL',
+	'RURAL' => 'RURAL',
+	'URBANO' => 'URBANO'
+);
+
+$uso_edificacion = array(
+	' ' => ' ',
+	'AGROPECUARIO' => 'AGROPECUARIO',
+	'BIEN DE DOMINIO PUBLICO' => 'BIEN DE DOMINIO PUBLICO',
+	'CULTURAL' => 'CULTURAL',
+	'EDUCATIVO' => 'EDUCATIVO',
+	'HABITACIONAL' => 'HABITACIONAL',
+	'LOTE NO URBANIZABLE' => 'LOTE NO URBANIZABLE',
+	'LOTE RURAL' => 'LOTE RURAL',
+	'LOTE URBANIZADO NO CONSTRUIDO' => 'LOTE URBANIZADO NO CONSTRUIDO',
+	'PARCELA HABITACIONAL' => 'PARCELA HABITACIONAL',
+	'PARCELA RECREACIONAL' => 'PARCELA RECREACIONAL',
+	'PECUARIO' => 'PECUARIO '
+);
+
+?>
+
+
 <ul id="navigation">
 	<?php if(isset($permisos['Bit&aacute;cora']['Consultar'])) { ?><li><a href='#' rel="bitacora" title="Bit&aacute;cora"><img src="<?php echo base_url('img/bitacora.png'); ?>"></a></li><?php } ?>
 	<?php if(isset($permisos['Archivos y Fotos']['Consultar'])) { ?><li><a href='#' rel="archivos" title="Ver Archivos"><img src="<?php echo base_url('img/archivos.png'); ?>"></a></li><?php } ?>
@@ -186,22 +245,22 @@
 			<table style="text-align:'left'">
 				<tbody>
 					<tr>
-						<td width="20%"><?php echo form_label('Uso Edificaci&oacute;n','uso_edificacion'); ?></td>
-						<td width="30%"><?php echo form_input('uso_edificacion', utf8_decode($descripcion->uso_edificacion));?></td>
-						<td width="20%"><?php echo form_label('Estado','estado'); ?></td>
-						<td width="30%"><?php echo form_input('estado', utf8_decode($descripcion->estado_pre)) ;?></td>
+						<td width="20%"><?= form_label('Uso Edificaci&oacute;n','uso_edificacion'); ?></td>
+						<td width="30%"><?= form_dropdown('uso_edificacion', $uso_edificacion, utf8_decode($descripcion->uso_edificacion));?></td>
+						<td width="20%"><?= form_label('Estado','estado'); ?></td>
+						<td width="30%"><?= form_dropdown('estado', array(' ' => ' ', 'ACTIVO' => 'ACTIVO','INACTIVO' => 'INACTIVO') ,utf8_decode($descripcion->estado_pre)) ;?></td>
 					</tr>
 					<tr>
-						<td width="20%"><?php echo form_label('Uso de Terreno','uso_terreno'); ?></td>
-						<td width="30%"><?php echo form_input('uso_terreno', utf8_decode($descripcion->uso_terreno));?></td>
-						<td width="20%"><?php echo form_label('Tipo de Tenencia','tipo_tenencia'); ?></td>
-						<td width="30%"><?php echo form_input('tipo_tenencia', utf8_decode($descripcion->tipo_tenencia)); ?></td>
+						<td width="20%"><?= form_label('Uso de Terreno','uso_terreno'); ?></td>
+						<td width="30%"><?= form_dropdown('uso_terreno',$uso_terreno, utf8_decode($descripcion->uso_terreno));?></td>
+						<td width="20%"><?= form_label('Tipo de Tenencia','tipo_tenencia'); ?></td>
+						<td width="30%"><?= form_dropdown('tipo_tenencia', $tipo_tenencia, utf8_decode($descripcion->tipo_tenencia)); ?></td>
 					</tr>
 					<tr>
-						<td width="20%"><?php echo form_label('Topografia','topografia'); ?></td>
-						<td width="30%"><?php echo form_input('topografia', utf8_decode($descripcion->topografia));?></td>
-						<td width="20%"><?php echo form_label('Via de Acceso','via_acceso'); ?></td>
-						<td width="30%"><?php echo form_input('via_acceso', utf8_decode($descripcion->via_acceso)); ?></td>
+						<td width="20%"><?= form_label('Topografia','topografia'); ?></td>
+						<td width="30%"><?= form_dropdown('topografia', $topografia, utf8_decode($descripcion->topografia));?></td>
+						<td width="20%"><?= form_label('Via de Acceso','via_acceso'); ?></td>
+						<td width="30%"><?= form_dropdown('via_acceso', $vias_acceso, utf8_decode($descripcion->via_acceso)); ?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?php echo form_label('Servicios P&uacute;blicos','servicios_publicos'); ?></td>
@@ -222,6 +281,8 @@
 						<td width="30%"><?php echo form_dropdown('margen_final', array(' ' => ' ', 'DERECHA' => 'DERECHA','IZQUIERDA' => 'IZQUIERDA'), utf8_decode($descripcion->margen_final)); ?></td>
 					</tr>
 					<tr>
+						<td width="20%"><?= form_label('Se requiere la longitud Efectiva','requiere_longitud_efectiva'); ?></td>
+						<td width="30%"><?= form_dropdown('requiere_longitud_efectiva', array(' ' => ' ', '1' => 'SI','0' => 'NO'), utf8_decode($descripcion->requiere_longitud_efectiva)); ?></td>
 						<td width="20%"><?php echo form_label('Estado del Proceso','estado_proceso'); ?></td>
 						<?php
 							$estado_proceso = array(' ' => ' ');
@@ -310,68 +371,6 @@
 				</tbody>
 			</table>
 			<?php echo form_fieldset_close(); ?>
-		</div>
-
-		<!-- seccion 3 -->
-		<h3><a href="#seccion3">PROPIETARIOS</a></h3>
-		<div>
-			<?php $id = 0;?>
-			<?php foreach ($propietarios as $propietario): ?>
-				<?php $id++; ?>
-				<?php echo form_fieldset("<b>Identificaci&oacute;n del propietario $id</b>", "id='$id'"); ?>
-					<table style="text-align:left">
-						<tbody>
-							<tr>
-								<td width="20%"><?php echo form_label('Tipo documento', "tipo_documento$id"); ?></td>
-								<td width="30%"><?php echo form_dropdown("tipo_documento$id", array(' ' => ' ', 'Cedula' => 'CC','Nit' => 'Nit'), utf8_decode($propietario->tipo_documento)); ?></td>
-								<td width="20%"><?php echo form_label('Propietario', "propietario$id"); ?></td>
-								<td width="30%"><?php echo form_input("propietario$id", utf8_decode($propietario->nombre), 'readonly'); ?></td>
-							</tr>
-							<tr>
-								<td width="20%"><?php echo form_label('Documento', "documento_propietario$id"); ?></td>
-								<td width="30%"><?php echo form_input("documento_propietario$id", utf8_decode($propietario->documento), 'readonly'); ?></td>
-								<td width="20%"><?php echo form_label('Tel&eacute;fono', "telefono$id"); ?></td>
-								<td width="30%"><?php echo form_input("telefono$id", utf8_decode($propietario->telefono), 'readonly'); ?></td>
-							</tr>
-							<tr>
-							<tr>
-								<td width="20%"><?php echo form_label('Dirección', "direccion_propietario$id"); ?></td>
-								<td width="30%"><?php echo form_input("direccion_propietario$id", utf8_decode($propietario->direccion)); ?></td>
-								<td width="20%"><?php echo form_label('Correo electrónico', "email_propietario$id"); ?></td>
-								<td width="30%"><?php echo form_input("email_propietario$id", utf8_decode($propietario->email)); ?></td>
-							</tr>
-							<tr>
-								<td width="20%"><?php echo form_label('Participaci&oacute;n', "participacion$id"); ?></td>
-								<td width="30%"><?php echo form_input("participacion$id", utf8_decode($propietario->participacion)); ?>%</td>
-								<td>
-									<?php
-										$boton_eliminar = array(
-											'type' => 'button',
-											'name' => "boton_eliminar$id",
-											'id' => "boton_eliminar$id",
-											'value' => 'Eliminar propietario'
-										);
-										echo form_input($boton_eliminar);
-									?>
-								</td>
-								<td><?php echo form_hidden("id_propietario$id", $propietario->id_propietario); ?></td>
-							</tr>
-						</tbody>
-					</table>
-				<?php echo form_fieldset_close(); ?>
-			<?php endforeach;?>
-			<input type="hidden" name="propietarios_hidden" id="propietarios_hidden" value="<?php echo $id; ?>" />
-			<?php echo form_label('No. de propietarios:', 'agregar')?>
-			<?php echo form_input('agregar'); ?>
-			<?php
-				$boton_agregar = array(
-					'type' => 'button',
-					'name' => 'boton_agregar',
-					'id' => 'boton_agregar',
-					'value' => 'Agregar'
-				);
-				echo form_input($boton_agregar);
-			?>
 		</div>
 
 		<!-- seccion 5 -->
@@ -627,74 +626,6 @@
 				</table>
 			<?php echo form_fieldset_close(); ?>
 
-			<!-- INVENTARIO DE CULTIVOS Y ESPECIES -->
-			<?php echo form_fieldset('<b>INVENTARIO DE CULTIVOS Y ESPECIES</b>'); ?>
-				<table style="text-align:left" width="100%">
-					<tbody>
-						<tr>
-							<td align="center"><b>DESCRIPCI&Oacute;N</b></td>
-							<td align="center"><b>CANT.</b></td>
-							<td align="center"><b>DENS.</b></td>
-							<td align="center"><b>UN.</b></td>
-						</tr>
-						<!-- Se lista la información de los cultivos -->
-						<?php foreach ($this->PrediosDAO->obtener_cultivos($predio->ficha_predial) as $cultivo) { ?>
-							<tr>
-								<td><?php echo $cultivo->numero; ?>. <?php echo form_input('cultivo_descr'.$cultivo->numero, utf8_decode($cultivo->descripcion));?></td>
-								<td><?php echo form_input('cultivo_cant'.$cultivo->numero, utf8_decode($cultivo->cantidad));?></td>
-								<td><?php echo form_input('cultivo_dens'.$cultivo->numero, utf8_decode($cultivo->densidad));?></td>
-								<td><?php echo form_input('cultivo_un'.$cultivo->numero, utf8_decode($cultivo->unidad));?></td>
-							</tr>
-						<?php } ?>
-					</tbody>
-				</table>
-			<?php echo form_fieldset_close(); ?>
-
-			<!-- DESCRIPCIÓN DE LAS CONSTRUCCIONES -->
-			<?php echo form_fieldset('<b>DESCRIPCI&OacuteN DE LAS CONSTRUCCIONES</b>'); ?>
-				<table style="text-align:left" width="100%">
-					<tbody>
-						<tr>
-							<td align="center"><b>&Iacute;TEM.</b></td>
-							<td align="center"><b>DESCRIPCI&Oacute;N</b></td>
-							<td align="center"><b>CANT.</b></td>
-							<td align="center"><b>UN.</b></td>
-						</tr>
-						<!-- Se lista la información de las construcciones -->
-						<?php foreach ($this->PrediosDAO->obtener_construcciones($predio->ficha_predial, '1') as $construccion) { ?>
-							<tr>
-								<td><?php echo $construccion->numero; ?>. <?php //echo form_input('const_item'.$construccion->numero, utf8_decode($construccion->item));?></td>
-								<td><?php echo form_input('const_desc'.$construccion->numero, utf8_decode($construccion->descripcion));?></td>
-								<td><?php echo form_input('const_cant'.$construccion->numero, utf8_decode($construccion->cantidad));?></td>
-								<td><?php echo form_input('const_un'.$construccion->numero, utf8_decode($construccion->unidad));?></td>
-							</tr>
-						<?php } ?>
-					</tbody>
-				</table>
-			<?php echo form_fieldset_close(); ?>
-
-			<!-- DESCRIPCIÓN DE LAS CONSTRUCCIONES ANEXAS -->
-			<?php echo form_fieldset('<b>DESCRIPCI&Oacute;N DE LAS CONSTRUCCIONES ANEXAS</b>'); ?>
-				<table style="text-align:left" width="100%">
-					<tbody>
-						<tr>
-							<td align="center"><b>&Iacute;TEM.</b></td>
-							<td align="center"><b>DESCRIPCI&Oacute;N</b></td>
-							<td align="center"><b>CANT.</b></td>
-							<td align="center"><b>UN.</b></td>
-						</tr>
-						<!-- Se lista la información de las construcciones anexas -->
-						<?php foreach ($this->PrediosDAO->obtener_construcciones($predio->ficha_predial, '2') as $construccion) { ?>
-							<tr>
-								<td><?php echo $construccion->numero; ?>. <?php //echo form_input('const_an_item'.$construccion->numero, utf8_decode($construccion->item));?></td>
-								<td><?php echo form_input('const_an_desc'.$construccion->numero, utf8_decode($construccion->descripcion));?></td>
-								<td><?php echo form_input('const_an_cant'.$construccion->numero, utf8_decode($construccion->cantidad));?></td>
-								<td><?php echo form_input('const_an_un'.$construccion->numero, utf8_decode($construccion->unidad));?></td>
-							</tr>
-						<?php } ?>
-					</tbody>
-				</table>
-
 				<!-- CHECKS -->
 				<table style="text-align:left" width="100%">
 					<tr>
@@ -723,7 +654,6 @@
 						<td>De acuerdo al estudio de t&iacute;tulos, la franja que estipula el decreto 2770 debe adquirirse?</td>
 					</tr>
 				</table>
-			<?php echo form_fieldset_close(); ?>
 		</div>
 
 		<!-- seccion 8 -->
@@ -909,6 +839,7 @@
 	//este script se ejecuta una vez se haya cargado el documento completamente (cuando el documento este ready)
 	$(document).ready(function()
 	{
+		$( "#form input[type=submit], #form input[type=button]").button();
 		$("#vertices").load("<?php echo site_url('archivos_controller/cargar_vertices'); ?>", {"ficha_predial": $('#form input[name=ficha]').val()});
 		$('#navigation a').stop().animate({'marginLeft':'85px'},1000);
 
