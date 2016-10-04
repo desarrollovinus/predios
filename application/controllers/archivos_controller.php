@@ -143,7 +143,7 @@ class Archivos_controller extends CI_Controller
 		$archivo = $this->input->post('archivo');
 		$directorio = $this->input->post('directorio');
 		$archivo_viejo = $directorio.'/'.$archivo;
-		$extension = substr($archivo, -4);
+		$extension = substr($archivo, (strlen($archivo) - strrpos($archivo, '.', -1)) * - 1);
 		$archivo = substr($archivo, 0, strpos($archivo, $extension));
 
 		// si el archivo contiene la palabra superado

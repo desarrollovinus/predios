@@ -886,7 +886,7 @@ class PrediosDAO extends CI_Model
 
 			while(($file = readdir($directorio)) !== FALSE)
 			{
-				if($file != '.' && $file != '..' && $file != 'fotos')
+				if($file != '.' && $file != '..' && $file != 'fotos' && strpos($file, 'SUPERADO') == FALSE)
 				{
 					$archivos += 1;
 				}
