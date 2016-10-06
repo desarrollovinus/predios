@@ -93,21 +93,21 @@ $uso_edificacion = array(
 				<tbody>
 					<tr>
 						<td width="30%"><?php echo form_label('Env&iacute;o a interventor&iacute;a','f_envio_int'); ?></td>
-						<td width="20%"><?php echo form_input('f_envio_int', utf8_decode($identificacion->f_envio_int)); ?></td>
+						<td width="20%"><?= form_input('f_envio_int', $identificacion->f_envio_int); ?></td>
 						<td width="30%"><?php echo form_label('Radicado','rad_env_int'); ?></td>
-						<td width="20%"><?php echo form_input('rad_env_int', utf8_decode($identificacion->rad_env_int)); ?></td>
+						<td width="20%"><?= form_input('rad_env_int', $identificacion->rad_env_int); ?></td>
 					</tr>
 					<tr>
 						<td width="30%"><?php echo form_label('Aprobaci&oacute;n','f_aprob_ficha'); ?></td>
-						<td width="20%"><?php echo form_input('f_aprob_ficha', utf8_decode($identificacion->f_aprob_ficha)); ?></td>
+						<td width="20%"><?= form_input('f_aprob_ficha', $identificacion->f_aprob_ficha); ?></td>
 						<td width="30%"><?php echo form_label('Radicado','rad_aprob_ficha'); ?></td>
-						<td width="20%"><?php echo form_input('rad_aprob_ficha', utf8_decode($identificacion->rad_aprob_ficha)); ?></td>
+						<td width="20%"><?= form_input('rad_aprob_ficha', $identificacion->rad_aprob_ficha); ?></td>
 					</tr>
 					<tr>
 						<td width="30%"><?php echo form_label('En corrección','f_rev_ficha'); ?></td>
-						<td width="20%"><?php echo form_input('f_rev_ficha', utf8_decode($identificacion->f_rev_ficha)); ?></td>
+						<td width="20%"><?= form_input('f_rev_ficha', $identificacion->f_rev_ficha); ?></td>
 						<td width="30%"><?php echo form_label('Radicado devolución ficha','rad_rev_ficha'); ?></td>
-						<td width="20%"><?php echo form_input('rad_rev_ficha', utf8_decode($identificacion->rad_rev_ficha)); ?></td>
+						<td width="20%"><?= form_input('rad_rev_ficha', $identificacion->rad_rev_ficha); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -117,58 +117,58 @@ $uso_edificacion = array(
 			<table style="text-align:'left'">
 				<tr>
 					<td width="30%"><?php echo form_label('Aprobación','f_aprob_soc'); ?></td>
-					<td width="20%"><?php echo form_input('f_aprob_soc', utf8_decode($identificacion->f_aprob_soc)); ?></td>
+					<td width="20%"><?= form_input('f_aprob_soc', $identificacion->f_aprob_soc); ?></td>
 					<td width="30%"><?php echo form_label('Radicado','rad_aprob_soc'); ?></td>
-					<td width="20%"><?php echo form_input('rad_aprob_soc', utf8_decode($identificacion->rad_aprob_soc)); ?></td>
+					<td width="20%"><?= form_input('rad_aprob_soc', $identificacion->rad_aprob_soc); ?></td>
 				</tr>
 				<tr>
 					<td width="30%"><?php echo form_label('Aprobación estudio de títulos','f_aprob_tit'); ?></td>
-					<td width="20%"><?php echo form_input('f_aprob_tit', utf8_decode($identificacion->f_aprob_tit)); ?></td>
+					<td width="20%"><?= form_input('f_aprob_tit', $identificacion->f_aprob_tit); ?></td>
 					<td width="30%"><?php echo form_label('Radicado','rad_aprob_tit'); ?></td>
-					<td width="20%"><?php echo form_input('rad_aprob_tit', utf8_decode($identificacion->rad_aprob_tit)); ?></td>
+					<td width="20%"><?= form_input('rad_aprob_tit', $identificacion->rad_aprob_tit); ?></td>
 				</tr>
 				<tr>
 					<td width="20%"><?php echo form_label('inicio del proceso de avalúo','envio_avaluador'); ?></td>
-					<td width="30%"><?php echo form_input('envio_avaluador', utf8_decode($identificacion->f_envio_av)); ?></td>
+					<td width="30%"><?= form_input('envio_avaluador', $identificacion->f_envio_av); ?></td>
 					<td width="20%"><?php echo form_label('Radicado env&iacute;o avaluador','radicado_envio_avaluador'); ?></td>
-					<td width="30%"><?php echo form_input('radicado_envio_avaluador', utf8_decode($identificacion->r_envio_av)); ?></td>
+					<td width="30%"><?= form_input('radicado_envio_avaluador', $identificacion->r_envio_av); ?></td>
 				</tr>
 				<tr>
 					<td><?php echo form_label('Fecha del aval&uacute;o','f_recibo_av'); ?></td>
-					<td><?php echo form_input('f_recibo_av', utf8_decode($identificacion->f_recibo_av)); ?></td>
+					<td><?= form_input('f_recibo_av', $identificacion->f_recibo_av); ?></td>
 					<td width="20%"><?php echo form_label('Radicado aprobación','r_rec_av'); ?></td>
-					<td width="30%"><?php echo form_input('r_rec_av', utf8_decode($identificacion->r_rec_av)); ?></td>
+					<td width="30%"><?= form_input('r_rec_av', $identificacion->r_rec_av); ?></td>
 				</tr>
 				<tr>
 					<td><?php echo form_label('Fecha de la oferta de compra','f_oferta_c'); ?></td>
-					<td><?php echo form_input('f_oferta_c', utf8_decode($identificacion->f_oferta_c)); ?></td>
+					<td><?= form_input('f_oferta_c', $identificacion->f_oferta_c); ?></td>
 					<td width="20%"><?php echo form_label('Radicado env&iacute;o avaluador','r_oferta_c'); ?></td>
-					<td width="30%"><?php echo form_input('r_oferta_c', utf8_decode($identificacion->r_oferta_c)); ?></td>
+					<td width="30%"><?= form_input('r_oferta_c', $identificacion->r_oferta_c); ?></td>
 				</tr>
 				<tr>
 					<td width="20%"><?php echo form_label('Oferta de compra notificada','f_oferta_notif'); ?></td>
-					<td width="30%"><?php echo form_input('f_oferta_notif', utf8_decode($identificacion->f_oferta_notif)); ?></td>
+					<td width="30%"><?= form_input('f_oferta_notif', $identificacion->f_oferta_notif); ?></td>
 					<td width="20%"><?php echo form_label('Radicado','rad_of_notif'); ?></td>
-					<td width="30%"><?php echo form_input('rad_of_notif', utf8_decode($identificacion->rad_of_notif)); ?></td>
+					<td width="30%"><?= form_input('rad_of_notif', $identificacion->rad_of_notif); ?></td>
 				</tr>
 				<tr>
 					<td width="20%"><?php echo form_label('Oferta de compra aceptada','f_oferta_ac'); ?></td>
-					<td width="30%"><?php echo form_input('f_oferta_ac', utf8_decode($identificacion->f_oferta_ac)); ?></td>
+					<td width="30%"><?= form_input('f_oferta_ac', $identificacion->f_oferta_ac); ?></td>
 					<td width="20%"><?php echo form_label('Radicado','rad_of_ac'); ?></td>
-					<td width="30%"><?php echo form_input('rad_of_ac', utf8_decode($identificacion->rad_of_ac)); ?></td>
+					<td width="30%"><?= form_input('rad_of_ac', $identificacion->rad_of_ac); ?></td>
 				</tr>
 
 				<tr>
 					<td width="20%"><?php echo form_label('Permiso de intervención','f_permiso_int'); ?></td>
-					<td width="30%"><?php echo form_input('f_permiso_int', utf8_decode($identificacion->f_permiso_int)); ?></td>
+					<td width="30%"><?= form_input('f_permiso_int', $identificacion->f_permiso_int); ?></td>
 					<td width="20%"><?php echo form_label('Radicado','rad_permiso_int'); ?></td>
-					<td width="30%"><?php echo form_input('rad_permiso_int', utf8_decode($identificacion->rad_permiso_int)); ?></td>
+					<td width="30%"><?= form_input('rad_permiso_int', $identificacion->rad_permiso_int); ?></td>
 				</tr>
 				<tr>
 					<td width="20%"><?php echo form_label('Firma de promesa','f_firma_prom'); ?></td>
-					<td width="30%"><?php echo form_input('f_firma_prom', utf8_decode($identificacion->f_firma_prom)); ?></td>
+					<td width="30%"><?= form_input('f_firma_prom', $identificacion->f_firma_prom); ?></td>
 					<td width="20%"><?php echo form_label('Radicado','rad_firma_prom'); ?></td>
-					<td width="30%"><?php echo form_input('rad_firma_prom', utf8_decode($identificacion->rad_firma_prom)); ?></td>
+					<td width="30%"><?= form_input('rad_firma_prom', $identificacion->rad_firma_prom); ?></td>
 				</tr>
 			</table>
 			<?php echo form_fieldset_close(); ?>
@@ -207,15 +207,15 @@ $uso_edificacion = array(
 				<tbody>
 					<tr>
 						<td width="20%"><?php echo form_label('Plano','area_total'); ?></td>
-						<td width="30%"><?php echo form_input('area_total', utf8_decode($descripcion->area_total)); ?>m&sup2;</td>
+						<td width="30%"><?= form_input('area_total', $descripcion->area_total); ?>m&sup2;</td>
 						<td width="20%"><?php echo form_label('Catastral','area_total_catastral'); ?></td>
-						<td width="30%"><?php echo form_input('area_total_catastral', utf8_decode($descripcion->area_total_catastral)); ?>m&sup2;</td>
+						<td width="30%"><?= form_input('area_total_catastral', $descripcion->area_total_catastral); ?>m&sup2;</td>
 					</tr>
 					<tr>
 						<td width="20%"><?php echo form_label('Registral','area_total_registral'); ?></td>
-						<td width="30%"><?php echo form_input('area_total_registral', utf8_decode($descripcion->area_total_registral)); ?>m&sup2;</td>
+						<td width="30%"><?= form_input('area_total_registral', $descripcion->area_total_registral); ?>m&sup2;</td>
 						<td width="20%"><?php echo form_label('Títulos','area_total_titulos'); ?></td>
-						<td width="30%"><?php echo form_input('area_total_titulos', utf8_decode($descripcion->area_total_titulos)); ?>m&sup2;</td>
+						<td width="30%"><?= form_input('area_total_titulos', $descripcion->area_total_titulos); ?>m&sup2;</td>
 					</tr>
 				</tbody>
 			</table>
@@ -226,16 +226,16 @@ $uso_edificacion = array(
 				<tbody>
 					<tr>
 						<td width="20%"><?php echo form_label('Requerida','area_requerida'); ?></td>
-						<td width="30%"><?php echo form_input('area_requerida', utf8_decode($descripcion->area_requerida)); ?>m&sup2;</td>
+						<td width="30%"><?= form_input('area_requerida', $descripcion->area_requerida); ?>m&sup2;</td>
 						<td width="20%"><?php echo form_label('Remanente','area_residual'); ?></td>
-						<td width="30%"><?php echo form_input('area_residual', utf8_decode($descripcion->area_residual)); ?>m&sup2;</td>
+						<td width="30%"><?= form_input('area_residual', $descripcion->area_residual); ?>m&sup2;</td>
 					</tr>
 
 					<tr>
 						<td width="20%"><?php echo form_label('construida','area_construida'); ?></td>
-						<td width="30%"><?php echo form_input('area_construida', utf8_decode($descripcion->area_construida)); ?>m&sup2;</td>
+						<td width="30%"><?= form_input('area_construida', $descripcion->area_construida); ?>m&sup2;</td>
 						<td width="20%"><?php echo form_label('construida anexos','area_const_requerida'); ?></td>
-						<td width="30%"><?php echo form_input('area_const_requerida', utf8_decode($descripcion->area_cons_requerida)); ?>m&sup2;</td>
+						<td width="30%"><?= form_input('area_const_requerida', $descripcion->area_cons_requerida); ?>m&sup2;</td>
 					</tr>
 				</tbody>
 			</table>
@@ -246,43 +246,43 @@ $uso_edificacion = array(
 				<tbody>
 					<tr>
 						<td width="20%"><?= form_label('Uso Edificaci&oacute;n','uso_edificacion'); ?></td>
-						<td width="30%"><?= form_dropdown('uso_edificacion', $uso_edificacion, utf8_decode($descripcion->uso_edificacion));?></td>
+						<td width="30%"><?= form_dropdown('uso_edificacion', $uso_edificacion, $descripcion->uso_edificacion);?></td>
 						<td width="20%"><?= form_label('Estado','estado'); ?></td>
-						<td width="30%"><?= form_dropdown('estado', array(' ' => ' ', 'ACTIVO' => 'ACTIVO','INACTIVO' => 'INACTIVO') ,utf8_decode($descripcion->estado_pre)) ;?></td>
+						<td width="30%"><?= form_dropdown('estado', array(' ' => ' ', 'ACTIVO' => 'ACTIVO','INACTIVO' => 'INACTIVO'), $descripcion->estado_pre) ;?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?= form_label('Uso de Terreno','uso_terreno'); ?></td>
-						<td width="30%"><?= form_dropdown('uso_terreno',$uso_terreno, utf8_decode($descripcion->uso_terreno));?></td>
+						<td width="30%"><?= form_dropdown('uso_terreno',$uso_terreno, $descripcion->uso_terreno);?></td>
 						<td width="20%"><?= form_label('Tipo de Tenencia','tipo_tenencia'); ?></td>
-						<td width="30%"><?= form_dropdown('tipo_tenencia', $tipo_tenencia, utf8_decode($descripcion->tipo_tenencia)); ?></td>
+						<td width="30%"><?= form_dropdown('tipo_tenencia', $tipo_tenencia, $descripcion->tipo_tenencia); ?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?= form_label('Topografia','topografia'); ?></td>
-						<td width="30%"><?= form_dropdown('topografia', $topografia, utf8_decode($descripcion->topografia));?></td>
+						<td width="30%"><?= form_dropdown('topografia', $topografia, $descripcion->topografia);?></td>
 						<td width="20%"><?= form_label('Via de Acceso','via_acceso'); ?></td>
-						<td width="30%"><?= form_dropdown('via_acceso', $vias_acceso, utf8_decode($descripcion->via_acceso)); ?></td>
+						<td width="30%"><?= form_dropdown('via_acceso', $vias_acceso, $descripcion->via_acceso); ?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?php echo form_label('Servicios P&uacute;blicos','servicios_publicos'); ?></td>
-						<td width="30%"><?php echo form_dropdown('servicios_publicos', array(' ' => ' ', 'Si' => 'S&iacute;','No' => 'No'), utf8_decode($descripcion->serv_publicos)); ?></td>
+						<td width="30%"><?= form_dropdown('servicios_publicos', array(' ' => ' ', 'Si' => 'S&iacute;','No' => 'No'), $descripcion->serv_publicos); ?></td>
 						<td width="20%"><?php echo form_label('Nacimiento de Agua','nacimiento_agua'); ?></td>
-						<td width="30%"><?php echo form_dropdown('nacimiento_agua', array(' ' => ' ', 'Si' => 'S&iacute;','No' => 'No'), utf8_decode($descripcion->nacimiento_agua)); ?></td>
+						<td width="30%"><?= form_dropdown('nacimiento_agua', array(' ' => ' ', 'Si' => 'S&iacute;','No' => 'No'), $descripcion->nacimiento_agua); ?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?php echo form_label('Abscisa inicial','abscisa_inicial'); ?></td>
-						<td width="30%"><?php echo form_input('abscisa_inicial', utf8_decode($descripcion->abscisa_inicial)); ?></td>
+						<td width="30%"><?= form_input('abscisa_inicial', $descripcion->abscisa_inicial); ?></td>
 						<td width="20%"><?php echo form_label('Margen','margen_inicial'); ?></td>
-						<td width="30%"><?php echo form_dropdown('margen_inicial', array(' ' => ' ', 'DERECHA' => 'DERECHA','IZQUIERDA' => 'IZQUIERDA'), utf8_decode($descripcion->margen_inicial)); ?></td>
+						<td width="30%"><?= form_dropdown('margen_inicial', array(' ' => ' ', 'DERECHA' => 'DERECHA','IZQUIERDA' => 'IZQUIERDA'), $descripcion->margen_inicial); ?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?php echo form_label('Abscisa Final','abscisa_final'); ?></td>
-						<td width="30%"><?php echo form_input('abscisa_final', utf8_decode($descripcion->abscisa_final)); ?></td>
+						<td width="30%"><?= form_input('abscisa_final', $descripcion->abscisa_final); ?></td>
 						<td width="20%"><?php echo form_label('Margen','margen_final'); ?></td>
-						<td width="30%"><?php echo form_dropdown('margen_final', array(' ' => ' ', 'DERECHA' => 'DERECHA','IZQUIERDA' => 'IZQUIERDA'), utf8_decode($descripcion->margen_final)); ?></td>
+						<td width="30%"><?= form_dropdown('margen_final', array(' ' => ' ', 'DERECHA' => 'DERECHA','IZQUIERDA' => 'IZQUIERDA'), $descripcion->margen_final); ?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?= form_label('Se requiere la longitud Efectiva','requiere_longitud_efectiva'); ?></td>
-						<td width="30%"><?= form_dropdown('requiere_longitud_efectiva', array(' ' => ' ', '1' => 'SI','0' => 'NO'), utf8_decode($descripcion->requiere_longitud_efectiva)); ?></td>
+						<td width="30%"><?= form_dropdown('requiere_longitud_efectiva', array(' ' => ' ', '1' => 'SI','0' => 'NO'), $descripcion->requiere_longitud_efectiva); ?></td>
 						<td width="20%"><?php echo form_label('Estado del Proceso','estado_proceso'); ?></td>
 						<?php
 							$estado_proceso = array(' ' => ' ');
@@ -290,17 +290,17 @@ $uso_edificacion = array(
 								$estado_proceso[$estado->estado] = $estado->estado;
 							endforeach;
 						?>
-						<td width="30%"><?php echo form_dropdown('estado_proceso', $estado_proceso, utf8_decode($identificacion->estado_pro)); ?></td>
+						<td width="30%"><?php echo form_dropdown('estado_proceso', $estado_proceso, ($identificacion->estado_pro)); ?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?php echo form_label('Entregado','entregado'); ?></td>
-						<td width="30%"><?php echo form_dropdown('entregado', array(' ' => ' ', 'SI' => 'S&iacute;','NO' => 'No'), utf8_decode($identificacion->entregado)); ?></td>
+						<td width="30%"><?= form_dropdown('entregado', array(' ' => ' ', 'SI' => 'S&iacute;','NO' => 'No'), ($identificacion->entregado)); ?></td>
 						<td width="20%"><?php echo form_label('Fecha Entregado','fecha_entregado'); ?></td>
-						<td width="30%"><?php echo form_input('fecha_entregado', utf8_decode($identificacion->f_entregado)); ?></td>
+						<td width="30%"><?= form_input('fecha_entregado', ($identificacion->f_entregado)); ?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?php echo form_label('Radicado','radicado'); ?></td>
-						<td width="30%"><?php echo form_input('radicado', utf8_decode($identificacion->rad_ent)); ?></td>
+						<td width="30%"><?= form_input('radicado', $identificacion->rad_ent); ?></td>
 						<td width="20%"><?php echo form_label('Requerido','requerido'); ?></td>
 						<td width="30%"><?php echo form_dropdown('requerido', array(1 => 'S&iacute;', 0 => 'No'), $predio->requerido); ?></td>
 					</tr>
@@ -308,7 +308,7 @@ $uso_edificacion = array(
 			</table>
 			<div align="center">
 				<?php echo form_label('Observaci&oacute;n','observacion')?><br>
-				<?php echo form_textarea('observacion', utf8_decode($descripcion->observacion));?>
+				<?= form_textarea('observacion', $descripcion->observacion);?>
 			</div>
 			<?php echo form_fieldset_close(); ?>
 		</div>
@@ -323,13 +323,13 @@ $uso_edificacion = array(
 				<tbody>
 					<tr>
 						<td width="20%"><?php echo form_label('Municipio','municipio'); ?></td>
-						<td width="30%"><?php echo form_input('municipio', utf8_decode($identificacion->municipio)); ?></td>
+						<td width="30%"><?= form_input('municipio', $identificacion->municipio); ?></td>
 						<td width="20%"><?php echo form_label('Vereda o Barrio','vereda_barrio'); ?></td>
-						<td width="30%"><?php echo form_input('vereda_barrio', utf8_decode($identificacion->barrio)); ?></td>
+						<td width="30%"><?= form_input('vereda_barrio', $identificacion->barrio); ?></td>
 					</tr>
 					<tr>
 						<td width="30%"><?php echo form_label('Direcci&oacute;n / Nombre','direccion_nombre'); ?></td>
-						<td width="20%"><?php echo form_input('direccion_nombre', utf8_decode($identificacion->direccion)); ?></td>
+						<td width="20%"><?= form_input('direccion_nombre', $identificacion->direccion); ?></td>
 						<td width="30%"><?php echo form_label('Tramo','tramo'); ?></td>
 						<?php
 							$_tramos = array(' ' => ' ');
@@ -337,7 +337,7 @@ $uso_edificacion = array(
 								$_tramos[$tramo->tramo] = $tramo->tramo;
 							endforeach;
 						?>
-						<td width="20%"><?php echo form_dropdown('tramo', $_tramos, utf8_decode($descripcion->tramo)); ?></td>
+						<td width="20%"><?= form_dropdown('tramo', $_tramos, $descripcion->tramo); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -348,25 +348,25 @@ $uso_edificacion = array(
 				<tbody>
 					<tr>
 						<td width="20%"><?php echo form_label('N&uacute;mero de matr&iacute;cula','numero_matricula_predio_inicial'); ?></td>
-						<td width="30%"><?php echo form_input('numero_matricula_predio_inicial', utf8_decode($identificacion->matricula_orig)); ?></td>
+						<td width="30%"><?= form_input('numero_matricula_predio_inicial', $identificacion->matricula_orig); ?></td>
 						<td width="20%"><?php echo form_label('Fecha','fecha_predio_inicial'); ?></td>
-						<td width="30%"><?php echo form_input('fecha_predio_inicial', utf8_decode($identificacion->fecha_escritura)); ?></td>
+						<td width="30%"><?= form_input('fecha_predio_inicial', $identificacion->fecha_escritura); ?></td>
 					</tr>
 					<tr>
 						<td><?php echo form_label('Oficina registro','oficina_registro_predio_inicial'); ?></td>
-						<td><?php echo form_input('oficina_registro_predio_inicial', utf8_decode($identificacion->of_registro)); ?></td>
+						<td><?= form_input('oficina_registro_predio_inicial', $identificacion->of_registro); ?></td>
 						<td><?php echo form_label('N&uacute;mero de la notar&iacute;a','numero_notaria_predio_inicial'); ?></td>
-						<td><?php echo form_input('numero_notaria_predio_inicial', utf8_decode($identificacion->no_notaria)); ?></td>
+						<td><?= form_input('numero_notaria_predio_inicial', $identificacion->no_notaria); ?></td>
 					</tr>
 					<tr>
 						<td width="30%"><?php echo form_label('N&uacute;mero de escritura','numero_escritura'); ?></td>
-						<td width="20%"><?php echo form_input('numero_escritura', utf8_decode($identificacion->escritura_orig)); ?></td>
+						<td width="20%"><?= form_input('numero_escritura', $identificacion->escritura_orig); ?></td>
 						<td width="30%"><?php echo form_label('N&uacute;mero catastral','numero_catastral_predio_inicial'); ?></td>
-						<td width="20%"><?php echo form_input('numero_catastral_predio_inicial', utf8_decode($identificacion->no_catastral)); ?></td>
+						<td width="20%"><?= form_input('numero_catastral_predio_inicial', $identificacion->no_catastral); ?></td>
 					</tr>
 					<tr>
 						<td><?php echo form_label('Ciudad','ciudad_predio_inicial'); ?></td>
-						<td><?php echo form_input('ciudad_predio_inicial', utf8_decode($identificacion->ciudad)); ?></td>
+						<td><?= form_input('ciudad_predio_inicial', $identificacion->ciudad); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -387,35 +387,35 @@ $uso_edificacion = array(
 
 				<tr>
 					<td width="20%"><?php echo form_label('Fecha del estudio','fecha_estudio'); ?></td>
-					<td width="30%"><?php echo form_input('fecha_estudio', utf8_decode($identificacion->fecha_estudio)); ?></td>
+					<td width="30%"><?= form_input('fecha_estudio', $identificacion->fecha_estudio); ?></td>
 					<td width="20%"><?php echo form_label('T&iacute;tulo de adquisici&oacute;n','titulo_adquisicion'); ?></td>
-					<td width="30%"><?php echo form_dropdown('titulo_adquisicion', $_titulos_adq, utf8_decode($identificacion->titulo_adquisicion)); ?></td>
+					<td width="30%"><?= form_dropdown('titulo_adquisicion', $_titulos_adq, $identificacion->titulo_adquisicion); ?></td>
 				</tr>
 			</table>
 			<?php echo form_fieldset_close(); ?>
 			<?php echo form_fieldset('<b>T&iacute;tulos de adquisici&oacute;n</b>'); ?>
-			<div align="center"><?php echo form_textarea('titulos_adquisicion', utf8_decode($identificacion->titulos_adq)); ?></div>
+			<div align="center"><?= form_textarea('titulos_adquisicion', $identificacion->titulos_adq); ?></div>
 			<?php echo form_fieldset_close(); ?>
 			<?php echo form_fieldset('<b>Linderos seg&uacute;n t&iacute;tulo</b>'); ?>
-			<div align="center"><?php echo form_textarea('linderos_segun_titulo', utf8_decode($identificacion->lind_titulo)); ?></div>
+			<div align="center"><?= form_textarea('linderos_segun_titulo', $identificacion->lind_titulo); ?></div>
 			<?php echo form_fieldset_close(); ?>
 			<?php echo form_fieldset('<b>Linderos predio requerido</b>'); ?>
-			<div align="center"><?php echo form_textarea('linderos_predio_requerido', utf8_decode($linderos->linderos)); ?></div>
+			<div align="center"><?= form_textarea('linderos_predio_requerido', $linderos->linderos); ?></div>
 			<?php echo form_fieldset_close(); ?>
 			<?php echo form_fieldset('<b>Grav&aacute;menes - Limitaciones</b>'); ?>
-			<div align="center"><?php echo form_textarea('gravamenes_limitaciones', utf8_decode($identificacion->gravamenes)); ?></div>
+			<div align="center"><?= form_textarea('gravamenes_limitaciones', $identificacion->gravamenes); ?></div>
 			<?php echo form_fieldset_close(); ?>
 			<?php echo form_fieldset('<b>Documentos estudiados</b>'); ?>
-			<div align="center"><?php echo form_textarea('documentos_estudiados', utf8_decode($identificacion->doc_estud)); ?></div>
+			<div align="center"><?= form_textarea('documentos_estudiados', $identificacion->doc_estud); ?></div>
 			<?php echo form_fieldset_close(); ?>
 			<?php echo form_fieldset('<b>Observaciones estudio de t&iacute;tulos</b>'); ?>
-			<div align="center"><?php echo form_textarea('observaciones_estudio_titulos', utf8_decode($identificacion->ob_titu)); ?></div>
+			<div align="center"><?= form_textarea('observaciones_estudio_titulos', $identificacion->ob_titu); ?></div>
 			<?php echo form_fieldset_close(); ?>
 			<?php echo form_fieldset('<b>Concepto</b>'); ?>
-			<div align="center"><?php echo form_textarea('concepto', utf8_decode($identificacion->conc_titu)); ?></div>
+			<div align="center"><?= form_textarea('concepto', $identificacion->conc_titu); ?></div>
 			<?php echo form_fieldset_close(); ?>
 			<?php echo form_fieldset('<b>Segregaciones del inmueble</b>'); ?>
-			<div align="center"><?php echo form_textarea('segregaciones', utf8_decode($identificacion->segreg_titu)); ?></div>
+			<div align="center"><?= form_textarea('segregaciones', $identificacion->segreg_titu); ?></div>
 			<?php echo form_fieldset_close(); ?>
 		</div>
 
@@ -427,7 +427,7 @@ $uso_edificacion = array(
 				<tbody>
 					<tr>
 						<td width="30%"><?php echo form_label('Inicio del trabajo f&iacute;sico','inicio_trabajo_fisico'); ?></td>
-						<td width="20%"><?php echo form_input('inicio_trabajo_fisico', utf8_decode($identificacion->f_inicio_trab)); ?></td>
+						<td width="20%"><?= form_input('inicio_trabajo_fisico', $identificacion->f_inicio_trab); ?></td>
 						<?php
 							$_contratistas = array(' ' => ' ');
 							foreach($contratistas as $contratista):
@@ -435,25 +435,25 @@ $uso_edificacion = array(
 							endforeach;
 						?>
 						<td width="30%"><?php echo form_label('Encargado gesti&oacute;n predial','encargado_gestion_predial'); ?></td>
-						<td width="20%"><?php echo form_dropdown('encargado_gestion_predial',$_contratistas, utf8_decode($identificacion->enc_gestion)); ?></td>
+						<td width="20%"><?= form_dropdown('encargado_gestion_predial',$_contratistas, $identificacion->enc_gestion); ?></td>
 					</tr>
 					<tr>
 						<td><?php echo form_label('Entrega del plano a interventor&iacute;a','entrega_plano_interventoria'); ?></td>
-						<td><?php echo form_input('entrega_plano_interventoria', utf8_decode($identificacion->f_ent_plano_int)); ?></td>
+						<td><?= form_input('entrega_plano_interventoria', $identificacion->f_ent_plano_int); ?></td>
 						<td><?php echo form_label('Radicado entrega interventor&iacute;a','radicado_entrega_interventoria'); ?></td>
-						<td><?php echo form_input('radicado_entrega_interventoria', utf8_decode($identificacion->rad_int)); ?></td>
+						<td><?= form_input('radicado_entrega_interventoria', $identificacion->rad_int); ?></td>
 					</tr>
 					<tr>
 						<td><?php echo form_label('Aprobaci&oacute;n definitiva del plano','aprobacion_definitiva_plano'); ?></td>
-						<td><?php echo form_input('aprobacion_definitiva_plano', utf8_decode($identificacion->f_apro_def)); ?></td>
+						<td><?= form_input('aprobacion_definitiva_plano', $identificacion->f_apro_def); ?></td>
 						<td><?php echo form_label('Radicado aprobaci&oacute;n plano','radicado_aprobacion_plano'); ?></td>
-						<td><?php echo form_input('radicado_aprobacion_plano', utf8_decode($identificacion->rad_apro_pla)); ?></td>
+						<td><?= form_input('radicado_aprobacion_plano', $identificacion->rad_apro_pla); ?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?php echo form_label('Notificaci&oacute;n propietario','notificacion_propietario'); ?></td>
-						<td width="30%"><?php echo form_input('notificacion_propietario', utf8_decode($identificacion->f_notificacion_pro)); ?></td>
+						<td width="30%"><?= form_input('notificacion_propietario', $identificacion->f_notificacion_pro); ?></td>
 						<td width="20%"><?php echo form_label('Radicado notificaci&oacute;n propietario','radicado_notificacion_propietario'); ?></td>
-						<td width="30%"><?php echo form_input('radicado_notificacion_propietario', utf8_decode($identificacion->rad_no_pro)); ?></td>
+						<td width="30%"><?= form_input('radicado_notificacion_propietario', $identificacion->rad_no_pro); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -465,32 +465,21 @@ $uso_edificacion = array(
 				<tbody>
 					<tr>
 						<td width="30%"><?php echo form_label('Total aval&uacute;o','total_avaluo'); ?></td>
-						<td width="20%"><?php echo form_input('total_avaluo', utf8_decode($identificacion->total_avaluo)); ?></td>
+						<td width="20%"><?= form_input('total_avaluo', $identificacion->total_avaluo); ?></td>
 						<td width="30%"><?php echo form_label('Valor total de mejoras','valor_total_mejoras'); ?></td>
-						<td width="20%"><?php echo form_input('valor_total_mejoras', utf8_decode($identificacion->valor_total_mej)); ?></td>
+						<td width="20%"><?= form_input('valor_total_mejoras', $identificacion->valor_total_mej); ?></td>
 					</tr>
 					<tr>
 						<td><?php echo form_label('Valor metro cuadrado','valor_metro_cuadrado'); ?></td>
-						<td><?php echo form_input('valor_metro_cuadrado', utf8_decode($identificacion->valor_mtr)); ?></td>
+						<td><?= form_input('valor_metro_cuadrado', $identificacion->valor_mtr); ?></td>
 						<td><?php echo form_label('Valor total del terreno','valor_total_terreno'); ?></td>
-						<td><?php echo form_input('valor_total_terreno', utf8_decode($identificacion->valor_total_terr)); ?></td>
+						<td><?= form_input('valor_total_terreno', $identificacion->valor_total_terr); ?></td>
 					</tr>
 					<tr>
 
 					</tr>
 				</tbody>
 			</table>
-
-			<!DOCTYPE html>
-			<html lang="en">
-			<head>
-				<meta charset="UTF-8">
-				<title>Document</title>
-			</head>
-			<body>
-
-			</body>
-			</html>
 
 			<?php echo form_fieldset_close(); ?>
 			<div class="clear">&nbsp;</div>
@@ -499,13 +488,13 @@ $uso_edificacion = array(
 				<tbody>
 					<tr>
 						<td width="20%"><?php echo form_label('Env&iacute;o a la gerencia para firmar','envio_gerencia_firmar'); ?></td>
-						<td width="30%"><?php echo form_input('envio_gerencia_firmar', utf8_decode($identificacion->f_envio_ger)); ?></td>
+						<td width="30%"><?= form_input('envio_gerencia_firmar', $identificacion->f_envio_ger); ?></td>
 						<td width="20%"><?php echo form_label('Radicado env&iacute;o a gerencia','radicado_envio_gerencia'); ?></td>
-						<td width="30%"><?php echo form_input('radicado_envio_gerencia', utf8_decode($identificacion->rad_env_ger)); ?></td>
+						<td width="30%"><?= form_input('radicado_envio_gerencia', $identificacion->rad_env_ger); ?></td>
 					</tr>
 					<tr>
 						<td><?php echo form_label('Recibo para la notificaci&oacute;n al propietario','recibo_notificacion_propietario'); ?></td>
-						<td><?php echo form_input('recibo_notificacion_propietario', utf8_decode($identificacion->f_recibo_pro)); ?></td>
+						<td><?= form_input('recibo_notificacion_propietario', $identificacion->f_recibo_pro); ?></td>
 					</tr>
 			</table>
 			<?php echo form_fieldset_close(); ?>
@@ -515,13 +504,13 @@ $uso_edificacion = array(
 				<tbody>
 					<tr>
 						<td width="30%"><?php echo form_label('Env&iacute;o escritura a notar&iacute;a','envio_escritura_notaria'); ?></td>
-						<td width="20%"><?php echo form_input('envio_escritura_notaria', utf8_decode($identificacion->env_esc_not)); ?></td>
+						<td width="20%"><?= form_input('envio_escritura_notaria', $identificacion->env_esc_not); ?></td>
 						<td width="30%"><?php echo form_label('Ingreso escritura','ingreso_escritura'); ?></td>
-						<td width="20%"><?php echo form_input('ingreso_escritura', utf8_decode($identificacion->ing_esc)); ?></td>
+						<td width="20%"><?= form_input('ingreso_escritura', $identificacion->ing_esc); ?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?php echo form_label('Recibo de registro','recibo_registro_enajenacion'); ?></td>
-						<td width="30%"><?php echo form_input('recibo_registro_enajenacion', utf8_decode($identificacion->rec_reg_vol)); ?></td>
+						<td width="30%"><?= form_input('recibo_registro_enajenacion', $identificacion->rec_reg_vol); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -532,19 +521,19 @@ $uso_edificacion = array(
 				<tbody>
 					<tr>
 						<td width="30%"><?php echo form_label('Notificaci&oacute;n','notificacion'); ?></td>
-						<td width="20%"><?php echo form_input('notificacion', utf8_decode($identificacion->notif)); ?></td>
+						<td width="20%"><?= form_input('notificacion', $identificacion->notif); ?></td>
 						<td width="30%"><?php echo form_label('Inicio juicio','inicio_juicio'); ?></td>
-						<td width="20%"><?php echo form_input('inicio_juicio', utf8_decode($identificacion->ini_juic)); ?></td>
+						<td width="20%"><?= form_input('inicio_juicio', $identificacion->ini_juic); ?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?php echo form_label('Inicio Sentencia','inicio_sentencia'); ?></td>
-						<td width="30%"><?php echo form_input('inicio_sentencia', utf8_decode($identificacion->ini_sent)); ?></td>
+						<td width="30%"><?= form_input('inicio_sentencia', $identificacion->ini_sent); ?></td>
 						<td width="20%"><?php echo form_label('Ingreso sentencia registro','ingreso_sentencia_registro'); ?></td>
-						<td width="30%"><?php echo form_input('ingreso_sentencia_registro', utf8_decode($identificacion->ing_sent)); ?></td>
+						<td width="30%"><?= form_input('ingreso_sentencia_registro', $identificacion->ing_sent); ?></td>
 					</tr>
 					<tr>
 						<td><?php echo form_label('Recibo de registro','recibo_registro_expropiacion'); ?></td>
-						<td><?php echo form_input('recibo_registro_expropiacion', utf8_decode($identificacion->rec_reg_exp)); ?></td>
+						<td><?= form_input('recibo_registro_expropiacion', $identificacion->rec_reg_exp); ?></td>
 					</tr>
 			</table>
 			<?php echo form_fieldset_close(); ?>
@@ -554,25 +543,25 @@ $uso_edificacion = array(
 				<tbody>
 					<tr>
 						<td width="20%"><?php echo form_label('N&uacute;mero de la matr&iacute;cula','numero_matricula_predio_final'); ?></td>
-						<td width="30%"><?php echo form_input('numero_matricula_predio_final', utf8_decode($identificacion->num_matricula_f)); ?></td>
+						<td width="30%"><?= form_input('numero_matricula_predio_final', $identificacion->num_matricula_f); ?></td>
 						<td width="20%"><?php echo form_label('Fecha','fecha_predio_final'); ?></td>
-						<td width="30%"><?php echo form_input('fecha_predio_final', utf8_decode($identificacion->fecha_esc_f)); ?></td>
+						<td width="30%"><?= form_input('fecha_predio_final', $identificacion->fecha_esc_f); ?></td>
 					</tr>
 					<tr>
 						<td><?php echo form_label('Oficina registro','oficina_registro_predio_final'); ?></td>
-						<td><?php echo form_input('oficina_registro_predio_final', utf8_decode($identificacion->of_registro_f)); ?></td>
+						<td><?= form_input('oficina_registro_predio_final', $identificacion->of_registro_f); ?></td>
 						<td><?php echo form_label('N&uacute;mero de la notar&iacute;a','numero_notaria_predio_final'); ?></td>
-						<td><?php echo form_input('numero_notaria_predio_final', utf8_decode($identificacion->num_notaria_f)); ?></td>
+						<td><?= form_input('numero_notaria_predio_final', $identificacion->num_notaria_f); ?></td>
 					</tr>
 					<tr>
 						<td width="30%"><?php echo form_label('Escritura o sentencia','escritura_sentencia'); ?></td>
-						<td width="20%"><?php echo form_input('escritura_sentencia', utf8_decode($identificacion->num_escritura_f)); ?></td>
+						<td width="20%"><?= form_input('escritura_sentencia', $identificacion->num_escritura_f); ?></td>
 						<td width="30%"><?php echo form_label('N&uacute;mero catastral','numero_catastral_predio_final'); ?></td>
-						<td width="20%"><?php echo form_input('numero_catastral_predio_final', utf8_decode($identificacion->num_catastral_f)); ?></td>
+						<td width="20%"><?= form_input('numero_catastral_predio_final', $identificacion->num_catastral_f); ?></td>
 					</tr>
 					<tr>
 						<td><?php echo form_label('Ciudad','ciudad_predio_final'); ?></td>
-						<td><?php echo form_input('ciudad_predio_final', utf8_decode($identificacion->ciudad_f)); ?></td>
+						<td><?= form_input('ciudad_predio_final', $identificacion->ciudad_f); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -604,23 +593,23 @@ $uso_edificacion = array(
 						</tr>
 						<tr>
 							<td><?php echo form_label('NORTE','norte_long'); ?></td>
-							<td><?php echo form_input('norte_long', utf8_decode($linderos->norte_long));?></td>
-							<td><?php echo form_input('nom_norte', utf8_decode($linderos->nom_norte));?></td>
+							<td><?= form_input('norte_long', $linderos->norte_long);?></td>
+							<td><?= form_input('nom_norte', $linderos->nom_norte);?></td>
 						</tr>
 						<tr>
 							<td><?php echo form_label('SUR','sur_long'); ?></td>
-							<td><?php echo form_input('sur_long', utf8_decode($linderos->sur_long));?></td>
-							<td><?php echo form_input('nom_sur', utf8_decode($linderos->nom_sur));?></td>
+							<td><?= form_input('sur_long', $linderos->sur_long);?></td>
+							<td><?= form_input('nom_sur', $linderos->nom_sur);?></td>
 						</tr>
 						<tr>
 							<td><?php echo form_label('ORIENTE','oriente_long'); ?></td>
-							<td><?php echo form_input('oriente_long', utf8_decode($linderos->oriente_long));?></td>
-							<td><?php echo form_input('nom_oriente', utf8_decode($linderos->nom_oriente));?></td>
+							<td><?= form_input('oriente_long', $linderos->oriente_long);?></td>
+							<td><?= form_input('nom_oriente', $linderos->nom_oriente);?></td>
 						</tr>
 						<tr>
 							<td><?php echo form_label('OCCIDENTE','occidente_long'); ?></td>
-							<td><?php echo form_input('occidente_long', utf8_decode($linderos->occidente_long));?></td>
-							<td><?php echo form_input('nom_occ', utf8_decode($linderos->nom_occ));?></td>
+							<td><?= form_input('occidente_long', $linderos->occidente_long);?></td>
+							<td><?= form_input('nom_occ', $linderos->nom_occ);?></td>
 						</tr>
 					</tbody>
 				</table>
@@ -679,12 +668,12 @@ $uso_edificacion = array(
 							endforeach;
 						?>
 						<td width="20%"><?php echo form_label('Estado de la vía','estado_via', "style='width: 30%;'"); ?></td>
-						<td width="20%"><?php echo form_dropdown('estado_via',$_estados_via, $identificacion->id_estado_via, "style='width: 100%;'"); ?></td>
+						<td width="20%"><?= form_dropdown('estado_via',$_estados_via, $identificacion->id_estado_via, "style='width: 100%;'"); ?></td>
 					</tr>
 					<tr>
 						<td width="20%"><?php echo form_label('Estado del predio en obra','estado_predio'); ?></td>
 						<td width="20%">
-							<?php echo form_dropdown('estado_predio', array(' ' => ' ', '1' => 'Disponible','0' => 'No disponible'), utf8_decode($identificacion->estado_predio)); ?>
+							<?= form_dropdown('estado_predio', array(' ' => ' ', '1' => 'Disponible','0' => 'No disponible'), $identificacion->estado_predio); ?>
 						</td>
 					</tr>
 				<tbody>
@@ -698,7 +687,7 @@ $uso_edificacion = array(
 					<tbody>
 						<tr>
 							<td width="20%"><?php echo form_label('Estado ambiental','estado_ambiental'); ?></td>
-							<td width="30%"><?php echo form_dropdown('estado_ambiental', array('1' => 'Disponible','0' => 'No disponible'), utf8_decode($descripcion->estado_ambiental)); ?></td>
+							<td width="30%"><?= form_dropdown('estado_ambiental', array('1' => 'Disponible','0' => 'No disponible'), $descripcion->estado_ambiental); ?></td>
 							<td width="20%"><?php echo form_label('Meta contractual (A&ntilde;o YYYY)','meta_contractual'); ?></td>
 							<td width="30%"><?php echo form_input('meta_contractual'); ?></td>
 						</tr>
@@ -720,7 +709,7 @@ $uso_edificacion = array(
 					<tbody>
 						<tr>
 							<td width="20%"><?php echo form_label('Fecha remisi&oacute;n insumos','fecha_remision_insumos'); ?></td>
-							<td width="30%"><?php echo form_input('fecha_remision_insumos', utf8_decode($descripcion->fecha_remision_insumos)); ?></td>
+							<td width="30%"><?= form_input('fecha_remision_insumos', $descripcion->fecha_remision_insumos); ?></td>
 							<!-- <td width="20%"><?php // echo form_label('Fecha remisión insumos','fecha_remision_insumo'); ?></td>
 							<td width="30%"><?php // echo form_input('fecha_remision_insumo'); ?></td> -->
 						</tr>
