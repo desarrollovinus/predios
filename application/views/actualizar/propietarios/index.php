@@ -17,7 +17,7 @@
 <!-- Contenedor modal agregar -->
 <div id="cont_agregar" hidden>
     <div id="error_participacion"></div>
-    <?= form_label('Numero de documento', 'documento_buscar') ?>
+    <?= form_label('Número de documento', 'documento_buscar') ?>
     <?php $data = array('name'=>'documento_buscar') ?>
     <?= form_input($data) ?>
     <input type="button" name="buscar" value="Buscar" onClick="buscar()" class="ui-button ui-widget ui-state-default ui-corner-all">
