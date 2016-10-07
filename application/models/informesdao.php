@@ -196,13 +196,15 @@ class InformesDAO extends CI_Model
 	}
 
 	function obtener_predios_agrupados($unidad_funcional = NULL){
-		($unidad_funcional) ? $unidad = "WHERE p.ficha_predial LIKE '{$unidad_funcional}%'" : $unidad = "" ;
+		($unidad_funcional) ? $unidad = "AND p.ficha_predial LIKE '{$unidad_funcional}%'" : $unidad = "" ;
 		$sql =
 		"SELECT
 			p.ficha_predial
 		FROM
 			tbl_predio AS p
-		$unidad
+		WHERE
+			p.requerido = '1'
+			$unidad
 		GROUP BY
 			substring(p.ficha_predial, 1, 6)
 		ORDER BY
@@ -218,7 +220,9 @@ class InformesDAO extends CI_Model
 		FROM
 			tbl_predio AS p
 		WHERE
-			p.ficha_predial LIKE '{$predio}%'
+			p.requerido = '1'
+			AND  p.ficha_predial LIKE '{$predio}%'
+			AND p.ficha_predial NOT LIKE '%M%'
 		ORDER BY
 			p.ficha_predial ASC";
 
@@ -228,23 +232,26 @@ class InformesDAO extends CI_Model
 	function obtener_informe_gestion_predial_ani($ficha) {
 		// Si existe una ficha específica
 		if ($ficha != null) {
-			$condicion = "WHERE tbl_predio.ficha_predial = '{$ficha}'";
+			$condicion = " AND tbl_predio.ficha_predial = '{$ficha}' ";
+			$requerido = " ";
 		}else{
 			$condicion = "";
+			$requerido = "AND tbl_predio.requerido = '1'";
 		} // if
 
 		$query =
 		"SELECT
 			substring(tbl_predio.ficha_predial, 1, 3) unidad_funcional,
-			-- substring(tbl_predio.ficha_predial, 5, 2) predio,
-			-- substring(tbl_predio.ficha_predial, 8, 1) abreviatura,
-			-- CASE substring(tbl_predio.ficha_predial, 8, 1) WHEN 'F' THEN 'Área' WHEN 'M' THEN 'Mejora' END tipo_ficha,
+			substring(tbl_predio.ficha_predial, 5, 2) predio,
+			substring(tbl_predio.ficha_predial, 8, 1) abreviatura,
+			CASE substring(tbl_predio.ficha_predial, 8, 1) WHEN 'F' THEN 'Área' WHEN 'M' THEN 'Mejora' END tipo_ficha,
 			substring(tbl_predio.ficha_predial, 10, 2) numero_faja,
 			tbl_predio.ficha_predial,
 			d.numero,
 			d.tramo,
 			d.abscisa_inicial,
 			d.abscisa_final,
+			CASE d.requiere_longitud_efectiva WHEN '0' THEN 'No' WHEN '1' THEN 'Si' END requiere_longitud_efectiva,
 			d.estado_ambiental,
 			d.margen_inicial,
 			d.margen_final,
@@ -369,7 +376,10 @@ class InformesDAO extends CI_Model
 		LEFT JOIN tbl_estados_semaforo AS tbl_funcion ON i.id_funcion_predio = tbl_funcion.id
 		LEFT JOIN tbl_estados_semaforo AS tbl_estado_via ON tbl_estado_via.id = i.id_estado_via
 		LEFT JOIN tbl_estados_proceso ON tbl_estados_proceso.estado = i.estado_pro
-		{$condicion}
+		WHERE
+			tbl_predio.ficha_predial <> ''
+			{$requerido}
+			{$condicion}
 		ORDER BY
 			tbl_predio.ficha_predial ASC";
 

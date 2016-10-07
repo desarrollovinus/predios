@@ -17,7 +17,7 @@
 					<tr>
 						<td><?php echo $propietario->tipo_documento; ?></td>
 						<td><?php echo $propietario->documento; ?></td>
-						<td><?php echo utf8_decode($propietario->nombre); ?></td>
+						<td><?php echo $propietario->nombre; ?></td>
 						<td><?php echo $propietario->telefono; ?></td>
 						<td width="70px">
 							<?php echo anchor(site_url("consultas_controller/propietario/$propietario->id_propietario"), '<img border="0" title="Consultar" src="'.base_url().'img/search.png"'); ?>

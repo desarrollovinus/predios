@@ -113,16 +113,16 @@ class Pagos_controller extends CI_Controller
 				$respuesta.='even">';
 			}
 				$respuesta.='<td class=" sorting_1">';
-					$respuesta.= utf8_decode($pago->num_pago);
+					$respuesta.= $pago->num_pago;
 				$respuesta.='</td>';
 				$respuesta.='<td>';
-					$respuesta.= utf8_decode($pago->fecha_pago);
+					$respuesta.= $pago->fecha_pago;
 				$respuesta.='</td>';
 				$respuesta.='<td>';
-					$respuesta.= utf8_decode($pago->doc_pago);
+					$respuesta.= $pago->doc_pago;
 				$respuesta.='</td>';
 				$respuesta.='<td>';
-					$respuesta.= utf8_decode(number_format($pago->valor, 3));
+					$respuesta.= number_format($pago->valor, 3);
 				$respuesta.='</td>';
 				if($this->session->userdata('tipo_usuario') == 2) {
 					$respuesta.='<td>';
@@ -138,10 +138,10 @@ class Pagos_controller extends CI_Controller
 	
 	function nuevo_pago()
 	{
-		$ficha = 		utf8_encode($this->input->post('ficha'));
-		$fecha = 		utf8_encode($this->input->post('fecha'));
-		$documento = 	utf8_encode($this->input->post('documento'));
-		$valor = 		utf8_encode($this->input->post('valor'));
+		$ficha = 		$this->input->post('ficha');
+		$fecha = 		$this->input->post('fecha');
+		$documento = 	$this->input->post('documento');
+		$valor = 		$this->input->post('valor');
 		
 		$this->load->model('PagosDAO');
 		$numero_pago = $this->PagosDAO->obtener_nuevo_numero_pago($ficha);

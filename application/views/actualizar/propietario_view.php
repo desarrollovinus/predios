@@ -7,7 +7,7 @@
 					<td><?php echo form_label('Tipo documento 2', 'tipo_documento'); ?></td>
 					<td><?php echo form_dropdown('tipo_documento', array(' ' => ' ', 'Cedula' => 'CC','Nit' => 'Nit'), $propietario->tipo_documento); ?></td>
 					<td><?php echo form_label('Propietario', 'propietario'); ?></td>
-					<td><?php echo form_input('propietario', utf8_decode($propietario->nombre)); ?></td>
+					<td><?php echo form_input('propietario', $propietario->nombre); ?></td>
 				</tr>
 				<tr>
 					<td><?php echo form_label('Documento', 'documento_propietario'); ?></td>

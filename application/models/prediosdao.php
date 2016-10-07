@@ -537,12 +537,16 @@ class PrediosDAO extends CI_Model
 		return $this->db->query($sql)->result();
 	}
 
-	function obtener_predios_semaforo($tramo)
+	function obtener_predio_semaforo($ficha = NULL)
 	{
+		if($ficha){
+			$condicion = "WHERE p.ficha_predial = '{$ficha}'";
+		}else{
+			$condicion = "";
+		}
+
 		$sql=
 		"SELECT
-			-- SUBSTRING_INDEX(p.ficha_predial, '-', - 1) AS Numero,
-			SUBSTRING(p.ficha_predial, 5, 10) Numero,
 			p.ficha_predial,
 			i.id_funcion_predio,
 			s_f.color AS color_funcion,
@@ -558,14 +562,11 @@ class PrediosDAO extends CI_Model
 		LEFT JOIN tbl_estados_semaforo AS s_f ON i.id_funcion_predio = s_f.id
 		LEFT JOIN tbl_estados_semaforo AS s_e ON i.id_estado_via = s_e.id
 		LEFT JOIN tbl_descripcion AS d ON d.ficha_predial = p.ficha_predial
-		WHERE
-			SUBSTRING_INDEX(p.ficha_predial, '-', 1) = '{$tramo}'
-		ORDER BY
-			Numero";
+		$condicion";
 
 
-		return $this->db->query($sql)->result();
-	} // obtener_predios_semaforo
+		return $this->db->query($sql)->row();
+	} // obtener_predio_semaforo
 
 	function obtener_cultivos($ficha_predial)
 	{

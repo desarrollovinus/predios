@@ -7,7 +7,7 @@
 					<td><?php echo form_label('Tipo documento', 'tipo_documento'); ?></td>
 					<td><?php echo form_input('tipo_documento', $propietario->tipo_documento, 'readonly="readonly"'); ?></td>
 					<td><?php echo form_label('Propietario', 'propietario'); ?></td>
-					<td><?php echo form_input('propietario', utf8_decode($propietario->nombre), 'readonly="readonly"'); ?></td>
+					<td><?php echo form_input('propietario', $propietario->nombre, 'readonly="readonly"'); ?></td>
 				</tr>
 				<tr>
 					<td><?php echo form_label('Documento', 'documento_propietario'); ?></td>

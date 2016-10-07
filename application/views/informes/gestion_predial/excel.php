@@ -232,7 +232,7 @@ foreach ($this->InformesDAO->obtener_predios_agrupados() as $registro) {
 	$objPHPExcel->getActiveSheet()->setCellValue("W{$fila}", $area_remanente);
 	$objPHPExcel->getActiveSheet()->setCellValue("X{$fila}", "=U{$fila}-Y{$fila}");
 	$objPHPExcel->getActiveSheet()->setCellValue("Y{$fila}", "=V{$fila}+W{$fila}");
-	$objPHPExcel->getActiveSheet()->setCellValue("Z{$fila}", utf8_decode($ficha->lind_titulo));
+	$objPHPExcel->getActiveSheet()->setCellValue("Z{$fila}", $ficha->lind_titulo);
 
 	
 	
