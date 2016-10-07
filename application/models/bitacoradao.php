@@ -32,7 +32,7 @@ class BitacoraDAO extends CI_Model
 
 		return $resultado;
 	}
-	
+
 	function insertar_anotacion($ficha_predial, $fecha, $titulo, $remitente, $radicado, $observacion, $usuario)
 	{
 		$this->db->set('ficha_predial', $ficha_predial);
@@ -55,15 +55,19 @@ class BitacoraDAO extends CI_Model
 
 		return $resultado;
 	}
-	
+
 	function eliminar_anotacion($id_bitacora) {
 		$this->db->where('id_bitacora', $id_bitacora);
 		return $this->db->delete('tbl_bitacora');
 	}
-	
+
 	function editar_anotacion($id_bitacora, $data) {
 		$this->db->where('id_bitacora', $id_bitacora);
-		return $this->db->update('tbl_bitacora', $data); 
+		return $this->db->update('tbl_bitacora', $data);
+	}
+
+	function obtener_bitacoras() {
+		return $this->db->get('tbl_bitacora')->result();
 	}
 }
 /* End of file bitacoradao.php */
