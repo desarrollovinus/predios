@@ -38,10 +38,10 @@
 			<div id="contenido">
 				<div id="form">
 					<?php echo form_fieldset("Bit&aacute;cora de la ficha predial <b>$ficha_predial</b>"); ?>
-						<h3>Primer propietario: 
-							<?php 
+						<h3>Primer propietario:
+							<?php
 								if(!empty($propietario)) {
-									echo utf8_decode($propietario->nombre); 
+									echo $propietario->nombre; 
 								}
 								else {
 									echo 'No hay propietarios asociados a esta ficha predial';
@@ -58,12 +58,12 @@
 									'name' => 'anotacion',
 									'id' => 'anotacion',
 									'value' => 'Nueva anotacion'
-								); 
+								);
 								echo form_input($anotacion);
 							}
 						?>
 					<?php echo form_fieldset_close(); ?>
-					
+
 					<div id="dialog-form" title="Agregar nueva entrada.">
 						<?php echo form_fieldset('Todos los datos son requeridos.'); ?>
 							<table>
@@ -122,7 +122,7 @@
 						{
 							//en el template hay un div con id="cargando", despues de ese div se agrega otro con id="dialog-confirm"
 							$('#cargando').append('<div id="dialog-confirm"></div>');
-							//al div que se acaba de crear se le agrega el atributo title="¿Desea borrar este propietario?"
+							//al div que se acaba de crear se le agrega el atributo title="ï¿½Desea borrar este propietario?"
 							$('#dialog-confirm').attr('title', titulo);
 							//tambien se le agrega el siguiente codigo html entre sus tags de inicio y final
 							$('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>' + mensaje + '</p>');
@@ -153,8 +153,8 @@
 								}
 							});
 						}
-						
-						$.post('<?php echo site_url('bitacora_controller/obtener_bitacora'); ?>', { ficha:'<?php echo $ficha_predial; ?>', <?php echo $this->security->get_csrf_token_name(); ?>:"<?php echo $this->security->get_csrf_hash(); ?>" }, 
+
+						$.post('<?php echo site_url('bitacora_controller/obtener_bitacora'); ?>', { ficha:'<?php echo $ficha_predial; ?>', <?php echo $this->security->get_csrf_token_name(); ?>:"<?php echo $this->security->get_csrf_hash(); ?>" },
 							function(msg){
 								respuesta = msg.split('|');
 								console.log(respuesta)
@@ -175,13 +175,13 @@
 								}
 							}
 						);
-						
-						//esta sentencia es para darle el estilo a los botones jquery.ui 
+
+						//esta sentencia es para darle el estilo a los botones jquery.ui
 					    $( "#form input[type=submit], #form input[type=button]").button();
-						
+
 						// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
 						$( "#dialog:ui-dialog" ).dialog( "destroy" );
-						
+
 						$( "#dialog-form-editar" ).dialog({
 							autoOpen: false,
 							height: 510,
@@ -197,31 +197,31 @@
 									var observacion = $.trim($('#dialog-form-editar textarea[name=observacion_editar]').val());
 									var id_bitacora = $.trim($('#dialog-form-editar input[name=id_bitacora]').val());
 									var error = false;
-									
+
 									if(fecha == '')
 									{
 										$('#dialog-form-editar input[name=fecha_editar]').after("<span class='error derecha'>&nbsp;<strong>*</strong></span>");
 										error = true;
 									}
-				
+
 									if(remitente == '')
 									{
 										$('#dialog-form-editar input[name=remitente_editar]').after("<span class='error derecha'>&nbsp;<strong>*</strong></span>");
 										error = true;
 									}
-				
+
 									if(titulo == '')
 									{
 										$('#dialog-form-editar input[name=titulo_editar]').after("<span class='error derecha'>&nbsp;<strong>*</strong></span>");
 										error = true;
 									}
-				
+
 									if(observacion == '')
 									{
 										$('#dialog-form-editar textarea[name=observacion_editar]').after("<span class='error derecha'>&nbsp;<strong>*</strong></span>");
 										error = true;
 									}
-									
+
 									if( ! error )
 									{
 										$.post('<?php echo site_url('bitacora_controller/editar_anotacion'); ?>', { id_bitacora:id_bitacora, fecha:fecha, remitente:remitente, radicado: radicado, titulo:titulo, observacion:observacion, <?php echo $this->security->get_csrf_token_name(); ?>:"<?php echo $this->security->get_csrf_hash(); ?>" },
@@ -252,7 +252,7 @@
 								$('#dialog-form-editar input[type=text]').val('');
 							}
 						});
-						
+
 						$( "#dialog-form" ).dialog({
 							autoOpen: false,
 							height: 510,
@@ -279,25 +279,25 @@
 										$('#dialog-form input[name=fecha]').after("<span class='error derecha'>&nbsp;<strong>*</strong></span>");
 										error = true;
 									}
-				
+
 									if(remitente == '')
 									{
 										$('#dialog-form input[name=remitente]').after("<span class='error derecha'>&nbsp;<strong>*</strong></span>");
 										error = true;
 									}
-				
+
 									if(titulo == '')
 									{
 										$('#dialog-form input[name=titulo]').after("<span class='error derecha'>&nbsp;<strong>*</strong></span>");
 										error = true;
 									}
-				
+
 									if(observacion == '')
 									{
 										$('#dialog-form textarea[name=observacion]').after("<span class='error derecha'>&nbsp;<strong>*</strong></span>");
 										error = true;
 									}
-									
+
 									if( ! error )
 									{
 										$.post('<?php echo site_url('bitacora_controller/nueva_entrada'); ?>', { ficha:ficha, fecha:fecha, remitente:remitente, radicado: radicado, titulo:titulo, observacion:observacion, <?php echo $this->security->get_csrf_token_name(); ?>:"<?php echo $this->security->get_csrf_hash(); ?>" },
@@ -315,7 +315,7 @@
 						                            $('div#alerta').fadeIn('slow');
 												}
 												$( "#dialog-form" ).dialog( "close" );
-											} 
+											}
 										);
 									}
 								},
@@ -328,7 +328,7 @@
 								$('#dialog-form input[type=text]').val('');
 							}
 						});
-				
+
 						$('#form a[title=Eliminar]').live('click', function(event){
 							var a = $(this);
 							var url = a.attr('href');
@@ -354,7 +354,7 @@
 									$(this).removeClass('error');
 								});
 							};
-				
+
 							abrir_ventana_dialogo('Eliminar anotaci&oacute;n de la bit&aacute;cora', 'Esta seguro(a) de realizar esta acci&oacute;n?', function(){
 								$('#cargando').html('Eliminando la entrada, por favor espere...');
 								$('#cargando').removeClass('error');
@@ -365,15 +365,15 @@
 							});
 							event.preventDefault();
 						});
-				
+
 						$('#form a[title=Editar]').live('click', function(event){
 							$('span.error').remove();
 							$('div#alerta').remove();
 							$('#dialog-form-editar').dialog( "open" );
 							var tr = $(this).closest('tr');
-							
+
 							$('#dialog-form-editar input[name=id_bitacora]').val($(this).attr('id'));
-				
+
 							tr.children('td').each(function(index) {
 								switch(index) {
 									case 0:{ $('#dialog-form-editar input[name=fecha_editar]').val($(this).text()); }break;
@@ -383,21 +383,21 @@
 									case 4:{ $('#dialog-form-editar input[name=radicado_editar]').val($(this).text()); }break;
 								}
 							});
-				
+
 							$('#dialog-form-editar input[name=fecha_editar]').focus();
 							event.preventDefault();
 						});
-						
+
 						$('#tabla').dataTable({
 							"bJQueryUI": true,
 							"sPaginationType": "full_numbers",
 							"bDestroy": true
 						});
-				
+
 						$('#form input[name=anotacion]').click(function(){
 							$('#dialog-form').dialog( "open" );
 						});
-				
+
 						$('#dialog-form input[name=fecha]').datepicker();
 						$('#dialog-form-editar input[name=fecha_editar]').datepicker();
 					});
