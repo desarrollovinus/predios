@@ -10,7 +10,7 @@ class Bitacora_controller extends CI_Controller
 		{
 			//redirecciono al controlador de sesion
 			redirect('sesion_controller');
-		}	
+		}
 		$permisos = $this->session->userdata('permisos');
 		if ( ! isset($permisos['Bit&aacute;cora']['Consultar']) ) {
 			$this->session->set_flashdata('error', 'Usted no cuenta con permisos para consultar la Bit&aacute;cora.');
@@ -19,7 +19,7 @@ class Bitacora_controller extends CI_Controller
 		//se establece la vista que tiene el contenido del menu
 		$this->data['menu'] = 'bitacora/menu';
 	}
-	
+
 	function index()
 	{
 		$this->load->model('PrediosDAO');
@@ -32,27 +32,27 @@ class Bitacora_controller extends CI_Controller
 	{
 		echo "http://orfeoweb.hatovial.com/orfeo384/buscar_radicado_predios.php";
 	}
-	
+
 	function lista_fichas() {
 		$this->load->model('PrediosDAO');
-		
+
 		$palabra_clave = $this->input->get('palabraClave');
 		$max_filas = $this->input->get('maxRows');
 		echo json_encode($this->PrediosDAO->listar_fichas($palabra_clave, $max_filas));
 	}
-	
+
 	function nueva_entrada()
 	{
-		$ficha = utf8_encode($this->input->post('ficha'));
-		$fecha = utf8_encode($this->input->post('fecha'));
-		$remitente = utf8_encode($this->input->post('remitente'));
-		$radicado = utf8_encode($this->input->post('radicado'));
-		$titulo = utf8_encode($this->input->post('titulo'));
-		$observacion = utf8_encode($this->input->post('observacion'));
+		$ficha = $this->input->post('ficha');
+		$fecha = $this->input->post('fecha');
+		$remitente = $this->input->post('remitente');
+		$radicado = $this->input->post('radicado');
+		$titulo = $this->input->post('titulo');
+		$observacion = $this->input->post('observacion');
 		$usuario = $this->session->userdata('id_usuario');
-		
+
 		$this->load->model('BitacoraDAO');
-		
+
 		if($this->BitacoraDAO->insertar_anotacion($ficha, $fecha, $titulo, $remitente, $radicado, $observacion, $usuario))
 		{
 			echo "correcto";
@@ -61,21 +61,21 @@ class Bitacora_controller extends CI_Controller
 			echo "Ocurri&oacute; un error al intentar guardar la anotaci&oacute;n, por favor intente nuevamente.";
 		}
 	}
-	
+
 	function obtener_bitacora()
 	{
 		//obtengo la ficha predial
 		$ficha_predial = $this->uri->segment(3);
 
 		$modo = 'url';
-		
+
 		//si no se paso por la url entonces retorna error
 		if( ! $ficha_predial )
 		{
 			$ficha_predial = $this->input->post('ficha');
 			$modo = 'post';
 		}
-		
+
 		if( ! $ficha_predial )
 		{
 			echo "Error al enviar la ficha predial, intente nuevamente.";
@@ -91,35 +91,35 @@ class Bitacora_controller extends CI_Controller
 			{
 				$this->load->model('PropietariosDAO');
 				$ficha_predial = str_replace('%20', ' ', $ficha_predial);
-			
+
 				//si se paso por url entonces se carga el modelo que gestiona la informacion de la bitacora
 				//$this->load->model('BitacoraDAO');
-				
+
 				//se pasa la ficha predial
 				$this->data['ficha_predial'] = $ficha_predial;
-				
+
 				//se pasa el primer propietario
 				$this->data['propietario'] = $this->PropietariosDAO->obtener_primer_propietario($ficha_predial);
-				
+
 				//se pasa toda la bitacora asociada a la ficha predial
-				//$this->data['bitacora'] = $this->obtener_tabla($this->BitacoraDAO->obtener_bitacora($ficha_predial));			
-				
+				//$this->data['bitacora'] = $this->obtener_tabla($this->BitacoraDAO->obtener_bitacora($ficha_predial));
+
 				//se establece el titulo de la pagina
 				$this->data['titulo_pagina'] = 'Bit&aacute;cora';
-				
+
 				//se carga el template
 				$this->load->view('bitacora/bitacora_view', $this->data);
 			}
 		}
 	}
-	
+
 	function obtener_tabla($bitacora)
 	{
 		$permisos = $this->session->userdata('permisos');
-		
+
 		$fila = 0;
 		$respuesta = '<table width="100%" id="tabla"><thead><tr><th>Fecha</th><th>Remitente</th><th>Titulo</th><th>Observaci&oacute;n</th><th>Radicado</th><th></th></tr></thead><tbody>';
-		
+
 		foreach ($bitacora as $anotacion):
 			$respuesta.='<tr class="';
 			if($fila % 2 == 0)
@@ -131,16 +131,16 @@ class Bitacora_controller extends CI_Controller
 				$respuesta.='even">';
 			}
 				$respuesta.='<td class=" sorting_1">';
-					$respuesta.= utf8_decode($anotacion->fecha);
+					$respuesta.= $anotacion->fecha;
 				$respuesta.='</td>';
 				$respuesta.='<td>';
-					$respuesta.= utf8_decode($anotacion->remitente);
+					$respuesta.= $anotacion->remitente;
 				$respuesta.='</td>';
 				$respuesta.='<td>';
-					$respuesta.= utf8_decode($anotacion->titulo);
+					$respuesta.= $anotacion->titulo;
 				$respuesta.='</td>';
 				$respuesta.='<td>';
-					$respuesta.= utf8_decode($anotacion->observacion);
+					$respuesta.= $anotacion->observacion;
 				$respuesta.='</td>';
 
 				$radicado = $anotacion->radicado;
@@ -170,13 +170,13 @@ class Bitacora_controller extends CI_Controller
 					}
 				$respuesta.='</td>';
 			$respuesta.='</tr>';
-			
+
 			$fila++;
 		endforeach;
 		$respuesta.='</tbody></table>';
 		return $respuesta;
 	}
-	
+
 	function valida_ficha()
 	{
 		$ficha_predial = $this->input->post('ficha');
@@ -191,7 +191,7 @@ class Bitacora_controller extends CI_Controller
 			echo 'La ficha predial ingresada no existe.';
 		}
 	}
-	
+
 	function eliminar_anotacion() {
 		$json['mensaje'] = 'correcto';
 		$id_bitacora = $this->input->post('id_bitacora');
@@ -206,7 +206,7 @@ class Bitacora_controller extends CI_Controller
 		}
 		echo json_encode($json);
 	}
-	
+
 	function editar_anotacion() {
 		$json['mensaje'] = 'correcto';
 		$id_bitacora = $this->input->post('id_bitacora');
@@ -215,16 +215,31 @@ class Bitacora_controller extends CI_Controller
 		}
 		else {
 			$this->load->model('BitacoraDAO');
-			$anotacion['titulo'] = utf8_encode($this->input->post('titulo'));
-			$anotacion['remitente'] = utf8_encode($this->input->post('remitente'));
-			$anotacion['radicado'] = utf8_encode($this->input->post('radicado'));
-			$anotacion['fecha'] = utf8_encode($this->input->post('fecha'));
-			$anotacion['observacion'] = utf8_encode($this->input->post('observacion'));
+			$anotacion['titulo'] = $this->input->post('titulo');
+			$anotacion['remitente'] = $this->input->post('remitente');
+			$anotacion['radicado'] = $this->input->post('radicado');
+			$anotacion['fecha'] = $this->input->post('fecha');
+			$anotacion['observacion'] = $this->input->post('observacion');
 			if( ! $this->BitacoraDAO->editar_anotacion($id_bitacora, $anotacion) ) {
 				$json['mensaje'] = 'Error al intentar editar la anotaci&oacute;n de la bit&aacute;cora. Refresque la p&aacute;gina e intente nuevamente.';
 			}
 		}
 		echo json_encode($json);
+	}
+
+	/*
+	* Esta funcion corrige problemas de doble codificacion en la base de datos
+	*/
+	function correccion() {
+		$this->load->model('BitacoraDAO');
+		$bitacoras = $this->BitacoraDAO->obtener_bitacoras();
+		foreach ($bitacoras as $bitacora) {
+			$anotacion['observacion'] = utf8_decode($bitacora->observacion);
+			$anotacion['titulo'] = utf8_decode($bitacora->titulo);
+			$anotacion['remitente'] = utf8_decode($bitacora->remitente);
+			$anotacion['usuario'] = utf8_decode($bitacora->usuario);
+			$this->BitacoraDAO->editar_anotacion($bitacora->id_bitacora, $anotacion);
+		}
 	}
 }
 

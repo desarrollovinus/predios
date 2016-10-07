@@ -614,6 +614,7 @@ class Actualizar_controller extends CI_Controller {
 		echo "correcto";
 	}
 
+/* Esta funcion corrige problemas de codificacion en la base de datos
 	function correccion() {
 		$predios = $this->PrediosDAO->obtener_fichas();
 		$i = 1;
@@ -773,7 +774,7 @@ class Actualizar_controller extends CI_Controller {
 			echo $i.')  '.$predio->id_predio.'<br>';
 		}
 	}
-
+*/
 	/**
 	 * Esta funcion elimina a un propietario
 	 */
