@@ -282,7 +282,7 @@ $uso_edificacion = array(
 					</tr>
 					<tr>
 						<td width="20%"><?= form_label('Se requiere la longitud Efectiva','requiere_longitud_efectiva'); ?></td>
-						<td width="30%"><?= form_dropdown('requiere_longitud_efectiva', array(' ' => ' ', '1' => 'SI','0' => 'NO'), $descripcion->requiere_longitud_efectiva); ?></td>
+						<td width="30%"><?= form_dropdown('requiere_longitud_efectiva', array('1' => 'SI','0' => 'NO'), $descripcion->requiere_longitud_efectiva); ?></td>
 						<td width="20%"><?php echo form_label('Estado del Proceso','estado_proceso'); ?></td>
 						<?php
 							$estado_proceso = array(' ' => ' ');

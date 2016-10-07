@@ -566,6 +566,7 @@ class Actualizar_controller extends CI_Controller {
 			'abscisa_final' => 			$this->input->post('abscisa_final'),
 			'margen_final' => 			$this->input->post('margen_final'),
 			'observacion' => 			$this->input->post('observacion'),
+			'requiere_longitud_efectiva' => $this->input->post('requiere_longitud_efectiva'),
 			'tramo' => 					$this->input->post('tramo'),
 			'numero' => 				$this->input->post('numero_ficha'),
 			'estado_ambiental' => 		$this->input->post('estado_ambiental'),
