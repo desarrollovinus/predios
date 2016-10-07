@@ -320,7 +320,7 @@ class PrediosDAO extends CI_Model
 		return $this->db->get('tbl_predio_req')->row();
 	}
 
-	function obtener_fichas()
+	function obtener_fichas($requerido=null)
 	{
 		$sql_ =
 		"SELECT
@@ -361,6 +361,10 @@ class PrediosDAO extends CI_Model
 		INNER JOIN tbl_usuarios ON tbl_usuarios.id_usuario = tbl_predio.usuario
 		ORDER BY
 			tbl_predio.ficha_predial ASC";
+
+		if ($requerido) {
+			$requeridos = "WHERE p.requerido = 1";
+		}
 
 		$sql =
 		"SELECT
@@ -420,6 +424,7 @@ class PrediosDAO extends CI_Model
 		FROM
 			tbl_predio AS p
 		INNER JOIN tbl_usuarios AS u ON u.id_usuario = p.usuario
+		{$requeridos}
 		ORDER BY
 			p.ficha_predial ASC";
 
@@ -886,7 +891,7 @@ class PrediosDAO extends CI_Model
 
 			while(($file = readdir($directorio)) !== FALSE)
 			{
-				if($file != '.' && $file != '..' && $file != 'fotos')
+				if($file != '.' && $file != '..' && $file != 'fotos' && strpos($file, 'SUPERADO') == FALSE)
 				{
 					$archivos += 1;
 				}

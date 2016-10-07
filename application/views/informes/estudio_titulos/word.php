@@ -105,13 +105,13 @@ $abscisa_inicial = "K".$abscisa_inicial[0] ."+" .$descripcion->abscisa_inicial %
 $abscisa_final = explode(".", $descripcion->abscisa_final / 1000);
 $abscisa_final = "K".$abscisa_final[0]. "+". $descripcion->abscisa_final % 1000;
 $table->addCell(10000, $styleCell)->addText(utf8_decode("VÍAS DEL NUS"), 'parrafo2', $alineacion_centrada);
-$table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($descripcion->tramo)), 'parrafo2', $alineacion_centrada);
+$table->addCell(10000, $styleCell)->addText((utf8_decode($descripcion->tramo)), 'parrafo2', $alineacion_centrada);
 
 $ficha = explode('-', $predio->ficha_predial);
 
 $table->addCell(10000, $styleCell)->addText("$ficha[0]-$ficha[1]", 'parrafo2', $alineacion_centrada);
-$table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($abscisa_inicial)), 'parrafo2', $alineacion_centrada);
-$table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($abscisa_final)), 'parrafo2', $alineacion_centrada);
+$table->addCell(10000, $styleCell)->addText((utf8_decode($abscisa_inicial)), 'parrafo2', $alineacion_centrada);
+$table->addCell(10000, $styleCell)->addText((utf8_decode($abscisa_final)), 'parrafo2', $alineacion_centrada);
 $seccion1->addTextBreak();
 
 $seccion1->addText(utf8_decode("1. IDENTIFICACIÓN DEL INMUEBLE"), 'titulo2', $alineacion_izquierda);
@@ -121,25 +121,25 @@ $PHPWord->addTableStyle('tabla3', $tabla3);
 $table = $seccion1->addTable('tabla3');
 $table->addRow();
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Dirección:"), 'parrafo2', $alineacion_izquierda);
-$table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($identificacion->direccion)), 'parrafo2', $alineacion_izquierda);
+$table->addCell(10000, $styleCell)->addText((utf8_decode($identificacion->direccion)), 'parrafo2', $alineacion_izquierda);
 $table->addRow();
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Vereda:"), 'parrafo2', $alineacion_izquierda);
-$table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($identificacion->barrio)), 'parrafo2', $alineacion_izquierda);
+$table->addCell(10000, $styleCell)->addText((utf8_decode($identificacion->barrio)), 'parrafo2', $alineacion_izquierda);
 $table->addRow();
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Municipio:"), 'parrafo2', $alineacion_izquierda);
-$table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($identificacion->municipio)), 'parrafo2', $alineacion_izquierda);
+$table->addCell(10000, $styleCell)->addText((utf8_decode($identificacion->municipio)), 'parrafo2', $alineacion_izquierda);
 $table->addRow();
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Departamento:"), 'parrafo2', $alineacion_izquierda);
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Antioquia"), 'parrafo2', $alineacion_izquierda);
 $table->addRow();
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Matricula Inmobiliaria:"), 'parrafo2', $alineacion_izquierda);
-$table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($identificacion->matricula_orig)), 'parrafo2', $alineacion_izquierda);
+$table->addCell(10000, $styleCell)->addText((utf8_decode($identificacion->matricula_orig)), 'parrafo2', $alineacion_izquierda);
 $table->addRow();
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Cedula catastral:"), 'parrafo2', $alineacion_izquierda);
-$table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($identificacion->no_catastral)), 'parrafo2', $alineacion_izquierda);
+$table->addCell(10000, $styleCell)->addText((utf8_decode($identificacion->no_catastral)), 'parrafo2', $alineacion_izquierda);
 $table->addRow();
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Destinación:"), 'parrafo2', $alineacion_izquierda);
-$table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($descripcion->uso_edificacion)), 'parrafo2', $alineacion_izquierda);
+$table->addCell(10000, $styleCell)->addText((utf8_decode($descripcion->uso_edificacion)), 'parrafo2', $alineacion_izquierda);
 $table->addRow();
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Coordenadas de amarre:"), 'parrafo2', $alineacion_izquierda);
 $table->addCell(10000, $styleCell)->addText(utf8_decode("Sistema Magna Sirgas - Origen Bogotá"), 'parrafo2', $alineacion_izquierda);
@@ -163,7 +163,7 @@ $seccion1->addTextBreak();
 $seccion1->addText(utf8_decode("Descripción, Cabida y Linderos: "), 'titulo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
 
-$lind_titulo = explode("?", substr(utf8_decode(utf8_decode($identificacion->lind_titulo)), 1));
+$lind_titulo = explode("?", substr(utf8_decode($identificacion->lind_titulo), 1));
 foreach ($lind_titulo as $item) {
   if ($item == null) { break; }
   $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
@@ -184,9 +184,9 @@ $table->addCell(10000, $styleCell)->addText(utf8_decode("DOCUMENTO"), 'titulo2',
 $table->addCell(10000, $styleCell)->addText(utf8_decode("(%)"), 'titulo2', $alineacion_centrada);
 foreach ($propietarios as $propietario) {
   $table->addRow();
-  $table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($propietario->nombre)), 'parrafo2', $alineacion_izquierda);
-  $table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($propietario->documento)), 'parrafo2', $alineacion_izquierda);
-  $table->addCell(10000, $styleCell)->addText(utf8_decode(utf8_decode($propietario->participacion)), 'parrafo2', $alineacion_izquierda);
+  $table->addCell(10000, $styleCell)->addText(utf8_decode(($propietario->nombre)), 'parrafo2', $alineacion_izquierda);
+  $table->addCell(10000, $styleCell)->addText(utf8_decode(($propietario->documento)), 'parrafo2', $alineacion_izquierda);
+  $table->addCell(10000, $styleCell)->addText(utf8_decode(($propietario->participacion)), 'parrafo2', $alineacion_izquierda);
 }
 $seccion1->addTextBreak();
 
@@ -195,7 +195,7 @@ $seccion1->addTextBreak();
 
 // para mostrar viñetas se usa TYPE_BULLET_FILLED con la funcion addListItem
 $seccion1->addText(utf8_decode("3. TRADICION DEL INMUEBLE"), 'titulo2', $alineacion_izquierda);
-$titulo_adq_items = explode("?", substr(utf8_decode(utf8_decode($identificacion->titulos_adq)), 1));
+$titulo_adq_items = explode("?", substr(utf8_decode(($identificacion->titulos_adq)), 1));
 foreach ($titulo_adq_items as $item) {
   if ($item == null) { break; }
   $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
@@ -205,7 +205,7 @@ foreach ($titulo_adq_items as $item) {
 $seccion1->addText(utf8_decode("4. GRAVÁMENES Y LIMITACIONES"), 'titulo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
 
-$gravamenes = explode("?", substr(utf8_decode(utf8_decode($identificacion->gravamenes)), 1));
+$gravamenes = explode("?", substr(utf8_decode(($identificacion->gravamenes)), 1));
 foreach ($gravamenes as $item) {
   if ($item == null) { break; }
   $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
@@ -217,14 +217,14 @@ $seccion1->addTextBreak();
 
 if (!empty($identificacion->segreg_titu)) {
     if ($identificacion->segreg_titu[0] == "?") {
-      $segregacion_titulo = explode("?", substr(utf8_decode(utf8_decode($identificacion->segreg_titu)), 1));
+      $segregacion_titulo = explode("?", substr(utf8_decode(($identificacion->segreg_titu)), 1));
       foreach ($segregacion_titulo as $item) {
         if ($item == null) { break; }
         $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
         $seccion1->addTextBreak();
       }
     } else {
-      $seccion1->addText(utf8_decode(utf8_decode($identificacion->segreg_titu)), 'parrafo2', $alineacion_justificada);
+      $seccion1->addText(utf8_decode(($identificacion->segreg_titu)), 'parrafo2', $alineacion_justificada);
       $seccion1->addTextBreak();
   }
 }
@@ -232,7 +232,7 @@ if (!empty($identificacion->segreg_titu)) {
 $seccion1->addText(utf8_decode("6. OBSERVACIONES DEL INMUEBLE"), 'titulo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
 
-$observaciones_titulo = explode("?", substr(utf8_decode(utf8_decode($identificacion->ob_titu)), 1));
+$observaciones_titulo = explode("?", substr(utf8_decode(($identificacion->ob_titu)), 1));
 foreach ($observaciones_titulo as $observacion) {
   if ($observacion == null) { break; }
   $seccion1->addListItem($observacion, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
@@ -242,7 +242,7 @@ foreach ($observaciones_titulo as $observacion) {
 $seccion1->addText(utf8_decode("7. CONCEPTO"), 'titulo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
 
-$concepto_items = explode("?", substr(utf8_decode(utf8_decode($identificacion->conc_titu)), 1));
+$concepto_items = explode("?", substr((utf8_decode($identificacion->conc_titu)), 1));
 foreach ($concepto_items as $item) {
   if ($item == null) { break; }
   $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
@@ -252,7 +252,7 @@ foreach ($concepto_items as $item) {
 $seccion1->addText(utf8_decode("8. DOCUMENTOS DE ESTUDIO"), 'titulo2', $alineacion_izquierda);
 $seccion1->addTextBreak();
 
-$documentos_items = explode("?", substr(utf8_decode(utf8_decode($identificacion->doc_estud)), 1));
+$documentos_items = explode("?", substr(utf8_decode(($identificacion->doc_estud)), 1));
 foreach ($documentos_items as $item) {
   if ($item == null) { break; }
   $seccion1->addListItem($item, 0, 'parrafo2', 'TYPE_BULLET_FILLED', $alineacion_justificada);
