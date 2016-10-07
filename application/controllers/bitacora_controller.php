@@ -131,16 +131,16 @@ class Bitacora_controller extends CI_Controller
 				$respuesta.='even">';
 			}
 				$respuesta.='<td class=" sorting_1">';
-					$respuesta.= utf8_decode($anotacion->fecha);
+					$respuesta.= $anotacion->fecha;
 				$respuesta.='</td>';
 				$respuesta.='<td>';
-					$respuesta.= utf8_decode($anotacion->remitente);
+					$respuesta.= $anotacion->remitente;
 				$respuesta.='</td>';
 				$respuesta.='<td>';
-					$respuesta.= utf8_decode($anotacion->titulo);
+					$respuesta.= $anotacion->titulo;
 				$respuesta.='</td>';
 				$respuesta.='<td>';
-					$respuesta.= utf8_decode($anotacion->observacion);
+					$respuesta.= $anotacion->observacion;
 				$respuesta.='</td>';
 
 				$radicado = $anotacion->radicado;
