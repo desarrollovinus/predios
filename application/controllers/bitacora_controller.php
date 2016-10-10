@@ -146,8 +146,8 @@ class Bitacora_controller extends CI_Controller
 				$radicado = $anotacion->radicado;
 				$anio = substr($radicado, 0,4);
 				$dependencia = substr($radicado, 4,3);
-				$pdf = 'http://orfeoweb.hatovial.com/orfeo384/bodega/'.$anio.'/'.$dependencia.'/'.$radicado.'.pdf';
-				$tif = 'http://orfeoweb.hatovial.com/orfeo384/bodega/'.$anio.'/'.$dependencia.'/'.$radicado.'.tif';
+				$pdf = 'http://orfeo.vinus.com.co/bodega/'.$anio.'/'.$dependencia.'/'.$radicado.'.pdf';
+				$tif = 'http://orfeo.vinus.com.co/bodega/'.$anio.'/'.$dependencia.'/'.$radicado.'.tif';
 
 				if (strlen(file_get_contents("$pdf")))
 				{
