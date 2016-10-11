@@ -34,46 +34,46 @@
  * @copyright  Copyright (c) 2011 PHPWord
  */
 class PHPWord_Section_Table_Cell {
-	
+
 	/**
 	 * Cell Width
-	 * 
+	 *
 	 * @var int
 	 */
 	private $_width = null;
-	
+
 	/**
 	 * Cell Style
-	 * 
+	 *
 	 * @var PHPWord_Style_Cell
 	 */
 	private $_style;
-	
+
 	/**
 	 * Cell Element Collection
-	 * 
+	 *
 	 * @var array
 	 */
 	private $_elementCollection = array();
-	
+
 	/**
 	 * Table holder
-	 * 
+	 *
 	 * @var string
 	 */
 	private $_insideOf;
-	
+
 	/**
 	 * Section/Header/Footer count
-	 * 
+	 *
 	 * @var int
 	 */
 	private $_pCount;
-	
-	
+
+
 	/**
 	 * Create a new Table Cell
-	 * 
+	 *
 	 * @param string $insideOf
 	 * @param int $pCount
 	 * @param int $width
@@ -83,11 +83,11 @@ class PHPWord_Section_Table_Cell {
 		$this->_insideOf = $insideOf;
 		$this->_pCount = $pCount;
 		$this->_width = $width;
-		
+
 		if(!is_null($style)) {
 			if(is_array($style)) {
 				$this->_style = new PHPWord_Style_Cell();
-				
+
 				foreach($style as $key => $value) {
 					if(substr($key, 0, 1) != '_') {
 						$key = '_'.$key;
@@ -99,24 +99,23 @@ class PHPWord_Section_Table_Cell {
 			}
 		}
 	}
-	
+
 	/**
 	 * Add a Text Element
-	 * 
+	 *
 	 * @param string $text
 	 * @param mixed $style
 	 * @return PHPWord_Section_Text
 	 */
 	public function addText($text, $styleFont = null, $styleParagraph = null) {
-		$text = utf8_encode($text);
 		$text = new PHPWord_Section_Text($text, $styleFont, $styleParagraph);
 		$this->_elementCollection[] = $text;
 		return $text;
 	}
-	
+
 	/**
 	 * Add a Link Element
-	 * 
+	 *
 	 * @param string $linkSrc
 	 * @param string $linkName
 	 * @param mixed $style
@@ -124,15 +123,10 @@ class PHPWord_Section_Table_Cell {
 	 */
 	public function addLink($linkSrc, $linkName = null, $style = null) {
 		if($this->_insideOf == 'section') {
-			$linkSrc = utf8_encode($linkSrc);
-			if(!is_null($linkName)) {
-				$linkName = utf8_encode($linkName);
-			}
-			
 			$link = new PHPWord_Section_Link($linkSrc, $linkName, $style);
 			$rID = PHPWord_Media::addSectionLinkElement($linkSrc);
 			$link->setRelationId($rID);
-			
+
 			$this->_elementCollection[] = $link;
 			return $link;
 		} else {
@@ -140,19 +134,19 @@ class PHPWord_Section_Table_Cell {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Add a TextBreak Element
-	 * 
+	 *
 	 * @param int $count
 	 */
 	public function addTextBreak() {
 		$this->_elementCollection[] = new PHPWord_Section_TextBreak();
 	}
-	
+
 	/**
 	 * Add a ListItem Element
-	 * 
+	 *
 	 * @param string $text
 	 * @param int $depth
 	 * @param mixed $styleText
@@ -160,22 +154,21 @@ class PHPWord_Section_Table_Cell {
 	 * @return PHPWord_Section_ListItem
 	 */
 	public function addListItem($text, $depth = 0, $styleText = null, $styleList = null) {
-		$text = utf8_encode($text);
 		$listItem = new PHPWord_Section_ListItem($text, $depth, $styleText, $styleList);
 		$this->_elementCollection[] = $listItem;
 		return $listItem;
 	}
-	
+
 	/**
 	 * Add a Image Element
-	 * 
+	 *
 	 * @param string $src
 	 * @param mixed $style
 	 * @return PHPWord_Section_Image
 	 */
 	public function addImage($src, $style = null) {
 		$image = new PHPWord_Section_Image($src, $style);
-		
+
 		if(!is_null($image->getSource())) {
 			if($this->_insideOf == 'section') {
 				$rID = PHPWord_Media::addSectionMediaElement($src, 'image');
@@ -185,17 +178,17 @@ class PHPWord_Section_Table_Cell {
 				$rID = PHPWord_Media::addFooterMediaElement($this->_pCount, $src);
 			}
 			$image->setRelationId($rID);
-			
+
 			$this->_elementCollection[] = $image;
 			return $image;
 		} else {
 			trigger_error('Source does not exist or unsupported image type.');
 		}
 	}
-	
+
 	/**
 	 * Add a by PHP created Image Element
-	 * 
+	 *
 	 * @param string $link
 	 * @param mixed $style
 	 * @return PHPWord_Section_MemoryImage
@@ -211,57 +204,57 @@ class PHPWord_Section_Table_Cell {
 				$rID = PHPWord_Media::addFooterMediaElement($this->_pCount, $link, $memoryImage);
 			}
 			$memoryImage->setRelationId($rID);
-			
+
 			$this->_elementCollection[] = $memoryImage;
 			return $memoryImage;
 		} else {
 			trigger_error('Unsupported image type.');
 		}
 	}
-	
+
 	/**
 	 * Add a OLE-Object Element
-	 * 
+	 *
 	 * @param string $src
 	 * @param mixed $style
 	 * @return PHPWord_Section_Object
 	 */
 	public function addObject($src, $style = null) {
 		$object = new PHPWord_Section_Object($src, $style);
-		
+
 		if(!is_null($object->getSource())) {
 			$inf = pathinfo($src);
 			$ext = $inf['extension'];
 			if(strlen($ext) == 4 && strtolower(substr($ext, -1)) == 'x') {
 				$ext = substr($ext, 0, -1);
 			}
-			
+
 			$iconSrc = PHPWORD_BASE_PATH . 'PHPWord/_staticDocParts/';
 			if(!file_exists($iconSrc.'_'.$ext.'.png')) {
 				$iconSrc = $iconSrc.'_default.png';
 			} else {
 				$iconSrc .= '_'.$ext.'.png';
 			}
-			
+
 			$rIDimg = PHPWord_Media::addSectionMediaElement($iconSrc, 'image');
 			$data = PHPWord_Media::addSectionMediaElement($src, 'oleObject');
 			$rID = $data[0];
 			$objectId = $data[1];
-			
+
 			$object->setRelationId($rID);
 			$object->setObjectId($objectId);
 			$object->setImageRelationId($rIDimg);
-			
+
 			$this->_elementCollection[] = $object;
 			return $object;
 		} else {
 			trigger_error('Source does not exist or unsupported object type.');
 		}
 	}
-	
+
 	/**
 	 * Add a PreserveText Element
-	 * 
+	 *
 	 * @param string $text
 	 * @param mixed $styleFont
 	 * @param mixed $styleParagraph
@@ -269,7 +262,6 @@ class PHPWord_Section_Table_Cell {
 	 */
 	public function addPreserveText($text, $styleFont = null, $styleParagraph = null) {
 		if($this->_insideOf == 'footer' || $this->_insideOf == 'header') {
-			$text = utf8_encode($text);
 			$ptext = new PHPWord_Section_Footer_PreserveText($text, $styleFont, $styleParagraph);
 			$this->_elementCollection[] = $ptext;
 			return $ptext;
@@ -277,10 +269,10 @@ class PHPWord_Section_Table_Cell {
 			trigger_error('addPreserveText only supported in footer/header.');
 		}
 	}
-	
+
 	/**
 	 * Create a new TextRun
-	 * 
+	 *
 	 * @return PHPWord_Section_TextRun
 	 */
 	public function createTextRun($styleParagraph = null) {
@@ -288,28 +280,28 @@ class PHPWord_Section_Table_Cell {
 		$this->_elementCollection[] = $textRun;
 		return $textRun;
 	}
-	
+
 	/**
 	 * Get all Elements
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getElements() {
 		return $this->_elementCollection;
 	}
-	
+
 	/**
 	 * Get Cell Style
-	 * 
+	 *
 	 * @return PHPWord_Style_Cell
 	 */
 	public function getStyle() {
 		return $this->_style;
 	}
-	
+
 	/**
 	 * Get Cell width
-	 * 
+	 *
 	 * @return int
 	 */
 	public function getWidth() {
