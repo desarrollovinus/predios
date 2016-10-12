@@ -24,10 +24,11 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>js/ui/jquery.ui.resizable.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>js/ui/jquery.effects.core.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.bgiframe-2.1.2.js"></script>
+<script type="text/javascript" src="<?= base_url(); ?>js/ajaxupload.2.0.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>js/funciones.js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
-		//esta sentencia es para darle el estilo a los botones jquery.ui 
+		//esta sentencia es para darle el estilo a los botones jquery.ui
 	    $( "#form input[type=submit], #form input[type=button]").button();
 
 	    //este script es para visualizar correctamente el menu
@@ -54,7 +55,7 @@
 			if(time == 'slow'){time = 1200;}
 			if(time == null){time = 1000;}
 			$('html,body').animate({scrollTop: t}, time);
-	    	  
+
 		};
 
 		$('div.ui-state-highlight button[name=ver]')
@@ -63,8 +64,8 @@
 				$('#dialog-form-error').dialog('open');
 			});
 
-		
-		
+
+
 	    $( "#dialog-form-error" ).dialog({
 			autoOpen: false,
 			height: $(window).height() < 840 ? $(window).height() : 840,
@@ -72,7 +73,7 @@
 			modal: true,
 			buttons: {
 				Enviar: function() {
-					
+
 				},
 				Cancelar: function() {
 					$('#dialog-form-error input[type=text]').val('');
@@ -83,5 +84,5 @@
 				$('#dialog-form-error input[type=text]').val('');
 			}
 		});
-	});  
+	});
 </script>

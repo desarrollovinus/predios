@@ -722,17 +722,6 @@ $uso_edificacion = array(
 			<?php echo form_fieldset_close(); ?>
 			<div class="clear">&nbsp;</div>
 		</div>
-		<!-- LISTA DE VÉRTICES  -->
-		<h3><a href= "#seccion9">VÉRTICES</a></h3>
-		<div>
-			<div id="error"></div>
-			<label for="btn_subir_csv">Actualizar registros (CSV)</label>
-			<input type="file" id="btn_subir_csv">
-			<div id="vertices"></div>
-			<p style="font-size:0.8em;">
-				Src: Magna-Sirgas / Colombia Bogotá Zone
-			</p>
-		</div>
 	</div>
 
 	<br /><input type="hidden" id="errores" />
@@ -808,32 +797,10 @@ $uso_edificacion = array(
 	?>
 </div>
 <script type="text/javascript">
-	var datos = {};
-	new AjaxUpload('#btn_subir_csv', {
-		action: '<?php echo site_url("archivos_controller/subir_csv"); ?>',
-		type: 'POST',
-		data: datos,
-		onSubmit : function(archivo , ext){
-			$("#error").html("");
-			if (ext[0] != "csv") {
-				$("#error").html('<div id="alerta" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0px 0.7em;"><p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>No es un archivo csv</p></div>');
-				return false;
-			}
-			datos['ficha'] = $('#form input[name=ficha]').val();
-		}, // onsubmit
-		onComplete: function(archivo, respuesta){
-			if (respuesta) {
-				console.log(respuesta);
-				$("#vertices").load("<?php echo site_url('archivos_controller/cargar_vertices'); ?>", {"ficha_predial": $('#form input[name=ficha]').val()});
-			}
-
-		} // oncomplete
-	}); // AjaxUpload
 	//este script se ejecuta una vez se haya cargado el documento completamente (cuando el documento este ready)
 	$(document).ready(function()
 	{
 		$( "#form input[type=submit], #form input[type=button]").button();
-		$("#vertices").load("<?php echo site_url('archivos_controller/cargar_vertices'); ?>", {"ficha_predial": $('#form input[name=ficha]').val()});
 		$('#navigation a').stop().animate({'marginLeft':'85px'},1000);
 
         $('#navigation > li').hover(
