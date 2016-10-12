@@ -419,12 +419,6 @@ class Archivos_controller extends CI_Controller
 		echo $estado;
 	}
 
-	function cargar_vertices(){
-		$this->load->model("accionesDAO");
-		$this->data['vertices'] = $this->accionesDAO->consultar_coordenadas($this->input->post('ficha_predial'));
-		$this->load->view('actualizar/vertices', $this->data);
-	}
-
 	// genera un kml con 1 o mas unidades funcionales y por predio
 	function generar_kml()
 	{

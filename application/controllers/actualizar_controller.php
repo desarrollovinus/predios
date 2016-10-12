@@ -35,7 +35,7 @@ class Actualizar_controller extends CI_Controller {
 		$this->data['menu'] = 'actualizar/menu';
 
 		// Carga de modelos
-		$this->load->model(array('ProcesosDAO', 'TramosDAO', 'ContratistasDAO', 'PrediosDAO', 'PropietariosDAO'));
+		$this->load->model(array('ProcesosDAO', 'TramosDAO', 'ContratistasDAO', 'PrediosDAO', 'PropietariosDAO', 'accionesDAO'));
 	}
 	/**
 	 * Pagina principal del modulo
@@ -403,6 +403,23 @@ class Actualizar_controller extends CI_Controller {
 					// Se carga la vista
 					$this->load->view('actualizar/propietarios/buscar', $this->data);
 				break; // Buscar propietaro
+				// Vertices
+				case 'vertices':
+					// Se toman valores que vienen por post
+					$this->data['ficha'] = $this->input->post('ficha');
+					// Se carga la vista
+					$this->load->view('actualizar/vertices/index', $this->data);
+				break; // Vertices de ficha predial
+				// Vertices Listar
+				case 'vertices_lista':
+					// Se toman valores que vienen por post
+					$this->data['ficha'] = $this->input->post('ficha');
+					// listado de vertices
+					$this->data['vertices'] = $this->accionesDAO->consultar_coordenadas($this->input->post('ficha'));
+					// Se carga la vista
+					$this->load->view('actualizar/vertices/listar', $this->data);
+				break; // Vertices de ficha predial
+
             } // suiche
         }else{
             //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
