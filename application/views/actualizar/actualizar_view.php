@@ -728,14 +728,17 @@ $uso_edificacion = array(
 	<div class="clear">&nbsp;</div>
 	<input type="hidden" id="boton_hidden" name="boton_hidden" value="" />
 	<?php
-		$guardar = array(
-			'type' => 'button',
-			'name' => 'guardar',
-			'id' => 'guardar',
-			'value' => 'Guardar y volver'
-		);
-		echo form_input($guardar);
+	 if(isset($permisos['Fichas']['Actualizar'])) {
+		 $guardar = array(
+			 'type' => 'button',
+			 'name' => 'guardar',
+			 'id' => 'guardar',
+			 'value' => 'Guardar y volver'
+		 );
+		 echo form_input($guardar);
+	 }
 
+	 if(isset($permisos['Fichas']['Actualizar'])) {
 		$continuar = array(
 			'type' => 'button',
 			'name' => 'continuar',
@@ -743,6 +746,7 @@ $uso_edificacion = array(
 			'value' => 'Guardar y continuar'
 		);
 		echo form_input($continuar);
+	 }
 
 		$salir = array(
 			'type' => 'button',

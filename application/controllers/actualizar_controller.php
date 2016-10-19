@@ -221,12 +221,6 @@ class Actualizar_controller extends CI_Controller {
 	 */
 	function ficha()
 	{
-		//se cargan los permisos
-		$permisos = $this->session->userdata('permisos');
-		if( ! isset($permisos['Fichas']['Actualizar']) ) {
-			$this->session->set_flashdata('error', 'Usted no cuenta con permisos para actualizar el m&oacute;dulo de Gesti&oacute;n de Fichas Prediales.');
-			redirect('');
-		}
 		//se obtiene el segmento de la uri correspondiente a la id del predio
 		$id_predio = $this->uri->segment(3);
 		if( $id_predio )
