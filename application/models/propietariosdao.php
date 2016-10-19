@@ -170,8 +170,19 @@ class PropietariosDAO extends CI_Model
 
 	function obtener_todos_los_propietarios()
 	{
-		$this->db->order_by('nombre, id_propietario');
-		$resultado = $this->db->get('tbl_propietario')->result();
+		$query ="SELECT
+			*, (
+				SELECT
+					Count(a.id_relacion)
+				FROM
+					tbl_relacion AS a
+				WHERE
+					a.id_propietario = tbl_propietario.id_propietario
+			) predios
+		FROM
+			tbl_propietario";
+			
+		$resultado = $this->db->query($query)->result();
 
 		#accion de auditoria
 		$auditoria = array(

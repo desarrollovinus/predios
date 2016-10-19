@@ -11,6 +11,7 @@
 					<th>Número de Documento</th>
 					<th>Nombre</th>
 					<th>Teléfono</th>
+					<th>Predios</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -21,10 +22,12 @@
 						<td><?= $propietario->documento; ?></td>
 						<td><?= $propietario->nombre; ?></td>
 						<td><?= $propietario->telefono; ?></td>
+						<td><?= $propietario->predios; ?></td>
 						<td width="70px">
 							<?php if (isset($permisos['Fichas']['Actualizar'])): ?>
-							  <img onclick="editar(<?= $propietario->id_propietario ?>)" border="0" title="Actualizar" src="<?= base_url().'img/edit.png' ?>">
+								<img onclick="editar(<?= $propietario->id_propietario ?>)" style="cursor:pointer;" title="Actualizar" src="<?= base_url().'img/edit.png' ?>">
 							<?php endif; ?>
+							<img onclick="detalle(<?= $propietario->id_propietario ?>)" style="cursor:pointer;" title="Ver detalle" src="<?= base_url().'img/search.png' ?>">
 						</td>
 					</tr>
 				<?php endforeach; ?>
@@ -37,7 +40,8 @@
 	$(document).ready(function(){
 		$('#tabla').dataTable({
 			"bJQueryUI": true,
-			"sPaginationType": "full_numbers"
+			"sPaginationType": "full_numbers",
+			"aaSorting": [[ 2, "asc" ]]
 		});
 	});
 
@@ -47,6 +51,11 @@
 		cargar_interfaz("cont_modal", "<?= site_url('actualizar_controller/cargar_interfaz'); ?>", {"tipo": "propietarios_gestion", "id": id});
 	} // editar
 
+	function detalle(id)
+	{
+		// Carga de interfaz
+		cargar_interfaz("principal", "<?= site_url('propietarios_controller/propietario'); ?>", {"tipo": "propietarios_gestion", "id": id});
+	} // editar
 
 	function guardar()
 	{
