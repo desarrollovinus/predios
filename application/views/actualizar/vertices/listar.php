@@ -3,15 +3,13 @@
     #tabla-vertices {
         text-align: center;
     }
-    #tabla-vertices th, #tabla-vertices td {
-        font-size: 1.3em;
-    }
 </style>
 
 <div id="error"></div>
+<h4>Vértices del predio <?=$ficha ?></h4>
 <label for="btn_subir_csv">Actualizar registros (CSV)</label>
 <input type="file" id="btn_subir_csv">
-<table id="tabla-vertices" style="width:100%; font-size: 13px">
+<table id="tabla-vertices" style="width:100%;">
     <thead>
         <tr>
             <th>Punto</th>
