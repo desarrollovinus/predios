@@ -4,7 +4,7 @@
         <thead>
             <tr>
                 <th>Predio</th>
-                <th>Participacion</th>
+                <th>Participación</th>
             </tr>
         </thead>
         <tbody>
