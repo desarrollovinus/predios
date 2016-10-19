@@ -112,6 +112,7 @@
 
 	    // Se cierra el modal
 	    cerrar_modal();
+		cargar_interfaz("principal", "<?= site_url('propietarios_controller/index'); ?>", {"tipo": "propietarios_gestion", "id": id});
 	} // guardar
 
 </script>
