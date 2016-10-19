@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/demo_table_jui.css" type="text/css" />
 <div id="form">
 	<?php echo form_fieldset('<b>Actualizar</b>'); ?>
-		<?php if (isset($permisos['Fichas']['Actualizar'])) { ?><img src="<?php echo base_url(); ?>img/edit.png" title="Actualizar" >: Actualizar Ficha <?php } ?>
+		<img src="<?php echo base_url(); ?>img/edit.png" title="Actualizar" >: Actualizar Ficha
 		<?php if (isset($permisos['Bit&aacute;cora']['Consultar'])) { ?><img alt="Ver Bit&aacute;cora" title="Ver Bit&aacute;cora" src="<?php echo base_url(); ?>img/bitacora.png">: Bit&aacute;cora,<?php } ?>
 		<?php if (isset($permisos['Archivos y Fotos']['Consultar'])) {?>
 			<img src="<?php echo base_url(); ?>img/archivos.png" title="Subir archivos" >: Subir Archivos
@@ -34,7 +34,7 @@
 							<td><?= $this->PrediosDAO->fotos_cantidad($ficha->ficha_predial)->fotos_cantidad; ?></td>
 							<td><?= $this->PrediosDAO->archivos_cantidad($ficha->ficha_predial); ?></td>
 							<td width="550px">
-								<?php if (isset($permisos['Fichas']['Actualizar'])) { ?><?php echo anchor("actualizar_controller/ficha/$ficha->id_predio", '<img src="'.base_url().'img/edit.png"', 'title="Actualizar"'); ?><?php } ?>
+								<?= anchor("actualizar_controller/ficha/$ficha->id_predio", '<img src="'.base_url().'img/edit.png"', 'title="Actualizar"'); ?>
 								<?php if (isset($permisos['Bit&aacute;cora']['Consultar'])) { ?><a href="javascript:void(window.open('<?php echo site_url("bitacora_controller/obtener_bitacora/$ficha->ficha_predial"); ?>','bitacora','resizable=no,location=no,menubar=no, scrollbars=yes,status=no,toolbar=no,fullscreen=no, dependent=no,width=1020,height=600,left=100,top=0' ))"><img border="0" alt="Ver Bit&aacute;cora" title="Ver Bit&aacute;cora" src="<?php echo base_url(); ?>img/bitacora.png"></a><?php } ?>
 								<?php
 									if (isset($permisos['Archivos y Fotos']['Consultar'])) {
