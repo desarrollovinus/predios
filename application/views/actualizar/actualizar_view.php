@@ -588,32 +588,39 @@ $uso_edificacion = array(
 					<tbody>
 						<tr>
 							<td width="15%"><b></b></td>
-							<td><b>LONGITUD</b></td>
-							<td><b>COLINDANTES</b></td>
+							<td></td>
 						</tr>
 						<tr>
 							<td><?php echo form_label('NORTE','norte_long'); ?></td>
 							<td><?= form_input('norte_long', $linderos->norte_long);?></td>
+						</tr>
+						<tr>
 							<?php $data = array('name'=>'nom_norte', 'value' => $linderos->nom_norte, 'rows'=>'5') ?>
-							<td><?= form_textarea($data);?></td>
+							<td colspan="2"><?= form_textarea($data);?></td>
 						</tr>
 						<tr>
 							<td><?php echo form_label('SUR','sur_long'); ?></td>
 							<td><?= form_input('sur_long', $linderos->sur_long);?></td>
+						</tr>
+						<tr>
 							<?php $data = array('name'=>'nom_sur', 'value' => $linderos->nom_sur, 'rows'=>'5') ?>
-							<td><?= form_textarea($data);?></td>
+							<td colspan="2"><?= form_textarea($data);?></td>
 						</tr>
 						<tr>
 							<td><?php echo form_label('ORIENTE','oriente_long'); ?></td>
 							<td><?= form_input('oriente_long', $linderos->oriente_long);?></td>
+						</tr>
+						<tr>
 							<?php $data = array('name'=>'nom_oriente', 'value' => $linderos->nom_oriente, 'rows'=>'5') ?>
-							<td><?= form_textarea($data);?></td>
+							<td colspan="2"><?= form_textarea($data);?></td>
 						</tr>
 						<tr>
 							<td><?php echo form_label('OCCIDENTE','occidente_long'); ?></td>
 							<td><?= form_input('occidente_long', $linderos->occidente_long);?></td>
+						</tr>
+						<tr>
 							<?php $data = array('name'=>'nom_occ', 'value' => $linderos->nom_occ, 'rows'=>'5') ?>
-							<td><?= form_textarea($data);?></td>
+							<td colspan="2"><?= form_textarea($data);?></td>
 						</tr>
 					</tbody>
 				</table>
