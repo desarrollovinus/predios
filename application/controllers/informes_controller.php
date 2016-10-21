@@ -591,7 +591,7 @@ class Informes_controller extends CI_Controller
 		$permisos = $this->session->userdata('permisos');
 		# verificar permisos
 		if(!isset($permisos['Informes']['Semáforo']) ) {
-  			$this->session->set_flashdata('error', 'Usted no cuenta con permisos para generar el informe de sábana predial.');
+  			$this->session->set_flashdata('error', 'Usted no cuenta con permisos para generar el informe semáforo.');
   			redirect('');
 		}
 
@@ -599,7 +599,7 @@ class Informes_controller extends CI_Controller
 		$auditoria = array(
 			'fecha_hora' => date('Y-m-d H:i:s', time()),
 			'id_usuario' => $this->session->userdata('id_usuario'),
-			'descripcion' => 'Consulta el informe de sábana predial'
+			'descripcion' => 'Consulta el informe semáforo'
 		);
 
 		$this->db->insert('auditoria', $auditoria);
