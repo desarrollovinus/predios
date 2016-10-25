@@ -523,7 +523,7 @@ class Informes_controller extends CI_Controller
 	function gestion_predial_excel(){
 		$permisos = $this->session->userdata('permisos');
 		# verificar permisos
-		if(!isset($permisos['Informes']['Gestion predial']) ) {
+		if(!isset($permisos['Informes']['Gestión predial']) ) {
   			$this->session->set_flashdata('error', 'Usted no cuenta con permisos para generar el informe de gestion predial.');
   			redirect('');
 		}
