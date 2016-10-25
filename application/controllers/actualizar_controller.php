@@ -35,7 +35,7 @@ class Actualizar_controller extends CI_Controller {
 		$this->data['menu'] = 'actualizar/menu';
 
 		// Carga de modelos
-		$this->load->model(array('ProcesosDAO', 'TramosDAO', 'ContratistasDAO', 'PrediosDAO', 'PropietariosDAO'));
+		$this->load->model(array('ProcesosDAO', 'TramosDAO', 'ContratistasDAO', 'PrediosDAO', 'PropietariosDAO', 'accionesDAO'));
 	}
 	/**
 	 * Pagina principal del modulo
@@ -45,7 +45,6 @@ class Actualizar_controller extends CI_Controller {
 		$this->load->model(array('PrediosDAO', 'ContratistasDAO', 'AccionesDAO'));
 		//se arma el array asociativo que se envia a la vista
 		$this->data['fichas'] = 				$this->PrediosDAO->obtener_fichas();
-		$this->data['contratistas'] =			$this->ContratistasDAO->obtener_contratistas();
 		$this->data['titulo_pagina'] = 			'Actualizar';
 		$this->data['contenido_principal'] = 	'actualizar/index_view';
 		//se carga la vista y se envia el array asociativo
@@ -221,12 +220,6 @@ class Actualizar_controller extends CI_Controller {
 	 */
 	function ficha()
 	{
-		//se cargan los permisos
-		$permisos = $this->session->userdata('permisos');
-		if( ! isset($permisos['Fichas']['Actualizar']) ) {
-			$this->session->set_flashdata('error', 'Usted no cuenta con permisos para actualizar el m&oacute;dulo de Gesti&oacute;n de Fichas Prediales.');
-			redirect('');
-		}
 		//se obtiene el segmento de la uri correspondiente a la id del predio
 		$id_predio = $this->uri->segment(3);
 		if( $id_predio )
@@ -403,6 +396,23 @@ class Actualizar_controller extends CI_Controller {
 					// Se carga la vista
 					$this->load->view('actualizar/propietarios/buscar', $this->data);
 				break; // Buscar propietaro
+				// Vertices
+				case 'vertices':
+					// Se toman valores que vienen por post
+					$this->data['ficha'] = $this->input->post('ficha');
+					// Se carga la vista
+					$this->load->view('actualizar/vertices/index', $this->data);
+				break; // Vertices de ficha predial
+				// Vertices Listar
+				case 'vertices_lista':
+					// Se toman valores que vienen por post
+					$this->data['ficha'] = $this->input->post('ficha');
+					// listado de vertices
+					$this->data['vertices'] = $this->accionesDAO->consultar_coordenadas($this->input->post('ficha'));
+					// Se carga la vista
+					$this->load->view('actualizar/vertices/listar', $this->data);
+				break; // Vertices de ficha predial
+
             } // suiche
         }else{
             //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio

@@ -52,6 +52,8 @@ if ($id > 0) {
                     <?= form_input($data) ?>
                 </td>
             </tr>
+        <!--muestra la participacion si existe la ficha  -->
+        <?php if ($ficha): ?>
             <tr>
                 <td><?= form_label('Participación*', 'participacion')?></td>
             </tr>
@@ -61,6 +63,7 @@ if ($id > 0) {
                     <?= form_input($data) ?>
                 </td>
             </tr>
+        <?php endif; ?>
         </tbody>
     </table>
 

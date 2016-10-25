@@ -419,15 +419,18 @@ class Archivos_controller extends CI_Controller
 		echo $estado;
 	}
 
-	function cargar_vertices(){
-		$this->load->model("accionesDAO");
-		$this->data['vertices'] = $this->accionesDAO->consultar_coordenadas($this->input->post('ficha_predial'));
-		$this->load->view('actualizar/vertices', $this->data);
-	}
-
 	// genera un kml con 1 o mas unidades funcionales y por predio
 	function generar_kml()
 	{
+		#accion de auditoria
+		$auditoria = array(
+			'fecha_hora' => date('Y-m-d H:i:s', time()),
+			'id_usuario' => $this->session->userdata('id_usuario'),
+			'descripcion' => 'Genera archivo kml'
+		);
+
+		$this->db->insert('auditoria', $auditoria);
+
 		$this->load->model(array("accionesDAO", "InformesDAO"));
 		$this->convencion_predio();
 		$unidades_funcionales = $this->uri->segment(3);

@@ -521,10 +521,41 @@ class Informes_controller extends CI_Controller
 	}
 
 	function gestion_predial_excel(){
+		$permisos = $this->session->userdata('permisos');
+		# verificar permisos
+		if(!isset($permisos['Informes']['Gestion predial']) ) {
+  			$this->session->set_flashdata('error', 'Usted no cuenta con permisos para generar el informe de gestion predial.');
+  			redirect('');
+		}
+
+		#accion de auditoria
+		$auditoria = array(
+			'fecha_hora' => date('Y-m-d H:i:s', time()),
+			'id_usuario' => $this->session->userdata('id_usuario'),
+			'descripcion' => 'Consulta el informe de gestion predial'
+		);
+
+		$this->db->insert('auditoria', $auditoria);
 		$this->load->view('informes/gestion_predial/excel');
 	}
 
 	function gestion_procesos_excel(){
+		$permisos = $this->session->userdata('permisos');
+		# verificar permisos
+		if(!isset($permisos['Informes']['Gestión de procesos']) ) {
+			$this->session->set_flashdata('error', 'Usted no cuenta con permisos para generar el informe de Gestion de procesos.');
+			redirect('');
+		}
+
+		#accion de auditoria
+		$auditoria = array(
+			'fecha_hora' => date('Y-m-d H:i:s', time()),
+			'id_usuario' => $this->session->userdata('id_usuario'),
+			'descripcion' => 'Consulta el informe de gestión de procesos'
+		);
+
+		$this->db->insert('auditoria', $auditoria);
+
 		$this->load->model('PrediosDAO');
 
 		$this->load->view('informes/gestion_predial/procesos_excel');
@@ -537,11 +568,41 @@ class Informes_controller extends CI_Controller
 	}
 
 	function sabana_excel(){
+		$permisos = $this->session->userdata('permisos');
+		# verificar permisos
+		if(!isset($permisos['Informes']['Sábana predial']) ) {
+  			$this->session->set_flashdata('error', 'Usted no cuenta con permisos para generar el informe de sábana predial.');
+  			redirect('');
+		}
+
+		#accion de auditoria
+		$auditoria = array(
+			'fecha_hora' => date('Y-m-d H:i:s', time()),
+			'id_usuario' => $this->session->userdata('id_usuario'),
+			'descripcion' => 'Consulta el informe de sábana predial'
+		);
+
+		$this->db->insert('auditoria', $auditoria);
 		$this->load->model(array('PrediosDAO', 'PagosDAO'));
 		$this->load->view('informes/sabana/excel');
 	}
 
 	function semaforo_excel(){
+		$permisos = $this->session->userdata('permisos');
+		# verificar permisos
+		if(!isset($permisos['Informes']['Semáforo']) ) {
+  			$this->session->set_flashdata('error', 'Usted no cuenta con permisos para generar el informe semáforo.');
+  			redirect('');
+		}
+
+		#accion de auditoria
+		$auditoria = array(
+			'fecha_hora' => date('Y-m-d H:i:s', time()),
+			'id_usuario' => $this->session->userdata('id_usuario'),
+			'descripcion' => 'Consulta el informe semáforo'
+		);
+
+		$this->db->insert('auditoria', $auditoria);
 		$this->load->model('PrediosDAO');
 		$this->load->view('informes/semaforo/excel');
 	}
