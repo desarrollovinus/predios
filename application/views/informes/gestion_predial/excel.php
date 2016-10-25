@@ -141,11 +141,11 @@ $objPHPExcel->getActiveSheet()->setCellValue('Q1', 'Barrio / vereda');
 $objPHPExcel->getActiveSheet()->setCellValue('R1', 'Clasificación');
 $objPHPExcel->getActiveSheet()->setCellValue('S1', 'Actividad económica');
 $objPHPExcel->getActiveSheet()->setCellValue('T1', 'Topografía');
-$objPHPExcel->getActiveSheet()->setCellValue('U1', 'Área total terreno');
-$objPHPExcel->getActiveSheet()->setCellValue('V1', 'Área requerida');
-$objPHPExcel->getActiveSheet()->setCellValue('W1', 'Área remanente');
-$objPHPExcel->getActiveSheet()->setCellValue('X1', 'Área sobrante');
-$objPHPExcel->getActiveSheet()->setCellValue('Y1', 'Área total requerida');
+$objPHPExcel->getActiveSheet()->setCellValue('U1', 'Área total terreno (m2)');
+$objPHPExcel->getActiveSheet()->setCellValue('V1', 'Área requerida (m2)');
+$objPHPExcel->getActiveSheet()->setCellValue('W1', 'Área remanente (m2)');
+$objPHPExcel->getActiveSheet()->setCellValue('X1', 'Área sobrante (m2)');
+$objPHPExcel->getActiveSheet()->setCellValue('Y1', 'Área total requerida (m2)');
 $objPHPExcel->getActiveSheet()->setCellValue('Z1', 'Lindero');
 
 //Se declara fila
@@ -175,7 +175,7 @@ foreach ($this->InformesDAO->obtener_predios_agrupados() as $registro) {
 
 		// Cálculo de longitud y áreas
 		$longitud_efectiva += $ficha->abscisa_final - $ficha->abscisa_inicial;
-		$area_total += $ficha->area_total_catastral;
+		// $area_total += $ficha->area_total_catastral;
 		$area_requerida += $ficha->area_requerida;
 		$area_remanente += $ficha->area_residual;
 
@@ -206,6 +206,18 @@ foreach ($this->InformesDAO->obtener_predios_agrupados() as $registro) {
 		$kms_final = "0";
 	}
 
+	// Si son dos o más propietarios
+	if ($ficha->numero_propietarios > 1) {
+		// Si es mayor a dos
+		if ($ficha->numero_propietarios > 2) {
+			$propietarios_adicionales = " Y OTROS";
+		}else{
+			$propietarios_adicionales = " Y OTRO";
+		}
+	}else{
+		$propietarios_adicionales = "";
+	}
+
 	// Datos
 	$objPHPExcel->getActiveSheet()->setCellValue("A{$fila}", $numero);
 	$objPHPExcel->getActiveSheet()->setCellValue("B{$fila}", $ficha->unidad_funcional);
@@ -217,7 +229,7 @@ foreach ($this->InformesDAO->obtener_predios_agrupados() as $registro) {
 	$objPHPExcel->getActiveSheet()->setCellValue("H{$fila}", $ficha->requiere_longitud_efectiva);
 	$objPHPExcel->getActiveSheet()->setCellValue("I{$fila}", "$margen_inicial-$ficha->margen_final");
 	$objPHPExcel->getActiveSheet()->setCellValue("J{$fila}", $ficha->numero_propietarios);
-	$objPHPExcel->getActiveSheet()->setCellValue("K{$fila}", $ficha->nombre_propietario);
+	$objPHPExcel->getActiveSheet()->setCellValue("K{$fila}", $ficha->nombre_propietario.$propietarios_adicionales);
 	$objPHPExcel->getActiveSheet()->setCellValue("L{$fila}", $ficha->documento_propietario);
 	$objPHPExcel->getActiveSheet()->setCellValue("M{$fila}", $ficha->direccion);
 	$objPHPExcel->getActiveSheet()->setCellValue("N{$fila}", $ficha->matricula);
@@ -227,7 +239,8 @@ foreach ($this->InformesDAO->obtener_predios_agrupados() as $registro) {
 	$objPHPExcel->getActiveSheet()->setCellValue("R{$fila}", $ficha->uso_terreno);
 	$objPHPExcel->getActiveSheet()->setCellValue("S{$fila}", $ficha->uso_edificacion);
 	$objPHPExcel->getActiveSheet()->setCellValue("T{$fila}", $ficha->topografia);
-	$objPHPExcel->getActiveSheet()->setCellValue("U{$fila}", $area_total);
+	$objPHPExcel->getActiveSheet()->setCellValue("U{$fila}", $ficha->area_total_catastral);
+	// $objPHPExcel->getActiveSheet()->setCellValue("U{$fila}", $area_total);
 	$objPHPExcel->getActiveSheet()->setCellValue("V{$fila}", $area_requerida);
 	$objPHPExcel->getActiveSheet()->setCellValue("W{$fila}", $area_remanente);
 	$objPHPExcel->getActiveSheet()->setCellValue("X{$fila}", "=U{$fila}-Y{$fila}");
