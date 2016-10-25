@@ -45,7 +45,6 @@ class Actualizar_controller extends CI_Controller {
 		$this->load->model(array('PrediosDAO', 'ContratistasDAO', 'AccionesDAO'));
 		//se arma el array asociativo que se envia a la vista
 		$this->data['fichas'] = 				$this->PrediosDAO->obtener_fichas();
-		$this->data['contratistas'] =			$this->ContratistasDAO->obtener_contratistas();
 		$this->data['titulo_pagina'] = 			'Actualizar';
 		$this->data['contenido_principal'] = 	'actualizar/index_view';
 		//se carga la vista y se envia el array asociativo

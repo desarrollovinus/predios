@@ -53,18 +53,8 @@ class Registro_controller extends CI_Controller
 	{
 		//se carga el modelo ProcesosDAO
 		$this->load->model('ProcesosDAO');
-		//se carga el modelo TramosDAO
-		$this->load->model('TramosDAO');
-		//se carga el modelo ContratistasDAO
-		$this->load->model('ContratistasDAO');
-		$this->data['funciones_predios_obra'] =			$this->PrediosDAO->obtener_funciones_predios_obra();
-		$this->data['estados_via'] =			$this->PrediosDAO->obtener_estados_via();
 		//se obtienen todos los estados posibles que tiene un proceso
 		$this->data['estados'] = $this->ProcesosDAO->obtener_estados_proceso();
-		//se obtienen todos los tramos
-		$this->data['tramos'] = $this->TramosDAO->obtener_tramos();
-		//se obtienen todos los contratistas
-		$this->data['contratistas'] = $this->ContratistasDAO->obtener_contratistas();
 		//se establece el titulo de la pagina
 		$this->data['titulo_pagina'] = 'Registro de predios';
 		//se establece la vista que tiene el contenido principal
@@ -75,7 +65,7 @@ class Registro_controller extends CI_Controller
 
 	/**
 	 * Esta funci&oacute;n se encarga de guardar la informaci&oacute;n del predio nuevo.
-	 *
+	 * No se recomienda eliminar la funcion utf8_encode ya que algunos valores van a a quedar inicializados en 0
 	 * @access	public
 	 */
 	function registrar_predio()
@@ -231,7 +221,7 @@ class Registro_controller extends CI_Controller
 			// se inserta los linderos
 			$this->PrediosDAO->insertar_linderos($ficha_predial, $linderos);
 
-			$this->PrediosDAO->insertar_predio($ficha_predial, utf8_encode($fecha_hora), utf8_encode($this->session->userdata('id_usuario'))); 
+			$this->PrediosDAO->insertar_predio($ficha_predial, utf8_encode($fecha_hora), utf8_encode($this->session->userdata('id_usuario')));
 			echo "correcto";
 		}
 	}
