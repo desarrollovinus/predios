@@ -84,7 +84,7 @@ class Gestion_social_controller extends CI_Controller {
 	}
 
 	function cargar_fichas_semaforo(){
-		print json_encode($this->PrediosDAO->obtener_predios_semafoto($this->input->post("unidad_funcional")));
+		print json_encode($this->PrediosDAO->obtener_predios_semaforo($this->input->post("unidad_funcional")));
 	}
 
 	function cargar_unidades_sociales_residentes(){
