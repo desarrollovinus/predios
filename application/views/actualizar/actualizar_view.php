@@ -43,6 +43,7 @@ $uso_terreno = array(
 
 $uso_edificacion = array(
 	' ' => ' ',
+	'AGRÍCOLA' => 'AGRÍCOLA',
 	'AGROPECUARIO' => 'AGROPECUARIO',
 	'BIEN DE DOMINIO PUBLICO' => 'BIEN DE DOMINIO PUBLICO',
 	'CULTURAL' => 'CULTURAL',
