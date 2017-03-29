@@ -12,7 +12,6 @@ $objPHPExcel->getProperties()
 	->setSubject("Ficha social - Unidad social productiva")
     ->setCategory("Reporte");
 
-
 //Definicion de las configuraciones por defecto en todo el libro
 $objPHPExcel->getDefaultStyle()->getFont()->setName('Arial'); //Tipo de letra
 $objPHPExcel->getDefaultStyle()->getFont()->setSize(10); //Tamaño
@@ -199,7 +198,7 @@ if (count($unidad) > 2) {
 	$nombre_ficha = $unidad_productiva->ficha_predial;
 } // if
 
-$hoja->setCellValue("E{$fila}", $nombre_ficha);
+$hoja->setCellValue("E{$fila}", "VINUS-$nombre_ficha");
 $hoja->setCellValue("G{$fila}", 'Tramo');
 $hoja->setDinamicSizeRow($predio->tramo, $fila, 'H:I');
 $fila++;
@@ -521,7 +520,7 @@ if (count($archivos) == 0) {
 
 header('Cache-Control: max-age=0');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment; filename="'.$unidad_productiva->ficha_predial.' - Unidad Social Productiva".xlsx"');
+header('Content-Disposition: attachment; filename="VINUS-'.$unidad_productiva->ficha_predial.' - Unidad Social Productiva".xlsx"');
 
 //Se genera el excel
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');

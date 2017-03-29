@@ -120,6 +120,8 @@ for ($i=1; $i <= 50; $i++) {
 	// siguiente columna
 	$columna++;
 } // for
+	
+$hoja->getRowDimension(6)->setRowHeight(25);
 
 //Celdas a combinar
 $hoja->mergeCells('A1:C3');
@@ -229,7 +231,7 @@ if (count($unidad) > 2) {
 	$nombre_ficha = $ficha;
 } // if
 
-$hoja->setCellValue('H6', $nombre_ficha);
+$hoja->setCellValue('H6', "VINUS-$nombre_ficha");
 $hoja->setCellValue('J6', 'Tramo:');
 $hoja->setCellValue('K6', $predio->tramo);
 
@@ -584,7 +586,7 @@ $objPHPExcel->getActiveSheet()->getStyle("A1:N{$fila}")->applyFromArray($borde_n
 //Se modifican los encabezados del HTTP para indicar que se envia un archivo de Excel.
 header('Cache-Control: max-age=0');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment; filename="'.$nombre_ficha.' - Caracterización general".xlsx"');
+header('Content-Disposition: attachment; filename="VINUS-'.$nombre_ficha.' - Caracterización general".xlsx"');
 
 //Se genera el excel
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');

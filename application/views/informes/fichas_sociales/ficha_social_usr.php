@@ -164,7 +164,7 @@ if (count($unidad) > 2) {
 } // if
 
 
-$hoja->setCellValue("H{$fila}", $nombre_ficha);
+$hoja->setCellValue("H{$fila}", "VINUS-$nombre_ficha");
 $hoja->setCellValue("J{$fila}", "Tramo:");
 $hoja->setCellValue("K{$fila}", $predio->tramo);
 $fila++;
@@ -474,7 +474,7 @@ foreach ($hoja->getMergeCells() as $cells) {
 
 header('Cache-Control: max-age=0');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment; filename="'.$unidad_residente->ficha_predial.' - Unidad Social Residente".xlsx"');
+header('Content-Disposition: attachment; filename="VINUS-'.$unidad_residente->ficha_predial.' - Unidad Social Residente".xlsx"');
 
 // Se genera el excel
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');

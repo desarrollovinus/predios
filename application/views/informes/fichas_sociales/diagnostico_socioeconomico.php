@@ -16,7 +16,7 @@ class PDF extends FPDF{
 	    $this->setX(52);
 	    $this->MultiCell(85,9, utf8_decode('FICHA SOCIAL DIAGNÓSTICO SOCIOECONÓMICO'),1,'C');
 	    $this->setX(52);
-	    $this->MultiCell(85,9, utf8_decode('PREDIO '.$GLOBALS['ficha']),1,'C');
+	    $this->MultiCell(85,9, utf8_decode('PREDIO VINUS-'.$GLOBALS['ficha']),1,'C');
 
 	    // Logo Vinus
 	    $this->setXY(137,10);
@@ -72,7 +72,7 @@ $pdf->Cell(191, 5, utf8_decode('1. DATOS GENERALES'), 1, 0, 'C');
 $pdf->setXY(16, $pdf->GetY() + 10);
 $pdf->SetFont('Arial', '', 8);
 $pdf->Cell(45, 1, utf8_decode('Proyecto:  Vías del Nus'), 0, 0, 'L');
-$pdf->Cell(55, 1, utf8_decode('Ficha Predial:  '.$predio->ficha_predial), 0, 0, 'L');
+$pdf->Cell(55, 1, utf8_decode("Ficha Predial:  VINUS-$predio->ficha_predial"), 0, 0, 'L');
 $pdf->Cell(55, 1, utf8_decode('Trayecto:  '. $predio->tramo), 0, 0, 'L');
 
 $pdf->setXY(16, $pdf->GetY() + 7);
@@ -260,4 +260,4 @@ $pdf->MultiCell(15, 7, utf8_decode('Nombre: Firma: C.C'), 0, 'L');
 $pdf->setXY(135, $pdf->GetY() - 21);
 $pdf->MultiCell(15, 7, utf8_decode('Nombre: Firma: C.C'), 0, 'L');
 
-$pdf->Output($predio->ficha_predial.'.pdf', 'D');
+$pdf->Output("VINUS-$predio->ficha_predial.pdf", 'D');
