@@ -23,7 +23,7 @@ class PDF extends FPDF{
 	    $this->MultiCell(85,9, utf8_decode('REGISTRO FOTOGRÁFICO'),1,'C');
 
 	    $this->setX(52);
-	    $this->MultiCell(85,9, utf8_decode("PREDIO ".substr($GLOBALS['ficha'], 0, 6)),1,'C');
+	    $this->MultiCell(85,9, utf8_decode("PREDIO VINUS-".substr($GLOBALS['ficha'], 0, 6)),1,'C');
 
 	    // Logo Vinus
 	    $this->setXY(137,10);
@@ -139,4 +139,4 @@ if(count($fotos) > 0) {
 
 
 // Se imprime el reporte
-$pdf->Output(substr($ficha, 0, 6).'.pdf', 'D');
+$pdf->Output("Registro fotográfico VINUS-$ficha.pdf", 'D');

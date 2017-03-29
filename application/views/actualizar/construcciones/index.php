@@ -1,5 +1,5 @@
 <h4 style="display: inline-block;">
-    Construcciones <?php if($subcategoria == 2) {echo "anexas"; } ?> del predio <?= $ficha; ?>
+    Construcciones <?php if($subcategoria == 2) {echo "anexas"; } ?> del predio VINUS-<?= $ficha; ?>
 </h4>
 <p style="float: right;">
     <input type="button" value="Nuevo" onClick="crear()" class="ui-button ui-widget ui-state-default ui-corner-all">

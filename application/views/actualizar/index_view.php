@@ -17,18 +17,18 @@
 				<thead>
 					<tr>
 						<!-- <th>Fecha de creaci&oacute;n</th> -->
-						<th>Ficha predial</th>
-						<th>Primer propietario</th>
-						<th>¿Requerido?</th>
-						<th>Fotos</th>
-						<th>Archivos</th>
-						<th>Opciones</th>
+						<th width="25%">Ficha predial</th>
+						<th width="45%">Primer propietario</th>
+						<th width="5%">¿Requerido?</th>
+						<th width="5%">Fotos</th>
+						<th width="5%">Archivos</th>
+						<th width="15%">Opciones</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php foreach ($fichas as $ficha): ?>
 						<tr>
-							<td><?php echo $ficha->ficha_predial; ?></td>
+							<td><?php echo "VINUS-$ficha->ficha_predial"; ?></td>
 							<td><?php echo $ficha->propietario; ?></td>
 							<td><?php echo $ficha->requerido; ?></td>
 							<td><?= $this->PrediosDAO->fotos_cantidad($ficha->ficha_predial)->fotos_cantidad; ?></td>

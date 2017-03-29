@@ -1,4 +1,4 @@
-<h4 style="display: inline-block;">Propietarios <?php echo $ficha; ?></h4>
+<h4 style="display: inline-block;">Propietarios VINUS-<?php echo $ficha; ?></h4>
 <p style="float: right;">
     <input type="button" value="Agregar" onClick="agregar_modal()" class="ui-button ui-widget ui-state-default ui-corner-all">
     <input type="button" value="Nuevo" onClick="crear()" class="ui-button ui-widget ui-state-default ui-corner-all">

@@ -93,7 +93,7 @@ $bordes = array(
  */
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(5);
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(10);
-$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(8);
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(13);
 $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(22);
 $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(15);
 $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(20);
@@ -221,8 +221,8 @@ foreach ($this->InformesDAO->obtener_predios_agrupados() as $registro) {
 	// Datos
 	$objPHPExcel->getActiveSheet()->setCellValue("A{$fila}", $numero);
 	$objPHPExcel->getActiveSheet()->setCellValue("B{$fila}", $ficha->unidad_funcional);
-	$objPHPExcel->getActiveSheet()->setCellValue("C{$fila}", substr($ficha->ficha_predial, 0, 6));
 	$objPHPExcel->getActiveSheet()->setCellValue("D{$fila}", $ficha->tramo);
+	$objPHPExcel->getActiveSheet()->setCellValue("C{$fila}", "VINUS-".substr($ficha->ficha_predial, 0, 6));
 	$objPHPExcel->getActiveSheet()->setCellValue("E{$fila}", $kms_inicial."+".$ms_inicial);
 	$objPHPExcel->getActiveSheet()->setCellValue("F{$fila}", $kms_final."+".$ms_final);
 	$objPHPExcel->getActiveSheet()->setCellValue("G{$fila}", $longitud_efectiva);

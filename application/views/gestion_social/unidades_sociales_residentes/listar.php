@@ -12,7 +12,7 @@
 <table style="width:100%; font-size: 13px">
 	<thead>
 		<tr>
-			<th>Ficha predial</th>
+			<th width="20%">Ficha predial</th>
 			<th>Relación con inmueble</th>
 			<th>Responsable</th>
 			<th>Integrantes</th>
@@ -24,7 +24,7 @@
 	<tbody>
 		<?php foreach ($unidades_sociales_residentes as $usr): ?>
 			<tr>
-				<td><?php echo $usr->ficha_predial; ?></td>
+				<td><?php echo "VINUS-$usr->ficha_predial"; ?></td>
 				<td><?php echo $usr->relacion_inmueble; ?></td>
 				<td><?php echo $usr->responsable; ?></td>
 				<td align="right"><?php echo $usr->integrantes; ?></td>

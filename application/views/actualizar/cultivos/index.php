@@ -1,4 +1,4 @@
-<h4 style="display: inline-block;">Cultivos y especies del predio <?php echo $ficha; ?></h4>
+<h4 style="display: inline-block;">Cultivos y especies del predio VINUS-<?php echo $ficha; ?></h4>
 <p style="float: right;">
     <input type="button" value="Nuevo" onClick="crear()" class="ui-button ui-widget ui-state-default ui-corner-all">
     <input type="button" value="Volver" onClick="javascript:volver()" class="ui-button ui-widget ui-state-default ui-corner-all">

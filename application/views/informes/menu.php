@@ -9,7 +9,7 @@
 		<li><a href="<?php echo site_url('informes_controller/gestion_predial_excel/'); ?>">Gestión Predial</a></li>
 	<?php endif; ?>
 	<?php if (isset($permisos['Informes']['Semáforo'])): ?>
-		<li><a href="<?php echo site_url('informes_controller/semaforo_excel/'); ?>">Semáforo</a></li>
+		<!-- <li><a href="<?php // echo site_url('informes_controller/semaforo_excel/'); ?>">Semáforo</a></li> -->
 	<?php endif; ?>
 	<?php if (isset($permisos['Informes']['Sábana predial'])): ?>
 		<li><a href="<?php echo site_url('informes_controller/sabana_excel/'); ?>">Sábana predial</a></li>

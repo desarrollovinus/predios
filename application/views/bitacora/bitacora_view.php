@@ -37,7 +37,7 @@
 		<div id="principal">
 			<div id="contenido">
 				<div id="form">
-					<?php echo form_fieldset("Bit&aacute;cora de la ficha predial <b>$ficha_predial</b>"); ?>
+					<?php echo form_fieldset("Bit&aacute;cora de la ficha predial <b>VINUS-$ficha_predial</b>"); ?>
 						<h3>Primer propietario:
 							<?php
 								if(!empty($propietario)) {

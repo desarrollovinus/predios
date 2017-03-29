@@ -290,7 +290,7 @@ if ($predio->numero_propietarios > 1) {
 
 // Datos
 $objPHPExcel->getActiveSheet()->setCellValue('N5', $predio->unidad_funcional);
-$objPHPExcel->getActiveSheet()->setCellValue('N7', "$predio->unidad_funcional-$predio->predio $predio->tipo_ficha $predio->numero_faja");
+$objPHPExcel->getActiveSheet()->setCellValue('N7', "VINUS-$predio->unidad_funcional-$predio->predio $predio->tipo_ficha $predio->numero_faja");
 $objPHPExcel->getActiveSheet()->setCellValue('C14', $predio->nombre_propietario.$propietarios_adicionales);
 $objPHPExcel->getActiveSheet()->setCellValue('C16', $predio->documento_propietario);
 $objPHPExcel->getActiveSheet()->setDinamicSizeRow($predio->direccion_propietario, 17, "C:H");
@@ -838,7 +838,7 @@ $objPHPExcel->getActiveSheet()->getHeaderFooter()->setOddFooter('&L&B' .$objPHPE
 //Se modifican los encabezados del HTTP para indicar que se envia un archivo de Excel.
 header('Cache-Control: max-age=0');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment; filename="'.$ficha.' Ficha predial".xlsx"');
+header("Content-Disposition: attachment; filename='Ficha predial VINUS-$ficha.xlsx'");
 
 //Se genera el excel
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');

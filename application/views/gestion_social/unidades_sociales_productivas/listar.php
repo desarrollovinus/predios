@@ -12,7 +12,7 @@
 <table style="width:100%; font-size: 13px">
 	<thead>
 		<tr>
-			<th>Ficha predial</th>
+			<th width="20%">Ficha predial</th>
 			<th>Relación con inmueble</th>
 			<th>Titular</th>
 			<th>Arrendatarios</th>
@@ -24,7 +24,7 @@
 	<tbody>
 		<?php foreach ($unidades_sociales_productivas as $usp): ?>
 			<tr>
-				<td><?= $usp->ficha_predial; ?></td>
+				<td><?= "VINUS-$usp->ficha_predial"; ?></td>
 				<td><?= $usp->relacion_inmueble; ?></td>
 				<td><?= $usp->titular; ?></td>
 				<td align="right"><?= $usp->arrendatarios; ?></td>

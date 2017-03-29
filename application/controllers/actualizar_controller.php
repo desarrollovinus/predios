@@ -230,7 +230,7 @@ class Actualizar_controller extends CI_Controller {
 			//se establece la vista que tiene el contenido del menu
 			$this->data['id_predio'] = $id_predio;
 			$this->data['predio'] =	$this->PrediosDAO->obtener_predio($id_predio);
-			$this->data['titulo_pagina'] = 			'Actualizar ficha '.$this->data['predio']->ficha_predial;
+			$this->data['titulo_pagina'] = 			'Actualizar ficha VINUS-'.$this->data['predio']->ficha_predial;
 			$this->data['menu'] = 'actualizar/menu_ficha';
 			$this->data['contenido_principal'] = 	'actualizar/index';
 			//se carga la vista y se envian los datos

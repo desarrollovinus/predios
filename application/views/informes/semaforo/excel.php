@@ -24,7 +24,7 @@ $objPHPExcel->getProperties()
 
 //Definicion de las configuraciones por defecto en todo el libro
 $objPHPExcel->getDefaultStyle()->getFont()->setName('Helvetica'); //Tipo de letra
-$objPHPExcel->getDefaultStyle()->getFont()->setSize(10); //Tamanio
+$objPHPExcel->getDefaultStyle()->getFont()->setSize(9); //Tamanio
 $objPHPExcel->getDefaultStyle()->getAlignment()->setWrapText(true);//Ajuste de texto
 $objPHPExcel->getDefaultStyle()->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);// Alineacion centrada
 
@@ -134,43 +134,132 @@ foreach ($unidades_funcionales as $unidad) {
 	// Combinar celdas
 	$hoja->mergeCells('B2:B3');
 
+	/**
+	 * Aplicacion de los estilos a la cabecera
+	 */
+	$objPHPExcel->getActiveSheet()->getStyle('A1:Y1')->applyFromArray($titulo_centrado_negrita);
+
+	//Logo
+	$objDrawing = new PHPExcel_Worksheet_Drawing();
+	$objDrawing->setName('Logo Concesión Vías del NUS S.A.S.');
+	$objDrawing->setDescription('Logo de uso exclusivo de Concesión Vías del NUS S.A.S.');
+	$objDrawing->setPath('img/logo_vinus_horizontal.png');
+	$objDrawing->setCoordinates('B2');
+	$hoja->getStyle('B2')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+	$objDrawing->setWidth(170);
+	$objDrawing->setOffsetX(10);
+	$objDrawing->setOffsetY(25);
+	$objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
+	$objDrawing->getShadow()->setDirection(40);
+
+	/*
+	 * Encabezado
+	 */
+	$hoja->setCellValue('C2', 'FORMATO 4 - SEMÁFORO PREDIAL');
+	// $hoja->setCellValue($columna_titulo.'2', 'Fecha de generación');
+	// $hoja->setCellValue($columna_titulo.'3', 'Unidad funcional');
+	$hoja->setCellValue('B5', 'Predio');
+	$hoja->setCellValue('B6', 'Ficha');
+	$hoja->setCellValue('B7', 'Función del predio en obra');
+	$hoja->setCellValue('B8', 'Estado del predio');
+	$hoja->setCellValue('B9', 'Estado de la vía');
+	$hoja->setCellValue('B11', 'Abscisa inicial');
+	$hoja->setCellValue('B12', 'Margen');
+	$hoja->setCellValue('B13', 'Abscisa final');
+	$hoja->setCellValue('B14', 'Margen');
+	$hoja->setCellValue('B15', 'Longitud efectiva');
+	// $hoja->setCellValue($columna_datos_inicio.'2', $this->InformesDAO->formatear_fecha(date('Y-m-d')));
+	// $hoja->setCellValue($columna_datos_inicio.'3', $unidad->Nombre);
+
+
 	// Se declara la columna donde inicia
 	$columna = "C";
 
 	$cont_columna = 1;
 
-	// Se hace el recorrido de predios del tramo
-	foreach ($this->InformesDAO->obtener_predios_agrupados($unidad->Nombre) as $registro) {
+	// Se consulta la cantidad de predios
+	$registros = $this->InformesDAO->obtener_predios_agrupados($unidad->Nombre);
+
+	// Se hace el recorrido de predios de la unidad funcional
+	foreach ($registros as $registro) {
 		// Se declara la fila donde inicia
 		$fila = 5;
 
-		/*
-		 * Definicion de la anchura de las columnas
-		 */
-		$hoja->getColumnDimension($columna)->setWidth(16);
+		// Contador
+		$cont = 1;
+
+		// echo substr($registro->ficha_predial, 0, 6);
+		// echo "<br>";
+
+		// Predio
+		$hoja->setCellValue("{$columna}5", substr($registro->ficha_predial, 0, 6));
+
+		// Aumento de fila
+		$fila++;
+
+		// Se consultan las fichas de un predio
+		$predios = $this->InformesDAO->obtener_predios_ficha(substr($registro->ficha_predial, 0, 6));
 
 		// Se recorren las fichas encontradas en ese predio
-		foreach ($this->InformesDAO->obtener_predios_ficha(substr($registro->ficha_predial, 0, 6)) as $predio) {
-			// Datos
-			$hoja->setCellValue($columna.$fila, substr($predio->ficha_predial, 0, 6));
+		foreach ($predios as $predio) {
+			// Columna temporal
+			$columna_temporal = $columna;
 
-			// Aumento de fila
-			$fila++;
+			/*
+			 * Definicion de la anchura de las columnas
+			 */
+			$hoja->getColumnDimension($columna)->setWidth(12);
 
-			// Si tiene un id en el estado del Semáforo
-			if ($predio->id_funcion_predio) {
-				// Se colorea la celda con el color que viene según el id
-				$objPHPExcel->getActiveSheet()->getStyle($columna.$fila)->getFill()->applyFromArray(array( 'type' => PHPExcel_Style_Fill::FILL_SOLID, 'startcolor' => array( 'rgb' => $predio->color_funcion )));
+			// Se carga la ficha
+			$ficha = $this->PrediosDAO->obtener_predios_semaforo($predio->ficha_predial);
+
+			// echo "  -".$ficha->ficha_predial.": "." (".count($predios).")";
+			// echo "<br>";
+			
+			// Ficha
+			$hoja->setCellValue("{$columna}6", $predio->ficha_predial);
+
+
+			($ficha->id_funcion_predio) ? $color_funcion = $ficha->color_funcion : $color_funcion = NULL ;
+
+
+			// Si hay otra ficha
+			if (count($predios) > $cont) {
+				// Estilos
+				$hoja->getStyle("{$columna}7")->getFill()->applyFromArray(array( 'type' => PHPExcel_Style_Fill::FILL_SOLID, 'startcolor' => array( 'rgb' => $color_funcion )));
+				
+				
+
+				// Aumento de columna
+				$columna++;
+			} else {
+				// Estilos
+				$hoja->getStyle("{$columna}7")->getFill()->applyFromArray(array( 'type' => PHPExcel_Style_Fill::FILL_SOLID, 'startcolor' => array( 'rgb' => $color_funcion )));
+
 			} // if
 
 
 
+			
+
+			// $color_disponible = "4F7F2C";
+			// $color_no_disponible = "FF0000";
+				
+			// // Si El predio está marcado como disponibe
+			// ($ficha->estado_predio == 1) ? $color_disponibilidad = $color_disponible : $color_disponibilidad = $color_no_disponible ;
+
+			// // Se colorea la celda con el color que viene según el id
+			// $hoja->getStyle($columna.$fila)->getFill()->applyFromArray(array( 'type' => PHPExcel_Style_Fill::FILL_SOLID, 'startcolor' => array( 'rgb' => $color_disponibilidad )));
+
+			
+			
+
+			// Aumento de contador
+			$cont++;
 		} // foreach predios
 
-		
 
-		// // Aumento de fila
-		// $fila++;
+		
 
 		// $color_disponible = "4F7F2C";
 		// $color_no_disponible = "FF0000";
@@ -436,13 +525,15 @@ $objPHPExcel->setActiveSheetIndex(0);
 // $objPHPExcel->getActiveSheet()->getHeaderFooter()->setOddHeader('&C&HPlease treatthis document as confidential!');
 $objPHPExcel->getActiveSheet()->getHeaderFooter()->setOddFooter('&L&B' .$objPHPExcel->getProperties()->getTitle() . '&RPágina &P de &N');
 
-// //Se modifican los encabezados del HTTP para indicar que se envia un archivo de Excel.
-// header('Cache-Control: max-age=0');
-// header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-// header('Content-Disposition: attachment; filename="Formato_Semaforo.xlsx"');
+// if ($this->uri->segment(3)) {
+	//Se modifican los encabezados del HTTP para indicar que se envia un archivo de Excel.
+	header('Cache-Control: max-age=0');
+	header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+	header('Content-Disposition: attachment; filename="Semáforo predial.xlsx"');
 
-// //Se genera el excel
-// $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-// $objWriter->save('php://output');
-// exit;
+	//Se genera el excel
+	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+	$objWriter->save('php://output');
+	exit;
+// }
 ?>

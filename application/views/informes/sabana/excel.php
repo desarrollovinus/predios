@@ -77,7 +77,7 @@ $bordes = array(
  * Definicion de la anchura de las columnas
  */
 $columna = "A";
-$objPHPExcel->getActiveSheet()->getColumnDimension($columna)->setWidth(14); $columna++;
+$objPHPExcel->getActiveSheet()->getColumnDimension($columna)->setWidth(21); $columna++;
 $objPHPExcel->getActiveSheet()->getColumnDimension($columna)->setWidth(10); $columna++;
 $objPHPExcel->getActiveSheet()->getColumnDimension($columna)->setWidth(20); $columna++;
 $objPHPExcel->getActiveSheet()->getColumnDimension($columna)->setWidth(25); $columna++;
@@ -587,7 +587,7 @@ foreach ($predios as $predio) {
 	} // if
 
 	// Contenido
-	$objPHPExcel->getActiveSheet()->setCellValue("A$fila", $nombre_ficha);
+	$objPHPExcel->getActiveSheet()->setCellValue("A$fila", "VINUS-$nombre_ficha");
 	$objPHPExcel->getActiveSheet()->setCellValue("B$fila", $predio->numero);
 	$objPHPExcel->getActiveSheet()->setCellValue("C$fila", $predio->tramo);
 	$objPHPExcel->getActiveSheet()->setCellValue("D$fila", $predio->nombre_propietario);

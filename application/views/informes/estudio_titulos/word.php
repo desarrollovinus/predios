@@ -109,7 +109,7 @@ $table->addCell(10000, $styleCell)->addText($descripcion->tramo, 'parrafo2', $al
 
 $ficha = explode('-', $predio->ficha_predial);
 
-$table->addCell(10000, $styleCell)->addText("$ficha[0]-$ficha[1]", 'parrafo2', $alineacion_centrada);
+$table->addCell(10000, $styleCell)->addText("VINUS-$ficha[0]-$ficha[1]", 'parrafo2', $alineacion_centrada);
 $table->addCell(10000, $styleCell)->addText($abscisa_inicial, 'parrafo2', $alineacion_centrada);
 $table->addCell(10000, $styleCell)->addText($abscisa_final, 'parrafo2', $alineacion_centrada);
 $seccion1->addTextBreak();
@@ -258,7 +258,7 @@ $objWriter->save($temp_file_uri);
 header('Content-Description: File Transfer');
 header('Content-Type: application/octet-stream');
 // header('Content-Disposition: attachment; filename=Acta_Recibo.docx');
-header("Content-Disposition: attachment; filename={$predio->ficha_predial} - Estudio de Títulos.docx");
+header("Content-Disposition: attachment; filename=Estudio de Títulos (VINUS-{$predio->ficha_predial}).docx");
 header('Content-Transfer-Encoding: binary');
 header('Expires: 0');
 header('Content-Length: ' . filesize($temp_file_uri));

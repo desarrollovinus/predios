@@ -6,7 +6,7 @@
 </style>
 
 <div id="error"></div>
-<h4>Vértices del predio <?=$ficha ?></h4>
+<h4>Vértices del predio VINUS-<?=$ficha ?></h4>
 <label for="btn_subir_csv">Actualizar registros (CSV)</label>
 <input type="file" id="btn_subir_csv">
 <table id="tabla-vertices" style="width:100%;">

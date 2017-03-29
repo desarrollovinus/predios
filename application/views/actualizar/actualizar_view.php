@@ -75,7 +75,7 @@ $uso_edificacion = array(
 		echo form_hidden($this->security->get_csrf_token_name(),$this->security->get_csrf_hash());
 		echo form_label('Ficha predial:&nbsp;&nbsp;&nbsp;','ficha');
 
-		echo form_input('ficha', $predio->ficha_predial, 'readonly');
+		echo form_input('ficha', "$predio->ficha_predial", 'readonly');
 
 		echo form_label('&nbsp;&nbsp;&nbsp;N&uacute;mero:&nbsp;&nbsp;&nbsp;','numero_ficha');
 		echo form_input('numero_ficha', $descripcion->numero);

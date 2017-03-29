@@ -8,7 +8,7 @@
 <table style="width:100%; font-size: 13px">
 	<thead>
 		<tr>
-			<th>Ficha predial</th>
+			<th width="20%">Ficha predial</th>
 			<th>Primer propietario</th>
 			<th>Unidades residentes</th>
 			<th>Unidades productivas</th>
@@ -19,7 +19,7 @@
 		<tbody>
 			<?php foreach ($fichas as $ficha): ?>
 				<tr>
-					<td><?php echo $ficha->ficha_predial; ?></td>
+					<td><?php echo "VINUS-$ficha->ficha_predial"; ?></td>
 					<td><?php echo $ficha->propietario; ?></td>
 					<td><?php echo $ficha->usr; ?></td>
 					<td><?php echo $ficha->usp; ?></td>
